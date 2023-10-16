@@ -1,12 +1,13 @@
 import { Grid } from "@mui/material";
 import ThemedLayout from "./components/ThemedLayout";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <ThemedLayout>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <p>NavBar </p>
+          <NavBar />
         </Grid>
         <Grid item xs={12}>
           <p>Main content</p>
