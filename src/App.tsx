@@ -1,20 +1,18 @@
-import { Stack } from "@mui/material";
-import ColorModeSwitch from "./components/ColorModeSwitch";
+import { Grid } from "@mui/material";
+import ThemedLayout from "./components/ThemedLayout";
 
 function App() {
   return (
-    <>
-      <p>Hello</p>
-      <Stack
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ pb: 3 }}
-      >
-        <p>Hello</p>
-        <ColorModeSwitch />;
-      </Stack>
-    </>
+    <ThemedLayout>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <p>NavBar </p>
+        </Grid>
+        <Grid item xs={12}>
+          <p>Main content</p>
+        </Grid>
+      </Grid>
+    </ThemedLayout>
   );
 }
 

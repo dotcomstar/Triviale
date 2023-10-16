@@ -12,13 +12,14 @@ const ColorModeSwitch = () => {
   return (
     <Stack direction="row">
       <Tooltip title="Toggle dark mode">
-        <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode}>
+        <p>Hello</p>
+        {/* <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode}>
           {theme.palette.mode === "dark" ? (
             <Brightness7Icon />
           ) : (
             <Brightness4Icon />
           )}
-        </IconButton>
+        </IconButton> */}
       </Tooltip>
     </Stack>
   );
