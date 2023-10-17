@@ -16,15 +16,13 @@ const ColorModeSwitch = () => {
     <Stack direction="row">
       <Tooltip title="Toggle dark mode">
         <FormGroup>
-          <FormControlLabel control={<Switch />} label="Dark Mode" />
+          <FormControlLabel
+            control={<Switch />}
+            checked={theme.palette.mode === "dark"}
+            onChange={colorMode.toggleColorMode}
+            label="Dark Mode"
+          />
         </FormGroup>
-        {/* <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode}>
-          {theme.palette.mode === "dark" ? (
-            <Brightness7Icon />
-          ) : (
-            <Brightness4Icon />
-          )}
-        </IconButton> */}
       </Tooltip>
     </Stack>
   );
