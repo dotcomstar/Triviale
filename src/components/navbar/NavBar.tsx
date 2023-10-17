@@ -1,8 +1,8 @@
 import { Box, IconButton, Stack, Typography } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/Menu";
 import logo from "/jacks_its_ac_design.webp";
-import SettingsButton from "./SettingsButton";
-import HelpButton from "./HelpButton";
+import SettingsButton from "./settings/SettingsButton";
+import HelpButton from "./help/HelpButton";
 
 const NavBar = () => {
   return (

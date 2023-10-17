@@ -1,4 +1,4 @@
-import useHighContrastStore from "../stores/highContrastStore";
+import useHighContrastStore from "../../../stores/highContrastStore";
 import SettingsSwitch from "./SettingsSwitch";
 
 const HighContrastSwitch = () => {

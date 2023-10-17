@@ -5,7 +5,7 @@ import {
   ListItem,
   Typography,
 } from "@mui/material";
-import CustomDialog from "./CustomDialog";
+import CustomDialog from "../CustomDialog";
 
 export interface HelpDialogProps {
   open: boolean;

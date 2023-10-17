@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import ThemedLayout from "./components/ThemedLayout";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/navbar/NavBar";
 
 function App() {
   return (

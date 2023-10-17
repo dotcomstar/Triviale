@@ -1,4 +1,4 @@
-import useHardModeStore from "../stores/hardModeStore";
+import useHardModeStore from "../../../stores/hardModeStore";
 import SettingsSwitch from "./SettingsSwitch";
 
 const HardModeSwitch = () => {

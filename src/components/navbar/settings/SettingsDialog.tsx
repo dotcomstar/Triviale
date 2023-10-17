@@ -2,7 +2,7 @@ import { DialogProps, Divider, List, ListItem } from "@mui/material";
 import ColorModeSwitch from "./ColorModeSwitch";
 import HardModeSwitch from "./HardModeSwitch";
 import HighContrastSwitch from "./HighContrastSwitch";
-import CustomDialog from "./CustomDialog";
+import CustomDialog from "../CustomDialog";
 
 export interface SettingsDialogProps {
   open: boolean;
