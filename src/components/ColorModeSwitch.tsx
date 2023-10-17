@@ -21,6 +21,8 @@ const ColorModeSwitch = () => {
             checked={theme.palette.mode === "dark"}
             onChange={colorMode.toggleColorMode}
             label="Dark Theme"
+            labelPlacement="start"
+            sx={{ ml: 0 }}
           />
         </FormGroup>
       </Tooltip>

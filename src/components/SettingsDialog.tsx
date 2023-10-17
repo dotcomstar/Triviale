@@ -18,7 +18,13 @@ const SettingsDialog = ({ open, onClose }: SettingsDialogProps) => {
           <ColorModeSwitch />
         </ListItem>
         <Divider component="li" sx={{ mx: 2 }} />
-        <ListItem></ListItem>
+        <ListItem>
+          <ColorModeSwitch />
+        </ListItem>
+        <Divider component="li" sx={{ mx: 2 }} />
+        <ListItem>
+          <ColorModeSwitch />
+        </ListItem>
       </List>
     </Dialog>
   );
