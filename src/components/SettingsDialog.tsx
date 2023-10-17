@@ -1,7 +1,8 @@
-import { Dialog, DialogProps, Divider, List, ListItem } from "@mui/material";
+import { DialogProps, Divider, List, ListItem } from "@mui/material";
 import ColorModeSwitch from "./ColorModeSwitch";
 import HardModeSwitch from "./HardModeSwitch";
 import HighContrastSwitch from "./HighContrastSwitch";
+import CustomDialog from "./CustomDialog";
 
 export interface SettingsDialogProps {
   open: boolean;
@@ -19,14 +20,11 @@ const SettingsDialog = ({
   };
 
   return (
-    <Dialog
+    <CustomDialog
       onClose={handleClose}
       open={open}
       TransitionComponent={TransitionComponent}
-      keepMounted
-      aria-describedby="settings-dialog-slide"
-      fullWidth
-      maxWidth="sm"
+      ariaDescribedBy="settings-dialog-slide"
     >
       <List>
         <ListItem>
@@ -41,7 +39,7 @@ const SettingsDialog = ({
           <HighContrastSwitch />
         </ListItem>
       </List>
-    </Dialog>
+    </CustomDialog>
   );
 };
 

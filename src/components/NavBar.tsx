@@ -2,6 +2,7 @@ import { Box, IconButton, Stack, Typography } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/Menu";
 import logo from "/jacks_its_ac_design.webp";
 import SettingsButton from "./SettingsButton";
+import HelpButton from "./HelpButton";
 
 const NavBar = () => {
   return (
@@ -31,7 +32,10 @@ const NavBar = () => {
           Triviale
         </Typography>
       </Stack>
-      <SettingsButton />
+      <Stack direction="row" alignItems="center">
+        <HelpButton />
+        <SettingsButton />
+      </Stack>
     </Stack>
   );
 };
