@@ -3,6 +3,7 @@ import SettingsSwitch from "./SettingsSwitch";
 
 const HighContrastSwitch = () => {
   const { highContrast, toggleHighContrast } = useHighContrastStore();
+  // const highContrast = useHighContrastStore((state) => state.highContrast); // Only update when this value is changed.
   return (
     <SettingsSwitch
       label="High Contrast Mode"
