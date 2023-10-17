@@ -1,24 +1,15 @@
-import { FormControl, Stack, Typography, useTheme } from "@mui/material";
-import React from "react";
-import { ColorModeContext } from "../components/ThemedLayout";
-import IOSSwitch from "./IOSSwitch";
+import useHighContrastStore from "../stores/highContrastStore";
+import SettingsSwitch from "./SettingsSwitch";
 
 const HighContrastSwitch = () => {
-  const theme = useTheme();
-  const colorMode = React.useContext(ColorModeContext);
+  const { highContrast, toggleHighContrast } = useHighContrastStore();
   return (
-    <FormControl fullWidth={true}>
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Stack direction="column">
-          <Typography>High Contrast Mode</Typography>
-          <Typography variant="caption">For improved color vision</Typography>
-        </Stack>
-        <IOSSwitch
-          checked={theme.palette.mode === "dark"}
-          onChange={colorMode.toggleColorMode}
-        />
-      </Stack>
-    </FormControl>
+    <SettingsSwitch
+      label="High Contrast Mode"
+      caption="For improved color vision"
+      checked={highContrast}
+      onChange={toggleHighContrast}
+    />
   );
 };
 
