@@ -1,8 +1,8 @@
-import { Box, IconButton, Stack, Typography } from "@mui/material";
-import MenuRoundedIcon from "@mui/icons-material/Menu";
-import logo from "/jacks_its_ac_design.webp";
-import SettingsButton from "./settings/SettingsButton";
+import { Box, Stack, Typography } from "@mui/material";
+import HamburgerDrawer from "./drawer/HamburgerDrawer";
 import HelpButton from "./help/HelpButton";
+import SettingsButton from "./settings/SettingsButton";
+import logo from "/jacks_its_ac_design.webp";
 
 const NavBar = () => {
   return (
@@ -14,9 +14,7 @@ const NavBar = () => {
       sx={{ borderBottom: 1, borderColor: "DarkGray" }}
       px={2}
     >
-      <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-        <MenuRoundedIcon fontSize="large" />
-      </IconButton>
+      <HamburgerDrawer />
       <Stack direction="row">
         <Box
           component="img"
