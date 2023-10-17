@@ -1,9 +1,8 @@
-import React from "react";
+import CardMembershipIcon from "@mui/icons-material/CardMembership";
 import MenuRoundedIcon from "@mui/icons-material/Menu";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
 import {
   Box,
-  Divider,
   IconButton,
   List,
   ListItem,
@@ -11,8 +10,8 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import React from "react";
 
 const HamburgerDrawer = () => {
   const iOS =
@@ -39,24 +38,11 @@ const HamburgerDrawer = () => {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+        {["Login", "Subscribe"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index % 2 === 0 ? <InboxIcon /> : <CardMembershipIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
