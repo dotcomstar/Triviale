@@ -20,7 +20,7 @@ const ColorModeSwitch = () => {
             control={<Switch />}
             checked={theme.palette.mode === "dark"}
             onChange={colorMode.toggleColorMode}
-            label="Dark Mode"
+            label="Dark Theme"
           />
         </FormGroup>
       </Tooltip>

@@ -1,7 +1,7 @@
 import { IconButton } from "@mui/material";
 import React from "react";
 import SettingsDialog from "./SettingsDialog";
-import SettingsIcon from "@mui/icons-material/Settings";
+import SettingsRoundedIcon from "@mui/icons-material/Settings";
 
 const SettingsButton = () => {
   const [open, setOpen] = React.useState(false);
@@ -22,7 +22,7 @@ const SettingsButton = () => {
         sx={{ mr: 2 }}
         onClick={handleClickOpen}
       >
-        <SettingsIcon />
+        <SettingsRoundedIcon fontSize="large" />
       </IconButton>
       <SettingsDialog open={open} onClose={handleClose} />
     </div>

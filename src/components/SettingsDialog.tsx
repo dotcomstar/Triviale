@@ -1,4 +1,4 @@
-import { Dialog, List, ListItem } from "@mui/material";
+import { Dialog, Divider, List, ListItem } from "@mui/material";
 import ColorModeSwitch from "./ColorModeSwitch";
 
 export interface SettingsDialogProps {
@@ -14,9 +14,11 @@ const SettingsDialog = ({ open, onClose }: SettingsDialogProps) => {
   return (
     <Dialog onClose={handleClose} open={open}>
       <List>
-        <ListItem disableGutters>
+        <ListItem>
           <ColorModeSwitch />
         </ListItem>
+        <Divider component="li" sx={{ mx: 2 }} />
+        <ListItem></ListItem>
       </List>
     </Dialog>
   );
