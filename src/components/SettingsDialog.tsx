@@ -1,5 +1,7 @@
 import { Dialog, Divider, List, ListItem } from "@mui/material";
 import ColorModeSwitch from "./ColorModeSwitch";
+import HardModeSwitch from "./HardModeSwitch";
+import HighContrastSwitch from "./HighContrastSwitch";
 
 export interface SettingsDialogProps {
   open: boolean;
@@ -15,7 +17,7 @@ const SettingsDialog = ({ open, onClose }: SettingsDialogProps) => {
     <Dialog onClose={handleClose} open={open}>
       <List>
         <ListItem>
-          <ColorModeSwitch />
+          <HardModeSwitch />
         </ListItem>
         <Divider component="li" sx={{ mx: 2 }} />
         <ListItem>
@@ -23,7 +25,7 @@ const SettingsDialog = ({ open, onClose }: SettingsDialogProps) => {
         </ListItem>
         <Divider component="li" sx={{ mx: 2 }} />
         <ListItem>
-          <ColorModeSwitch />
+          <HighContrastSwitch />
         </ListItem>
       </List>
     </Dialog>

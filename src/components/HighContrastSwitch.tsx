@@ -3,13 +3,16 @@ import React from "react";
 import { ColorModeContext } from "../components/ThemedLayout";
 import IOSSwitch from "./IOSSwitch";
 
-const ColorModeSwitch = () => {
+const HighContrastSwitch = () => {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
   return (
     <FormControl fullWidth={true}>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography>Dark Theme</Typography>
+        <Stack direction="column">
+          <Typography>High Contrast Mode</Typography>
+          <Typography variant="caption">For improved color vision</Typography>
+        </Stack>
         <IOSSwitch
           checked={theme.palette.mode === "dark"}
           onChange={colorMode.toggleColorMode}
@@ -19,4 +22,4 @@ const ColorModeSwitch = () => {
   );
 };
 
-export default ColorModeSwitch;
+export default HighContrastSwitch;
