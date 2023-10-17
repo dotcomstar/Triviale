@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import logo from "/jacks_its_ac_design.webp";
 import ColorModeSwitch from "./ColorModeSwitch";
 
@@ -8,7 +8,8 @@ const NavBar = () => {
       direction="row"
       padding="10px"
       justifyContent="center"
-      bgcolor="#ff5c6d" // TODO: Extract this to a variable
+      alignItems="center"
+      sx={{ borderBottom: 1 }}
     >
       <Stack direction="row">
         <Box
@@ -21,7 +22,7 @@ const NavBar = () => {
           alt="ScheduleTerp's logo"
           src={logo}
         />
-        <Button variant="text" aria-label="About" color="info">
+        <Button variant="text" aria-label="About" color="info" translate="no">
           Triviale
         </Button>
       </Stack>
