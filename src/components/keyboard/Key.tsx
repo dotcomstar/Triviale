@@ -1,5 +1,5 @@
+import { Button, Typography } from "@mui/material";
 import { ReactNode } from "react";
-import { Button } from "@mui/material";
 
 type Props = {
   children?: ReactNode;
@@ -23,12 +23,14 @@ const Key = ({ children, width = 40, value, onClick, isRevealing }: Props) => {
       aria-label={`${value} key`}
       onClick={handleClick}
       sx={{
-        width: width,
+        width: `${width}px`,
+        minWidth: `${width}px`,
         transitionDelay: isRevealing ? `${REVEAL_TIME_MS}ms` : "unset",
       }}
       variant="contained"
+      color="unclicked"
     >
-      {children || value}
+      <Typography sx={{ fontWeight: "bold" }}>{children || value}</Typography>
     </Button>
   );
 };

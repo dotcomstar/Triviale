@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useEffect } from "react";
 import Key from "./Key";
 // import { DELETE_TEXT, ENTER_TEXT } from '../../constants/strings';
