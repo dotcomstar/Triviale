@@ -1,32 +1,11 @@
 import {
   CssBaseline,
-  PaletteColorOptions,
   PaletteMode,
   ThemeProvider,
   createTheme,
   responsiveFontSizes,
 } from "@mui/material";
 import React, { ReactNode, useEffect } from "react";
-
-declare module "@mui/material/styles" {
-  interface CustomPalette {
-    almost: PaletteColorOptions;
-    success: PaletteColorOptions;
-    unclicked: PaletteColorOptions;
-    failure: PaletteColorOptions;
-  }
-  interface Palette extends CustomPalette {}
-  interface PaletteOptions extends CustomPalette {}
-}
-
-declare module "@mui/material/Button" {
-  interface ButtonPropsColorOverrides {
-    almost: true;
-    success: true;
-    unclicked: true;
-    failure: true;
-  }
-}
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
@@ -80,26 +59,31 @@ const ThemedLayout = ({ children }: Props) => {
     [mode]
   );
 
-  const { palette } = createTheme();
-  const { augmentColor } = palette;
-  const createColor = (mainColor: any) =>
-    augmentColor({
-      color: {
-        main: mainColor,
-        contrastText: mode === "dark" ? "white" : "black",
-      },
-    });
-
   // Update the theme only if the mode changes
   let theme = React.useMemo(
     () =>
       createTheme({
         palette: {
           mode: mode === "dark" ? "dark" : "light",
-          almost: createColor(mode === "dark" ? "#B59F3B" : "#C9B458"),
-          success: createColor(mode === "dark" ? "#538D4E" : "#6AAA64"),
-          unclicked: createColor(mode === "dark" ? "#818384" : "#D3D6DA"),
-          failure: createColor(mode === "dark" ? "#3A3A3C" : "#787C7E"),
+          ...(mode === "light"
+            ? {
+                // palette values for light mode
+                primary: {
+                  main: "#D3D6DA",
+                },
+                error: { main: "#787C7E" },
+                warning: { main: "#C9B458" },
+                success: { main: "#6AAA64" },
+              }
+            : {
+                // palette values for dark mode
+                primary: {
+                  main: "#818384",
+                },
+                error: { main: "#3A3A3C" },
+                warning: { main: "#B59F3B" },
+                success: { main: "#538D4E" },
+              }),
         },
       }),
     [mode]

@@ -28,7 +28,7 @@ const Key = ({ children, width = 40, value, onClick, isRevealing }: Props) => {
         transitionDelay: isRevealing ? `${REVEAL_TIME_MS}ms` : "unset",
       }}
       variant="contained"
-      color="unclicked"
+      color="primary"
     >
       <Typography sx={{ fontWeight: "bold" }}>{children || value}</Typography>
     </Button>
