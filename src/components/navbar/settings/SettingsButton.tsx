@@ -25,7 +25,7 @@ const SettingsButton = () => {
   };
 
   return (
-    <div>
+    <>
       <IconButton
         edge="start"
         color="inherit"
@@ -39,7 +39,7 @@ const SettingsButton = () => {
         onClose={handleClose}
         TransitionComponent={Transition}
       />
-    </div>
+    </>
   );
 };
 

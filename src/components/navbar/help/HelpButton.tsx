@@ -25,12 +25,11 @@ const HelpButton = () => {
   };
 
   return (
-    <div>
+    <>
       <IconButton
         edge="start"
         color="inherit"
         aria-label="help"
-        sx={{ mr: 2 }}
         onClick={handleClickOpen}
       >
         <HelpOutlineIcon fontSize="large" />
@@ -40,7 +39,7 @@ const HelpButton = () => {
         onClose={handleClose}
         TransitionComponent={Transition}
       />
-    </div>
+    </>
   );
 };
 
