@@ -1,5 +1,6 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { useState } from "react";
+import useQuestionExpansionStore from "../../stores/questionExpansionStore";
 
 interface Props {
   children: string;
@@ -7,16 +8,21 @@ interface Props {
 
 const ExpandableText = ({ children }: Props) => {
   if (!children) return null;
-  const [expanded, setExpanded] = useState(1);
+  const { questionExpansion, resetQuestion, expandQuestion } =
+    useQuestionExpansionStore();
   const length = children.length / 5;
   const summary =
-    expanded < 5 ? children.substring(0, expanded * length) + "..." : children;
+    questionExpansion < 5
+      ? children.substring(0, questionExpansion * length) + "..."
+      : children;
 
   return (
     <Stack>
       <Typography fontSize="large">{summary}</Typography>
-      {expanded < 5 && (
-        <Button onClick={() => setExpanded(expanded + 1)}>Show more</Button>
+      {questionExpansion < 5 && (
+        <Button onClick={() => expandQuestion()} color="secondary">
+          Show more
+        </Button>
       )}
     </Stack>
   );
