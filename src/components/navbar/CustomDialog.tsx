@@ -29,6 +29,7 @@ const CustomDialog = ({
       keepMounted
       fullWidth
       maxWidth="sm"
+      sx={{ zIndex: 1200, mx: 0 }}
     >
       {children}
     </Dialog>

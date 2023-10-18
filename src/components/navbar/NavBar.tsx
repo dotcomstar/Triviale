@@ -15,7 +15,7 @@ const NavBar = () => {
       px={2}
     >
       <HamburgerDrawer />
-      <Stack direction="row">
+      <Stack direction="row" alignItems="center">
         <Box
           component="img"
           sx={{
@@ -26,7 +26,7 @@ const NavBar = () => {
           alt="Triviale Logo"
           src={logo}
         />
-        <Typography translate="no" variant="h3" alignItems={"center"}>
+        <Typography translate="no" variant="h3">
           Triviale
         </Typography>
       </Stack>

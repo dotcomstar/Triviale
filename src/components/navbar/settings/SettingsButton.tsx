@@ -30,7 +30,6 @@ const SettingsButton = () => {
         edge="start"
         color="inherit"
         aria-label="settings"
-        sx={{ mr: 2 }}
         onClick={handleClickOpen}
       >
         <SettingsRoundedIcon fontSize="large" />

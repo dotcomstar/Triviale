@@ -95,7 +95,7 @@ const ThemedLayout = ({ children }: Props) => {
     <>
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
+          <CssBaseline enableColorScheme />
           {children}
         </ThemeProvider>
       </ColorModeContext.Provider>
