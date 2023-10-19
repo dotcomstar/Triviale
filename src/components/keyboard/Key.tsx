@@ -5,11 +5,19 @@ type Props = {
   children?: ReactNode;
   value: string;
   width?: number;
+  fontSize?: number;
   onClick: (value: string) => void;
   isRevealing?: boolean;
 };
 
-const Key = ({ children, width = 40, value, onClick, isRevealing }: Props) => {
+const Key = ({
+  children,
+  width = 40,
+  value,
+  onClick,
+  isRevealing,
+  fontSize = 20,
+}: Props) => {
   const REVEAL_TIME_MS = 350;
   //   const highContrast = useHighContrastStore((state) => state.highContrast); // Only update when this value is changed.
 
@@ -26,11 +34,18 @@ const Key = ({ children, width = 40, value, onClick, isRevealing }: Props) => {
         width: `${width}px`,
         minWidth: `${width}px`,
         transitionDelay: isRevealing ? `${REVEAL_TIME_MS}ms` : "unset",
+        p: 0,
+        "&.MuiButton-contained": {
+          padding: 0,
+        },
       }}
       variant="contained"
       color="primary"
+      size="small"
     >
-      <Typography sx={{ fontWeight: "bold" }}>{children || value}</Typography>
+      <Typography sx={{ fontWeight: "bold", fontSize: fontSize }}>
+        {children || value}
+      </Typography>
     </Button>
   );
 };

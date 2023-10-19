@@ -52,13 +52,7 @@ const Keyboard = ({
   }, [onEnter, onDelete, onChar]);
 
   return (
-    <Stack
-      direction="column"
-      paddingX="10px"
-      justifyContent="center"
-      alignItems="center"
-      px={2}
-    >
+    <Stack direction="column" justifyContent="center" alignItems="center">
       <Stack direction="row">
         {["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"].map((key) => (
           <Key
@@ -80,7 +74,7 @@ const Keyboard = ({
         ))}
       </Stack>
       <Stack direction="row">
-        <Key width={65.4} value="ENTER" onClick={onClick}>
+        <Key width={65.4} fontSize={12} value="ENTER" onClick={onClick}>
           {ENTER_TEXT}
         </Key>
         {["Z", "X", "C", "V", "B", "N", "M"].map((key) => (
@@ -91,7 +85,7 @@ const Keyboard = ({
             isRevealing={isRevealing}
           />
         ))}
-        <Key width={65.4} value="DELETE" onClick={onClick}>
+        <Key width={65.4} fontSize={12} value="DELETE" onClick={onClick}>
           {DELETE_TEXT}
         </Key>
       </Stack>
