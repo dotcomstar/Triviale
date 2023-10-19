@@ -19,8 +19,8 @@ const NavBar = () => {
         <Box
           component="img"
           sx={{
-            width: 60,
-            height: 60,
+            width: 50,
+            height: 50,
             borderRadius: 2.6,
           }}
           alt="Triviale Logo"
