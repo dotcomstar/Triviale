@@ -1,5 +1,4 @@
 import { Button, Stack, Typography } from "@mui/material";
-import { useState } from "react";
 import useQuestionExpansionStore from "../../stores/questionExpansionStore";
 
 interface Props {
@@ -8,8 +7,7 @@ interface Props {
 
 const ExpandableText = ({ children }: Props) => {
   if (!children) return null;
-  const { questionExpansion, resetQuestion, expandQuestion } =
-    useQuestionExpansionStore();
+  const { questionExpansion, expandQuestion } = useQuestionExpansionStore();
   const length = children.length / 5;
   const summary =
     questionExpansion < 5
