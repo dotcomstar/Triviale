@@ -1,9 +1,9 @@
-import { Stack } from "@mui/material";
+import BackspaceIcon from "@mui/icons-material/Backspace";
+import { Icon, Stack } from "@mui/material";
 import { useEffect } from "react";
 import Key from "./Key";
 // import { DELETE_TEXT, ENTER_TEXT } from '../../constants/strings';
 // import { getStatuses } from '../../lib/statuses';
-// import { localeAwareUpperCase } from '../../lib/words';
 
 type KeyboardProps = {
   onChar: (value: string) => void;
@@ -18,8 +18,15 @@ const Keyboard = ({
   onEnter,
   isRevealing,
 }: KeyboardProps) => {
-  const DELETE_TEXT = "Delete";
   const ENTER_TEXT = "Enter";
+
+  // TODO: Refactor into variables
+  const topRowWidth =
+    "min(((100vw - 16px) - (9 * 6px)) / 10, ((500px - 16px) - (9 * 6px)) / 10)";
+  const defaultRowWidth =
+    "min(((100vw - 16px) - (8 * 6px)) / 10, ((500px - 16px) - (8 * 6px)) / 10)";
+  const enterDeleteWidth =
+    "min(((100vw - 16px) - (8 * 6px)) / 10 * 1.5, ((500px - 16px) - (8 * 6px)) / 10 * 1.5)";
 
   const onClick = (value: string) => {
     if (value === "ENTER") {
@@ -52,13 +59,20 @@ const Keyboard = ({
   }, [onEnter, onDelete, onChar]);
 
   return (
-    <Stack direction="column" justifyContent="center" alignItems="center">
+    <Stack
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
+      spacing="8px"
+      sx={{ mx: "8px" }}
+    >
       <Stack direction="row">
         {["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"].map((key) => (
           <Key
             value={key}
             key={key}
             onClick={onClick}
+            width={topRowWidth}
             isRevealing={isRevealing}
           />
         ))}
@@ -69,12 +83,18 @@ const Keyboard = ({
             value={key}
             key={key}
             onClick={onClick}
+            width={defaultRowWidth}
             isRevealing={isRevealing}
           />
         ))}
       </Stack>
       <Stack direction="row">
-        <Key width={65.4} fontSize={12} value="ENTER" onClick={onClick}>
+        <Key
+          fontSize={12}
+          width={enterDeleteWidth}
+          value="ENTER"
+          onClick={onClick}
+        >
           {ENTER_TEXT}
         </Key>
         {["Z", "X", "C", "V", "B", "N", "M"].map((key) => (
@@ -82,11 +102,19 @@ const Keyboard = ({
             value={key}
             key={key}
             onClick={onClick}
+            width={defaultRowWidth}
             isRevealing={isRevealing}
           />
         ))}
-        <Key width={65.4} fontSize={12} value="DELETE" onClick={onClick}>
-          {DELETE_TEXT}
+        <Key
+          fontSize={12}
+          width={enterDeleteWidth}
+          value="DELETE"
+          onClick={onClick}
+        >
+          <Icon>
+            <BackspaceIcon />
+          </Icon>
         </Key>
       </Stack>
     </Stack>

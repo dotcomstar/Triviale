@@ -11,14 +11,14 @@ function App() {
   const { expandQuestion } = useQuestionExpansionStore();
   return (
     <ThemedLayout>
-      <Grid container spacing={2}>
+      <Grid container>
         <Grid item xs={12}>
           <NavBar />
         </Grid>
-        <Grid item xs={12} sx={{ mx: 3 }}>
+        <Grid item xs={12} sx={{ mx: 3, pt: 2 }}>
           <ExpandableText>{data[0].question}</ExpandableText>
         </Grid>
-        <Grid item xs={12} sx={{ mx: 3 }} overflow={"scroll"}>
+        <Grid item xs={12} sx={{ px: 0 }} overflow={"scroll"}>
           <Keyboard
             onChar={(c) => {
               console.log(c);

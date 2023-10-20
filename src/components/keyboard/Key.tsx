@@ -4,17 +4,17 @@ import { ReactNode } from "react";
 type Props = {
   children?: ReactNode;
   value: string;
-  width?: number;
   fontSize?: number;
   onClick: (value: string) => void;
+  width: string;
   isRevealing?: boolean;
 };
 
 const Key = ({
   children,
-  width = 40,
   value,
   onClick,
+  width,
   isRevealing,
   fontSize = 20,
 }: Props) => {
@@ -31,13 +31,17 @@ const Key = ({
       aria-label={`${value} key`}
       onClick={handleClick}
       sx={{
-        width: `${width}px`,
-        minWidth: `${width}px`,
+        width: { width },
+        // width: "calc(((100vw - 16px) - (8 * 6px)) / 10)",
+        height: "58px",
+        minWidth: "20px",
         transitionDelay: isRevealing ? `${REVEAL_TIME_MS}ms` : "unset",
         p: 0,
         "&.MuiButton-contained": {
           padding: 0,
         },
+        mr: "6px",
+        alignContent: "center",
       }}
       variant="contained"
       color="primary"
