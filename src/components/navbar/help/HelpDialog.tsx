@@ -5,6 +5,13 @@ import {
   ListItem,
   Typography,
 } from "@mui/material";
+import {
+  HELP_DIALOG_ARIA,
+  HELP_HOW_TILE_COLORS_CHANGE,
+  HELP_HOW_TO_PLAY,
+  HELP_NUM_QUESTIONS,
+  HELP_NUM_TRIES,
+} from "../../../constants/strings";
 import CustomDialog from "../CustomDialog";
 
 export interface HelpDialogProps {
@@ -27,21 +34,18 @@ const HelpDialog = ({
       onClose={handleClose}
       open={open}
       TransitionComponent={TransitionComponent}
-      ariaDescribedBy="help-dialog-slide"
+      ariaDescribedBy={HELP_DIALOG_ARIA}
     >
       <DialogTitle sx={{ fontWeight: "bold", fontSize: "28px", pb: 0 }}>
-        How To Play
+        {HELP_HOW_TO_PLAY}
       </DialogTitle>
       <Typography sx={{ m: 3, my: 0, fontSize: "20px" }}>
-        Guess each answer in 5 tries.
+        {HELP_NUM_TRIES}
       </Typography>
       <List sx={{ listStyleType: "disc", mx: 6, mt: 0, pb: 3 }}>
+        <ListItem sx={{ display: "list-item" }}>{HELP_NUM_QUESTIONS}</ListItem>
         <ListItem sx={{ display: "list-item" }}>
-          Total of 3 questions per day.
-        </ListItem>
-        <ListItem sx={{ display: "list-item" }}>
-          The color of the tiles will change to show how close your guess was to
-          the word.
+          {HELP_HOW_TILE_COLORS_CHANGE}
         </ListItem>
       </List>
     </CustomDialog>

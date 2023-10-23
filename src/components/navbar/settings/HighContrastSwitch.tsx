@@ -1,13 +1,16 @@
+import {
+  HIGH_CONTRAST_MODE_DESCRIPTION,
+  HIGH_CONTRAST_MODE_LABEL,
+} from "../../../constants/strings";
 import useHighContrastStore from "../../../stores/highContrastStore";
 import SettingsSwitch from "./SettingsSwitch";
 
 const HighContrastSwitch = () => {
   const { highContrast, toggleHighContrast } = useHighContrastStore();
-  // const highContrast = useHighContrastStore((state) => state.highContrast); // Only update when this value is changed.
   return (
     <SettingsSwitch
-      label="High Contrast Mode"
-      caption="For improved color vision"
+      label={HIGH_CONTRAST_MODE_LABEL}
+      caption={HIGH_CONTRAST_MODE_DESCRIPTION}
       checked={highContrast}
       onChange={toggleHighContrast}
     />

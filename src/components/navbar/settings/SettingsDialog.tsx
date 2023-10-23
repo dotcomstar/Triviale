@@ -3,6 +3,7 @@ import ColorModeSwitch from "./ColorModeSwitch";
 import HardModeSwitch from "./HardModeSwitch";
 import HighContrastSwitch from "./HighContrastSwitch";
 import CustomDialog from "../CustomDialog";
+import { SETTINGS_DIALOG_ARIA } from "../../../constants/strings";
 
 export interface SettingsDialogProps {
   open: boolean;
@@ -24,7 +25,7 @@ const SettingsDialog = ({
       onClose={handleClose}
       open={open}
       TransitionComponent={TransitionComponent}
-      ariaDescribedBy="settings-dialog-slide"
+      ariaDescribedBy={SETTINGS_DIALOG_ARIA}
     >
       <List>
         <ListItem>

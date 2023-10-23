@@ -1,3 +1,7 @@
+import {
+  HARD_MODE_DESCRIPTION,
+  HARD_MODE_LABEL,
+} from "../../../constants/strings";
 import useHardModeStore from "../../../stores/hardModeStore";
 import SettingsSwitch from "./SettingsSwitch";
 
@@ -6,8 +10,8 @@ const HardModeSwitch = () => {
 
   return (
     <SettingsSwitch
-      label="Hard Mode"
-      caption="Only one answer per question"
+      label={HARD_MODE_LABEL}
+      caption={HARD_MODE_DESCRIPTION}
       checked={hardMode}
       onChange={toggleHardMode}
     />

@@ -8,7 +8,7 @@ interface Props {
 const ExpandableText = ({ children }: Props) => {
   if (!children) return null;
   const { questionExpansion, expandQuestion } = useQuestionExpansionStore();
-  const length = children.length / 5;
+  const length = children.length / 5; // TODO: Split questions more intelligently.
   const summary =
     questionExpansion < 5
       ? children.substring(0, questionExpansion * length) + "..."

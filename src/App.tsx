@@ -6,6 +6,7 @@ import useQuestions from "./hooks/useQuestions";
 import Keyboard from "./components/keyboard/Keyboard";
 import useQuestionExpansionStore from "./stores/questionExpansionStore";
 import EmptyRow from "./components/grid/EmptyRow";
+import GameGrid from "./components/grid/GameGrid";
 
 function App() {
   const { data } = useQuestions();
@@ -20,11 +21,7 @@ function App() {
           <ExpandableText>{data[0].question}</ExpandableText>
         </Grid>
         <Grid item xs={12} sx={{ mx: 3 }}>
-          <EmptyRow />
-          <EmptyRow />
-          <EmptyRow />
-          <EmptyRow />
-          <EmptyRow />
+          <GameGrid />
         </Grid>
         <Grid item xs={12} sx={{ px: 0 }} overflow={"scroll"}>
           <Keyboard
