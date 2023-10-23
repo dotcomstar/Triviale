@@ -64,7 +64,7 @@ const Keyboard = ({
       justifyContent="center"
       alignItems="center"
       spacing="8px"
-      sx={{ mx: "8px" }}
+      sx={{ m: "8px" }}
     >
       <Stack direction="row">
         {["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"].map((key) => (

@@ -1,5 +1,6 @@
 import { Button, Typography } from "@mui/material";
 import { ReactNode } from "react";
+import useHighContrastStore from "../../stores/highContrastStore";
 
 type Props = {
   children?: ReactNode;
@@ -19,7 +20,7 @@ const Key = ({
   fontSize = 20,
 }: Props) => {
   const REVEAL_TIME_MS = 350;
-  //   const highContrast = useHighContrastStore((state) => state.highContrast); // Only update when this value is changed.
+  const highContrast = useHighContrastStore((state) => state.highContrast); // Only update when this value is changed.
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     onClick(value);
@@ -32,7 +33,6 @@ const Key = ({
       onClick={handleClick}
       sx={{
         width: { width },
-        // width: "calc(((100vw - 16px) - (8 * 6px)) / 10)",
         height: "58px",
         minWidth: "20px",
         transitionDelay: isRevealing ? `${REVEAL_TIME_MS}ms` : "unset",
@@ -44,7 +44,7 @@ const Key = ({
         alignContent: "center",
       }}
       variant="contained"
-      color="primary"
+      color={highContrast ? "secondary" : "primary"}
       size="small"
     >
       <Typography sx={{ fontWeight: "bold", fontSize: fontSize }}>
