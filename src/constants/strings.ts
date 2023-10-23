@@ -1,7 +1,5 @@
 import { MAX_CHALLENGES, QUESTIONS_PER_DAY } from "./settings";
 
-export const GAME_TITLE = process.env.REACT_APP_GAME_NAME!;
-
 export const HELP_HOW_TO_PLAY = "How To Play";
 export const HELP_NUM_TRIES = `Guess each answer in ${MAX_CHALLENGES} tries.`;
 export const HELP_NUM_QUESTIONS = `Total of ${QUESTIONS_PER_DAY} questions per day.`;
