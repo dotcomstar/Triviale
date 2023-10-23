@@ -21,6 +21,10 @@ function App() {
         </Grid>
         <Grid item xs={12} sx={{ mx: 3 }}>
           <EmptyRow />
+          <EmptyRow />
+          <EmptyRow />
+          <EmptyRow />
+          <EmptyRow />
         </Grid>
         <Grid item xs={12} sx={{ px: 0 }} overflow={"scroll"}>
           <Keyboard

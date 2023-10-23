@@ -14,7 +14,7 @@ const Cell = ({ nthLetter, value = "empty" }: CellProps) => {
       : nthLetter % 10 === 3
       ? "rd"
       : "th"
-  } letter, ${value}`;
+  } letter, ${value ? value : "empty"}`;
   return (
     <Box
       aria-label={description}
