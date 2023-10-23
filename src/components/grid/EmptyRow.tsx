@@ -7,7 +7,13 @@ const EmptyRow = () => {
   const emptyCells = Array.from(Array(solution.length));
 
   return (
-    <Stack direction="row">
+    <Stack
+      direction="row"
+      justifyContent="center"
+      alignItems="center"
+      sx={{ m: "8px" }}
+      spacing="5px"
+    >
       {emptyCells.map((_, i) => (
         <Cell key={i} nthLetter={i + 1} value="e" />
       ))}

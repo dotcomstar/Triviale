@@ -19,7 +19,7 @@ function App() {
         <Grid item xs={12} sx={{ mx: 3, pt: 2 }}>
           <ExpandableText>{data[0].question}</ExpandableText>
         </Grid>
-        <Grid item xs={12} sx={{ mx: 3, pt: 2 }}>
+        <Grid item xs={12} sx={{ mx: 3 }}>
           <EmptyRow />
         </Grid>
         <Grid item xs={12} sx={{ px: 0 }} overflow={"scroll"}>

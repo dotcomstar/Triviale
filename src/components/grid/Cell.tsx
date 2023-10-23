@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 interface CellProps {
   nthLetter: number;
@@ -16,8 +16,19 @@ const Cell = ({ nthLetter, value = "empty" }: CellProps) => {
       : "th"
   } letter, ${value}`;
   return (
-    <Box aria-label={description} sx={{ p: 2, border: "2px solid grey" }}>
-      {value}
+    <Box
+      aria-label={description}
+      sx={{
+        p: 2,
+        border: "2px solid grey",
+        height: "52px",
+        width: "52px",
+        alignContent: "center",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Typography> {value}</Typography>
     </Box>
   );
 };
