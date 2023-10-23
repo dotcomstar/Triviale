@@ -18,17 +18,18 @@ const Cell = ({ nthLetter, value = "empty" }: CellProps) => {
   return (
     <Box
       aria-label={description}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
       sx={{
-        p: 2,
         border: "2px solid grey",
         height: "52px",
         width: "52px",
-        alignContent: "center",
-        alignItems: "center",
-        justifyContent: "center",
       }}
     >
-      <Typography> {value}</Typography>
+      <Typography fontSize={"2em"} fontWeight={"bold"}>
+        {value}
+      </Typography>
     </Box>
   );
 };
