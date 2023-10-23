@@ -67,24 +67,26 @@ const Keyboard = ({
       sx={{ m: "8px" }}
     >
       <Stack direction="row">
-        {["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"].map((key) => (
+        {["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"].map((key, i) => (
           <Key
             value={key}
             key={key}
             onClick={onClick}
             width={topRowWidth}
             isRevealing={isRevealing}
+            hasNext={i !== 9}
           />
         ))}
       </Stack>
       <Stack direction="row">
-        {["A", "S", "D", "F", "G", "H", "J", "K", "L"].map((key) => (
+        {["A", "S", "D", "F", "G", "H", "J", "K", "L"].map((key, i) => (
           <Key
             value={key}
             key={key}
             onClick={onClick}
             width={defaultRowWidth}
             isRevealing={isRevealing}
+            hasNext={i !== 8}
           />
         ))}
       </Stack>
@@ -94,6 +96,7 @@ const Keyboard = ({
           width={enterDeleteWidth}
           value="ENTER"
           onClick={onClick}
+          hasNext
         >
           {ENTER_TEXT}
         </Key>
@@ -104,6 +107,7 @@ const Keyboard = ({
             onClick={onClick}
             width={defaultRowWidth}
             isRevealing={isRevealing}
+            hasNext
           />
         ))}
         <Key

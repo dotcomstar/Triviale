@@ -9,6 +9,7 @@ type Props = {
   onClick: (value: string) => void;
   width: string;
   isRevealing?: boolean;
+  hasNext?: boolean;
 };
 
 const Key = ({
@@ -18,6 +19,7 @@ const Key = ({
   width,
   isRevealing,
   fontSize = 20,
+  hasNext = false,
 }: Props) => {
   const REVEAL_TIME_MS = 350;
   const highContrast = useHighContrastStore((state) => state.highContrast); // Only update when this value is changed.
@@ -40,7 +42,7 @@ const Key = ({
         "&.MuiButton-contained": {
           padding: 0,
         },
-        mr: "6px",
+        mr: hasNext ? "6px" : "0px",
         alignContent: "center",
       }}
       variant="contained"
