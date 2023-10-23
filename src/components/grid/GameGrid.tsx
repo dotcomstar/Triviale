@@ -8,7 +8,7 @@ const GameGrid = () => {
   const guessNumber = useGameStateStore((s) => s.guessNumber);
   return (
     <>
-      {MAX_CHALLENGES}
+      {MAX_CHALLENGES - guessNumber}
       <EmptyRow />
       <EmptyRow />
       <EmptyRow />

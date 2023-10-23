@@ -1,6 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import useHighContrastStore from "../../stores/highContrastStore";
+import { REVEAL_TIME_MS } from "../../constants/settings";
 
 type Props = {
   children?: ReactNode;
@@ -21,7 +22,6 @@ const Key = ({
   fontSize = 20,
   hasNext = false,
 }: Props) => {
-  const REVEAL_TIME_MS = 350;
   const highContrast = useHighContrastStore((state) => state.highContrast); // Only update when this value is changed.
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {

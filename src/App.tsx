@@ -5,7 +5,6 @@ import ExpandableText from "./components/question/ExpandableText";
 import useQuestions from "./hooks/useQuestions";
 import Keyboard from "./components/keyboard/Keyboard";
 import useQuestionExpansionStore from "./stores/questionExpansionStore";
-import EmptyRow from "./components/grid/EmptyRow";
 import GameGrid from "./components/grid/GameGrid";
 
 function App() {
