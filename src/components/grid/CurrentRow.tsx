@@ -1,9 +1,11 @@
 // import { solution } from "../../lib/words";
 import { Stack } from "@mui/material";
 import Cell from "./Cell";
+import useQuestionByID from "../../hooks/useQuestionByID";
 
 const CurrentRow = () => {
-  const solution = "Burr"; // TODO: Grab from store
+  const question = useQuestionByID(3);
+  const solution = question?.answer!;
   const emptyCells = Array.from(Array(solution.length));
 
   return (

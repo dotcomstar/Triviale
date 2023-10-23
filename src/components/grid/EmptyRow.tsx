@@ -1,9 +1,11 @@
 // import { solution } from "../../lib/words";
 import { Stack } from "@mui/material";
 import Cell from "./Cell";
+import useQuestionByID from "../../hooks/useQuestionByID";
 
 const EmptyRow = () => {
-  const solution = "Burr"; // TODO: Grab from store
+  const question = useQuestionByID(1);
+  const solution = question?.answer!;
   const emptyCells = Array.from(Array(solution.length));
 
   return (
@@ -11,7 +13,6 @@ const EmptyRow = () => {
       direction="row"
       justifyContent="center"
       alignItems="center"
-      sx={{ m: "8px" }}
       spacing="5px"
     >
       {emptyCells.map((_, i) => (
