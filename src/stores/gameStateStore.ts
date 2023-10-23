@@ -33,6 +33,6 @@ const useGameStateStore = create<GameStateStore>((set) => ({
 }));
 
 if (process.env.NODE_ENV === "development")
-  mountStoreDevtool("Hard Mode Store", useGameStateStore);
+  mountStoreDevtool("Game State Store", useGameStateStore);
 
 export default useGameStateStore;

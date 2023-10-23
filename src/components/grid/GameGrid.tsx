@@ -7,14 +7,12 @@ import EmptyRow from "./EmptyRow";
 const GameGrid = () => {
   //   const { questionExpansion, expandQuestion } = useQuestionExpansionStore();
   const guessNumber = useGameStateStore((s) => s.guessNumber);
+  const numEmptyRows = MAX_CHALLENGES - guessNumber;
   return (
     <Stack direction={"column"} spacing={1}>
-      {MAX_CHALLENGES - guessNumber}
-      <EmptyRow />
-      <EmptyRow />
-      <EmptyRow />
-      <EmptyRow />
-      <EmptyRow />
+      {[...Array(numEmptyRows)].map((_, i) => (
+        <EmptyRow key={i} />
+      ))}
     </Stack>
   );
 };
