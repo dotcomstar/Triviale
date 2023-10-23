@@ -4,7 +4,7 @@ import Cell from "./Cell";
 import useQuestionByID from "../../hooks/useQuestionByID";
 
 const CurrentRow = () => {
-  const question = useQuestionByID(3);
+  const question = useQuestionByID(1);
   const solution = question?.answer!;
   const emptyCells = Array.from(Array(solution.length));
 
