@@ -3,6 +3,7 @@ import MenuRoundedIcon from "@mui/icons-material/Menu";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import {
   Box,
+  Drawer,
   IconButton,
   List,
   ListItem,
@@ -10,13 +11,9 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import React from "react";
 
 const HamburgerDrawer = () => {
-  const iOS =
-    typeof navigator !== "undefined" &&
-    /iPad|iPhone|iPod/.test(navigator.userAgent);
   const [expanded, setExpanded] = React.useState(false);
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -63,19 +60,9 @@ const HamburgerDrawer = () => {
         >
           <MenuRoundedIcon fontSize="large" />
         </IconButton>{" "}
-        <SwipeableDrawer
-          anchor={"left"}
-          open={expanded}
-          onClose={toggleDrawer(false)}
-          onOpen={toggleDrawer(true)}
-          // From: https://mui.com/material-ui/react-drawer/
-          disableBackdropTransition={!iOS}
-          disableDiscovery={iOS}
-          //- iOS is hosted on high-end devices. The backdrop transition can be enabled without dropping frames. The performance will be good enough.
-          //- iOS has a "swipe to go back" feature that interferes with the discovery feature, so discovery has to be disabled.
-        >
+        <Drawer anchor={"left"} open={expanded} onClose={toggleDrawer(false)}>
           {list()}
-        </SwipeableDrawer>
+        </Drawer>
       </React.Fragment>
     </div>
   );
