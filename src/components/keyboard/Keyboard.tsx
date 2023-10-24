@@ -1,8 +1,8 @@
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import { Icon, Stack } from "@mui/material";
 import { useEffect } from "react";
+import { ENTER_TEXT } from "../../constants/strings";
 import Key from "./Key";
-// import { DELETE_TEXT, ENTER_TEXT } from '../../constants/strings';
 // import { getStatuses } from '../../lib/statuses';
 
 type KeyboardProps = {
@@ -12,21 +12,25 @@ type KeyboardProps = {
   isRevealing?: boolean;
 };
 
+const getKeyWidth = (numKeys: number, multiplier: number) => {
+  return `min(((100vw - 16px) - (${
+    numKeys - 1
+  } * 6px)) / 10 * ${multiplier}, ((500px - 16px) - (${
+    numKeys - 1
+  } * 6px)) / 10 * ${multiplier})`;
+};
+
 const Keyboard = ({
   onChar,
   onDelete,
   onEnter,
   isRevealing,
 }: KeyboardProps) => {
-  const ENTER_TEXT = "Enter";
-
-  // TODO: Refactor into variables
-  const topRowWidth =
-    "min(((100vw - 16px) - (9 * 6px)) / 10, ((500px - 16px) - (9 * 6px)) / 10)";
-  const defaultRowWidth =
-    "min(((100vw - 16px) - (8 * 6px)) / 10, ((500px - 16px) - (8 * 6px)) / 10)";
-  const enterDeleteWidth =
-    "min(((100vw - 16px) - (8 * 6px)) / 10 * 1.5, ((500px - 16px) - (8 * 6px)) / 10 * 1.5)";
+  const numTopRowKeys = 10;
+  const numDefaultRowKeys = 9;
+  const topRowKeyWidth = getKeyWidth(numTopRowKeys, 1);
+  const defaultKeyWidth = getKeyWidth(numDefaultRowKeys, 1);
+  const enterDeleteWidth = getKeyWidth(numDefaultRowKeys, 1.5);
 
   const onClick = (value: string) => {
     if (value === "ENTER") {
@@ -72,7 +76,7 @@ const Keyboard = ({
             value={key}
             key={key}
             onClick={onClick}
-            width={topRowWidth}
+            width={topRowKeyWidth}
             isRevealing={isRevealing}
             hasNext={i !== 9}
           />
@@ -84,7 +88,7 @@ const Keyboard = ({
             value={key}
             key={key}
             onClick={onClick}
-            width={defaultRowWidth}
+            width={defaultKeyWidth}
             isRevealing={isRevealing}
             hasNext={i !== 8}
           />
@@ -105,7 +109,7 @@ const Keyboard = ({
             value={key}
             key={key}
             onClick={onClick}
-            width={defaultRowWidth}
+            width={defaultKeyWidth}
             isRevealing={isRevealing}
             hasNext
           />
