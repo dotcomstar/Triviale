@@ -1,6 +1,7 @@
 import { Button, Stack, Typography } from "@mui/material";
 import useQuestionExpansionStore from "../../stores/questionExpansionStore";
 import useGameStateStore from "../../stores/gameStateStore";
+import useCurrGuessStore from "../../stores/currGuessStore";
 
 interface Props {
   children: string;
@@ -15,6 +16,7 @@ const ExpandableText = ({ children }: Props) => {
       ? children.substring(0, questionExpansion * length) + "..."
       : children;
   const makeGuess = useGameStateStore((s) => s.makeGuess);
+  const { guess, resetGuess } = useCurrGuessStore();
 
   return (
     <Stack>
@@ -23,7 +25,8 @@ const ExpandableText = ({ children }: Props) => {
         <Button
           onClick={() => {
             expandQuestion();
-            makeGuess([]);
+            makeGuess(guess);
+            resetGuess();
           }}
           color="secondary"
         >
