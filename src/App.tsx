@@ -4,7 +4,6 @@ import NavBar from "./components/navbar/NavBar";
 import ExpandableText from "./components/question/ExpandableText";
 import useQuestions from "./hooks/useQuestions";
 import Keyboard from "./components/keyboard/Keyboard";
-import useQuestionExpansionStore from "./stores/questionExpansionStore";
 import GameGrid from "./components/grid/GameGrid";
 import useCurrGuessStore from "./stores/currGuessStore";
 import useGameStateStore from "./stores/gameStateStore";
@@ -12,8 +11,6 @@ import { MAX_CHALLENGES } from "./constants/settings";
 
 function App() {
   const { data } = useQuestions();
-  const { expandQuestion, resetQuestionExpansion } =
-    useQuestionExpansionStore();
   const { addChar, deleteChar, index, guess, resetGuess } = useCurrGuessStore();
   const { questionNumber, makeGuess, guessNumber, moveToNextQuestion } =
     useGameStateStore();
@@ -46,12 +43,10 @@ function App() {
             onEnter={() => {
               console.log("enter");
               if (index === answer.length) {
-                expandQuestion();
                 makeGuess(guess);
                 resetGuess();
                 if (guessNumber >= MAX_CHALLENGES - 1) {
                   moveToNextQuestion();
-                  resetQuestionExpansion();
                 }
               }
             }}

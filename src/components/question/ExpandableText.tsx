@@ -1,5 +1,4 @@
 import { Button, Stack, Typography } from "@mui/material";
-import useQuestionExpansionStore from "../../stores/questionExpansionStore";
 import useGameStateStore from "../../stores/gameStateStore";
 import useCurrGuessStore from "../../stores/currGuessStore";
 
@@ -9,11 +8,11 @@ interface Props {
 
 const ExpandableText = ({ children }: Props) => {
   if (!children) return null;
-  const { questionExpansion, expandQuestion } = useQuestionExpansionStore();
+  const guessNumber = useGameStateStore((s) => s.guessNumber) + 1;
   const length = children.length / 5; // TODO: Split questions more intelligently.
   const summary =
-    questionExpansion < 5
-      ? children.substring(0, questionExpansion * length) + "..."
+    guessNumber < 5
+      ? children.substring(0, guessNumber * length) + "..."
       : children;
   const makeGuess = useGameStateStore((s) => s.makeGuess);
   const { guess, resetGuess } = useCurrGuessStore();
@@ -21,10 +20,9 @@ const ExpandableText = ({ children }: Props) => {
   return (
     <Stack>
       <Typography fontSize="large">{summary}</Typography>
-      {questionExpansion < 5 && (
+      {guessNumber < 5 && (
         <Button
           onClick={() => {
-            expandQuestion();
             makeGuess(guess);
             resetGuess();
           }}
