@@ -57,9 +57,10 @@ const HamburgerDrawer = () => {
           color="inherit"
           aria-label="menu"
           onClick={toggleDrawer(true)}
+          sx={{ pr: 4 }}
         >
           <MenuRoundedIcon fontSize="large" />
-        </IconButton>{" "}
+        </IconButton>
         <Drawer anchor={"left"} open={expanded} onClose={toggleDrawer(false)}>
           {list()}
         </Drawer>
