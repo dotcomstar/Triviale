@@ -5,7 +5,6 @@ import useGameStateStore from "../../stores/gameStateStore";
 import GameRow from "./GameRow";
 
 const GameGrid = () => {
-  //   const { questionExpansion, expandQuestion } = useQuestionExpansionStore();
   const guessNumber = useGameStateStore((s) => s.guessNumber);
   const questionNumber = useGameStateStore((s) => s.questionNumber);
   const currGuess = useCurrGuessStore((s) => s.guess);
@@ -13,19 +12,16 @@ const GameGrid = () => {
 
   return (
     <Stack direction={"column"} spacing={1}>
-      <GameRow guess={currGuess} />
       {guesses.map((q, i) =>
-        i === questionNumber ? (
-          q.map((g, gi) =>
-            gi === guessNumber ? (
-              <GameRow guess={currGuess} />
-            ) : (
-              <GameRow guess={g} />
+        i === questionNumber
+          ? q.map((g, gi) =>
+              gi === guessNumber ? (
+                <GameRow guess={currGuess} key={gi} />
+              ) : (
+                <GameRow guess={g} key={gi} />
+              )
             )
-          )
-        ) : (
-          <GameRow guess={["T", "E", "S", "T"]} />
-        )
+          : null
       )}
     </Stack>
   );

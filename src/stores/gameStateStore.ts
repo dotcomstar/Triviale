@@ -16,9 +16,9 @@ const useGameStateStore = create<GameStateStore>((set) => ({
   questionNumber: 0,
   guessNumber: 0,
   guesses: [
-    Array(MAX_CHALLENGES) as string[][],
-    Array(MAX_CHALLENGES) as string[][],
-    Array(MAX_CHALLENGES) as string[][],
+    Array(MAX_CHALLENGES).fill([""]),
+    Array(MAX_CHALLENGES).fill([""]),
+    Array(MAX_CHALLENGES).fill([""]),
   ],
   moveToNextQuestion: () =>
     set((state) => ({

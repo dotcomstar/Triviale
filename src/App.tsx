@@ -12,8 +12,9 @@ import { MAX_CHALLENGES } from "./constants/settings";
 
 function App() {
   const { data } = useQuestions();
-  const { expandQuestion } = useQuestionExpansionStore();
-  const { addChar, deleteChar, index, guess } = useCurrGuessStore();
+  const { expandQuestion, resetQuestionExpansion } =
+    useQuestionExpansionStore();
+  const { addChar, deleteChar, index, guess, resetGuess } = useCurrGuessStore();
   const { questionNumber, makeGuess, guessNumber, moveToNextQuestion } =
     useGameStateStore();
   return (
@@ -44,8 +45,10 @@ function App() {
               console.log("enter");
               expandQuestion();
               makeGuess(guess);
-              if (guessNumber === MAX_CHALLENGES) {
-                moveToNextQuestion;
+              resetGuess();
+              if (guessNumber >= MAX_CHALLENGES) {
+                moveToNextQuestion();
+                resetQuestionExpansion();
               }
             }}
             isRevealing={false}
