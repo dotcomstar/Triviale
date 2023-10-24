@@ -17,6 +17,8 @@ function App() {
   const { addChar, deleteChar, index, guess, resetGuess } = useCurrGuessStore();
   const { questionNumber, makeGuess, guessNumber, moveToNextQuestion } =
     useGameStateStore();
+  const question = data[questionNumber].question;
+  const answer = data[questionNumber].answer;
   return (
     <ThemedLayout>
       <Grid container>
@@ -24,7 +26,7 @@ function App() {
           <NavBar />
         </Grid>
         <Grid item xs={12} sx={{ mx: 3, pt: 2 }}>
-          <ExpandableText>{data[questionNumber].question}</ExpandableText>
+          <ExpandableText>{question}</ExpandableText>
         </Grid>
         <Grid item xs={12} sx={{ px: 1, mb: 1 }}>
           <GameGrid />
@@ -33,7 +35,7 @@ function App() {
           <Keyboard
             onChar={(c) => {
               console.log(c);
-              if (index < data[questionNumber].answer.length) {
+              if (index < answer.length) {
                 addChar(c);
               }
             }}
@@ -43,7 +45,7 @@ function App() {
             }}
             onEnter={() => {
               console.log("enter");
-              if (index === data[questionNumber].answer.length) {
+              if (index === answer.length) {
                 expandQuestion();
                 makeGuess(guess);
                 resetGuess();
