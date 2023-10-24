@@ -43,11 +43,16 @@ function App() {
             onEnter={() => {
               console.log("enter");
               if (index === answer.length) {
+                if (guess.join("") === answer.toLocaleUpperCase()) {
+                  console.log("Correct!");
+                } else {
+                  console.log("Incorrect :(");
+                }
                 makeGuess(guess);
                 resetGuess();
-                if (guessNumber >= MAX_CHALLENGES - 1) {
-                  moveToNextQuestion();
-                }
+              }
+              if (guessNumber >= MAX_CHALLENGES) {
+                moveToNextQuestion();
               }
             }}
             isRevealing={false}

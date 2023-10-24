@@ -37,10 +37,6 @@ const Key = ({
         height: "58px",
         minWidth: "20px",
         transitionDelay: isRevealing ? `${REVEAL_TIME_MS}ms` : "unset",
-        p: 0,
-        "&.MuiButton-contained": {
-          padding: 0,
-        },
         mr: hasNext ? "6px" : "0px",
         alignContent: "center",
         overflow: "clip",
