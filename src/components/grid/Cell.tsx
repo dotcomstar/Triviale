@@ -2,10 +2,10 @@ import { Box, Typography } from "@mui/material";
 
 interface CellProps {
   nthLetter: number;
-  value: string;
+  value?: string;
 }
 
-const Cell = ({ nthLetter, value = "empty" }: CellProps) => {
+const Cell = ({ nthLetter, value }: CellProps) => {
   const description = `${nthLetter}${
     nthLetter !== 11 && nthLetter % 10 === 1
       ? "st"

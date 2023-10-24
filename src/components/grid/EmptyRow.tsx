@@ -16,7 +16,7 @@ const EmptyRow = () => {
       spacing="5px"
     >
       {emptyCells.map((_, i) => (
-        <Cell key={i} nthLetter={i + 1} value="" />
+        <Cell key={i} nthLetter={i + 1} />
       ))}
     </Stack>
   );
