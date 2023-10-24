@@ -22,8 +22,6 @@ const Key = ({
   fontSize = 20,
   hasNext = false,
 }: Props) => {
-  const highContrast = useHighContrastStore((state) => state.highContrast); // Only update when this value is changed.
-
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     onClick(value);
     event.currentTarget.blur();
@@ -47,7 +45,6 @@ const Key = ({
         overflow: "clip",
       }}
       variant="contained"
-      color={highContrast ? "secondary" : "primary"}
       size="small"
     >
       <Typography sx={{ fontWeight: "bold", fontSize: fontSize }}>

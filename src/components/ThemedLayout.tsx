@@ -6,6 +6,7 @@ import {
   responsiveFontSizes,
 } from "@mui/material";
 import React, { ReactNode, useEffect } from "react";
+import useHighContrastStore from "../stores/highContrastStore";
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
@@ -17,6 +18,7 @@ interface Props {
 
 const ThemedLayout = ({ children }: Props) => {
   const [mode, setMode] = React.useState<PaletteMode>("light");
+  const { highContrast } = useHighContrastStore();
 
   const setModeAndStore = (mode: "light" | "dark") => {
     setMode(mode);
@@ -73,9 +75,17 @@ const ThemedLayout = ({ children }: Props) => {
                   light: "#878A8C",
                   dark: "#D3D6DA",
                 },
-                error: { main: "#787C7E" },
-                warning: { main: "#C9B458" },
-                success: { main: "#6AAA64" },
+                ...(highContrast
+                  ? {
+                      error: { main: "#787C7E" },
+                      warning: { main: "#85C0F9" },
+                      success: { main: "#F5793A" },
+                    }
+                  : {
+                      error: { main: "#3A3A3C" },
+                      warning: { main: "#C9B458" },
+                      success: { main: "#6AAA64" },
+                    }),
               }
             : {
                 // palette values for dark mode
@@ -84,9 +94,17 @@ const ThemedLayout = ({ children }: Props) => {
                   light: "#565758",
                   dark: "#3A3A3C",
                 },
-                error: { main: "#3A3A3C" },
-                warning: { main: "#B59F3B" },
-                success: { main: "#538D4E" },
+                ...(highContrast
+                  ? {
+                      error: { main: "#787C7E" },
+                      warning: { main: "#85C0F9" },
+                      success: { main: "#F5793A" },
+                    }
+                  : {
+                      error: { main: "#3A3A3C" },
+                      warning: { main: "#B59F3B" },
+                      success: { main: "#538D4E" },
+                    }),
               }),
         },
       }),
