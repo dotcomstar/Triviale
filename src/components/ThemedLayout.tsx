@@ -70,6 +70,8 @@ const ThemedLayout = ({ children }: Props) => {
                 // palette values for light mode
                 primary: {
                   main: "#D3D6DA",
+                  light: "#878A8C",
+                  dark: "#D3D6DA",
                 },
                 error: { main: "#787C7E" },
                 warning: { main: "#C9B458" },
@@ -79,6 +81,8 @@ const ThemedLayout = ({ children }: Props) => {
                 // palette values for dark mode
                 primary: {
                   main: "#818384",
+                  light: "#565758",
+                  dark: "#3A3A3C",
                 },
                 error: { main: "#3A3A3C" },
                 warning: { main: "#B59F3B" },

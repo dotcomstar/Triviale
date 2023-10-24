@@ -22,7 +22,8 @@ const Cell = ({ nthLetter, value }: CellProps) => {
       justifyContent="center"
       alignItems="center"
       sx={{
-        border: `2px solid gray`,
+        border: "2px solid",
+        borderColor: `${value ? "primary.light" : "primary.dark"}`,
         height: "52px",
         width: "52px",
       }}
