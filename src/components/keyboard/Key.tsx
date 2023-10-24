@@ -46,6 +46,7 @@ const Key = ({
         overflow: "clip",
       }}
       variant="contained"
+      disableElevation
       size="small"
       color={status}
     >
