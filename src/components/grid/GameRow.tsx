@@ -1,5 +1,4 @@
-// import { solution } from "../../lib/words";
-import { Stack } from "@mui/material";
+import { Stack, useTheme } from "@mui/material";
 import Cell from "./Cell";
 import useQuestionByID from "../../hooks/useQuestionByID";
 import useGameStateStore from "../../stores/gameStateStore";
@@ -13,6 +12,7 @@ const GameRow = ({ guess }: GameRowProps) => {
   const question = useQuestionByID(questionNumber);
   const solution = question?.answer!;
   const emptyCells = Array.from(Array(solution.length - guess.length));
+  const theme = useTheme();
 
   return (
     <Stack
@@ -22,7 +22,12 @@ const GameRow = ({ guess }: GameRowProps) => {
       spacing="5px"
     >
       {guess.map((letter, i) => (
-        <Cell key={i} nthLetter={i + 1} value={letter} />
+        <Cell
+          key={i}
+          nthLetter={i + 1}
+          value={letter}
+          status={theme.palette.success}
+        />
       ))}
       {emptyCells.map((_, i) => (
         <Cell key={i} nthLetter={guess.length + i + 1} />

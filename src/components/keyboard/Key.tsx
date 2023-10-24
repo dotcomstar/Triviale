@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Button, ButtonOwnProps, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import { REVEAL_TIME_MS } from "../../constants/settings";
 
@@ -10,6 +10,7 @@ type Props = {
   width: string;
   isRevealing?: boolean;
   hasNext?: boolean;
+  status?: ButtonOwnProps["color"];
 };
 
 const Key = ({
@@ -18,6 +19,7 @@ const Key = ({
   onClick,
   width,
   isRevealing,
+  status = undefined,
   fontSize = 20,
   hasNext = false,
 }: Props) => {
@@ -25,7 +27,6 @@ const Key = ({
     onClick(value);
     event.currentTarget.blur();
   };
-  const status = undefined;
 
   return (
     <Button

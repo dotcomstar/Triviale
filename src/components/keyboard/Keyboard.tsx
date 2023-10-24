@@ -3,7 +3,8 @@ import { Icon, Stack } from "@mui/material";
 import { useEffect } from "react";
 import { ENTER_TEXT } from "../../constants/strings";
 import Key from "./Key";
-// import { getStatuses } from '../../lib/statuses';
+import useQuestions from "../../hooks/useQuestions";
+import useGameStateStore from "../../stores/gameStateStore";
 
 type KeyboardProps = {
   onChar: (value: string) => void;
@@ -18,6 +19,17 @@ const getKeyWidth = (numKeys: number, multiplier: number) => {
   } * 6px)) / 10 * ${multiplier}, ((500px - 16px) - (${
     numKeys - 1
   } * 6px)) / 10 * ${multiplier})`;
+};
+
+export const getStatus = (val: string | undefined) => {
+  const { data } = useQuestions();
+  const questionNumber = useGameStateStore((s) => s.questionNumber);
+  const answer = data[questionNumber].answer;
+
+  if (val && answer.toLocaleUpperCase().includes(val)) {
+    return "success";
+  }
+  return undefined;
 };
 
 const Keyboard = ({
@@ -78,6 +90,7 @@ const Keyboard = ({
             onClick={onClick}
             width={topRowKeyWidth}
             isRevealing={isRevealing}
+            status={getStatus(key)}
             hasNext={i !== 9}
           />
         ))}
@@ -89,6 +102,7 @@ const Keyboard = ({
             key={key}
             onClick={onClick}
             width={defaultKeyWidth}
+            status={getStatus(key)}
             isRevealing={isRevealing}
             hasNext={i !== 8}
           />
@@ -110,6 +124,7 @@ const Keyboard = ({
             key={key}
             onClick={onClick}
             width={defaultKeyWidth}
+            status={getStatus(key)}
             isRevealing={isRevealing}
             hasNext
           />

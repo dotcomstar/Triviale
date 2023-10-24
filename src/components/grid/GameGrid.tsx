@@ -1,4 +1,3 @@
-// import useQuestionExpansionStore from "../../stores/questionExpansionStore";
 import { Stack } from "@mui/material";
 import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
