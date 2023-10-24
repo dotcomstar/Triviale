@@ -18,7 +18,7 @@ interface Props {
 
 const ThemedLayout = ({ children }: Props) => {
   const [mode, setMode] = React.useState<PaletteMode>("light");
-  const { highContrast } = useHighContrastStore();
+  const highContrast = useHighContrastStore((s) => s.highContrast);
 
   const setModeAndStore = (mode: "light" | "dark") => {
     setMode(mode);
@@ -75,14 +75,13 @@ const ThemedLayout = ({ children }: Props) => {
                   light: "#878A8C",
                   dark: "#D3D6DA",
                 },
+                error: { main: "#787C7E" },
                 ...(highContrast
                   ? {
-                      error: { main: "#787C7E" },
                       warning: { main: "#85C0F9" },
-                      success: { main: "#F5793A" },
+                      success: { main: "#F5793A", contrastText: "#FFFFFF" },
                     }
                   : {
-                      error: { main: "#3A3A3C" },
                       warning: { main: "#C9B458" },
                       success: { main: "#6AAA64" },
                     }),
@@ -94,21 +93,20 @@ const ThemedLayout = ({ children }: Props) => {
                   light: "#565758",
                   dark: "#3A3A3C",
                 },
+                error: { main: "#3A3A3C" },
                 ...(highContrast
                   ? {
-                      error: { main: "#787C7E" },
-                      warning: { main: "#85C0F9" },
-                      success: { main: "#F5793A" },
+                      warning: { main: "#85C0F9", contrastText: "#FFFFFF" },
+                      success: { main: "#F5793A", contrastText: "#FFFFFF" },
                     }
                   : {
-                      error: { main: "#3A3A3C" },
                       warning: { main: "#B59F3B" },
                       success: { main: "#538D4E" },
                     }),
               }),
         },
       }),
-    [mode]
+    [mode, highContrast]
   );
 
   theme = responsiveFontSizes(theme);

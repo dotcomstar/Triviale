@@ -1,6 +1,5 @@
 import { Button, Typography } from "@mui/material";
 import { ReactNode } from "react";
-import useHighContrastStore from "../../stores/highContrastStore";
 import { REVEAL_TIME_MS } from "../../constants/settings";
 
 type Props = {
@@ -26,6 +25,7 @@ const Key = ({
     onClick(value);
     event.currentTarget.blur();
   };
+  const status = undefined;
 
   return (
     <Button
@@ -46,6 +46,7 @@ const Key = ({
       }}
       variant="contained"
       size="small"
+      color={status}
     >
       <Typography sx={{ fontWeight: "bold", fontSize: fontSize }}>
         {children || value}
