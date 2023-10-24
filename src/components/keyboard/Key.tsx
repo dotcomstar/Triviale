@@ -44,6 +44,7 @@ const Key = ({
         },
         mr: hasNext ? "6px" : "0px",
         alignContent: "center",
+        overflow: "clip",
       }}
       variant="contained"
       color={highContrast ? "secondary" : "primary"}
