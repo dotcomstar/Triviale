@@ -7,11 +7,11 @@ interface CellProps {
 
 const Cell = ({ nthLetter, value = "empty" }: CellProps) => {
   const description = `${nthLetter}${
-    nthLetter % 10 === 1
+    nthLetter !== 11 && nthLetter % 10 === 1
       ? "st"
-      : nthLetter % 10 === 2
+      : nthLetter !== 12 && nthLetter % 10 === 2
       ? "nd"
-      : nthLetter % 10 === 3
+      : nthLetter !== 13 && nthLetter % 10 === 3
       ? "rd"
       : "th"
   } letter, ${value ? value : "empty"}`;
@@ -22,7 +22,7 @@ const Cell = ({ nthLetter, value = "empty" }: CellProps) => {
       justifyContent="center"
       alignItems="center"
       sx={{
-        border: "2px solid grey",
+        border: `2px solid gray`,
         height: "52px",
         width: "52px",
       }}
