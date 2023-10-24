@@ -43,12 +43,14 @@ function App() {
             }}
             onEnter={() => {
               console.log("enter");
-              expandQuestion();
-              makeGuess(guess);
-              resetGuess();
-              if (guessNumber >= MAX_CHALLENGES) {
-                moveToNextQuestion();
-                resetQuestionExpansion();
+              if (index === data[questionNumber].answer.length) {
+                expandQuestion();
+                makeGuess(guess);
+                resetGuess();
+                if (guessNumber >= MAX_CHALLENGES - 1) {
+                  moveToNextQuestion();
+                  resetQuestionExpansion();
+                }
               }
             }}
             isRevealing={false}

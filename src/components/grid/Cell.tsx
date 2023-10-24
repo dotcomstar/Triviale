@@ -27,7 +27,7 @@ const Cell = ({ nthLetter, value }: CellProps) => {
         width: "52px",
       }}
     >
-      <Typography fontSize={"2em"} fontWeight={"bold"}>
+      <Typography fontSize={"1.5em"} fontWeight={"bold"}>
         {value}
       </Typography>
     </Box>
