@@ -15,7 +15,7 @@ const useCurrGuessStore = create<CurrGuessStore>((set) => ({
   deleteChar: () =>
     set((state) => ({
       guess: [...state.guess.filter((_, i) => i !== state.index - 1)],
-      index: state.index - 1,
+      index: Math.max(0, state.index - 1),
     })),
   addChar: (char: string) =>
     set((state) => ({
