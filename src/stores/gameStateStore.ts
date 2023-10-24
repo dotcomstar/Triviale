@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { mountStoreDevtool } from "simple-zustand-devtools";
+import { MAX_CHALLENGES } from "../constants/settings";
 
 interface GameStateStore {
   gameState: "won" | "lost" | "inProgress";
@@ -12,9 +13,13 @@ interface GameStateStore {
 
 const useGameStateStore = create<GameStateStore>((set) => ({
   gameState: "inProgress",
-  questionNumber: 1,
+  questionNumber: 0,
   guessNumber: 0,
-  guesses: [[] as string[][], [] as string[][], [] as string[][]],
+  guesses: [
+    Array(MAX_CHALLENGES) as string[][],
+    Array(MAX_CHALLENGES) as string[][],
+    Array(MAX_CHALLENGES) as string[][],
+  ],
   moveToNextQuestion: () =>
     set((state) => ({
       questionNumber: state.questionNumber + 1,

@@ -1,22 +1,32 @@
 // import useQuestionExpansionStore from "../../stores/questionExpansionStore";
 import { Stack } from "@mui/material";
-import { MAX_CHALLENGES } from "../../constants/settings";
-import useGameStateStore from "../../stores/gameStateStore";
-import EmptyRow from "./EmptyRow";
-import CurrentRow from "./CurrentRow";
 import useCurrGuessStore from "../../stores/currGuessStore";
+import useGameStateStore from "../../stores/gameStateStore";
+import GameRow from "./GameRow";
 
 const GameGrid = () => {
   //   const { questionExpansion, expandQuestion } = useQuestionExpansionStore();
   const guessNumber = useGameStateStore((s) => s.guessNumber);
-  const numEmptyRows = MAX_CHALLENGES - guessNumber - 1;
-  const guess = useCurrGuessStore((s) => s.guess);
+  const questionNumber = useGameStateStore((s) => s.questionNumber);
+  const currGuess = useCurrGuessStore((s) => s.guess);
+  const guesses = useGameStateStore((s) => s.guesses);
+
   return (
     <Stack direction={"column"} spacing={1}>
-      <CurrentRow guess={guess} />
-      {[...Array(numEmptyRows)].map((_, i) => (
-        <EmptyRow key={i} />
-      ))}
+      <GameRow guess={currGuess} />
+      {guesses.map((q, i) =>
+        i === questionNumber ? (
+          q.map((g, gi) =>
+            gi === guessNumber ? (
+              <GameRow guess={currGuess} />
+            ) : (
+              <GameRow guess={g} />
+            )
+          )
+        ) : (
+          <GameRow guess={["T", "E", "S", "T"]} />
+        )
+      )}
     </Stack>
   );
 };
