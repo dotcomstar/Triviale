@@ -15,7 +15,7 @@ const GameGrid = () => {
         i === questionNumber
           ? q.map((g, gi) =>
               gi === guessNumber ? (
-                <GameRow guess={currGuess} key={gi} />
+                <GameRow guess={currGuess} key={gi} isCurrent />
               ) : (
                 <GameRow guess={g} key={gi} />
               )

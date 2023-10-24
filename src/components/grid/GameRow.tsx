@@ -5,9 +5,10 @@ import useGameStateStore from "../../stores/gameStateStore";
 
 interface GameRowProps {
   guess: string[];
+  isCurrent?: boolean;
 }
 
-const GameRow = ({ guess }: GameRowProps) => {
+const GameRow = ({ guess, isCurrent = false }: GameRowProps) => {
   const questionNumber = useGameStateStore((s) => s.questionNumber);
   const question = useQuestionByID(questionNumber);
   const solution = question?.answer!;
@@ -26,7 +27,7 @@ const GameRow = ({ guess }: GameRowProps) => {
           key={i}
           nthLetter={i + 1}
           value={letter}
-          status={theme.palette.success}
+          status={isCurrent ? undefined : theme.palette.success}
         />
       ))}
       {emptyCells.map((_, i) => (
