@@ -2,7 +2,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import useGameStateStore from "../../stores/gameStateStore";
 import useCurrGuessStore from "../../stores/currGuessStore";
 import { MAX_CHALLENGES } from "../../constants/settings";
-import { SKIP_BUTTON_TEXT } from "../../constants/strings";
+import { SKIP_BUTTON_TEXT, WIN_MESSAGES } from "../../constants/strings";
 
 interface Props {
   children: string;
@@ -18,6 +18,10 @@ const ExpandableText = ({ children }: Props) => {
       : children;
   const makeGuess = useGameStateStore((s) => s.makeGuess);
   const { guess, resetGuess } = useCurrGuessStore();
+  const questionState = useGameStateStore((s) => s.questionState);
+  const min = Math.ceil(0);
+  const max = Math.floor(WIN_MESSAGES.length);
+  const randomIndex = Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive
 
   return (
     <Stack>
@@ -30,7 +34,9 @@ const ExpandableText = ({ children }: Props) => {
           }}
           color="secondary"
         >
-          {SKIP_BUTTON_TEXT}
+          {questionState === "inProgress"
+            ? SKIP_BUTTON_TEXT
+            : WIN_MESSAGES[randomIndex]}
         </Button>
       )}
     </Stack>
