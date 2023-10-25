@@ -21,6 +21,7 @@ const getKeyWidth = (numKeys: number, multiplier: number) => {
   } * 6px)) / 10 * ${multiplier})`;
 };
 
+// TODO: Speed up getting status
 export const getStatus = (val: string | undefined) => {
   const { data } = useQuestions();
   const questionNumber = useGameStateStore((s) => s.questionNumber);
@@ -29,23 +30,26 @@ export const getStatus = (val: string | undefined) => {
 
   if (
     val &&
-    answer.includes(val) &&
     guesses[questionNumber].reduce(
       (accumulator, guess) => accumulator || guess.includes(val),
       false
     )
   ) {
-    if (
-      guesses[questionNumber].reduce(
-        (accumulator, guess) =>
-          accumulator ||
-          guess.filter((c, i) => c === val && c === answer[i]).length !== 0,
-        false
-      )
-    ) {
-      return "success";
+    if (answer.includes(val)) {
+      if (
+        guesses[questionNumber].reduce(
+          (accumulator, guess) =>
+            accumulator ||
+            guess.filter((c, i) => c === val && c === answer[i]).length !== 0,
+          false
+        )
+      ) {
+        return "success";
+      }
+      return "warning";
+    } else {
+      return "error";
     }
-    return "warning";
   }
   return undefined;
 };

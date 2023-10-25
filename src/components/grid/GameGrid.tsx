@@ -42,7 +42,7 @@ const GameGrid = () => {
     for (let i = 0; i < guess.length; i++) {
       let currChar = guess[i];
       let currCount: number = count.get(currChar);
-      if (currCount && currCount > 0) {
+      if (currCount && currCount > 0 && statuses[i] === theme.palette.error) {
         statuses[i] = theme.palette.warning;
         count.set(currChar, currCount - 1);
       }
