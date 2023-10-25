@@ -27,6 +27,7 @@ function App() {
   } = useGameStateStore();
   const question = data[questionNumber].question;
   const answer = data[questionNumber].answer.toLocaleUpperCase();
+
   return (
     <ThemedLayout>
       <Grid container>
