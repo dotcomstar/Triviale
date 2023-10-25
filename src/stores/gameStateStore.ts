@@ -2,17 +2,26 @@ import { create } from "zustand";
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { MAX_CHALLENGES } from "../constants/settings";
 
+type WinState = "won" | "lost" | "inProgress";
+
 interface GameStateStore {
-  gameState: "won" | "lost" | "inProgress";
+  gameState: WinState;
+  questionState: WinState;
   questionNumber: number;
   guessNumber: number;
   makeGuess: (guess: string[]) => void;
   moveToNextQuestion: () => void;
+  winQuestion: () => void;
+  loseQuestion: () => void;
+  resetQuestion: () => void;
+  winGame: () => void;
+  loseGame: () => void;
   guesses: string[][][];
 }
 
 const useGameStateStore = create<GameStateStore>((set) => ({
   gameState: "inProgress",
+  questionState: "inProgress",
   questionNumber: 0,
   guessNumber: 0,
   guesses: [
@@ -20,6 +29,11 @@ const useGameStateStore = create<GameStateStore>((set) => ({
     Array(MAX_CHALLENGES).fill([]),
     Array(MAX_CHALLENGES).fill([]),
   ],
+  winGame: () => set(() => ({ gameState: "won" })),
+  loseGame: () => set(() => ({ gameState: "lost" })),
+  winQuestion: () => set(() => ({ questionState: "won" })),
+  loseQuestion: () => set(() => ({ questionState: "lost" })),
+  resetQuestion: () => set(() => ({ questionState: "inProgress" })),
   moveToNextQuestion: () =>
     set((state) => ({
       questionNumber: state.questionNumber + 1,
