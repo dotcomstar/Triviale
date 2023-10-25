@@ -1,9 +1,10 @@
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import { Icon, Stack } from "@mui/material";
 import { useEffect } from "react";
+import { ENTER_TEXT } from "../../constants/strings";
 import Key from "./Key";
-// import { DELETE_TEXT, ENTER_TEXT } from '../../constants/strings';
-// import { getStatuses } from '../../lib/statuses';
+import useQuestions from "../../hooks/useQuestions";
+import useGameStateStore from "../../stores/gameStateStore";
 
 type KeyboardProps = {
   onChar: (value: string) => void;
@@ -12,21 +13,58 @@ type KeyboardProps = {
   isRevealing?: boolean;
 };
 
+const getKeyWidth = (numKeys: number, multiplier: number) => {
+  return `min(((100vw - 16px) - (${
+    numKeys - 1
+  } * 6px)) / 10 * ${multiplier}, ((500px - 16px) - (${
+    numKeys - 1
+  } * 6px)) / 10 * ${multiplier})`;
+};
+
+// TODO: Speed up getting status
+export const getStatus = (val: string | undefined) => {
+  const { data } = useQuestions();
+  const questionNumber = useGameStateStore((s) => s.questionNumber);
+  const answer = data[questionNumber].answer.toLocaleUpperCase();
+  const guesses = useGameStateStore((s) => s.guesses);
+
+  if (
+    val &&
+    guesses[questionNumber].reduce(
+      (accumulator, guess) => accumulator || guess.includes(val),
+      false
+    )
+  ) {
+    if (answer.includes(val)) {
+      if (
+        guesses[questionNumber].reduce(
+          (accumulator, guess) =>
+            accumulator ||
+            guess.filter((c, i) => c === val && c === answer[i]).length !== 0,
+          false
+        )
+      ) {
+        return "success";
+      }
+      return "warning";
+    } else {
+      return "error";
+    }
+  }
+  return undefined;
+};
+
 const Keyboard = ({
   onChar,
   onDelete,
   onEnter,
   isRevealing,
 }: KeyboardProps) => {
-  const ENTER_TEXT = "Enter";
-
-  // TODO: Refactor into variables
-  const topRowWidth =
-    "min(((100vw - 16px) - (9 * 6px)) / 10, ((500px - 16px) - (9 * 6px)) / 10)";
-  const defaultRowWidth =
-    "min(((100vw - 16px) - (8 * 6px)) / 10, ((500px - 16px) - (8 * 6px)) / 10)";
-  const enterDeleteWidth =
-    "min(((100vw - 16px) - (8 * 6px)) / 10 * 1.5, ((500px - 16px) - (8 * 6px)) / 10 * 1.5)";
+  const numTopRowKeys = 10;
+  const numDefaultRowKeys = 9;
+  const topRowKeyWidth = getKeyWidth(numTopRowKeys, 1);
+  const defaultKeyWidth = getKeyWidth(numDefaultRowKeys, 1);
+  const enterDeleteWidth = getKeyWidth(numDefaultRowKeys, 1.5);
 
   const onClick = (value: string) => {
     if (value === "ENTER") {
@@ -72,8 +110,9 @@ const Keyboard = ({
             value={key}
             key={key}
             onClick={onClick}
-            width={topRowWidth}
+            width={topRowKeyWidth}
             isRevealing={isRevealing}
+            status={getStatus(key)}
             hasNext={i !== 9}
           />
         ))}
@@ -84,7 +123,8 @@ const Keyboard = ({
             value={key}
             key={key}
             onClick={onClick}
-            width={defaultRowWidth}
+            width={defaultKeyWidth}
+            status={getStatus(key)}
             isRevealing={isRevealing}
             hasNext={i !== 8}
           />
@@ -105,7 +145,8 @@ const Keyboard = ({
             value={key}
             key={key}
             onClick={onClick}
-            width={defaultRowWidth}
+            width={defaultKeyWidth}
+            status={getStatus(key)}
             isRevealing={isRevealing}
             hasNext
           />

@@ -1,6 +1,5 @@
-import { Button, Typography } from "@mui/material";
+import { Button, ButtonOwnProps, Typography } from "@mui/material";
 import { ReactNode } from "react";
-import useHighContrastStore from "../../stores/highContrastStore";
 import { REVEAL_TIME_MS } from "../../constants/settings";
 
 type Props = {
@@ -11,6 +10,7 @@ type Props = {
   width: string;
   isRevealing?: boolean;
   hasNext?: boolean;
+  status?: ButtonOwnProps["color"];
 };
 
 const Key = ({
@@ -19,11 +19,10 @@ const Key = ({
   onClick,
   width,
   isRevealing,
+  status = undefined,
   fontSize = 20,
   hasNext = false,
 }: Props) => {
-  const highContrast = useHighContrastStore((state) => state.highContrast); // Only update when this value is changed.
-
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     onClick(value);
     event.currentTarget.blur();
@@ -38,16 +37,14 @@ const Key = ({
         height: "58px",
         minWidth: "20px",
         transitionDelay: isRevealing ? `${REVEAL_TIME_MS}ms` : "unset",
-        p: 0,
-        "&.MuiButton-contained": {
-          padding: 0,
-        },
         mr: hasNext ? "6px" : "0px",
         alignContent: "center",
+        overflow: "clip",
       }}
       variant="contained"
-      color={highContrast ? "secondary" : "primary"}
+      disableElevation
       size="small"
+      color={status}
     >
       <Typography sx={{ fontWeight: "bold", fontSize: fontSize }}>
         {children || value}

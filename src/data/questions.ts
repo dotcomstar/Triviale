@@ -24,7 +24,7 @@ export default [
   {
     questionId: 2,
     question:
-      "After serving in the Social war under his father Strabo he was sent to clear Sicily and Africa of opposition in the ensuing Civil War. He then subdued more enemies of Sulla when he was sent to Spain, after which he returned to Rome and took much credit for putting down Spartacus' rebellion. After he was made consul, he was given the extraordinary command of clearing the Mediteranean of pirates, which he did sucessfully. He success would soon come to an end, however, at the hands of one of his fellow triumvirs. Losing the battle of Pharsalus, this is what member of the first triumvirate who fought against Caesar for control of the Roman Empire",
+      "After serving in the Social war under his father Strabo he was sent to clear Sicily and Africa of opposition in the ensuing Civil War. He then subdued more enemies of Sulla when he was sent to Spain, after which he returned to Rome and took much credit for putting down Spartacus' rebellion. After he was made consul, he was given the extraordinary command of clearing the Mediteranean of pirates, which he did sucessfully. He success would soon come to an end, however, at the hands of one of his fellow triumvirs. Losing the battle of Pharsalus, this is what member of the first triumvirate who fought against Caesar for control of the Roman Empire?",
     answer: "Pompey",
     url: "https://quizbowlpackets.com/1460/2009%20Yale%20Bulldog%20(High%20School).pdf",
     category: HISTORY,

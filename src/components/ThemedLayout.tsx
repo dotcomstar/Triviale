@@ -6,6 +6,7 @@ import {
   responsiveFontSizes,
 } from "@mui/material";
 import React, { ReactNode, useEffect } from "react";
+import useHighContrastStore from "../stores/highContrastStore";
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
@@ -17,6 +18,7 @@ interface Props {
 
 const ThemedLayout = ({ children }: Props) => {
   const [mode, setMode] = React.useState<PaletteMode>("light");
+  const highContrast = useHighContrastStore((s) => s.highContrast);
 
   const setModeAndStore = (mode: "light" | "dark") => {
     setMode(mode);
@@ -70,23 +72,41 @@ const ThemedLayout = ({ children }: Props) => {
                 // palette values for light mode
                 primary: {
                   main: "#D3D6DA",
+                  light: "#878A8C",
+                  dark: "#D3D6DA",
                 },
                 error: { main: "#787C7E" },
-                warning: { main: "#C9B458" },
-                success: { main: "#6AAA64" },
+                ...(highContrast
+                  ? {
+                      warning: { main: "#85C0F9", contrastText: "#FFFFFF" },
+                      success: { main: "#F5793A", contrastText: "#FFFFFF" },
+                    }
+                  : {
+                      warning: { main: "#C9B458", contrastText: "#FFFFFF" },
+                      success: { main: "#6AAA64", contrastText: "#FFFFFF" },
+                    }),
               }
             : {
                 // palette values for dark mode
                 primary: {
                   main: "#818384",
+                  light: "#565758",
+                  dark: "#3A3A3C",
                 },
                 error: { main: "#3A3A3C" },
-                warning: { main: "#B59F3B" },
-                success: { main: "#538D4E" },
+                ...(highContrast
+                  ? {
+                      warning: { main: "#85C0F9", contrastText: "#FFFFFF" },
+                      success: { main: "#F5793A", contrastText: "#FFFFFF" },
+                    }
+                  : {
+                      warning: { main: "#B59F3B", contrastText: "#FFFFFF" },
+                      success: { main: "#538D4E", contrastText: "#FFFFFF" },
+                    }),
               }),
         },
       }),
-    [mode]
+    [mode, highContrast]
   );
 
   theme = responsiveFontSizes(theme);
