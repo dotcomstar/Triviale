@@ -31,14 +31,15 @@ export const getStatus = (val: string | undefined) => {
     val &&
     answer.includes(val) &&
     guesses[questionNumber].reduce(
-      (accumulator, currentValue) => accumulator || currentValue.includes(val),
+      (accumulator, guess) => accumulator || guess.includes(val),
       false
     )
   ) {
     if (
       guesses[questionNumber].reduce(
-        (accumulator, currentValue) =>
-          accumulator || val === answer[currentValue.indexOf(val)],
+        (accumulator, guess) =>
+          accumulator ||
+          guess.filter((c, i) => c === val && c === answer[i]).length !== 0,
         false
       )
     ) {

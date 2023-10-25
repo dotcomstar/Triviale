@@ -13,6 +13,7 @@ const GameGrid = () => {
   const guesses = useGameStateStore((s) => s.guesses);
   const theme = useTheme();
 
+  // TODO: Memoize and possible export this function?
   const getStatuses = (guess: string[]) => {
     const answerArr = answer.split("");
     const statuses = Array(guess.length).fill(theme.palette.error); // Fill with 'incorrect' color by default
