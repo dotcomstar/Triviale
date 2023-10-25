@@ -1,6 +1,10 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { MAX_CHALLENGES } from "../../constants/settings";
-import { SKIP_BUTTON_TEXT, WIN_MESSAGES } from "../../constants/strings";
+import {
+  NEXT_QUESTIONS_TEXT,
+  SKIP_BUTTON_TEXT,
+  WIN_MESSAGES,
+} from "../../constants/strings";
 import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
 
@@ -41,7 +45,7 @@ const ExpandableText = ({ children }: Props) => {
         >
           {questionState === "inProgress"
             ? SKIP_BUTTON_TEXT
-            : WIN_MESSAGES[randomIndex]}
+            : WIN_MESSAGES[randomIndex] + " " + NEXT_QUESTIONS_TEXT}
         </Button>
       )}
     </Stack>
