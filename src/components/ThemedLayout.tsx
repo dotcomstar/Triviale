@@ -78,12 +78,12 @@ const ThemedLayout = ({ children }: Props) => {
                 error: { main: "#787C7E" },
                 ...(highContrast
                   ? {
-                      warning: { main: "#85C0F9" },
+                      warning: { main: "#85C0F9", contrastText: "#FFFFFF" },
                       success: { main: "#F5793A", contrastText: "#FFFFFF" },
                     }
                   : {
-                      warning: { main: "#C9B458" },
-                      success: { main: "#6AAA64" },
+                      warning: { main: "#C9B458", contrastText: "#FFFFFF" },
+                      success: { main: "#6AAA64", contrastText: "#FFFFFF" },
                     }),
               }
             : {
@@ -100,8 +100,8 @@ const ThemedLayout = ({ children }: Props) => {
                       success: { main: "#F5793A", contrastText: "#FFFFFF" },
                     }
                   : {
-                      warning: { main: "#B59F3B" },
-                      success: { main: "#538D4E" },
+                      warning: { main: "#B59F3B", contrastText: "#FFFFFF" },
+                      success: { main: "#538D4E", contrastText: "#FFFFFF" },
                     }),
               }),
         },

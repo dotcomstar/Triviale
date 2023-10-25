@@ -27,7 +27,7 @@ const GameRow = ({ guess, isCurrent = false }: GameRowProps) => {
           key={i}
           nthLetter={i + 1}
           value={letter}
-          status={isCurrent ? undefined : theme.palette.success}
+          status={isCurrent ? undefined : theme.palette.warning}
         />
       ))}
       {emptyCells.map((_, i) => (
