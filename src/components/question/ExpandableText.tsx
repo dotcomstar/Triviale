@@ -19,9 +19,7 @@ const ExpandableText = ({ children }: Props) => {
   const makeGuess = useGameStateStore((s) => s.makeGuess);
   const { guess, resetGuess } = useCurrGuessStore();
   const questionState = useGameStateStore((s) => s.questionState);
-  const min = Math.ceil(0);
-  const max = Math.floor(WIN_MESSAGES.length);
-  const randomIndex = Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive
+  const randomIndex = Math.floor(Math.random() * WIN_MESSAGES.length);
 
   return (
     <Stack>
