@@ -5,7 +5,6 @@ import { ENTER_TEXT } from "../../constants/strings";
 import Key from "./Key";
 import useQuestions from "../../hooks/useQuestions";
 import useGameStateStore from "../../stores/gameStateStore";
-import useCurrGuessStore from "../../stores/currGuessStore";
 
 type KeyboardProps = {
   onChar: (value: string) => void;
@@ -25,16 +24,27 @@ const getKeyWidth = (numKeys: number, multiplier: number) => {
 export const getStatus = (val: string | undefined) => {
   const { data } = useQuestions();
   const questionNumber = useGameStateStore((s) => s.questionNumber);
-  const answer = data[questionNumber].answer;
-  const guess = useCurrGuessStore((s) => s.guess);
+  const answer = data[questionNumber].answer.toLocaleUpperCase();
+  const guesses = useGameStateStore((s) => s.guesses);
 
   if (
     val &&
-    answer.toLocaleUpperCase().includes(val) &&
-    guess.includes(val) &&
-    answer.indexOf(val) === guess.indexOf(val)
+    answer.includes(val) &&
+    guesses[questionNumber].reduce(
+      (accumulator, currentValue) => accumulator || currentValue.includes(val),
+      false
+    )
   ) {
-    return "success";
+    if (
+      guesses[questionNumber].reduce(
+        (accumulator, currentValue) =>
+          accumulator || val === answer[currentValue.indexOf(val)],
+        false
+      )
+    ) {
+      return "success";
+    }
+    return "warning";
   }
   return undefined;
 };

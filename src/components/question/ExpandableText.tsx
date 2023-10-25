@@ -2,6 +2,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import useGameStateStore from "../../stores/gameStateStore";
 import useCurrGuessStore from "../../stores/currGuessStore";
 import { MAX_CHALLENGES } from "../../constants/settings";
+import { SKIP_BUTTON_TEXT } from "../../constants/strings";
 
 interface Props {
   children: string;
@@ -29,7 +30,7 @@ const ExpandableText = ({ children }: Props) => {
           }}
           color="secondary"
         >
-          Show more
+          {SKIP_BUTTON_TEXT}
         </Button>
       )}
     </Stack>

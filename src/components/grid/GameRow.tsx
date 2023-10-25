@@ -1,19 +1,18 @@
-import { Stack, useTheme } from "@mui/material";
-import Cell from "./Cell";
+import { PaletteColor, Stack } from "@mui/material";
 import useQuestionByID from "../../hooks/useQuestionByID";
 import useGameStateStore from "../../stores/gameStateStore";
+import Cell from "./Cell";
 
 interface GameRowProps {
   guess: string[];
-  isCurrent?: boolean;
+  statuses?: PaletteColor[];
 }
 
-const GameRow = ({ guess, isCurrent = false }: GameRowProps) => {
+const GameRow = ({ guess, statuses = [] }: GameRowProps) => {
   const questionNumber = useGameStateStore((s) => s.questionNumber);
   const question = useQuestionByID(questionNumber);
-  const solution = question?.answer!;
-  const emptyCells = Array.from(Array(solution.length - guess.length));
-  const theme = useTheme();
+  const answer = question?.answer.toLocaleUpperCase()!;
+  const emptyCells = Array.from(Array(answer.length - guess.length));
 
   return (
     <Stack
@@ -23,12 +22,7 @@ const GameRow = ({ guess, isCurrent = false }: GameRowProps) => {
       spacing="5px"
     >
       {guess.map((letter, i) => (
-        <Cell
-          key={i}
-          nthLetter={i + 1}
-          value={letter}
-          status={isCurrent ? undefined : theme.palette.warning}
-        />
+        <Cell key={i} nthLetter={i + 1} value={letter} status={statuses[i]} />
       ))}
       {emptyCells.map((_, i) => (
         <Cell key={i} nthLetter={guess.length + i + 1} />
