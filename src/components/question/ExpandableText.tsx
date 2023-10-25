@@ -42,6 +42,8 @@ const ExpandableText = ({ children }: Props) => {
             resetGuess();
           }}
           color="secondary"
+          variant={questionState === "inProgress" ? "text" : "contained"}
+          sx={{ mb: 1 }}
         >
           {questionState === "inProgress"
             ? SKIP_BUTTON_TEXT
