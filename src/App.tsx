@@ -7,7 +7,8 @@ import Keyboard from "./components/keyboard/Keyboard";
 import GameGrid from "./components/grid/GameGrid";
 import useCurrGuessStore from "./stores/currGuessStore";
 import useGameStateStore from "./stores/gameStateStore";
-import { MAX_CHALLENGES, QUESTIONS_PER_DAY } from "./constants/settings";
+import { MAX_CHALLENGES } from "./constants/settings";
+import ProgressBar from "./components/progressBar/ProgressBar";
 
 function App() {
   const { data } = useQuestions();
@@ -16,14 +17,13 @@ function App() {
     questionNumber,
     makeGuess,
     guessNumber,
-    moveToNextQuestion,
+    moveToQuestion,
     gameState,
     questionState,
     winGame,
     loseGame,
     winQuestion,
     loseQuestion,
-    resetQuestion,
   } = useGameStateStore();
   const question = data[questionNumber].question;
   const answer = data[questionNumber].answer.toLocaleUpperCase();
@@ -34,7 +34,10 @@ function App() {
         <Grid item xs={12}>
           <NavBar />
         </Grid>
-        <Grid item xs={12} sx={{ mx: 3, pt: 2 }}>
+        <Grid item xs={12}>
+          <ProgressBar />
+        </Grid>
+        <Grid item xs={12} sx={{ mx: 3, pt: 1 }}>
           <ExpandableText>{question}</ExpandableText>
         </Grid>
         <Grid item xs={12} sx={{ px: 1, mb: 1 }}>
@@ -44,7 +47,10 @@ function App() {
           <Keyboard
             onChar={(c) => {
               console.log(c);
-              if (index < answer.length && questionState === "inProgress") {
+              if (
+                index < answer.length &&
+                questionState[questionNumber] === "inProgress"
+              ) {
                 addChar(c);
               }
             }}
@@ -54,34 +60,36 @@ function App() {
             }}
             onEnter={() => {
               console.log("enter");
-              console.log(questionState);
               if (index === answer.length) {
                 if (guess.join("") === answer) {
-                  console.log("Correct!");
-                  winQuestion();
-                  if (questionNumber >= QUESTIONS_PER_DAY - 1) {
-                    console.log("Won the game");
-                    winGame();
-                  }
+                  winQuestion(questionNumber);
                 } else if (guessNumber >= MAX_CHALLENGES - 1) {
-                  loseQuestion();
-                  console.log("Lost the question :(");
-                  if (questionNumber >= QUESTIONS_PER_DAY - 1) {
-                    console.log("Lost the game");
-                    loseGame();
-                  }
+                  loseQuestion(questionNumber);
                 } else {
                   console.log("Incorrect :(");
                 }
                 makeGuess(guess);
                 resetGuess();
               }
+              if (!questionState.includes("inProgress")) {
+                if (
+                  questionState.reduce(
+                    (acc, state) => acc && state === "won",
+                    true
+                  )
+                ) {
+                  winGame();
+                  return;
+                } else {
+                  loseGame();
+                  return;
+                }
+              }
               if (
-                questionState !== "inProgress" &&
+                questionState[questionNumber] !== "inProgress" &&
                 gameState === "inProgress"
               ) {
-                resetQuestion();
-                moveToNextQuestion();
+                moveToQuestion(questionNumber + 1);
               }
             }}
             isRevealing={false}

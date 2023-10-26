@@ -1,19 +1,18 @@
 import { create } from "zustand";
 import { mountStoreDevtool } from "simple-zustand-devtools";
-import { MAX_CHALLENGES } from "../constants/settings";
+import { MAX_CHALLENGES, QUESTIONS_PER_DAY } from "../constants/settings";
 
-type WinState = "won" | "lost" | "inProgress";
+export type WinState = "won" | "lost" | "inProgress";
 
 interface GameStateStore {
   gameState: WinState;
-  questionState: WinState;
+  questionState: WinState[];
   questionNumber: number;
   guessNumber: number;
   makeGuess: (guess: string[]) => void;
-  moveToNextQuestion: () => void;
-  winQuestion: () => void;
-  loseQuestion: () => void;
-  resetQuestion: () => void;
+  moveToQuestion: (id: number) => void;
+  winQuestion: (id: number) => void;
+  loseQuestion: (id: number) => void;
   winGame: () => void;
   loseGame: () => void;
   guesses: string[][][];
@@ -21,7 +20,7 @@ interface GameStateStore {
 
 const useGameStateStore = create<GameStateStore>((set) => ({
   gameState: "inProgress",
-  questionState: "inProgress",
+  questionState: Array(QUESTIONS_PER_DAY).fill("inProgress"),
   questionNumber: 0,
   guessNumber: 0,
   guesses: [
@@ -29,15 +28,37 @@ const useGameStateStore = create<GameStateStore>((set) => ({
     Array(MAX_CHALLENGES).fill([]),
     Array(MAX_CHALLENGES).fill([]),
   ],
-  winGame: () => set(() => ({ gameState: "won" })),
-  loseGame: () => set(() => ({ gameState: "lost" })),
-  winQuestion: () => set(() => ({ questionState: "won" })),
-  loseQuestion: () => set(() => ({ questionState: "lost" })),
-  resetQuestion: () => set(() => ({ questionState: "inProgress" })),
-  moveToNextQuestion: () =>
+  winGame: () => {
+    console.log("Won the game");
+    set(() => ({ gameState: "won" }));
+  },
+  loseGame: () => {
+    console.log("Lost the game");
+    set(() => ({ gameState: "lost" }));
+  },
+  winQuestion: (id: number) => {
+    console.log("Correct!");
     set((state) => ({
-      questionNumber: state.questionNumber + 1,
-      guessNumber: 0,
+      questionState: [
+        ...state.questionState.map((s, i) => (i === id ? "won" : s)),
+      ],
+    }));
+  },
+  loseQuestion: (id: number) => {
+    console.log("Lost the question :(");
+    set((state) => ({
+      questionState: [
+        ...state.questionState.map((s, i) => (i === id ? "lost" : s)),
+      ],
+    }));
+  },
+  moveToQuestion: (id: number) =>
+    set((state) => ({
+      questionNumber: id,
+      guessNumber: state.guesses[id].reduce(
+        (acc, guess) => (acc + guess.length > 0 ? 1 : 0),
+        0
+      ),
     })),
   makeGuess: (guess: string[]) => {
     set((state) => ({

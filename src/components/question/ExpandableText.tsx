@@ -23,7 +23,7 @@ const ExpandableText = ({ children }: Props) => {
   const makeGuess = useGameStateStore((s) => s.makeGuess);
   const resetGuess = useCurrGuessStore((s) => s.resetGuess);
   const questionState = useGameStateStore((s) => s.questionState);
-  const { gameState, resetQuestion, moveToNextQuestion } = useGameStateStore();
+  const { gameState, moveToQuestion, questionNumber } = useGameStateStore();
   const randomIndex = Math.floor(Math.random() * WIN_MESSAGES.length);
 
   return (
@@ -32,22 +32,30 @@ const ExpandableText = ({ children }: Props) => {
       {guessNumber < MAX_CHALLENGES && (
         <Button
           onClick={() => {
-            if (questionState !== "inProgress" && gameState === "inProgress") {
-              resetQuestion();
-              moveToNextQuestion();
+            if (
+              questionState[questionNumber] !== "inProgress" &&
+              gameState === "inProgress"
+            ) {
+              console.log(gameState.indexOf("inProgress"));
+              moveToQuestion(gameState.indexOf("inProgress") + 1); // Move to next unfinished question, if such a question exists.
             }
-            if (questionState === "inProgress") {
+            if (questionState[questionNumber] === "inProgress") {
               makeGuess([]);
             }
             resetGuess();
           }}
           color="secondary"
-          variant={questionState === "inProgress" ? "text" : "contained"}
+          variant={
+            questionState[questionNumber] === "inProgress"
+              ? "text"
+              : "contained"
+          }
           sx={{ mb: 1 }}
         >
-          {questionState === "inProgress"
+          {questionState[questionNumber] === "inProgress"
             ? SKIP_BUTTON_TEXT
-            : WIN_MESSAGES[randomIndex] + " " + NEXT_QUESTIONS_TEXT}
+            : WIN_MESSAGES[randomIndex] +
+              (gameState === "inProgress" ? " " + NEXT_QUESTIONS_TEXT : "")}
         </Button>
       )}
     </Stack>
