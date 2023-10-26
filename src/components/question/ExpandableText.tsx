@@ -29,35 +29,33 @@ const ExpandableText = ({ children }: Props) => {
   return (
     <Stack>
       <Typography fontSize="large">{summary}</Typography>
-      {guessNumber < MAX_CHALLENGES && (
-        <Button
-          onClick={() => {
-            if (
-              questionState[questionNumber] !== "inProgress" &&
-              gameState === "inProgress"
-            ) {
-              console.log(gameState.indexOf("inProgress"));
-              moveToQuestion(gameState.indexOf("inProgress") + 1); // Move to next unfinished question, if such a question exists.
-            }
-            if (questionState[questionNumber] === "inProgress") {
-              makeGuess([]);
-            }
-            resetGuess();
-          }}
-          color="secondary"
-          variant={
-            questionState[questionNumber] === "inProgress"
-              ? "text"
-              : "contained"
+      <Button
+        onClick={() => {
+          if (
+            questionState[questionNumber] !== "inProgress" &&
+            gameState === "inProgress"
+          ) {
+            console.log(gameState.indexOf("inProgress"));
+            moveToQuestion(gameState.indexOf("inProgress") + 1); // Move to next unfinished question, if such a question exists.
           }
-          sx={{ mb: 1 }}
-        >
-          {questionState[questionNumber] === "inProgress"
-            ? SKIP_BUTTON_TEXT
-            : WIN_MESSAGES[randomIndex] +
-              (gameState === "inProgress" ? " " + NEXT_QUESTIONS_TEXT : "")}
-        </Button>
-      )}
+          if (questionState[questionNumber] === "inProgress") {
+            makeGuess([]);
+            resetGuess();
+          }
+        }}
+        color="secondary"
+        variant={
+          questionState[questionNumber] === "inProgress" ? "text" : "contained"
+        }
+        sx={{ mb: 1 }}
+      >
+        {questionState[questionNumber] === "inProgress"
+          ? SKIP_BUTTON_TEXT
+          : questionState[questionNumber] === "won"
+          ? WIN_MESSAGES[randomIndex] +
+            (gameState === "inProgress" ? " " + NEXT_QUESTIONS_TEXT : "")
+          : NEXT_QUESTIONS_TEXT}
+      </Button>
     </Stack>
   );
 };
