@@ -28,6 +28,7 @@ const ProgressBar = () => {
                 ? "success"
                 : "error"
             }
+            sx={{ borderRadius: 0 }}
           >
             {`Q${i + 1}`}
           </Button>
