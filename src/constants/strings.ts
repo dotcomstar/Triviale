@@ -21,7 +21,7 @@ export const GAME_COPIED_MESSAGE = "Game copied to clipboard";
 export const NOT_ENOUGH_LETTERS_MESSAGE = "Not enough letters";
 export const WORD_NOT_FOUND_MESSAGE = "Word not found";
 
-export const SKIP_BUTTON_TEXT = "Skip this guess";
+export const SKIP_BUTTON_TEXT = "Reveal the next clue";
 export const NEXT_QUESTIONS_TEXT = "Next Question";
 
 export const HARD_MODE_ALERT_MESSAGE =
