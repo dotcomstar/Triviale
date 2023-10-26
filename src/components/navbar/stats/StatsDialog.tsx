@@ -26,6 +26,7 @@ import useQuestionByID from "../../../hooks/useQuestionByID";
 import useGameStateStore from "../../../stores/gameStateStore";
 import useHardModeStore from "../../../stores/hardModeStore";
 import CustomDialog from "../CustomDialog";
+import useDailyIndex, { getPositiveIndex } from "../../../hooks/useDailyIndex";
 
 export interface StatsDialogProps {
   open: boolean;
@@ -39,14 +40,17 @@ const StatsDialog = ({
   TransitionComponent,
 }: StatsDialogProps) => {
   const isHardMode = useHardModeStore((s) => s.hardMode);
-  const questionDetails = (id: number) => {
-    const q = useQuestionByID(id);
-    return [q?.category!, q?.answer.toLocaleUpperCase()!];
-  };
   const guesses = useGameStateStore((s) => s.guesses);
+  const dailyIndex = useDailyIndex();
   const date = new Date().toLocaleDateString();
   const questionState = useGameStateStore((s) => s.questionState);
   const solutionIndex = date;
+  const questionDetails = (id: number) => {
+    const safeIndex = getPositiveIndex(dailyIndex + id);
+    const q = useQuestionByID(safeIndex);
+    return [q?.category!, q?.answer.toLocaleUpperCase()!];
+  };
+
   let points = questionState.reduce(
     (acc, val) => acc + (val === "won" ? 5 : 0),
     0
@@ -108,7 +112,9 @@ const StatsDialog = ({
       </DialogTitle>
       <Typography sx={{ m: 3, my: 0, fontSize: "20px" }}>
         {GUESS_DISTRIBUTION_TEXT}
-        <Typography fontStyle={"italic"}>{PLACEHOLDER_TEXT}</Typography>
+      </Typography>
+      <Typography sx={{ m: 3, my: 0, fontSize: "20px" }} fontStyle={"italic"}>
+        {PLACEHOLDER_TEXT}
       </Typography>
       <Stack justifyContent={"center"} alignItems={"center"} sx={{ p: 2 }}>
         <Button

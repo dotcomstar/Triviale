@@ -57,7 +57,7 @@ const useGameStateStore = create<GameStateStore>((set) => ({
     set((state) => ({
       questionNumber: id,
       guessNumber: state.guesses[id].reduce(
-        (acc, guess) => (acc + guess.length > 0 ? 1 : 0),
+        (acc, guess) => acc + (guess.length > 0 ? 1 : 0),
         0
       ),
     })),
@@ -66,7 +66,7 @@ const useGameStateStore = create<GameStateStore>((set) => ({
       questionNumber: state.questionState.indexOf("inProgress"),
       guessNumber: state.guesses[
         state.questionState.indexOf("inProgress")
-      ].reduce((acc, guess) => (acc + guess.length > 0 ? 1 : 0), 0),
+      ].reduce((acc, guess) => acc + (guess.length > 0 ? 1 : 0), 0),
     })),
   makeGuess: (guess: string[]) => {
     set((state) => ({

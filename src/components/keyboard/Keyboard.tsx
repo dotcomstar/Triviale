@@ -3,8 +3,9 @@ import { Icon, Stack } from "@mui/material";
 import { useEffect } from "react";
 import { ENTER_TEXT } from "../../constants/strings";
 import Key from "./Key";
-import useQuestions from "../../hooks/useQuestions";
 import useGameStateStore from "../../stores/gameStateStore";
+import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
+import useQuestionByID from "../../hooks/useQuestionByID";
 
 type KeyboardProps = {
   onChar: (value: string) => void;
@@ -23,9 +24,10 @@ const getKeyWidth = (numKeys: number, multiplier: number) => {
 
 // TODO: Speed up getting status
 export const getStatus = (val: string | undefined) => {
-  const { data } = useQuestions();
+  const dailyIndex = useDailyIndex();
   const questionNumber = useGameStateStore((s) => s.questionNumber);
-  const answer = data[questionNumber].answer.toLocaleUpperCase();
+  const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
+  const answer = useQuestionByID(safeIndex)?.answer.toLocaleUpperCase();
   const guesses = useGameStateStore((s) => s.guesses);
 
   if (
@@ -35,7 +37,7 @@ export const getStatus = (val: string | undefined) => {
       false
     )
   ) {
-    if (answer.includes(val)) {
+    if (answer?.includes(val)) {
       if (
         guesses[questionNumber].reduce(
           (accumulator, guess) =>

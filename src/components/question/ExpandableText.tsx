@@ -10,6 +10,7 @@ import {
 import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
 import useQuestionByID from "../../hooks/useQuestionByID";
+import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 
 interface Props {
   children: string;
@@ -19,16 +20,19 @@ const ExpandableText = ({ children }: Props) => {
   if (!children) return null;
   const guessNumber = useGameStateStore((s) => s.guessNumber) + 1;
   const length = children.length / MAX_CHALLENGES; // TODO: Split questions more intelligently.
-  const summary =
-    guessNumber < MAX_CHALLENGES
-      ? children.substring(0, guessNumber * length) + "..."
-      : children;
   const makeGuess = useGameStateStore((s) => s.makeGuess);
   const resetGuess = useCurrGuessStore((s) => s.resetGuess);
   const questionState = useGameStateStore((s) => s.questionState);
   const { gameState, moveToNextQuestion, questionNumber } = useGameStateStore();
+  const summary =
+    guessNumber < MAX_CHALLENGES &&
+    questionState[questionNumber] === "inProgress"
+      ? children.substring(0, guessNumber * length) + "..."
+      : children;
   const randomIndex = Math.floor(Math.random() * WIN_MESSAGES.length);
-  const answer = useQuestionByID(questionNumber)?.answer!;
+  const dailyIndex = useDailyIndex();
+  const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
+  const answer = useQuestionByID(safeIndex)?.answer!;
   const numWon = questionState.reduce(
     (acc, guess) => acc + (guess === "won" ? 1 : 0),
     0

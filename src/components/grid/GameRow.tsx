@@ -2,6 +2,7 @@ import { PaletteColor, Stack } from "@mui/material";
 import useQuestionByID from "../../hooks/useQuestionByID";
 import useGameStateStore from "../../stores/gameStateStore";
 import Cell from "./Cell";
+import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 
 interface GameRowProps {
   guess: string[];
@@ -9,8 +10,10 @@ interface GameRowProps {
 }
 
 const GameRow = ({ guess, statuses = [] }: GameRowProps) => {
+  const dailyIndex = useDailyIndex();
   const questionNumber = useGameStateStore((s) => s.questionNumber);
-  const question = useQuestionByID(questionNumber);
+  const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
+  const question = useQuestionByID(safeIndex);
   const answer = question?.answer.toLocaleUpperCase()!;
   const emptyCells = Array.from(Array(answer.length - guess.length));
 
