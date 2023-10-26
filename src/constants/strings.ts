@@ -1,4 +1,5 @@
 export const GAME_TITLE = "Triviale";
+export const GAME_URL = "Trivialle.vercel.app";
 
 import { MAX_CHALLENGES, QUESTIONS_PER_DAY } from "./settings";
 
@@ -37,6 +38,10 @@ export const NOT_CONTAINED_MESSAGE = (letter: string) =>
 export const NUMBER_CORRECT_TEXT = (numCorrect: number) =>
   `Got ${numCorrect} / ${QUESTIONS_PER_DAY} correct`;
 
+export const IN_TEXT = "in";
+export const SHARE_POINTS = (points: number) =>
+  `I got ${points} points in ${GAME_TITLE}!`;
+export const SHARE_LINK = `See how you compare: ${GAME_URL}`;
 export const ENTER_TEXT = "Enter";
 export const STATISTICS_TITLE = "Statistics";
 export const GUESS_DISTRIBUTION_TEXT = "Guess Distribution";

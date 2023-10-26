@@ -7,20 +7,21 @@ import {
   Typography,
 } from "@mui/material";
 import copy from "copy-to-clipboard";
+import { useState } from "react";
 import {
   GAME_TITLE,
   GUESS_DISTRIBUTION_TEXT,
   HELP_DIALOG_ARIA,
+  IN_TEXT,
+  SHARE_LINK,
+  SHARE_POINTS,
   SHARE_TEXT,
   STATISTICS_TITLE,
 } from "../../../constants/strings";
-import CustomDialog from "../CustomDialog";
-import { useState } from "react";
-import useHardModeStore from "../../../stores/hardModeStore";
-import { useTheme } from "@mui/material";
-import useHighContrastStore from "../../../stores/highContrastStore";
-import useGameStateStore from "../../../stores/gameStateStore";
 import useQuestionByID from "../../../hooks/useQuestionByID";
+import useGameStateStore from "../../../stores/gameStateStore";
+import useHardModeStore from "../../../stores/hardModeStore";
+import CustomDialog from "../CustomDialog";
 
 export interface HelpDialogProps {
   open: boolean;
@@ -63,14 +64,12 @@ const HelpDialog = ({
             return "❌";
           }
         }) +
-        " in " +
+        ` ${IN_TEXT} ` +
         q[0] +
         " \n"
       );
     })
-    .join(
-      ""
-    )}I got ${points} points in Triviale!\nSee how you compare: Trivialle.vercel.app`;
+    .join("")}${SHARE_POINTS(points)}\n${SHARE_LINK}`;
   const [showCopied, setShowCopied] = useState(false);
 
   const handleClose = () => {
