@@ -1,3 +1,5 @@
+export const GAME_TITLE = "Triviale";
+
 import { MAX_CHALLENGES, QUESTIONS_PER_DAY } from "./settings";
 
 export const HELP_HOW_TO_PLAY = "How To Play";

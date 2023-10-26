@@ -1,9 +1,9 @@
 import { IconButton } from "@mui/material";
-import React from "react";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import HelpDialog from "../help/HelpDialog";
+import React from "react";
+import { LeaderboardOutlined } from "@mui/icons-material";
+import StatsDialog from "./StatsDialog";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -32,9 +32,9 @@ const StatsButton = () => {
         aria-label="help"
         onClick={handleClickOpen}
       >
-        <HelpOutlineIcon fontSize="large" />
+        <LeaderboardOutlined fontSize="large" />
       </IconButton>
-      <HelpDialog
+      <StatsDialog
         open={open}
         onClose={handleClose}
         TransitionComponent={Transition}

@@ -1,6 +1,6 @@
-const SCIENCE = "science";
-const HISTORY = "history";
-const LITERATURE = "literature";
+const SCIENCE = "SCI";
+const HISTORY = "HIS";
+const LITERATURE = "LIT";
 
 export default [
   {
