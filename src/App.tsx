@@ -108,6 +108,7 @@ function App() {
                 questionState[questionNumber] !== "inProgress" &&
                 gameState === "inProgress"
               ) {
+                resetGuess();
                 moveToNextQuestion();
               }
             }}

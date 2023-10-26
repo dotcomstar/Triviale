@@ -42,7 +42,7 @@ const ExpandableText = ({ children }: Props) => {
               questionState[questionNumber] !== "inProgress" &&
               gameState === "inProgress"
             ) {
-              console.log(gameState.indexOf("inProgress"));
+              resetGuess();
               moveToNextQuestion();
             }
             if (questionState[questionNumber] === "inProgress") {
