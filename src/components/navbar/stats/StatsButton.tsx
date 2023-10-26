@@ -4,6 +4,7 @@ import { TransitionProps } from "@mui/material/transitions";
 import React from "react";
 import { LeaderboardOutlined } from "@mui/icons-material";
 import StatsDialog from "./StatsDialog";
+import useStatsStore from "../../../stores/statsStore";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -15,13 +16,13 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const StatsButton = () => {
-  const [open, setOpen] = React.useState(false);
+  const { statsOpen, openStats, closeStats } = useStatsStore();
   const handleClickOpen = () => {
-    setOpen(true);
+    openStats();
   };
 
   const handleClose = () => {
-    setOpen(false);
+    closeStats();
   };
 
   return (
@@ -35,7 +36,7 @@ const StatsButton = () => {
         <LeaderboardOutlined fontSize="large" />
       </IconButton>
       <StatsDialog
-        open={open}
+        open={statsOpen}
         onClose={handleClose}
         TransitionComponent={Transition}
       />

@@ -9,6 +9,7 @@ import { MAX_CHALLENGES } from "./constants/settings";
 import useQuestions from "./hooks/useQuestions";
 import useCurrGuessStore from "./stores/currGuessStore";
 import useGameStateStore from "./stores/gameStateStore";
+import useStatsStore from "./stores/statsStore";
 
 function App() {
   const { data } = useQuestions();
@@ -28,6 +29,7 @@ function App() {
   const question = data[questionNumber].question;
   const answer = data[questionNumber].answer.toLocaleUpperCase();
   const fullAnswer = data[questionNumber].fullAnswer;
+  const openStats = useStatsStore((s) => s.openStats);
 
   return (
     <ThemedLayout>
@@ -98,11 +100,11 @@ function App() {
                   (hasOneMoreGuess && won)
                 ) {
                   winGame();
-                  return;
                 } else {
                   loseGame();
-                  return;
                 }
+                openStats();
+                return;
               }
               if (
                 questionState[questionNumber] !== "inProgress" &&
