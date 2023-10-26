@@ -63,17 +63,19 @@ const StatsDialog = ({
       let prevCorrect = false;
       let q = questionDetails(i);
       return (
-        question.map((g) => {
-          if (g.join("") === q[1] || prevCorrect) {
-            prevCorrect = true;
-            points += 1;
-            return "✅";
-          } else if (g.includes(SKIP_LETTER)) {
-            return "⏭️";
-          } else {
-            return "❌";
-          }
-        }) +
+        question
+          .map((g) => {
+            if (g.join("") === q[1] || prevCorrect) {
+              prevCorrect = true;
+              points += 1;
+              return "✅";
+            } else if (g.includes(SKIP_LETTER)) {
+              return "⏭️";
+            } else {
+              return "❌";
+            }
+          })
+          .join("") +
         ` ${IN_TEXT} ` +
         q[0] +
         " \n"
