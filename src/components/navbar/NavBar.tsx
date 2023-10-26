@@ -3,6 +3,7 @@ import HamburgerDrawer from "./drawer/HamburgerDrawer";
 import HelpButton from "./help/HelpButton";
 import SettingsButton from "./settings/SettingsButton";
 import logo from "/jacks_its_ac_design.webp";
+import StatsButton from "./stats/StatsButton";
 
 const NavBar = () => (
   <Stack
@@ -31,6 +32,7 @@ const NavBar = () => (
     </Stack>
     <Stack direction="row" alignItems="center">
       <HelpButton />
+      <StatsButton />
       <SettingsButton />
     </Stack>
   </Stack>

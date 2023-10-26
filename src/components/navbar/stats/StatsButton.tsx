@@ -1,10 +1,9 @@
 import { IconButton } from "@mui/material";
 import React from "react";
-import SettingsDialog from "./SettingsDialog";
-import SettingsRoundedIcon from "@mui/icons-material/Settings";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import { SETTINGS_BUTTON_ARIA } from "../../../constants/strings";
+import HelpDialog from "../help/HelpDialog";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -15,7 +14,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const SettingsButton = () => {
+const StatsButton = () => {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -30,12 +29,12 @@ const SettingsButton = () => {
       <IconButton
         edge="start"
         color="inherit"
-        aria-label={SETTINGS_BUTTON_ARIA}
+        aria-label="help"
         onClick={handleClickOpen}
       >
-        <SettingsRoundedIcon fontSize="large" />
+        <HelpOutlineIcon fontSize="large" />
       </IconButton>
-      <SettingsDialog
+      <HelpDialog
         open={open}
         onClose={handleClose}
         TransitionComponent={Transition}
@@ -44,4 +43,4 @@ const SettingsButton = () => {
   );
 };
 
-export default SettingsButton;
+export default StatsButton;
