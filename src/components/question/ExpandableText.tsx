@@ -1,7 +1,8 @@
 import { Button, Stack, Typography } from "@mui/material";
-import { MAX_CHALLENGES } from "../../constants/settings";
+import { MAX_CHALLENGES, QUESTIONS_PER_DAY } from "../../constants/settings";
 import {
   NEXT_QUESTIONS_TEXT,
+  NUMBER_CORRECT_TEXT,
   SKIP_BUTTON_TEXT,
   WIN_MESSAGES,
 } from "../../constants/strings";
@@ -29,33 +30,43 @@ const ExpandableText = ({ children }: Props) => {
   return (
     <Stack>
       <Typography fontSize="large">{summary}</Typography>
-      <Button
-        onClick={() => {
-          if (
-            questionState[questionNumber] !== "inProgress" &&
-            gameState === "inProgress"
-          ) {
-            console.log(gameState.indexOf("inProgress"));
-            moveToQuestion(gameState.indexOf("inProgress") + 1); // Move to next unfinished question, if such a question exists.
+      {(guessNumber < MAX_CHALLENGES ||
+        questionState[questionNumber] !== "inProgress") && (
+        <Button
+          onClick={() => {
+            if (
+              questionState[questionNumber] !== "inProgress" &&
+              gameState === "inProgress"
+            ) {
+              console.log(gameState.indexOf("inProgress"));
+              moveToQuestion(gameState.indexOf("inProgress") + 1); // Move to next unfinished question, if such a question exists.
+            }
+            if (questionState[questionNumber] === "inProgress") {
+              makeGuess([]);
+              resetGuess();
+            }
+          }}
+          color="secondary"
+          variant={
+            questionState[questionNumber] === "inProgress"
+              ? "text"
+              : "contained"
           }
-          if (questionState[questionNumber] === "inProgress") {
-            makeGuess([]);
-            resetGuess();
-          }
-        }}
-        color="secondary"
-        variant={
-          questionState[questionNumber] === "inProgress" ? "text" : "contained"
-        }
-        sx={{ mb: 1 }}
-      >
-        {questionState[questionNumber] === "inProgress"
-          ? SKIP_BUTTON_TEXT
-          : questionState[questionNumber] === "won"
-          ? WIN_MESSAGES[randomIndex] +
-            (gameState === "inProgress" ? " " + NEXT_QUESTIONS_TEXT : "")
-          : NEXT_QUESTIONS_TEXT}
-      </Button>
+          sx={{ mb: 1 }}
+        >
+          {questionState[questionNumber] === "inProgress"
+            ? SKIP_BUTTON_TEXT
+            : questionState[questionNumber] === "won"
+            ? WIN_MESSAGES[randomIndex] +
+              (gameState === "inProgress" ? " " + NEXT_QUESTIONS_TEXT : "")
+            : NUMBER_CORRECT_TEXT(
+                questionState.reduce(
+                  (acc, guess) => (acc + guess === "won" ? 1 : 0),
+                  0
+                )
+              )}
+        </Button>
+      )}
     </Stack>
   );
 };
