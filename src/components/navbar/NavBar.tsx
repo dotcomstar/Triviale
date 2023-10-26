@@ -16,7 +16,6 @@ const NavBar = () => (
   >
     <Stack direction="row" alignItems="center">
       <HamburgerDrawer />
-      <StatsButton />
     </Stack>
     <Stack direction="row" alignItems="center">
       <Box
@@ -35,6 +34,7 @@ const NavBar = () => (
     </Stack>
     <Stack direction="row" alignItems="center">
       <HelpButton />
+      <StatsButton />
       <SettingsButton />
     </Stack>
   </Stack>
