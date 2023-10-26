@@ -7,12 +7,13 @@ export const HELP_HOW_TILE_COLORS_CHANGE =
   "          The color of the tiles will change to show how close your guess was to the word.";
 export const HELP_DIALOG_ARIA = "help-dialog-slide";
 
-export const WIN_MESSAGES = ["Great Job!", "Awesome", "Well done!"];
+export const WIN_MESSAGES = ["Great Job!", "Awesome!", "Well done!"];
 export const GAME_COPIED_MESSAGE = "Game copied to clipboard";
 export const NOT_ENOUGH_LETTERS_MESSAGE = "Not enough letters";
 export const WORD_NOT_FOUND_MESSAGE = "Word not found";
 
 export const SKIP_BUTTON_TEXT = "Skip this guess";
+export const NEXT_QUESTIONS_TEXT = "Next Question";
 
 export const SETTINGS_DIALOG_ARIA = "settings-dialog-slide";
 export const HARD_MODE_ALERT_MESSAGE =
