@@ -14,7 +14,6 @@ const useDailyIndex = () => {
   );
   const len = questions.length;
   const positiveModIndex = (((index * QUESTIONS_PER_DAY) % len) + len) % len;
-  console.log(positiveModIndex);
   return positiveModIndex;
 };
 
