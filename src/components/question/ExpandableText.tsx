@@ -54,17 +54,20 @@ const ExpandableText = ({ children }: Props) => {
           }
           sx={{ mb: 1 }}
         >
-          {questionState[questionNumber] === "inProgress"
-            ? SKIP_BUTTON_TEXT
-            : questionState[questionNumber] === "won"
-            ? WIN_MESSAGES[randomIndex] +
-              (gameState === "inProgress" ? " " + NEXT_QUESTIONS_TEXT : "")
-            : NUMBER_CORRECT_TEXT(
+          {gameState === "inProgress"
+            ? questionState[questionNumber] === "inProgress"
+              ? SKIP_BUTTON_TEXT
+              : questionState[questionNumber] === "won"
+              ? WIN_MESSAGES[randomIndex] + " " + NEXT_QUESTIONS_TEXT
+              : NEXT_QUESTIONS_TEXT
+            : gameState === "lost"
+            ? NUMBER_CORRECT_TEXT(
                 questionState.reduce(
-                  (acc, guess) => (acc + guess === "won" ? 1 : 0),
+                  (acc, guess) => acc + (guess === "won" ? 1 : 0),
                   0
                 )
-              )}
+              )
+            : WIN_MESSAGES[randomIndex]}
         </Button>
       )}
     </Stack>
