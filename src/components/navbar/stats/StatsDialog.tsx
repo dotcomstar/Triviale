@@ -26,7 +26,7 @@ import useQuestionByID from "../../../hooks/useQuestionByID";
 import useGameStateStore from "../../../stores/gameStateStore";
 import useHardModeStore from "../../../stores/hardModeStore";
 import CustomDialog from "../CustomDialog";
-import useDailyIndex from "../../../hooks/useDailyIndex";
+import useDailyIndex, { getPositiveIndex } from "../../../hooks/useDailyIndex";
 
 export interface StatsDialogProps {
   open: boolean;
@@ -46,7 +46,8 @@ const StatsDialog = ({
   const questionState = useGameStateStore((s) => s.questionState);
   const solutionIndex = date;
   const questionDetails = (id: number) => {
-    const q = useQuestionByID(id + dailyIndex);
+    const safeIndex = getPositiveIndex(dailyIndex + id);
+    const q = useQuestionByID(safeIndex);
     return [q?.category!, q?.answer.toLocaleUpperCase()!];
   };
 

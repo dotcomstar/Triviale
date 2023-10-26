@@ -1,16 +1,17 @@
 import { Stack, useTheme } from "@mui/material";
+import { SKIPPED_TEXT } from "../../constants/strings";
+import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
+import useQuestionByID from "../../hooks/useQuestionByID";
 import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
 import GameRow from "./GameRow";
-import useQuestionByID from "../../hooks/useQuestionByID";
-import useDailyIndex from "../../hooks/useDailyIndex";
-import { SKIPPED_TEXT } from "../../constants/strings";
 
 const GameGrid = () => {
   const dailyIndex = useDailyIndex();
   const guessNumber = useGameStateStore((s) => s.guessNumber);
   const questionNumber = useGameStateStore((s) => s.questionNumber);
-  const question = useQuestionByID(questionNumber + dailyIndex);
+  const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
+  const question = useQuestionByID(safeIndex);
   const answer = question?.answer.toLocaleUpperCase()!;
   const currGuess = useCurrGuessStore((s) => s.guess);
   const guesses = useGameStateStore((s) => s.guesses);

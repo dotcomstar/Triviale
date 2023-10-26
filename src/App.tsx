@@ -10,7 +10,7 @@ import useQuestions from "./hooks/useQuestions";
 import useCurrGuessStore from "./stores/currGuessStore";
 import useGameStateStore from "./stores/gameStateStore";
 import useStatsStore from "./stores/statsStore";
-import useDailyIndex from "./hooks/useDailyIndex";
+import useDailyIndex, { getPositiveIndex } from "./hooks/useDailyIndex";
 
 function App() {
   const { data } = useQuestions();
@@ -28,9 +28,10 @@ function App() {
     loseQuestion,
   } = useGameStateStore();
   const dailyIndex = useDailyIndex();
-  const question = data[questionNumber + dailyIndex].question;
-  const answer = data[questionNumber + dailyIndex].answer.toLocaleUpperCase();
-  const fullAnswer = data[questionNumber + dailyIndex].fullAnswer;
+  const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
+  const question = data[safeIndex].question;
+  const answer = data[safeIndex].answer.toLocaleUpperCase();
+  const fullAnswer = data[safeIndex].fullAnswer;
   const openStats = useStatsStore((s) => s.openStats);
 
   return (

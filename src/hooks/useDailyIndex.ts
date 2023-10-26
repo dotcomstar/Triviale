@@ -8,13 +8,17 @@ const oneDay = 1000 * 60 * 60 * 24; // One day Time in ms (milliseconds)
 // const presentDate = new Date();
 const presentDate = new Date(new Date().getTime() + oneDay); // Temp offset so new questions come the second day and not the first
 
+const len = questions.length;
+
+export const getPositiveIndex = (index: number) => {
+  return ((index % len) + len) % len;
+};
+
 const useDailyIndex = () => {
   const index: number = Math.floor(
     Math.round(firstGameDate.getTime() - presentDate.getTime()) / oneDay
   );
-  const len = questions.length;
-  const positiveModIndex = (((index * QUESTIONS_PER_DAY) % len) + len) % len;
-  return positiveModIndex;
+  return index * QUESTIONS_PER_DAY;
 };
 
 export default useDailyIndex;

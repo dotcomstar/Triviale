@@ -10,7 +10,7 @@ import {
 import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
 import useQuestionByID from "../../hooks/useQuestionByID";
-import useDailyIndex from "../../hooks/useDailyIndex";
+import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 
 interface Props {
   children: string;
@@ -31,7 +31,8 @@ const ExpandableText = ({ children }: Props) => {
       : children;
   const randomIndex = Math.floor(Math.random() * WIN_MESSAGES.length);
   const dailyIndex = useDailyIndex();
-  const answer = useQuestionByID(questionNumber + dailyIndex)?.answer!;
+  const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
+  const answer = useQuestionByID(safeIndex)?.answer!;
   const numWon = questionState.reduce(
     (acc, guess) => acc + (guess === "won" ? 1 : 0),
     0

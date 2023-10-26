@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { ENTER_TEXT } from "../../constants/strings";
 import Key from "./Key";
 import useGameStateStore from "../../stores/gameStateStore";
-import useDailyIndex from "../../hooks/useDailyIndex";
+import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 import useQuestionByID from "../../hooks/useQuestionByID";
 
 type KeyboardProps = {
@@ -26,9 +26,8 @@ const getKeyWidth = (numKeys: number, multiplier: number) => {
 export const getStatus = (val: string | undefined) => {
   const dailyIndex = useDailyIndex();
   const questionNumber = useGameStateStore((s) => s.questionNumber);
-  const answer = useQuestionByID(
-    questionNumber + dailyIndex
-  )?.answer.toLocaleUpperCase();
+  const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
+  const answer = useQuestionByID(safeIndex)?.answer.toLocaleUpperCase();
   const guesses = useGameStateStore((s) => s.guesses);
 
   if (
