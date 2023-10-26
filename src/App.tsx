@@ -1,14 +1,14 @@
-import { Grid } from "@mui/material";
+import { Alert, Grid } from "@mui/material";
 import ThemedLayout from "./components/ThemedLayout";
-import NavBar from "./components/navbar/NavBar";
-import ExpandableText from "./components/question/ExpandableText";
-import useQuestions from "./hooks/useQuestions";
-import Keyboard from "./components/keyboard/Keyboard";
 import GameGrid from "./components/grid/GameGrid";
+import Keyboard from "./components/keyboard/Keyboard";
+import NavBar from "./components/navbar/NavBar";
+import ProgressBar from "./components/progressBar/ProgressBar";
+import ExpandableText from "./components/question/ExpandableText";
+import { MAX_CHALLENGES } from "./constants/settings";
+import useQuestions from "./hooks/useQuestions";
 import useCurrGuessStore from "./stores/currGuessStore";
 import useGameStateStore from "./stores/gameStateStore";
-import { MAX_CHALLENGES } from "./constants/settings";
-import ProgressBar from "./components/progressBar/ProgressBar";
 
 function App() {
   const { data } = useQuestions();
@@ -27,6 +27,7 @@ function App() {
   } = useGameStateStore();
   const question = data[questionNumber].question;
   const answer = data[questionNumber].answer.toLocaleUpperCase();
+  const fullAnswer = data[questionNumber].fullAnswer;
 
   return (
     <ThemedLayout>
@@ -41,6 +42,12 @@ function App() {
           <ExpandableText>{question}</ExpandableText>
         </Grid>
         <Grid item xs={12} sx={{ px: 1, mb: 1 }}>
+          {questionState[questionNumber] === "lost" && (
+            <Alert severity="info">
+              Answer was {answer}
+              {fullAnswer ? `, as in ${fullAnswer}` : ""}
+            </Alert>
+          )}
           <GameGrid />
         </Grid>
         <Grid item xs={12} sx={{ px: 0 }} overflow={"scroll"}>
