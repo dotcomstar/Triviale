@@ -3,11 +3,13 @@ import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
 import GameRow from "./GameRow";
 import useQuestionByID from "../../hooks/useQuestionByID";
+import useDailyIndex from "../../hooks/useDailyIndex";
 
 const GameGrid = () => {
+  const dailyIndex = useDailyIndex();
   const guessNumber = useGameStateStore((s) => s.guessNumber);
   const questionNumber = useGameStateStore((s) => s.questionNumber);
-  const question = useQuestionByID(questionNumber);
+  const question = useQuestionByID(questionNumber + dailyIndex);
   const answer = question?.answer.toLocaleUpperCase()!;
   const currGuess = useCurrGuessStore((s) => s.guess);
   const guesses = useGameStateStore((s) => s.guesses);

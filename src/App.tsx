@@ -27,11 +27,11 @@ function App() {
     winQuestion,
     loseQuestion,
   } = useGameStateStore();
-  const question = data[questionNumber].question;
-  const answer = data[questionNumber].answer.toLocaleUpperCase();
-  const fullAnswer = data[questionNumber].fullAnswer;
-  const openStats = useStatsStore((s) => s.openStats);
   const dailyIndex = useDailyIndex();
+  const question = data[questionNumber + dailyIndex].question;
+  const answer = data[questionNumber + dailyIndex].answer.toLocaleUpperCase();
+  const fullAnswer = data[questionNumber + dailyIndex].fullAnswer;
+  const openStats = useStatsStore((s) => s.openStats);
 
   return (
     <ThemedLayout>

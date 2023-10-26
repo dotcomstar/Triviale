@@ -32,7 +32,7 @@ export default [
   {
     questionId: 3,
     question:
-      "After Trotsky announced his response to this, The Germans began advancing toward Petrograd once again, and Lenin threatened to resign over this measure. Largely because of this measure, Russia was excluded from the peace negotiations at Versailles. Ultimately, Russia had to give up one third of its railway network, 73% of its iron ore production, and 780,000 square kilometers of territory. Resulting in the cession of territory already occupied by the German army, including Poland, Lithuania, and Latvia, this was what treaty signed by the Bolshevik revolutionaries with Germany that took Russia out of World War I?",
+      "After Trotsky announced his response to this, the Germans began advancing toward Petrograd once again, and Lenin threatened to resign over this measure. Largely because of this measure, Russia was excluded from the peace negotiations at Versailles. Ultimately, Russia had to give up one third of its railway network, 73% of its iron ore production, and 780,000 square kilometers of territory. Resulting in the cession of territory already occupied by the German army, including Poland, Lithuania, and Latvia, this was what treaty signed by the Bolshevik revolutionaries with Germany that took Russia out of World War I?",
     answer: "BrestLitovsk",
     fullAnswer: "Treaty of Brest-Litovsk",
     url: "https://quizbowlpackets.com/1460/2009%20Yale%20Bulldog%20(High%20School).pdf",
@@ -53,6 +53,6 @@ export default [
     answer: "Eliot",
     fullAnswer: "T. S. Eliot",
     url: "https://quizbowlpackets.com/1460/2009%20Yale%20Bulldog%20(High%20School).pdf",
-    category: "literature",
+    category: LITERATURE,
   },
 ];
