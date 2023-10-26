@@ -57,7 +57,6 @@ const HamburgerDrawer = () => {
           color="inherit"
           aria-label="menu"
           onClick={toggleDrawer(true)}
-          sx={{ pr: 4 }}
         >
           <MenuRoundedIcon fontSize="large" />
         </IconButton>
