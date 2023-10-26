@@ -1,8 +1,10 @@
 import { Button, Stack } from "@mui/material";
 import { QUESTIONS_PER_DAY } from "../../constants/settings";
 import useGameStateStore from "../../stores/gameStateStore";
+import useCurrGuessStore from "../../stores/currGuessStore";
 
 const ProgressBar = () => {
+  const resetGuess = useCurrGuessStore((s) => s.resetGuess);
   const { moveToQuestion, questionState } = useGameStateStore();
 
   return (
@@ -19,7 +21,10 @@ const ProgressBar = () => {
             key={i}
             fullWidth
             variant="contained"
-            onClick={() => moveToQuestion(i)}
+            onClick={() => {
+              resetGuess();
+              moveToQuestion(i);
+            }}
             disableElevation
             color={
               questionState[i] === "inProgress"
@@ -28,6 +33,7 @@ const ProgressBar = () => {
                 ? "success"
                 : "error"
             }
+            sx={{ borderRadius: 0 }}
           >
             {`Q${i + 1}`}
           </Button>

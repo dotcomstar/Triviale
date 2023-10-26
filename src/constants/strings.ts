@@ -29,6 +29,9 @@ export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
   `Must use ${guess} in position ${position}`;
 export const NOT_CONTAINED_MESSAGE = (letter: string) =>
   `Guess must contain ${letter}`;
+export const NUMBER_CORRECT_TEXT = (numCorrect: number) =>
+  `Got ${numCorrect} / ${QUESTIONS_PER_DAY} correct`;
+
 export const ENTER_TEXT = "Enter";
 export const STATISTICS_TITLE = "Statistics";
 export const GUESS_DISTRIBUTION_TEXT = "Guess Distribution";
