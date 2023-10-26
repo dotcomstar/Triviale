@@ -14,6 +14,7 @@ import {
   GAME_TITLE,
   GUESS_DISTRIBUTION_TEXT,
   IN_TEXT,
+  PLACEHOLDER_TEXT,
   SHARE_LINK,
   SHARE_POINTS,
   SHARE_TEXT,
@@ -107,7 +108,7 @@ const StatsDialog = ({
       </DialogTitle>
       <Typography sx={{ m: 3, my: 0, fontSize: "20px" }}>
         {GUESS_DISTRIBUTION_TEXT}
-        {": TODO"}
+        <Typography fontStyle={"italic"}>{PLACEHOLDER_TEXT}</Typography>
       </Typography>
       <Stack justifyContent={"center"} alignItems={"center"} sx={{ p: 2 }}>
         <Button
