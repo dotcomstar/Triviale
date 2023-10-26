@@ -3,12 +3,14 @@ import {
   Button,
   DialogProps,
   DialogTitle,
+  Snackbar,
   Stack,
   Typography,
 } from "@mui/material";
 import copy from "copy-to-clipboard";
 import { useState } from "react";
 import {
+  GAME_COPIED_MESSAGE,
   GAME_TITLE,
   GUESS_DISTRIBUTION_TEXT,
   HELP_DIALOG_ARIA,
@@ -76,6 +78,7 @@ const HelpDialog = ({
     onClose();
   };
   const handleShare = () => {
+    setShowCopied(true);
     copy(textToShare, {
       debug: true,
     });
@@ -88,6 +91,12 @@ const HelpDialog = ({
       TransitionComponent={TransitionComponent}
       ariaDescribedBy={HELP_DIALOG_ARIA}
     >
+      <Snackbar
+        open={showCopied}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Typography> {GAME_COPIED_MESSAGE}</Typography>
+      </Snackbar>
       <DialogTitle sx={{ fontWeight: "bold", fontSize: "28px", pb: 0 }}>
         {STATISTICS_TITLE}
       </DialogTitle>
