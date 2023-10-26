@@ -8,6 +8,7 @@ import {
 } from "../../constants/strings";
 import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
+import useQuestionByID from "../../hooks/useQuestionByID";
 
 interface Props {
   children: string;
@@ -26,6 +27,7 @@ const ExpandableText = ({ children }: Props) => {
   const questionState = useGameStateStore((s) => s.questionState);
   const { gameState, moveToNextQuestion, questionNumber } = useGameStateStore();
   const randomIndex = Math.floor(Math.random() * WIN_MESSAGES.length);
+  const answer = useQuestionByID(questionNumber)?.answer!;
   const numWon = questionState.reduce(
     (acc, guess) => acc + (guess === "won" ? 1 : 0),
     0
@@ -46,7 +48,7 @@ const ExpandableText = ({ children }: Props) => {
               moveToNextQuestion();
             }
             if (questionState[questionNumber] === "inProgress") {
-              makeGuess([]);
+              makeGuess(Array(answer.length).fill("x"));
               resetGuess();
             }
           }}
