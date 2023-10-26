@@ -10,6 +10,7 @@ import useQuestions from "./hooks/useQuestions";
 import useCurrGuessStore from "./stores/currGuessStore";
 import useGameStateStore from "./stores/gameStateStore";
 import useStatsStore from "./stores/statsStore";
+import useDailyIndex from "./hooks/useDailyIndex";
 
 function App() {
   const { data } = useQuestions();
@@ -30,6 +31,7 @@ function App() {
   const answer = data[questionNumber].answer.toLocaleUpperCase();
   const fullAnswer = data[questionNumber].fullAnswer;
   const openStats = useStatsStore((s) => s.openStats);
+  const dailyIndex = useDailyIndex();
 
   return (
     <ThemedLayout>

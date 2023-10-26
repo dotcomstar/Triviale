@@ -108,7 +108,9 @@ const StatsDialog = ({
       </DialogTitle>
       <Typography sx={{ m: 3, my: 0, fontSize: "20px" }}>
         {GUESS_DISTRIBUTION_TEXT}
-        <Typography fontStyle={"italic"}>{PLACEHOLDER_TEXT}</Typography>
+      </Typography>
+      <Typography sx={{ m: 3, my: 0, fontSize: "20px" }} fontStyle={"italic"}>
+        {PLACEHOLDER_TEXT}
       </Typography>
       <Stack justifyContent={"center"} alignItems={"center"} sx={{ p: 2 }}>
         <Button
