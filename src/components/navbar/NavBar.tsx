@@ -12,9 +12,12 @@ const NavBar = () => (
     justifyContent="space-between"
     alignItems="center"
     sx={{ borderBottom: 1, borderColor: "DarkGray" }}
-    px={2}
+    px="2vw"
   >
-    <HamburgerDrawer />
+    <Stack direction="row" alignItems="center">
+      <HamburgerDrawer />
+      <StatsButton />
+    </Stack>
     <Stack direction="row" alignItems="center">
       <Box
         component="img"
@@ -32,7 +35,6 @@ const NavBar = () => (
     </Stack>
     <Stack direction="row" alignItems="center">
       <HelpButton />
-      <StatsButton />
       <SettingsButton />
     </Stack>
   </Stack>
