@@ -14,9 +14,11 @@ import {
   GAME_TITLE,
   GUESS_DISTRIBUTION_TEXT,
   IN_TEXT,
+  PLACEHOLDER_TEXT,
   SHARE_LINK,
   SHARE_POINTS,
   SHARE_TEXT,
+  SKIP_LETTER,
   STATISTICS_TITLE,
   STATS_DIALOG_ARIA,
 } from "../../../constants/strings";
@@ -62,6 +64,8 @@ const StatsDialog = ({
             prevCorrect = true;
             points += 1;
             return "✅";
+          } else if (g.includes(SKIP_LETTER)) {
+            return "⏭️";
           } else {
             return "❌";
           }
@@ -104,7 +108,7 @@ const StatsDialog = ({
       </DialogTitle>
       <Typography sx={{ m: 3, my: 0, fontSize: "20px" }}>
         {GUESS_DISTRIBUTION_TEXT}
-        {": TODO"}
+        <Typography fontStyle={"italic"}>{PLACEHOLDER_TEXT}</Typography>
       </Typography>
       <Stack justifyContent={"center"} alignItems={"center"} sx={{ p: 2 }}>
         <Button

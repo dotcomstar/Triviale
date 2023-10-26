@@ -4,6 +4,7 @@ import {
   NEXT_QUESTIONS_TEXT,
   NUMBER_CORRECT_TEXT,
   SKIP_BUTTON_TEXT,
+  SKIP_LETTER,
   WIN_MESSAGES,
 } from "../../constants/strings";
 import useCurrGuessStore from "../../stores/currGuessStore";
@@ -48,7 +49,7 @@ const ExpandableText = ({ children }: Props) => {
               moveToNextQuestion();
             }
             if (questionState[questionNumber] === "inProgress") {
-              makeGuess(Array(answer.length).fill("x"));
+              makeGuess(Array(answer.length).fill(SKIP_LETTER));
               resetGuess();
             }
           }}

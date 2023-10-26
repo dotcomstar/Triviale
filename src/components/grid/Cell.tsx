@@ -1,4 +1,5 @@
 import { Box, PaletteColor, Typography } from "@mui/material";
+import { SKIPPED_TEXT, SKIP_LETTER } from "../../constants/strings";
 
 interface CellProps {
   nthLetter: number;
@@ -15,7 +16,9 @@ const Cell = ({ nthLetter, value, status = undefined }: CellProps) => {
       : nthLetter !== 13 && nthLetter % 10 === 3
       ? "rd"
       : "th"
-  } letter, ${value ? value : "empty"}`;
+  } letter, ${
+    value ? (value === SKIP_LETTER ? SKIPPED_TEXT : value) : "empty"
+  }`;
 
   return (
     <Box
