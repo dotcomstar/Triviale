@@ -17,7 +17,7 @@ function App() {
     questionNumber,
     makeGuess,
     guessNumber,
-    moveToQuestion,
+    moveToNextQuestion,
     gameState,
     questionState,
     winGame,
@@ -67,23 +67,35 @@ function App() {
             }}
             onEnter={() => {
               console.log("enter");
+              let finalGuess = false;
+              let won = false;
+              let hasOneMoreGuess =
+                questionState.filter((state) => state === "inProgress")
+                  .length === 1;
               if (index === answer.length) {
                 if (guess.join("") === answer) {
                   winQuestion(questionNumber);
+                  finalGuess = true;
+                  won = true;
                 } else if (guessNumber >= MAX_CHALLENGES - 1) {
                   loseQuestion(questionNumber);
+                  finalGuess = true;
                 } else {
                   console.log("Incorrect :(");
                 }
                 makeGuess(guess);
                 resetGuess();
               }
-              if (!questionState.includes("inProgress")) {
+              if (
+                !questionState.includes("inProgress") ||
+                (hasOneMoreGuess && finalGuess)
+              ) {
                 if (
                   questionState.reduce(
                     (acc, state) => acc && state === "won",
                     true
-                  )
+                  ) ||
+                  (hasOneMoreGuess && won)
                 ) {
                   winGame();
                   return;
@@ -96,7 +108,7 @@ function App() {
                 questionState[questionNumber] !== "inProgress" &&
                 gameState === "inProgress"
               ) {
-                moveToQuestion(questionNumber + 1);
+                moveToNextQuestion();
               }
             }}
             isRevealing={false}

@@ -11,6 +11,7 @@ interface GameStateStore {
   guessNumber: number;
   makeGuess: (guess: string[]) => void;
   moveToQuestion: (id: number) => void;
+  moveToNextQuestion: () => void;
   winQuestion: (id: number) => void;
   loseQuestion: (id: number) => void;
   winGame: () => void;
@@ -59,6 +60,13 @@ const useGameStateStore = create<GameStateStore>((set) => ({
         (acc, guess) => (acc + guess.length > 0 ? 1 : 0),
         0
       ),
+    })),
+  moveToNextQuestion: () =>
+    set((state) => ({
+      questionNumber: state.questionState.indexOf("inProgress"),
+      guessNumber: state.guesses[
+        state.questionState.indexOf("inProgress")
+      ].reduce((acc, guess) => (acc + guess.length > 0 ? 1 : 0), 0),
     })),
   makeGuess: (guess: string[]) => {
     set((state) => ({

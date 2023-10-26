@@ -1,5 +1,5 @@
 import { Button, Stack, Typography } from "@mui/material";
-import { MAX_CHALLENGES, QUESTIONS_PER_DAY } from "../../constants/settings";
+import { MAX_CHALLENGES } from "../../constants/settings";
 import {
   NEXT_QUESTIONS_TEXT,
   NUMBER_CORRECT_TEXT,
@@ -24,8 +24,12 @@ const ExpandableText = ({ children }: Props) => {
   const makeGuess = useGameStateStore((s) => s.makeGuess);
   const resetGuess = useCurrGuessStore((s) => s.resetGuess);
   const questionState = useGameStateStore((s) => s.questionState);
-  const { gameState, moveToQuestion, questionNumber } = useGameStateStore();
+  const { gameState, moveToNextQuestion, questionNumber } = useGameStateStore();
   const randomIndex = Math.floor(Math.random() * WIN_MESSAGES.length);
+  const numWon = questionState.reduce(
+    (acc, guess) => acc + (guess === "won" ? 1 : 0),
+    0
+  );
 
   return (
     <Stack>
@@ -39,7 +43,7 @@ const ExpandableText = ({ children }: Props) => {
               gameState === "inProgress"
             ) {
               console.log(gameState.indexOf("inProgress"));
-              moveToQuestion(gameState.indexOf("inProgress") + 1); // Move to next unfinished question, if such a question exists.
+              moveToNextQuestion();
             }
             if (questionState[questionNumber] === "inProgress") {
               makeGuess([]);
@@ -61,13 +65,8 @@ const ExpandableText = ({ children }: Props) => {
               ? WIN_MESSAGES[randomIndex] + " " + NEXT_QUESTIONS_TEXT
               : NEXT_QUESTIONS_TEXT
             : gameState === "lost"
-            ? NUMBER_CORRECT_TEXT(
-                questionState.reduce(
-                  (acc, guess) => acc + (guess === "won" ? 1 : 0),
-                  0
-                )
-              )
-            : WIN_MESSAGES[randomIndex]}
+            ? NUMBER_CORRECT_TEXT(numWon)
+            : WIN_MESSAGES[randomIndex] + " " + NUMBER_CORRECT_TEXT(numWon)}
         </Button>
       )}
     </Stack>
