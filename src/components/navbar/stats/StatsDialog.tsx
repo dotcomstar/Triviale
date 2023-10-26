@@ -13,7 +13,6 @@ import {
   GAME_COPIED_MESSAGE,
   GAME_TITLE,
   GUESS_DISTRIBUTION_TEXT,
-  HELP_DIALOG_ARIA,
   IN_TEXT,
   SHARE_LINK,
   SHARE_POINTS,
@@ -26,17 +25,17 @@ import useGameStateStore from "../../../stores/gameStateStore";
 import useHardModeStore from "../../../stores/hardModeStore";
 import CustomDialog from "../CustomDialog";
 
-export interface HelpDialogProps {
+export interface StatsDialogProps {
   open: boolean;
   onClose: () => void;
   TransitionComponent: DialogProps["TransitionComponent"];
 }
 
-const HelpDialog = ({
+const StatsDialog = ({
   open,
   onClose,
   TransitionComponent,
-}: HelpDialogProps) => {
+}: StatsDialogProps) => {
   const isHardMode = useHardModeStore((s) => s.hardMode);
   const questionDetails = (id: number) => {
     const q = useQuestionByID(id);
@@ -95,10 +94,11 @@ const HelpDialog = ({
     >
       <Snackbar
         open={showCopied}
+        onClose={() => setShowCopied(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Typography> {GAME_COPIED_MESSAGE}</Typography>
-      </Snackbar>
+        autoHideDuration={2000}
+        message={GAME_COPIED_MESSAGE}
+      />
       <DialogTitle sx={{ fontWeight: "bold", fontSize: "28px", pb: 0 }}>
         {STATISTICS_TITLE}
       </DialogTitle>
@@ -122,4 +122,4 @@ const HelpDialog = ({
   );
 };
 
-export default HelpDialog;
+export default StatsDialog;
