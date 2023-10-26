@@ -17,6 +17,7 @@ import {
   SHARE_LINK,
   SHARE_POINTS,
   SHARE_TEXT,
+  SKIP_LETTER,
   STATISTICS_TITLE,
   STATS_DIALOG_ARIA,
 } from "../../../constants/strings";
@@ -62,6 +63,8 @@ const StatsDialog = ({
             prevCorrect = true;
             points += 1;
             return "✅";
+          } else if (g.includes(SKIP_LETTER)) {
+            return "⏭️";
           } else {
             return "❌";
           }
