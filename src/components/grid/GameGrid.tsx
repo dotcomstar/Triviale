@@ -4,6 +4,7 @@ import useGameStateStore from "../../stores/gameStateStore";
 import GameRow from "./GameRow";
 import useQuestionByID from "../../hooks/useQuestionByID";
 import useDailyIndex from "../../hooks/useDailyIndex";
+import { SKIPPED_TEXT } from "../../constants/strings";
 
 const GameGrid = () => {
   const dailyIndex = useDailyIndex();
@@ -19,6 +20,10 @@ const GameGrid = () => {
   const getStatuses = (guess: string[]) => {
     const answerArr = answer.split("");
     const statuses = Array(guess.length).fill(theme.palette.error); // Fill with 'incorrect' color by default
+    if (guess.includes(SKIPPED_TEXT)) {
+      // Don't compute if the guess was skipped.
+      return;
+    }
     const count = new Map();
     // Get count of all chars in answer
     // TODO: Compute only once and pass deep copy as param

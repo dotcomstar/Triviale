@@ -20,14 +20,15 @@ const ExpandableText = ({ children }: Props) => {
   if (!children) return null;
   const guessNumber = useGameStateStore((s) => s.guessNumber) + 1;
   const length = children.length / MAX_CHALLENGES; // TODO: Split questions more intelligently.
-  const summary =
-    guessNumber < MAX_CHALLENGES
-      ? children.substring(0, guessNumber * length) + "..."
-      : children;
   const makeGuess = useGameStateStore((s) => s.makeGuess);
   const resetGuess = useCurrGuessStore((s) => s.resetGuess);
   const questionState = useGameStateStore((s) => s.questionState);
   const { gameState, moveToNextQuestion, questionNumber } = useGameStateStore();
+  const summary =
+    guessNumber < MAX_CHALLENGES &&
+    questionState[questionNumber] === "inProgress"
+      ? children.substring(0, guessNumber * length) + "..."
+      : children;
   const randomIndex = Math.floor(Math.random() * WIN_MESSAGES.length);
   const dailyIndex = useDailyIndex();
   const answer = useQuestionByID(questionNumber + dailyIndex)?.answer!;
