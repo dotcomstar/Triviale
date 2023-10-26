@@ -4,6 +4,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import HelpDialog from "./HelpDialog";
+import { HELP_BUTTON_ARIA } from "../../../constants/strings";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -29,7 +30,7 @@ const HelpButton = () => {
       <IconButton
         edge="start"
         color="inherit"
-        aria-label="help"
+        aria-label={HELP_BUTTON_ARIA}
         onClick={handleClickOpen}
       >
         <HelpOutlineIcon fontSize="large" />

@@ -11,6 +11,7 @@ import {
   HELP_HOW_TO_PLAY,
   HELP_NUM_QUESTIONS,
   HELP_NUM_TRIES,
+  HELP_TITLE,
 } from "../../../constants/strings";
 import CustomDialog from "../CustomDialog";
 
@@ -35,6 +36,7 @@ const HelpDialog = ({
       open={open}
       TransitionComponent={TransitionComponent}
       ariaDescribedBy={HELP_DIALOG_ARIA}
+      ariaLabeledBy={HELP_TITLE}
     >
       <DialogTitle sx={{ fontWeight: "bold", fontSize: "28px", pb: 0 }}>
         {HELP_HOW_TO_PLAY}

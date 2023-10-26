@@ -1,10 +1,10 @@
 import { IconButton } from "@mui/material";
-import React from "react";
-import SettingsDialog from "./SettingsDialog";
-import SettingsRoundedIcon from "@mui/icons-material/Settings";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import { SETTINGS_BUTTON_ARIA } from "../../../constants/strings";
+import React from "react";
+import { LeaderboardOutlined } from "@mui/icons-material";
+import StatsDialog from "./StatsDialog";
+import useStatsStore from "../../../stores/statsStore";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -15,14 +15,14 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const SettingsButton = () => {
-  const [open, setOpen] = React.useState(false);
+const StatsButton = () => {
+  const { statsOpen, openStats, closeStats } = useStatsStore();
   const handleClickOpen = () => {
-    setOpen(true);
+    openStats();
   };
 
   const handleClose = () => {
-    setOpen(false);
+    closeStats();
   };
 
   return (
@@ -30,13 +30,13 @@ const SettingsButton = () => {
       <IconButton
         edge="start"
         color="inherit"
-        aria-label={SETTINGS_BUTTON_ARIA}
+        aria-label="help"
         onClick={handleClickOpen}
       >
-        <SettingsRoundedIcon fontSize="large" />
+        <LeaderboardOutlined fontSize="large" />
       </IconButton>
-      <SettingsDialog
-        open={open}
+      <StatsDialog
+        open={statsOpen}
         onClose={handleClose}
         TransitionComponent={Transition}
       />
@@ -44,4 +44,4 @@ const SettingsButton = () => {
   );
 };
 
-export default SettingsButton;
+export default StatsButton;
