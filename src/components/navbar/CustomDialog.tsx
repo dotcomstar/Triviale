@@ -6,6 +6,7 @@ export interface CustomDialogProps {
   onClose: () => void;
   TransitionComponent: DialogProps["TransitionComponent"];
   ariaDescribedBy: string;
+  ariaLabeledBy: string;
   children: ReactNode;
 }
 
@@ -15,6 +16,7 @@ const CustomDialog = ({
   TransitionComponent,
   ariaDescribedBy,
   children,
+  ariaLabeledBy,
 }: CustomDialogProps) => {
   const handleClose = () => {
     onClose();
@@ -26,6 +28,7 @@ const CustomDialog = ({
       open={open}
       TransitionComponent={TransitionComponent}
       aria-describedby={ariaDescribedBy}
+      aria-labelledby={ariaLabeledBy}
       keepMounted
       fullWidth
       maxWidth="sm"

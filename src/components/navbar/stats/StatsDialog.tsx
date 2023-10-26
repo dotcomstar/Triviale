@@ -19,6 +19,7 @@ import {
   SHARE_POINTS,
   SHARE_TEXT,
   STATISTICS_TITLE,
+  STATS_DIALOG_ARIA,
 } from "../../../constants/strings";
 import useQuestionByID from "../../../hooks/useQuestionByID";
 import useGameStateStore from "../../../stores/gameStateStore";
@@ -89,7 +90,8 @@ const HelpDialog = ({
       onClose={handleClose}
       open={open}
       TransitionComponent={TransitionComponent}
-      ariaDescribedBy={HELP_DIALOG_ARIA}
+      ariaDescribedBy={STATS_DIALOG_ARIA}
+      ariaLabeledBy={STATISTICS_TITLE}
     >
       <Snackbar
         open={showCopied}

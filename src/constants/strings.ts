@@ -9,9 +9,11 @@ export const HELP_NUM_QUESTIONS = `Total of ${QUESTIONS_PER_DAY} questions per d
 export const HELP_HOW_TILE_COLORS_CHANGE =
   "          The color of the tiles will change to show how close your guess was to the word.";
 export const HELP_BUTTON_ARIA = "help";
+export const HELP_TITLE = "Help";
 export const HELP_DIALOG_ARIA = "help-dialog-slide";
 
 export const SETTINGS_BUTTON_ARIA = "settings";
+export const SETTINGS_TITLE = "Settings";
 export const SETTINGS_DIALOG_ARIA = "settings-dialog-slide";
 
 export const WIN_MESSAGES = ["Great Job!", "Awesome!", "Well done!"];
@@ -43,6 +45,7 @@ export const SHARE_POINTS = (points: number) =>
   `I got ${points} points in ${GAME_TITLE}!`;
 export const SHARE_LINK = `See how you compare: ${GAME_URL}`;
 export const ENTER_TEXT = "Enter";
+export const STATS_DIALOG_ARIA = "statistics-dialog-slide";
 export const STATISTICS_TITLE = "Statistics";
 export const GUESS_DISTRIBUTION_TEXT = "Guess Distribution";
 export const NEW_WORD_TEXT = "New word in";
