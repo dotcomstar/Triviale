@@ -112,7 +112,7 @@ const questions: Question[] = [
     category: SCIENCE,
   },
   {
-    question: `This country is the home of Michael Ondaatje [Michael on-DAHT-yeh], the author of The English Patient, which won the Man Booker Prize. A short story writer from this country won the 2013 Nobel in Literature for works like Lives of Girls and Women. Alice Munro is from this country, where L.M.  Montgomery wrote a novel about a red-headed orphan who lives on Prince Edward Island. Name this home country of Anne of Green Gables, which is north of the United States.`,
+    question: `This country is the home of Michael Ondaatje, the author of The English Patient, which won the Man Booker Prize. A short story writer from this country won the 2013 Nobel in Literature for works like Lives of Girls and Women. Alice Munro is from this country, where L.M.  Montgomery wrote a novel about a red-headed orphan who lives on Prince Edward Island. Name this home country of Anne of Green Gables, which is north of the United States.`,
     answer: "Canada",
     url: "https://files.quizbowlpackets.com/2852/Round2.pdf",
     category: ART_AND_LITERATURE,
