@@ -6,6 +6,7 @@ interface SettingsSwitchProps {
   caption?: string;
   checked: boolean;
   onChange: () => void;
+  disabled?: boolean;
 }
 
 const SettingsSwitch = ({
@@ -13,6 +14,7 @@ const SettingsSwitch = ({
   caption,
   checked,
   onChange,
+  disabled = false,
 }: SettingsSwitchProps) => {
   return (
     <FormControl fullWidth={true}>
@@ -21,7 +23,7 @@ const SettingsSwitch = ({
           <Typography>{label}</Typography>
           {caption && <Typography variant="caption">{caption}</Typography>}
         </Stack>
-        <IOSSwitch checked={checked} onChange={onChange} />
+        <IOSSwitch checked={checked && !disabled} onChange={onChange} />
       </Stack>
     </FormControl>
   );
