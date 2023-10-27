@@ -58,7 +58,7 @@ export default [
   {
     questionId: 6,
     question:
-      'It was first proposed in an 1824 work titled "Reflections on the Motive Power of Fire", and operates on a thermodynamically reversible cycle consisting of 4 steps: isothermal expansion, isentropic expansion, isothermal compression, and isentropic compression. This hypothetical device ideally transfers energy from a hot resevoir to a cold resevoir, producing mechanical work. FTP, name this namesake engine proposed by a French physicist, whose efficiency is always greater than that of any real heat engine.',
+      'It was first proposed in an 1824 work titled "Reflections on the Motive Power of Fire", and operates on a thermodynamically reversible cycle consisting of 4 steps: isothermal expansion, isentropic expansion, isothermal compression, and isentropic compression. This hypothetical device ideally transfers energy from a hot resevoir to a cold resevoir, producing mechanical work. Name this namesake engine proposed by a French physicist, whose efficiency is always greater than that of any real heat engine.',
     answer: "Carnot",
     fullAnswer: "Carnot Engine",
     url: "https://quizbowlpackets.com/1460/2009%20Yale%20Bulldog%20(High%20School).pdf",
@@ -67,7 +67,7 @@ export default [
   {
     questionId: 7,
     question:
-      'Authentic translations of this poem were attempted by A.J. Arberry, and Robert Graves, working with Omar Ali-Shah, but the manuscripts they worked from turned out to be forgeries. Its popularity in English-speaking countries is largely due to the translation by Edward Fitzgerald, and the rhyme scheme of AABA he employed for its quatrains is now named after the poem. His translation contains the lines "The Moving Finger writes: and, having writ, / Moves on", and its twelfth quatrain reads: "A Book of Verses underneath the Bough, / A Jug of Wine, a Loaf of Bread—and thou". This if, FTP, what 12th century Persian poem by Omar Khayyam?',
+      'Authentic translations of this poem were attempted by A.J. Arberry, and Robert Graves, working with Omar Ali-Shah, but the manuscripts they worked from turned out to be forgeries. Its popularity in English-speaking countries is largely due to the translation by Edward Fitzgerald, and the rhyme scheme of AABA he employed for its quatrains is now named after the poem. His translation contains the lines "The Moving Finger writes: and, having writ, / Moves on", and its twelfth quatrain reads: "A Book of Verses underneath the Bough, / A Jug of Wine, a Loaf of Bread—and thou". This is what 12th century Persian poem by Omar Khayyam?',
     answer: "Rubaiyat",
     fullAnswer: "The Rubaiyat of Omar Khayyam",
     url: "https://quizbowlpackets.com/1460/2009%20Yale%20Bulldog%20(High%20School).pdf",
@@ -76,7 +76,7 @@ export default [
   {
     questionId: 8,
     question:
-      "The present international airport of this city is located at Chep Lak Kok on Lantau Island, but previously airlines had to make a harrowing descent through skyscrapers to reach Kai Tak Airport. The total population is estimated at over 7 million, but vast parts of the New Territories in the North are uninhabited. Walt Disney opened an edition of Disneyland here in 2005 and the equestrian events at the 2008 Olympics were staged here. FTP, name this Chinese Special Administrative Region, located east of Macau, which was handed back to China by the British in 1997",
+      "The present international airport of this city is located at Chep Lak Kok on Lantau Island, but previously airlines had to make a harrowing descent through skyscrapers to reach Kai Tak Airport. The total population is estimated at over 7 million, but vast parts of the New Territories in the North are uninhabited. Walt Disney opened an edition of Disneyland here in 2005 and the equestrian events at the 2008 Olympics were staged here. Name this Chinese Special Administrative Region, located east of Macau, which was handed back to China by the British in 1997",
     answer: "Hongkong",
     fullAnswer: "Hong Kong, China",
     url: "https://quizbowlpackets.com/1460/2009%20Yale%20Bulldog%20(High%20School).pdf",
