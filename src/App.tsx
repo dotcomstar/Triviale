@@ -11,9 +11,11 @@ import useCurrGuessStore from "./stores/currGuessStore";
 import useGameStateStore from "./stores/gameStateStore";
 import useStatsStore from "./stores/statsStore";
 import useDailyIndex, { getPositiveIndex } from "./hooks/useDailyIndex";
+import useHardModeStore from "./stores/hardModeStore";
 
 function App() {
   const { data } = useQuestions();
+  const hardMode = useHardModeStore((s) => s.hardMode);
   const { addChar, deleteChar, index, guess, resetGuess } = useCurrGuessStore();
   const {
     questionNumber,
@@ -82,7 +84,7 @@ function App() {
                   winQuestion(questionNumber);
                   finalGuess = true;
                   won = true;
-                } else if (guessNumber >= MAX_CHALLENGES - 1) {
+                } else if (guessNumber >= MAX_CHALLENGES - 1 || hardMode) {
                   loseQuestion(questionNumber);
                   finalGuess = true;
                 } else {
