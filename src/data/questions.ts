@@ -92,14 +92,14 @@ const questions: Question[] = [
   },
   {
     question:
-      "Palisade cells are located on these structures, which in arid climates are often covered by wax to preserve water loss through transpiration. The stomata on these structures exchange oxygen for carbon dioxide.  These structures are called fronds on ferns, and they are needly for conifer plants. For ten points, name these structures that are rich in chlorophyll, bud off from stems, and are the site of photosynthesis in plants.",
+      "Palisade cells are located on these structures, which in arid climates are often covered by wax to preserve water loss through transpiration. The stomata on these structures exchange oxygen for carbon dioxide.  These structures are called fronds on ferns, and they are needly for conifer plants. Name these structures that are rich in chlorophyll, bud off from stems, and are the site of photosynthesis in plants.",
     answer: "leaves",
     fullAnswer: "Leaves on trees",
     url: "https://files.quizbowlpackets.com/2852/Round2.pdf",
     category: SCIENCE,
   },
   {
-    question: `The Intermediate Value Theorem requires one of these objects to be continuous on a closed interval, or else the result isn't guaranteed. The term "codomain" is often used interchangeably with "range" to describe the set of output values of these objects. "G of x" or "F of x" are often used to indicate, for ten points, what mathematical objects that can be thought of as machines that, for an input value, return exactly one result?`,
+    question: `The Intermediate Value Theorem requires one of these objects to be continuous on a closed interval, or else the result isn't guaranteed. The term "codomain" is often used interchangeably with "range" to describe the set of output values of these objects. "G of x" or "F of x" are often used to indicate what mathematical objects that can be thought of as machines that, for an input value, return exactly one result?`,
     answer: "function",
     url: "https://files.quizbowlpackets.com/2852/Round2.pdf",
     category: MATH,
@@ -110,6 +110,25 @@ const questions: Question[] = [
     fullAnswer: "Gravitational Force",
     url: "https://files.quizbowlpackets.com/2852/Round2.pdf",
     category: SCIENCE,
+  },
+  {
+    question: `This country is the home of Michael Ondaatje [Michael on-DAHT-yeh], the author of The English Patient, which won the Man Booker Prize. A short story writer from this country won the 2013 Nobel in Literature for works like Lives of Girls and Women. Alice Munro is from this country, where L.M.  Montgomery wrote a novel about a red-headed orphan who lives on Prince Edward Island. Name this home country of Anne of Green Gables, which is north of the United States.`,
+    answer: "Canada",
+    url: "https://files.quizbowlpackets.com/2852/Round2.pdf",
+    category: ART_AND_LITERATURE,
+  },
+  {
+    question: `The release of energy in these events is described by elastic-rebound theory. These events are detected by triangulation of P and S waves. The modified Mercalli scale measures the intensity of these events, unlike a logarithmic scale for their magnitude, which is named for Charles Richter. These events begin at an epicenter and can cause tsunamis. For ten points, name these natural disasters that are caused by rupturing faults in the crust.`,
+    answer: "earthquakes",
+    url: "https://files.quizbowlpackets.com/2852/Round2.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `Chaplain and photographer Francis Browne documented this ship's stops at Cherbourg and Queenstown after it initially departed from Southampton. Architect Thomas Andrews diagnosed the "mathematical certainty" that awaited this ship on the morning of April 15th once six of its compartments had flooded. Edward Smith died while captaining what "unsinkable" ocean liner that, in 1912, sank after striking an iceberg?`,
+    answer: "Titanic",
+    fullAnswer: "RMS Titanic",
+    url: "https://files.quizbowlpackets.com/2852/Round7.pdf",
+    category: HISTORY,
   },
 ];
 
