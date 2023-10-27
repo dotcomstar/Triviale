@@ -1,13 +1,4 @@
-import questions from "../data/questions";
-
-interface Question {
-  questionId: number;
-  question: string;
-  answer: string;
-  fullAnswer?: string;
-  url: string;
-  category: string;
-}
+import questions, { Question } from "../data/questions";
 
 export type QuestionsResponse = {
   data: Question[];

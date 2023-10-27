@@ -1,8 +1,17 @@
 const SCIENCE = "SCI";
 const HISTORY = "HIS";
 const ART_AND_LITERATURE = "ART/LIT";
+const MATH = "MATH";
 
-export default [
+export interface Question {
+  question: string;
+  answer: string;
+  fullAnswer?: string;
+  url: string;
+  category: string;
+}
+
+const questions: Question[] = [
   {
     question:
       "Although this man received 73 electoral votes, he would not become president; a situation which most directly led to the introduction of the 12th amendment. As vice president, he presided over the impeachment trail of Samuel P. Chase. Later in his political career, he was accused of treason for supposedly wanting to set up a monarchy in western North America. This man may be better known, though, for an incident that occured when he was running for governor of New York in 1804, where a federalist political opponent sullied his name with many slanders and eventually made him lose the election. This is what man who challenged Alexander Hamilton to a duel and killed him?",
@@ -83,10 +92,25 @@ export default [
   },
   {
     question:
-      " Palisade cells are located on these structures, which in arid climates are often covered by wax to preserve water loss through transpiration. The stomata on these structures exchange (*) oxygen for carbon dioxide.  These structures are called fronds on ferns, and they are needly for conifer plants. For ten points, name these structures that are rich in chlorophyll, bud off from stems, and are the site of photosynthesis in plants.",
+      "Palisade cells are located on these structures, which in arid climates are often covered by wax to preserve water loss through transpiration. The stomata on these structures exchange oxygen for carbon dioxide.  These structures are called fronds on ferns, and they are needly for conifer plants. For ten points, name these structures that are rich in chlorophyll, bud off from stems, and are the site of photosynthesis in plants.",
     answer: "leaves",
     fullAnswer: "Leaves on trees",
     url: "https://files.quizbowlpackets.com/2852/Round2.pdf",
     category: SCIENCE,
   },
+  {
+    question: `The Intermediate Value Theorem requires one of these objects to be continuous on a closed interval, or else the result isn't guaranteed. The term "codomain" is often used interchangeably with "range" to describe the set of output values of these objects. "G of x" or "F of x" are often used to indicate, for ten points, what mathematical objects that can be thought of as machines that, for an input value, return exactly one result?`,
+    answer: "function",
+    url: "https://files.quizbowlpackets.com/2852/Round2.pdf",
+    category: MATH,
+  },
+  {
+    question: `The hierarchy problem asks why this force is so much weaker than the weak force. General relativity explains this force through the curvature of spacetime. On Earth's surface, the acceleration due to this force is about 9.8 meters per second squared. Tides are caused by this force, which acts between any two objects with mass. "Big G" is a constant named for what force that attracts objects on Earth toward the ground?`,
+    answer: "gravity",
+    fullAnswer: "Gravitational Force",
+    url: "https://files.quizbowlpackets.com/2852/Round2.pdf",
+    category: SCIENCE,
+  },
 ];
+
+export default questions;
