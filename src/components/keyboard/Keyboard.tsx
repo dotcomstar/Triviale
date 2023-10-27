@@ -81,6 +81,7 @@ const Keyboard = ({
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
       if (e.key === "Enter") {
+        e.preventDefault();
         onEnter();
       } else if (e.key === "Backspace") {
         onDelete();
