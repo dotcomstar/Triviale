@@ -44,6 +44,8 @@ const ExpandableText = ({ children }: Props) => {
       {(guessNumber < MAX_CHALLENGES ||
         questionState[questionNumber] !== "inProgress") && (
         <Button
+          id="ExpandableButton"
+          disableFocusRipple
           onClick={() => {
             if (
               questionState[questionNumber] !== "inProgress" &&
