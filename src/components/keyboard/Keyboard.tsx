@@ -80,15 +80,13 @@ const Keyboard = ({
 
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        onEnter();
-      } else if (e.key === "Backspace") {
+      if (e.key === "Backspace") {
         onDelete();
       } else {
         const key = e.key.toLocaleUpperCase();
         // TODO: check this test if the range works with non-english letters
         if (key.length === 1 && key >= "A" && key <= "Z") {
+          document.getElementById("ENTER_KEY")?.focus();
           onChar(key);
         }
       }
@@ -140,6 +138,7 @@ const Keyboard = ({
           value="ENTER"
           onClick={onClick}
           hasNext
+          id={"ENTER_KEY"}
         >
           {ENTER_TEXT}
         </Key>

@@ -82,10 +82,12 @@ function App() {
               if (index === answer.length) {
                 if (guess.join("") === answer) {
                   winQuestion(questionNumber);
+                  document.getElementById("ExpandableButton")?.focus();
                   finalGuess = true;
                   won = true;
                 } else if (guessNumber >= MAX_CHALLENGES - 1 || hardMode) {
                   loseQuestion(questionNumber);
+                  document.getElementById("ExpandableButton")?.focus();
                   finalGuess = true;
                 } else {
                   console.log("Incorrect :(");

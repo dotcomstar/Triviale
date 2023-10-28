@@ -11,6 +11,7 @@ type Props = {
   isRevealing?: boolean;
   hasNext?: boolean;
   status?: ButtonOwnProps["color"];
+  id?: string;
 };
 
 const Key = ({
@@ -22,6 +23,7 @@ const Key = ({
   status = undefined,
   fontSize = 20,
   hasNext = false,
+  id,
 }: Props) => {
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     onClick(value);
@@ -45,6 +47,8 @@ const Key = ({
       disableElevation
       size="small"
       color={status}
+      id={id}
+      disableFocusRipple={!!id}
     >
       <Typography sx={{ fontWeight: "bold", fontSize: fontSize }}>
         {children || value}
