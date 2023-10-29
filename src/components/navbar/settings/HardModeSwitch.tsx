@@ -32,7 +32,6 @@ const HardModeSwitch = () => {
         label={HARD_MODE_LABEL}
         caption={HARD_MODE_DESCRIPTION}
         checked={hardMode}
-        disabled={!canToggleHardMode}
         onChange={() => {
           if (canToggleHardMode) {
             toggleHardMode();
