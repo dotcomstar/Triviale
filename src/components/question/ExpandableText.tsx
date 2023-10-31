@@ -40,7 +40,7 @@ const ExpandableText = ({ children }: Props) => {
 
   return (
     <Stack>
-      <Box sx={{ border: 0, borderColor: "DarkGray" }}>
+      <Box sx={{ border: 2, borderColor: "DarkGray" }}>
         <Typography fontSize="large" m={1}>
           {summary}
         </Typography>

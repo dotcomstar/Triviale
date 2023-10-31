@@ -9,9 +9,9 @@ import { MAX_CHALLENGES } from "./constants/settings";
 import useQuestions from "./hooks/useQuestions";
 import useCurrGuessStore from "./stores/currGuessStore";
 import useGameStateStore from "./stores/gameStateStore";
-import useStatsStore from "./stores/statsStore";
 import useDailyIndex, { getPositiveIndex } from "./hooks/useDailyIndex";
 import useHardModeStore from "./stores/hardModeStore";
+import useDialogStore from "./stores/dialogStore";
 
 function App() {
   const { data } = useQuestions();
@@ -34,7 +34,7 @@ function App() {
   const question = data[safeIndex].question;
   const answer = data[safeIndex].answer.toLocaleUpperCase();
   const fullAnswer = data[safeIndex].fullAnswer;
-  const openStats = useStatsStore((s) => s.openStats);
+  const openStats = useDialogStore((s) => s.setStatsOpen);
 
   return (
     <ThemedLayout>
@@ -110,7 +110,7 @@ function App() {
                 } else {
                   loseGame();
                 }
-                openStats();
+                openStats(true);
                 return;
               }
               if (
