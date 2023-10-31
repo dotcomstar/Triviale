@@ -40,8 +40,8 @@ const ExpandableText = ({ children }: Props) => {
 
   return (
     <Stack>
-      <Paper elevation={2}>
-        <Typography fontSize="large" m={1}>
+      <Paper elevation={2} sx={{ mb: 2 }}>
+        <Typography fontSize="large" m={2}>
           {summary}
         </Typography>
       </Paper>
