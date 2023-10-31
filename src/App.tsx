@@ -38,7 +38,7 @@ function App() {
 
   return (
     <ThemedLayout>
-      <Grid container>
+      <Grid container paddingY={1}>
         <Grid item xs={12}>
           <NavBar />
         </Grid>

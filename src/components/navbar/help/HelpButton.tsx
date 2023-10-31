@@ -7,7 +7,7 @@ const HelpButton = () => {
   const setHelpOpen = useDialogStore((s) => s.setHelpOpen);
   return (
     <IconButton
-      edge="start"
+      edge="end"
       color="inherit"
       aria-label={HELP_BUTTON_ARIA}
       onClick={() => setHelpOpen(true)}

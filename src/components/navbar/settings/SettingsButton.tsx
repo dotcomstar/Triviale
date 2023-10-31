@@ -8,7 +8,7 @@ const SettingsButton = () => {
 
   return (
     <IconButton
-      edge="start"
+      edge="end"
       color="inherit"
       aria-label={SETTINGS_BUTTON_ARIA}
       onClick={() => setSettingsOpen(true)}
