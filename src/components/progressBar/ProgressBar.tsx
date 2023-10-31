@@ -11,6 +11,7 @@ const ProgressBar = () => {
     <Stack
       direction="row"
       padding="2px"
+      paddingTop="0px"
       justifyContent="center"
       alignItems="center"
     >
