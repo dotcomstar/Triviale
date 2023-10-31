@@ -10,7 +10,6 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Stack,
   useMediaQuery,
 } from "@mui/material";
 import React from "react";
