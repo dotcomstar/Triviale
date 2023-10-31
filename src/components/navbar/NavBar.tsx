@@ -46,7 +46,7 @@ const NavBar = () => {
         padding="10px"
         justifyContent="space-between"
         alignItems="center"
-        px="2vw"
+        px="calc(max(3vw,20px))"
       >
         <Stack direction="row" alignItems="center">
           <HamburgerDrawer />
@@ -74,7 +74,7 @@ const NavBar = () => {
             <SettingsButton />
           </Stack>
         ) : (
-          <Paper elevation={0} sx={{ width: "35px" }} />
+          <SettingsButton />
         )}
       </Stack>
       <HelpDialog

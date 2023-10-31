@@ -7,7 +7,7 @@ const StatsButton = () => {
 
   return (
     <IconButton
-      edge="start"
+      edge="end"
       color="inherit"
       aria-label="help"
       onClick={() => setStatsOpen(true)}

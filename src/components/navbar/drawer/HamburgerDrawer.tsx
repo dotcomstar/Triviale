@@ -13,15 +13,10 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import React from "react";
-import HelpButton from "../help/HelpButton";
-import {
-  HELP_TITLE,
-  SETTINGS_TITLE,
-  STATISTICS_TITLE,
-} from "../../../constants/strings";
+import { HELP_TITLE, STATISTICS_TITLE } from "../../../constants/strings";
 import useDialogStore from "../../../stores/dialogStore";
+import HelpButton from "../help/HelpButton";
 import StatsButton from "../stats/StatsButton";
-import SettingsButton from "../settings/SettingsButton";
 
 const HamburgerDrawer = () => {
   const matches = useMediaQuery("(min-width:600px)");
@@ -39,7 +34,7 @@ const HamburgerDrawer = () => {
     };
 
   const list = () => {
-    const { setHelpOpen, setStatsOpen, setSettingsOpen } = useDialogStore();
+    const { setHelpOpen, setStatsOpen } = useDialogStore();
     return (
       <Box
         sx={{ width: 250, height: "200" }}
@@ -70,10 +65,6 @@ const HamburgerDrawer = () => {
               <ListItem onClick={() => setStatsOpen(true)}>
                 <StatsButton />
                 <ListItemText primary={STATISTICS_TITLE} />
-              </ListItem>
-              <ListItem onClick={() => setSettingsOpen(true)}>
-                <SettingsButton />
-                <ListItemText primary={SETTINGS_TITLE} />
               </ListItem>
             </>
           )}

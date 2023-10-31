@@ -10,8 +10,8 @@ const ProgressBar = () => {
   return (
     <Stack
       direction="row"
-      padding="2px"
-      paddingTop="0px"
+      px="10px"
+      py="5px"
       justifyContent="center"
       alignItems="center"
     >
