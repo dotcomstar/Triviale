@@ -10,6 +10,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Stack,
   useMediaQuery,
 } from "@mui/material";
 import React from "react";
@@ -58,12 +59,15 @@ const HamburgerDrawer = () => {
             </>
           ) : (
             <>
-              <ListItem onClick={() => setHelpOpen(true)}>
-                <HelpButton />
+              <ListItem
+                onClick={() => setHelpOpen(true)}
+                sx={{ justifyContent: "space-between" }}
+              >
+                <HelpButton startEdge />
                 <ListItemText primary={HELP_TITLE} />
               </ListItem>
               <ListItem onClick={() => setStatsOpen(true)}>
-                <StatsButton />
+                <StatsButton startEdge />
                 <ListItemText primary={STATISTICS_TITLE} />
               </ListItem>
             </>

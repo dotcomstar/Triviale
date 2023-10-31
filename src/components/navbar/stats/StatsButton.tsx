@@ -2,12 +2,12 @@ import { LeaderboardOutlined } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import useDialogStore from "../../../stores/dialogStore";
 
-const StatsButton = () => {
+const StatsButton = ({ startEdge = false }: { startEdge?: boolean }) => {
   const setStatsOpen = useDialogStore((s) => s.setStatsOpen);
 
   return (
     <IconButton
-      edge="end"
+      edge={startEdge ? "start" : "end"}
       color="inherit"
       aria-label="help"
       onClick={() => setStatsOpen(true)}
