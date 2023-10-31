@@ -1,4 +1,4 @@
-import { Alert, Grid } from "@mui/material";
+import { Alert, Grid, useMediaQuery } from "@mui/material";
 import ThemedLayout from "./components/ThemedLayout";
 import GameGrid from "./components/grid/GameGrid";
 import Keyboard from "./components/keyboard/Keyboard";
@@ -35,10 +35,11 @@ function App() {
   const answer = data[safeIndex].answer.toLocaleUpperCase();
   const fullAnswer = data[safeIndex].fullAnswer;
   const openStats = useDialogStore((s) => s.setStatsOpen);
+  const matches = useMediaQuery("(min-width:600px)");
 
   return (
     <ThemedLayout>
-      <Grid container paddingY={1}>
+      <Grid container paddingY={matches ? 1 : 0}>
         <Grid item xs={12}>
           <NavBar />
         </Grid>

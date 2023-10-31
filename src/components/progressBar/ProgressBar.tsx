@@ -1,4 +1,4 @@
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, useMediaQuery } from "@mui/material";
 import { QUESTIONS_PER_DAY } from "../../constants/settings";
 import useGameStateStore from "../../stores/gameStateStore";
 import useCurrGuessStore from "../../stores/currGuessStore";
@@ -6,12 +6,14 @@ import useCurrGuessStore from "../../stores/currGuessStore";
 const ProgressBar = () => {
   const resetGuess = useCurrGuessStore((s) => s.resetGuess);
   const { moveToQuestion, questionState } = useGameStateStore();
+  const matches = useMediaQuery("(min-width:600px)");
 
   return (
     <Stack
       direction="row"
-      px="10px"
-      py="5px"
+      px={matches ? "10px" : "0px"}
+      py={"5px"}
+      pt={matches ? "5px" : "0px"}
       justifyContent="center"
       alignItems="center"
     >

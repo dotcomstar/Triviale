@@ -18,7 +18,7 @@ import useDialogStore from "../../../stores/dialogStore";
 import HelpButton from "../help/HelpButton";
 import StatsButton from "../stats/StatsButton";
 
-const HamburgerDrawer = () => {
+const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
   const matches = useMediaQuery("(min-width:600px)");
   const [expanded, setExpanded] = React.useState(false);
   const toggleDrawer =
@@ -85,7 +85,7 @@ const HamburgerDrawer = () => {
           aria-label="menu"
           onClick={toggleDrawer(true)}
         >
-          <MenuRoundedIcon fontSize="large" />
+          <MenuRoundedIcon fontSize={size} />
         </IconButton>
         <Drawer anchor={"left"} open={expanded} onClose={toggleDrawer(false)}>
           {list()}
