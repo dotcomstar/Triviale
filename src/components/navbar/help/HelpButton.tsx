@@ -3,11 +3,11 @@ import { IconButton } from "@mui/material";
 import { HELP_BUTTON_ARIA } from "../../../constants/strings";
 import useDialogStore from "../../../stores/dialogStore";
 
-const HelpButton = () => {
+const HelpButton = ({ startEdge = false }: { startEdge?: boolean }) => {
   const setHelpOpen = useDialogStore((s) => s.setHelpOpen);
   return (
     <IconButton
-      edge="end"
+      edge={startEdge ? "start" : "end"}
       color="inherit"
       aria-label={HELP_BUTTON_ARIA}
       onClick={() => setHelpOpen(true)}
