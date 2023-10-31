@@ -2,6 +2,8 @@ const SCIENCE = "SCI";
 const HISTORY = "HIS";
 const ART_AND_LITERATURE = "ART/LIT";
 const MATH = "MATH";
+const RELIGION = "RELIG";
+const GEOGRAPHY = "GEOG";
 
 export interface Question {
   question: string;
@@ -128,6 +130,61 @@ const questions: Question[] = [
     answer: "Titanic",
     fullAnswer: "RMS Titanic",
     url: "https://files.quizbowlpackets.com/2852/Round7.pdf",
+    category: HISTORY,
+  },
+  {
+    question: `A character in this novel has her glove stolen by John Brooke, who later becomes her husband. Another character visits the Hummels, and contracts scarlet fever from them after three of their children die. At the end of this novel, Professor Bhaer and his wife turn Plumfield into a school for boys. Amy accompanies Aunt Carrol to Europe during this novel. Name this Louisa May Alcott novel about the March family.`,
+    answer: "LittleWomen",
+    fullAnswer: "Little Women",
+    url: "https://files.quizbowlpackets.com/2852/Round6.pdf",
+    category: ART_AND_LITERATURE,
+  },
+  {
+    question: `A 2021 Maisie Peters song with this title says it's "crazy to think that you still call me" this word, and insists that the singer is "playing a perfect Patrick Bateman." A Talking Heads song asks "qu'est-ce que c'est" [kess-kah-say] about a "Killer" of this type. A Post Malone song describes his "A.P." with this word, which partially titles an Ava Max song about a girl who is "Sweet but" this adjective. Give this word that describes the madness of a knife murderer in an Alfred Hitchcock film.`,
+    answer: "Psycho",
+    fullAnswer: "Psycho Killer or Sweet but Psycho",
+    url: "https://files.quizbowlpackets.com/2852/Round6.pdf",
+    category: ART_AND_LITERATURE,
+  },
+  {
+    question: `The A and B coefficients of stimulated emission are named for this scientist, who first figured out the operating principle of a laser. This scientist's objection to quantum mechanics is often misinterpreted by the quote, "God does not play dice." In 1905, a year called this man's Annus mirabilis, this scientist published papers on the photoelectric effect and special relativity. Name this German physicist who derived the formula "E equals M C squared."`,
+    answer: "Einstein",
+    fullAnswer: "Albert Einstein",
+    url: "https://files.quizbowlpackets.com/2852/Round6.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `This religious movement's Doctrine and Covenants was controversially edited in 1876. A set of six lessons called "Missionary Discussions" are used by some of this church's missionaries. In 1978, this church ended its ban on having Black priests, and in the nineteenth century, this church was criticized both for its support of slavery as for its support of polygamy. Joseph Smith and Brigham Young were early leaders of what Christian church based in Utah?`,
+    answer: "Mormon",
+    fullAnswer: "Church of Jesus Christ of Latter-day Saints",
+    url: "https://files.quizbowlpackets.com/2852/Round6.pdf",
+    category: RELIGION,
+  },
+  {
+    question: `An island in this body of water is home to the Troodos mountain range, and is named for its extensive copper resources. The Strait of Bonifacio separates two other islands in this body of water, one of which was the birthplace of Napoleon. This sea's largest island contains the cities of Palermo and Syracuse. The arms of this sea include the Tyrrhenian, Ionian, and Aegean Seas. Cyprus, Corsica, Sardinia, and Sicily are the largest islands in what sea that separates Africa and Europe?`,
+    answer: "Mediterranean",
+    fullAnswer: "Mediterranean Sea",
+    url: "https://files.quizbowlpackets.com/2852/Round6.pdf",
+    category: GEOGRAPHY,
+  },
+  {
+    question: `A deity with the head of this creature was called Ailuros in Greece, and was worshipped at Bubastis. One of these creatures, named Ta-Miu, was entombed with Prince Thutmose. A fierce counterpart for a goddess with the head of this creature was Sekhmet, who had the head of a lion. Bastet had the head of what felines that were domesticated to control populations of mice in grain stores?`,
+    answer: "kitty",
+    fullAnswer: "Kitty Cat",
+    url: "https://files.quizbowlpackets.com/2852/Round6.pdf",
+    category: RELIGION,
+  },
+  {
+    question: `Ted Sorensen's work for this man included writing a speech that asks why Rice University plays against Texas. Sorensen also probably ghostwrote a book that won this man the Pulitzer Prize while he served as a Senator from Massachusetts, Profiles in Courage. Sorensen helped with this President's inaugural address, which includes the command "Ask not what your country can do for you." Name this US President who was inaugurated in 1961 and assassinated in 1963 by Lee Harvey Oswald.`,
+    answer: "JFKennedy",
+    fullAnswer: "John Fitzgerald Kennedy",
+    url: "https://files.quizbowlpackets.com/2852/Round6.pdf",
+    category: HISTORY,
+  },
+  {
+    question: `The idea that these people should study calligraphy or other artforms is promoted by The Book of Five Rings, which also advocates for training with two longswords. During the Sengoku period, people in this profession followed the bushido moral code, which is often compared to a knight's sense of chivalry. For ten points, name this warrior class that served the daimyo from the medieval era until the nineteenth century in Japan`,
+    answer: "Samurai",
+    url: "https://files.quizbowlpackets.com/2852/Round6.pdf",
     category: HISTORY,
   },
 ];

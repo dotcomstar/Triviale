@@ -11,7 +11,7 @@ const NavBar = () => (
     padding="10px"
     justifyContent="space-between"
     alignItems="center"
-    sx={{ borderBottom: 1, borderColor: "DarkGray" }}
+    // sx={{ borderBottom: 1, borderColor: "DarkGray" }}
     px="2vw"
   >
     <Stack direction="row" alignItems="center">
