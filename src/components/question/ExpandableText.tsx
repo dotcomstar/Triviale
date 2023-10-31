@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Button, Paper, Stack, Typography } from "@mui/material";
 import { MAX_CHALLENGES } from "../../constants/settings";
 import {
   NEXT_QUESTIONS_TEXT,
@@ -7,10 +7,10 @@ import {
   SKIP_LETTER,
   WIN_MESSAGES,
 } from "../../constants/strings";
+import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
+import useQuestionByID from "../../hooks/useQuestionByID";
 import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
-import useQuestionByID from "../../hooks/useQuestionByID";
-import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 
 interface Props {
   children: string;
@@ -40,11 +40,11 @@ const ExpandableText = ({ children }: Props) => {
 
   return (
     <Stack>
-      <Box sx={{ border: 0, borderColor: "DarkGray" }}>
-        <Typography fontSize="large" m={1}>
+      <Paper elevation={2} sx={{ mb: 2 }}>
+        <Typography fontSize="large" m={2}>
           {summary}
         </Typography>
-      </Box>
+      </Paper>
       {(guessNumber < MAX_CHALLENGES ||
         questionState[questionNumber] !== "inProgress") && (
         <Button
