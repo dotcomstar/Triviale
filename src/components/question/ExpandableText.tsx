@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Paper, Stack, Typography } from "@mui/material";
 import { MAX_CHALLENGES } from "../../constants/settings";
 import {
   NEXT_QUESTIONS_TEXT,
@@ -40,11 +40,11 @@ const ExpandableText = ({ children }: Props) => {
 
   return (
     <Stack>
-      <Box sx={{ border: 2, borderColor: "DarkGray" }}>
+      <Paper elevation={2}>
         <Typography fontSize="large" m={1}>
           {summary}
         </Typography>
-      </Box>
+      </Paper>
       {(guessNumber < MAX_CHALLENGES ||
         questionState[questionNumber] !== "inProgress") && (
         <Button
