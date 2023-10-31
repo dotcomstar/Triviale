@@ -10,10 +10,21 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  useMediaQuery,
 } from "@mui/material";
 import React from "react";
+import HelpButton from "../help/HelpButton";
+import {
+  HELP_TITLE,
+  SETTINGS_TITLE,
+  STATISTICS_TITLE,
+} from "../../../constants/strings";
+import useDialogStore from "../../../stores/dialogStore";
+import StatsButton from "../stats/StatsButton";
+import SettingsButton from "../settings/SettingsButton";
 
 const HamburgerDrawer = () => {
+  const matches = useMediaQuery("(min-width:600px)");
   const [expanded, setExpanded] = React.useState(false);
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -27,27 +38,49 @@ const HamburgerDrawer = () => {
       setExpanded(open);
     };
 
-  const list = () => (
-    <Box
-      sx={{ width: 250, height: "200" }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
-      <List>
-        {["Login", "Subscribe"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton onClick={() => console.log(text)}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <CardMembershipIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
+  const list = () => {
+    const { setHelpOpen, setStatsOpen, setSettingsOpen } = useDialogStore();
+    return (
+      <Box
+        sx={{ width: 250, height: "200" }}
+        role="presentation"
+        onClick={toggleDrawer(false)}
+        onKeyDown={toggleDrawer(false)}
+      >
+        <List>
+          {matches ? (
+            <>
+              {["Login", "Subscribe"].map((text, index) => (
+                <ListItem key={text} disablePadding>
+                  <ListItemButton onClick={() => console.log(text)}>
+                    <ListItemIcon>
+                      {index % 2 === 0 ? <InboxIcon /> : <CardMembershipIcon />}
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItemButton>
+                </ListItem>
+              ))}{" "}
+            </>
+          ) : (
+            <>
+              <ListItem onClick={() => setHelpOpen(true)}>
+                <HelpButton />
+                <ListItemText primary={HELP_TITLE} />
+              </ListItem>
+              <ListItem onClick={() => setStatsOpen(true)}>
+                <StatsButton />
+                <ListItemText primary={STATISTICS_TITLE} />
+              </ListItem>
+              <ListItem onClick={() => setSettingsOpen(true)}>
+                <SettingsButton />
+                <ListItemText primary={SETTINGS_TITLE} />
+              </ListItem>
+            </>
+          )}
+        </List>
+      </Box>
+    );
+  };
 
   return (
     <div>
