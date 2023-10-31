@@ -8,6 +8,7 @@ import useGameStateStore from "../../../stores/gameStateStore";
 import useHardModeStore from "../../../stores/hardModeStore";
 import SettingsSwitch from "./SettingsSwitch";
 import { Snackbar } from "@mui/material";
+import { ALERT_TIME_MS } from "../../../constants/settings";
 
 const HardModeSwitch = () => {
   const { hardMode, toggleHardMode } = useHardModeStore();
@@ -25,7 +26,7 @@ const HardModeSwitch = () => {
         open={invalidToggle}
         onClose={() => setInvalidToggle(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        autoHideDuration={2000}
+        autoHideDuration={ALERT_TIME_MS}
         message={HARD_MODE_ALERT_MESSAGE}
       />
       <SettingsSwitch

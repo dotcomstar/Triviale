@@ -27,6 +27,7 @@ import useGameStateStore from "../../../stores/gameStateStore";
 import useHardModeStore from "../../../stores/hardModeStore";
 import CustomDialog from "../CustomDialog";
 import useDailyIndex, { getPositiveIndex } from "../../../hooks/useDailyIndex";
+import { ALERT_TIME_MS } from "../../../constants/settings";
 
 export interface StatsDialogProps {
   open: boolean;
@@ -106,7 +107,7 @@ const StatsDialog = ({
         open={showCopied}
         onClose={() => setShowCopied(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        autoHideDuration={2000}
+        autoHideDuration={ALERT_TIME_MS}
         message={GAME_COPIED_MESSAGE}
       />
       <DialogTitle sx={{ fontWeight: "bold", fontSize: "28px", pb: 0 }}>
