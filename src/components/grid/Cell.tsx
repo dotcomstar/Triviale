@@ -29,6 +29,7 @@ const Cell = ({ nthLetter, value, status = undefined }: CellProps) => {
       sx={{
         border: status ? "none" : "2px solid",
         borderColor: `${value ? "primary.light" : "primary.dark"}`,
+        borderRadius: 10,
         height: "52px",
         width: "52px",
         backgroundColor: status?.main,
