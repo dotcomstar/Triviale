@@ -1,10 +1,4 @@
-import {
-  DialogProps,
-  DialogTitle,
-  List,
-  ListItem,
-  Typography,
-} from "@mui/material";
+import { DialogProps, List, ListItem, Typography } from "@mui/material";
 import {
   HELP_DIALOG_ARIA,
   HELP_HOW_TILE_COLORS_CHANGE,
@@ -37,10 +31,8 @@ const HelpDialog = ({
       TransitionComponent={TransitionComponent}
       ariaDescribedBy={HELP_DIALOG_ARIA}
       ariaLabeledBy={HELP_TITLE}
+      dialogTitle={HELP_HOW_TO_PLAY}
     >
-      <DialogTitle sx={{ fontWeight: "bold", fontSize: "28px", pb: 0 }}>
-        {HELP_HOW_TO_PLAY}
-      </DialogTitle>
       <Typography sx={{ m: 3, my: 0, fontSize: "20px" }}>
         {HELP_NUM_TRIES}
       </Typography>
