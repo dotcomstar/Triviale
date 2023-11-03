@@ -11,6 +11,7 @@ import logo from "/jacks_its_ac_design.webp";
 import useDialogStore from "../../stores/dialogStore";
 import StatsDialog from "./stats/StatsDialog";
 import SettingsDialog from "./settings/SettingsDialog";
+import { GAME_TITLE, LOGO_ALT } from "../../constants/strings";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -55,11 +56,11 @@ const NavBar = () => {
               height: "calc(min(8vw,58px))",
               borderRadius: 2.6,
             }}
-            alt="Triviale Logo"
+            alt={LOGO_ALT}
             src={logo}
           />
           <Typography translate="no" variant="h3" fontSize={"1.5REM"}>
-            Triviale
+            {GAME_TITLE}
           </Typography>
         </Stack>
         {matches ? (
