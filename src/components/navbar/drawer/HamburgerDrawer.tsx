@@ -1,4 +1,5 @@
 import CardMembershipIcon from "@mui/icons-material/CardMembership";
+import CloseIcon from "@mui/icons-material/Close";
 import MenuRoundedIcon from "@mui/icons-material/Menu";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import {
@@ -42,6 +43,19 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
         onClick={toggleDrawer(false)}
         onKeyDown={toggleDrawer(false)}
       >
+        <IconButton
+          aria-label="close"
+          onClick={toggleDrawer(false)}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            zIndex: 10,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
         <List>
           {matches ? (
             <>
@@ -54,7 +68,7 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
                     <ListItemText primary={text} />
                   </ListItemButton>
                 </ListItem>
-              ))}{" "}
+              ))}
             </>
           ) : (
             <>

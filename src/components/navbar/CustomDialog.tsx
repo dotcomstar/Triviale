@@ -1,5 +1,6 @@
-import { Dialog, DialogProps } from "@mui/material";
+import { Dialog, DialogProps, DialogTitle, IconButton } from "@mui/material";
 import { ReactNode } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 
 export interface CustomDialogProps {
   open: boolean;
@@ -8,6 +9,7 @@ export interface CustomDialogProps {
   ariaDescribedBy: string;
   ariaLabeledBy: string;
   children: ReactNode;
+  dialogTitle?: string;
 }
 
 const CustomDialog = ({
@@ -17,6 +19,7 @@ const CustomDialog = ({
   ariaDescribedBy,
   children,
   ariaLabeledBy,
+  dialogTitle = "",
 }: CustomDialogProps) => {
   const handleClose = () => {
     onClose();
@@ -34,6 +37,24 @@ const CustomDialog = ({
       maxWidth="sm"
       sx={{ zIndex: "modal", mx: 0 }}
     >
+      <DialogTitle
+        sx={{ fontWeight: "bold", fontSize: "28px", pb: dialogTitle ? 0 : 1 }}
+      >
+        {dialogTitle}
+      </DialogTitle>
+      <IconButton
+        aria-label="close"
+        onClick={handleClose}
+        sx={{
+          position: "absolute",
+          right: 8,
+          top: 8,
+          zIndex: 10,
+          color: (theme) => theme.palette.grey[500],
+        }}
+      >
+        <CloseIcon />
+      </IconButton>
       {children}
     </Dialog>
   );

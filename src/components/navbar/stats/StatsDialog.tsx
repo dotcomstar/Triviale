@@ -2,7 +2,6 @@ import { ShareOutlined } from "@mui/icons-material";
 import {
   Button,
   DialogProps,
-  DialogTitle,
   Snackbar,
   Stack,
   Typography,
@@ -102,6 +101,7 @@ const StatsDialog = ({
       TransitionComponent={TransitionComponent}
       ariaDescribedBy={STATS_DIALOG_ARIA}
       ariaLabeledBy={STATISTICS_TITLE}
+      dialogTitle={STATISTICS_TITLE}
     >
       <Snackbar
         open={showCopied}
@@ -110,9 +110,6 @@ const StatsDialog = ({
         autoHideDuration={ALERT_TIME_MS}
         message={GAME_COPIED_MESSAGE}
       />
-      <DialogTitle sx={{ fontWeight: "bold", fontSize: "28px", pb: 0 }}>
-        {STATISTICS_TITLE}
-      </DialogTitle>
       <Typography sx={{ m: 3, my: 0, fontSize: "20px" }}>
         {GUESS_DISTRIBUTION_TEXT}
       </Typography>
