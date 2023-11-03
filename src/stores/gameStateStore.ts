@@ -4,7 +4,15 @@ import { MAX_CHALLENGES, QUESTIONS_PER_DAY } from "../constants/settings";
 
 export type WinState = "won" | "lost" | "inProgress";
 
-interface GameStateStore {
+export interface GameStateImport {
+  gameState: WinState;
+  questionState: WinState[];
+  questionNumber: number;
+  guessNumber: number;
+  guesses: string[][][];
+}
+
+export interface GameStateStore {
   gameState: WinState;
   questionState: WinState[];
   questionNumber: number;
@@ -17,6 +25,7 @@ interface GameStateStore {
   winGame: () => void;
   loseGame: () => void;
   guesses: string[][][];
+  importGame: (pastStore: GameStateImport) => void;
 }
 
 const useGameStateStore = create<GameStateStore>((set) => ({
@@ -78,6 +87,15 @@ const useGameStateStore = create<GameStateStore>((set) => ({
             : val
         ),
       ],
+    }));
+  },
+  importGame: (pastStore: GameStateImport) => {
+    set(() => ({
+      gameState: pastStore.gameState,
+      questionState: pastStore.questionState,
+      questionNumber: pastStore.questionNumber,
+      guessNumber: pastStore.guessNumber,
+      guesses: pastStore.guesses,
     }));
   },
 }));
