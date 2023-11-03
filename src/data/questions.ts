@@ -5,6 +5,7 @@ const MATH = "MATH";
 const RELIGION = "RELIG";
 const GEOGRAPHY = "GEOG";
 const POP_CULTURE = "POP";
+const COMPUTER_SCIENCE = "CS";
 
 export interface Question {
   question: string;
@@ -237,6 +238,114 @@ const questions: Question[] = [
     answer: "Blackbeard",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
     category: HISTORY,
+  },
+  {
+    question: `One work by this composer features a bass echo a B-flat major melody played by the trombone in the "Tuba Mirum" section. This composer's requiem in D minor was commissioned by Count von Walsegg and completed by Franz Süssmayr after his death in 1791. The only two symphonies in a minor key by this composer are the "Little" and "Great" G minor symphonies. Name this Austrian composer of the "Jupiter" Symphony, The Magic Flute, and  Turkish March.`,
+    answer: "Mozart",
+    fullAnswer: "Wolfgang Amadeus Mozart",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
+    category: ART_AND_LITERATURE,
+  },
+  {
+    question: `In this tissue, calsequestrin binds to calcium ions in the sarcoplasmic reticulum, which, when released, binds to troponin. The functional unit of this tissue is the sarcomere. This tissue contains the proteins actin and myosin. Types of this tissue include smooth and striated. Name this tissue attached to bone that is responsible for contraction, examples of which include the bicep.`,
+    answer: "muscle",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `John Keats wrote a poem titled "On Sitting Down to Read [this play] Once Again." In this play, a character declares "as flies to wanton boys are we to the gods; they kill us for their sport." A character disguised as Tom O'Bedlam leads Gloucester off an imaginary cliff in this play. This play opens with the flattering of the title character by his daughters Regan and Goneril. Name this Shakespearean tragedy about the title monarch, who exiles his daughter Cordelia.`,
+    answer: "KingLear",
+    fullAnswer: "King Lear",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
+    category: ART_AND_LITERATURE,
+  },
+  {
+    question: `The motion of two parts of these entities can be considered separately, according to the Born-Oppenheimer approximation. Arnold Sommerfeld introduced the azimuthal quantum number and elliptical paths to a model of these entities created by Ernest Rutherford. Niels Bohr formulated the planetary model of these entities, which can undergo alpha and beta decay. Name these entities that consist of electrons that follow clearly defined circular shells, which surround a central nucleus`,
+    answer: "atoms",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `A treaty involving these animals was negotiated by Megasthenes with Seleucus I, who was paid 500 of them to go away. Pyrrhus of Epirus was the first to try invading Rome using these animals, which were present in most ancient Indian armies. Use of these animals failed at Zama when Scipio Africanus defeated the army of Carthage. Name these large animals that Hannibal brought across the Alps.`,
+    answer: "elephants",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
+    category: HISTORY,
+  },
+  {
+    question: `One performer in this ballet stands en pointe while performing 32 fouettés in a pas de deux. It's not by Mozart, but this ballet's score was edited by Riccardo Drigo for its revival by Lev Ivanov and Marius Petipa.  Lead ballerinas playing the role of this ballet's heroine often wear a black dress to also perform Odile, the daughter of the evil sorcerer von Rothbart. Name this Tchaikovsky ballet, in which Odette is cursed to turn into the title bird.`,
+    answer: "SwanLake",
+    fullAnswer: "Swan Lake",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
+    category: ART_AND_LITERATURE,
+  },
+  {
+    question: `This civilization celebrated the husband of Ops in a festival which is preceded by "Io" [Yo] in a common greeting. A festival from this civilization involved the election of a mock king and the reversal of master and slave roles. That festival from this civilization celebrated a deity who carried a sickle and was frequently associated with the Greek Cronus. Name this civilization, which celebrated Saturnalia in the Forum`,
+    answer: "Roman",
+    fullAnswer: "Roman Civilization",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
+    category: RELIGION,
+  },
+  {
+    question: `Pink banana flesh appears under a yellow peel in this artist's design for the cover of the Velvet Underground's debut album. This artist used mesh to transfer ink onto a canvas to create portraits of an actress in his Marilyn Diptych, which was made using silk-screening. This artist, who worked at the Factory, created thirty-two paintings that only differ in the labels of varieties like "split pea" and "tomato." Name this Pop artist, who painted Campbell's soup cans.`,
+    answer: "Warhol",
+    fullAnswer: "Andy Warhol",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
+    category: ART_AND_LITERATURE,
+  },
+  {
+    question: `In this kingdom, Lorrin Thurston's Bayonet Constitution effectively repealed a law which protected travelers, the Law of the Splintered Paddle. The Newlands Resolution authorized William McKinley to send troops to annex this kingdom. Sanford Dole overthrew this kingdom's final monarch, Queen Liliuokalani. Name this kingdom once led by Kamehameha, an island chain that became the 50th state.`,
+    answer: "Hawaii",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
+    category: HISTORY,
+  },
+  {
+    question: `KHP is typically used to "standardize" a solution that is to be used in this technique. Quantities in this technique are tracked on a type of graph that approximates a sigmoid curve and plots volume against pH. To begin this technique, one must add an indicator, such as phenolphthalein, which will eventually cause the analyte to change color, indicating this technique's endpoint. Name this analytical technique used to determine an analyte's concentration`,
+    answer: "Titration",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `Aristaeus's pursuit of this man's wife leads to her death from a snakebite. As an Argonaut, this man saved his crew by drowning out the Sirens' songs. After giving up the love for women for young boys, the Maenads killed this man and floated his head down a river. This son of the Muse Calliope ignores Hades' instructions and looks at his wife before leaving the underworld. Name this husband of Eurydice, a mythical lyre player.`,
+    answer: "Orpheus",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
+    category: RELIGION,
+  },
+  {
+    question: `One reaction in this organelle is driven by the cyclic interconversion of Coenzyme Q10 between ubiquinol and ubiquinone. Reducing equivalents, like FADH2 and NADH, serve as the inputs in a pathway in this organelle. In this organelle, a series of protein complexes named I through IV create a chemiosmotic potential that allows ATP synthase to produce ATP. This organelle contains the Krebs cycle and electron transport chain. Name this organelle, the powerhouse of the cell.`,
+    answer: "Mitochondria",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `It's not Japan, but the term rangaku refers to technology acquired from this country through the port of Dejima. Charles Mackay described a "mania" in this country where the price of tulips spiked, then plunged.  This non-British country founded Batavia in its "East Indies," which consisted of colonies in what is now modern-day Indonesia. Name this country ruled by the House of Orange, which is the namesake of Dutch disease.`,
+    answer: "Netherlands",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
+    category: HISTORY,
+  },
+  {
+    question: `A PC game in this genre was inspired by the DS game Ouendan and includes "mania" and "taiko" modes.  Players slice moving red and blue cubes in a virtual reality game in this genre, Beat Saber. In a game in this genre, players touch buttons with their feet as arrows fly upwards on a screen. Players click circles in osu!, a game in this genre that also includes Dance Dance Revolution. What games test a player's sense of music and time?`,
+    answer: "rhythm",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
+    category: POP_CULTURE,
+  },
+  {
+    question: `Files for these things begin with a DOCTYPE declaration and use angle brackets to denote keywords like "head" and "body." Cascading Style Sheets are most commonly used to modify the visual elements, like color and font, of these things. The "h-ref" keyword is used to embed hyperlinks in these things, which can be accessed using URLs. Name these things that are accessed using browsers like Google Chrome.`,
+    answer: "website",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
+    category: COMPUTER_SCIENCE,
+  },
+  {
+    question: `The power of this institution in one country was mitigated by Plutarco Elías Calles, leading to the Cristero War. This institution was stripped of property by the Lerdo Law, which sparked the Reform War in Mexico. Several Latin American revolutions were guided by a philosophy combining this institution's beliefs with Marxism, liberation theology. Name this religious institution that sponsored Jesuit missions in the Americas, led by the Pope from Vatican City.`,
+    answer: "Catholicism",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
+    category: RELIGION,
+  },
+  {
+    question: `This location lies south of the Kaibab Plateau, and is home to a group of basement rocks named for Vishnu. This landmark is home to a "house" named for the Hopi people, whose myths described its creation.  The Hualapai tribe operates a glass "skywalk" above this location, which formed due to erosion from the Colorado River. Many tourists drive to this location from cities like Flagstaff and Phoenix. For 10 points, name this large gorge in Arizona.`,
+    answer: "GrandCanyon",
+    fullAnswer: "The Grand Canyon",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2004N.pdf",
+    category: GEOGRAPHY,
   },
 ];
 
