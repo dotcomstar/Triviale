@@ -12,6 +12,7 @@ import useGameStateStore from "./stores/gameStateStore";
 import useDailyIndex, { getPositiveIndex } from "./hooks/useDailyIndex";
 import useHardModeStore from "./stores/hardModeStore";
 import useDialogStore from "./stores/dialogStore";
+import { useEffect } from "react";
 
 function App() {
   const { data } = useQuestions();
@@ -28,6 +29,8 @@ function App() {
     loseGame,
     winQuestion,
     loseQuestion,
+    guesses,
+    importGame,
   } = useGameStateStore();
   const dailyIndex = useDailyIndex();
   const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
@@ -36,6 +39,49 @@ function App() {
   const fullAnswer = data[safeIndex].fullAnswer;
   const openStats = useDialogStore((s) => s.setStatsOpen);
   const matches = useMediaQuery("(min-width:600px)");
+
+  useEffect(() => {
+    window.addEventListener("unload", handleTabClosing);
+    return () => {
+      window.removeEventListener("unload", handleTabClosing);
+    };
+  });
+
+  // Save game state to local storage.
+  const handleTabClosing = () => {
+    localStorage.setItem(
+      "prevGame",
+      JSON.stringify({
+        pastOffset: dailyIndex,
+        gameState: gameState,
+        questionState: questionState,
+        questionNumber: questionNumber,
+        guessNumber: guessNumber,
+        guesses: guesses,
+      })
+    );
+  };
+
+  useEffect(() => {
+    // Check if the user has already made guesses today.
+    const existingGuesses = localStorage.getItem("prevGame") || "{}";
+    console.log(existingGuesses);
+    const pastGuesses = JSON.parse(existingGuesses);
+    if (pastGuesses["pastOffset"] === dailyIndex) {
+      console.log("Importing past guesses");
+      const pastGame = {
+        gameState: pastGuesses["gameState"],
+        questionState: pastGuesses["questionState"],
+        questionNumber: pastGuesses["questionNumber"],
+        guessNumber: pastGuesses["guessNumber"],
+        guesses: pastGuesses["guesses"],
+      };
+      importGame(pastGame);
+    } else {
+      // No previous guesses
+      console.log("No previous guesses");
+    }
+  }, []);
 
   return (
     <ThemedLayout>
