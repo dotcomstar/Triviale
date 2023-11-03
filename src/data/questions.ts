@@ -4,6 +4,7 @@ const ART_AND_LITERATURE = "ART/LIT";
 const MATH = "MATH";
 const RELIGION = "RELIG";
 const GEOGRAPHY = "GEOG";
+const POP_CULTURE = "POP";
 
 export interface Question {
   question: string;
@@ -120,7 +121,7 @@ const questions: Question[] = [
     category: ART_AND_LITERATURE,
   },
   {
-    question: `The release of energy in these events is described by elastic-rebound theory. These events are detected by triangulation of P and S waves. The modified Mercalli scale measures the intensity of these events, unlike a logarithmic scale for their magnitude, which is named for Charles Richter. These events begin at an epicenter and can cause tsunamis. For ten points, name these natural disasters that are caused by rupturing faults in the crust.`,
+    question: `The release of energy in these events is described by elastic-rebound theory. These events are detected by triangulation of P and S waves. The modified Mercalli scale measures the intensity of these events, unlike a logarithmic scale for their magnitude, which is named for Charles Richter. These events begin at an epicenter and can cause tsunamis. Name these natural disasters that are caused by rupturing faults in the crust.`,
     answer: "earthquakes",
     url: "https://files.quizbowlpackets.com/2852/Round2.pdf",
     category: SCIENCE,
@@ -182,9 +183,59 @@ const questions: Question[] = [
     category: HISTORY,
   },
   {
-    question: `The idea that these people should study calligraphy or other artforms is promoted by The Book of Five Rings, which also advocates for training with two longswords. During the Sengoku period, people in this profession followed the bushido moral code, which is often compared to a knight's sense of chivalry. For ten points, name this warrior class that served the daimyo from the medieval era until the nineteenth century in Japan`,
+    question: `The idea that these people should study calligraphy or other artforms is promoted by The Book of Five Rings, which also advocates for training with two longswords. During the Sengoku period, people in this profession followed the bushido moral code, which is often compared to a knight's sense of chivalry. Name this warrior class that served the daimyo from the medieval era until the nineteenth century in Japan`,
     answer: "Samurai",
     url: "https://files.quizbowlpackets.com/2852/Round6.pdf",
+    category: HISTORY,
+  },
+  {
+    question: `Only this figure's head and neck appear in the Athenaeum Portrait, the best known work of Gilbert Stuart.  Grant Wood painted this figure holding an ax in Parson Weems' Fable, which depicts a myth in which he cuts a cherry tree. This man titles Emmanuel Leutze's most famous painting, in which James Monroe holds an American flag in a boat floating on an icy river. Name this man depicted "crossing the Delaware" in one painting, the first U. S. President`,
+    answer: "Washington",
+    fullAnswer: "George Washington",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
+    category: ART_AND_LITERATURE,
+  },
+  {
+    question: `Followers of this religion in the Banu Qurayza tribe were defeated at the Battle of the Trench. The "Beta" community of this religious group in Ethiopia were airlifted to an Asian country in Operation Solomon.  Members of this religion descended from Middle Eastern groups are known as Mizrahi. Aliyah is the primary tenet of a movement involving this religious group, Zionism. Name this target of antiSemitism that populates much of Israel.`,
+    answer: "Judaism",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
+    category: RELIGION,
+  },
+  {
+    question: `In one film, one of these characters is given the stolen Zodiac Stone for safekeeping. The PX-21 mutagen makes these characters turn into their purple "evil" form. The refrain "I got money" features in a song by Yeat titled "Rich [one of these characters]." Many movie theaters kicked out people who wore suits as part of a trend called "gentle [these characters]." Name these yellow creatures, who title a movie subtitled "The Rise of Gru."`,
+    answer: "minions",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
+    category: POP_CULTURE,
+  },
+  {
+    question: `Timberline Lodge, located on this state's highest point, was the filming site for much of The Shining. Nike is headquartered in Beaverton, a southern suburb of this state's largest city. It's not Maine, but this state's Mount Hood overlooks its largest city, Portland. Name this Pacific Northwest state that lies south of Washington and north of California.`,
+    answer: "Oregon",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
+    category: GEOGRAPHY,
+  },
+  {
+    question: `This quantity equals the square root of the product two, times mass, times kinetic energy. It's not force, but according to Newton's Second Law, the rate of change of this quantity equals mass times acceleration.  Rockets generate thrust after ejecting mass, since this quantity is conserved. Impulse equals the change in this quantity. Name this quantity equal to mass times velocity`,
+    answer: "momentum",
+    fullAnswer: "Linear Momentum",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `A scientist from this country was the first to estimate the extent an increase in atmospheric carbon dioxide would increase Earth's temperature. That scientist from this country names an equation that has a preexponential factor and is useful for calculating activation energies. Another scientist from this country used nitroglycerin to invent an explosive. This country contains the city of Ytterby. Name this home country of Svante Arrhenius and Alfred Nobel, who was born in Stockholm.`,
+    answer: "Sweden",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `A depiction of this figure's head in Ayutthaya is almost completely surrounded by the roots of a banyan tree. The misleadingly named "Emerald" statue of this figure is currently located in Bangkok. Some statues of this figure carved out of cliffs can be found at Leshan and another site destroyed by the Taliban in 2001, Bamiyan. Name this religious figure, sometimes called Siddhartha Gautama.`,
+    answer: "Buddha",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
+    category: RELIGION,
+  },
+  {
+    question: `Samuel Wragg exchanged medical supplies for prisoners with this man after he set up a blockade around Charles Town in South Carolina. Despite parting ways with Stede Bonnet, this man returned to his old life with the Adventure, the successor to the Queen Anne's Revenge. Though his actual name is unknown, this man's name was often given as Edward Teach. Name this pirate, who was nicknamed for his dark facial hair.`,
+    answer: "Blackbeard",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
     category: HISTORY,
   },
 ];
