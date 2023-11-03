@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ScheduleTerp driver. This actually runs the algorithm.
+"""Triviale backend Lambda function. This serves the questions every day.
 """
 __author__     = "Jet Lee"
 __copyright__  = "Copyright 2023"
