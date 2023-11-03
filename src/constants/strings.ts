@@ -1,4 +1,5 @@
-export const GAME_TITLE = "Triviale";
+export const GAME_TITLE = "Trivialle";
+export const LOGO_ALT = `${GAME_TITLE} Logo`;
 export const GAME_URL = "https://trivialle.vercel.app/";
 
 import { MAX_CHALLENGES, QUESTIONS_PER_DAY } from "./settings";
