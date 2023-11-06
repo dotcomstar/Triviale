@@ -105,8 +105,8 @@ const Keyboard = ({
       spacing="8px"
       sx={{ m: "8px" }}
     >
-      <Stack direction="row">
-        {["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"].map((key, i) => (
+      <Stack direction="row" spacing={"6px"}>
+        {["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"].map((key) => (
           <Key
             value={key}
             key={key}
@@ -114,12 +114,11 @@ const Keyboard = ({
             width={topRowKeyWidth}
             isRevealing={isRevealing}
             status={getStatus(key)}
-            hasNext={i !== 9}
           />
         ))}
       </Stack>
-      <Stack direction="row">
-        {["A", "S", "D", "F", "G", "H", "J", "K", "L"].map((key, i) => (
+      <Stack direction="row" spacing={"6px"}>
+        {["A", "S", "D", "F", "G", "H", "J", "K", "L"].map((key) => (
           <Key
             value={key}
             key={key}
@@ -127,17 +126,15 @@ const Keyboard = ({
             width={defaultKeyWidth}
             status={getStatus(key)}
             isRevealing={isRevealing}
-            hasNext={i !== 8}
           />
         ))}
       </Stack>
-      <Stack direction="row">
+      <Stack direction="row" spacing="6px">
         <Key
           fontSize={12}
           width={enterDeleteWidth}
           value="ENTER"
           onClick={onClick}
-          hasNext
           id={"ENTER_KEY"}
         >
           {ENTER_TEXT}
@@ -150,7 +147,6 @@ const Keyboard = ({
             width={defaultKeyWidth}
             status={getStatus(key)}
             isRevealing={isRevealing}
-            hasNext
           />
         ))}
         <Key
