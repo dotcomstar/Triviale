@@ -1,4 +1,4 @@
-import { Box, PaletteColor, Typography } from "@mui/material";
+import { Box, PaletteColor, Typography, useMediaQuery } from "@mui/material";
 import { SKIPPED_TEXT, SKIP_LETTER } from "../../constants/strings";
 
 interface CellProps {
@@ -8,6 +8,7 @@ interface CellProps {
 }
 
 const Cell = ({ nthLetter, value, status = undefined }: CellProps) => {
+  const matches = useMediaQuery("(min-width:600px)");
   const description = `${nthLetter}${
     nthLetter !== 11 && nthLetter % 10 === 1
       ? "st"
@@ -30,7 +31,7 @@ const Cell = ({ nthLetter, value, status = undefined }: CellProps) => {
         border: status ? "none" : "2px solid",
         borderColor: `${value ? "primary.light" : "primary.dark"}`,
         borderRadius: 10,
-        height: "52px",
+        height: matches ? "52px" : "42px",
         width: "52px",
         backgroundColor: status?.main,
       }}
