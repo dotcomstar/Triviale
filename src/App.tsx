@@ -92,7 +92,7 @@ function App() {
         <Grid item xs={12}>
           <ProgressBar />
         </Grid>
-        <Grid item xs={12} sx={{ mx: 3, pt: 1 }}>
+        <Grid item xs={12} sx={{ mx: 0, pt: 1 }}>
           <ExpandableText>{question}</ExpandableText>
         </Grid>
         <Grid item xs={12} sx={{ px: 1, mb: 1 }}>

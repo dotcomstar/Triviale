@@ -22,7 +22,6 @@ const Key = ({
   isRevealing,
   status = undefined,
   fontSize = 20,
-  hasNext = false,
   id,
 }: Props) => {
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -39,7 +38,6 @@ const Key = ({
         height: "58px",
         minWidth: "20px",
         transitionDelay: isRevealing ? `${REVEAL_TIME_MS}ms` : "unset",
-        mr: hasNext ? "6px" : "0px",
         alignContent: "center",
         overflow: "clip",
       }}
