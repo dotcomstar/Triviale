@@ -40,6 +40,7 @@ function App() {
   const openStats = useDialogStore((s) => s.setStatsOpen);
   const matches = useMediaQuery("(min-width:600px)");
 
+  // Running on unload or beforeunload is unreliable according to https://developer.chrome.com/articles/page-lifecycle-api/#legacy-lifecycle-apis-to-avoid
   useEffect(() => {
     window.addEventListener("visibilitychange", handleTabClosing);
     return () => {
