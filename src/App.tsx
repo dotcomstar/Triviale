@@ -41,9 +41,9 @@ function App() {
   const matches = useMediaQuery("(min-width:600px)");
 
   useEffect(() => {
-    window.addEventListener("unload", handleTabClosing);
+    window.addEventListener("visibilitychange", handleTabClosing);
     return () => {
-      window.removeEventListener("unload", handleTabClosing);
+      window.removeEventListener("visibilitychange", handleTabClosing);
     };
   });
 
