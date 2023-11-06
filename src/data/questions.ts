@@ -2,8 +2,8 @@ const SCIENCE = "SCI";
 const HISTORY = "HIS";
 const ART_AND_LITERATURE = "ART/LIT";
 // const MATH = "MATH";
-const RELIGION = "RELIG";
-const GEOGRAPHY = "GEOG";
+const RELIGION = "REL";
+const GEOGRAPHY = "GEO";
 const POP_CULTURE = "POP";
 const COMPUTER_SCIENCE = "CS";
 

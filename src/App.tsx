@@ -40,6 +40,7 @@ function App() {
   const openStats = useDialogStore((s) => s.setStatsOpen);
   const matches = useMediaQuery("(min-width:600px)");
 
+  // Running on unload or beforeunload is unreliable according to https://developer.chrome.com/articles/page-lifecycle-api/#legacy-lifecycle-apis-to-avoid
   useEffect(() => {
     window.addEventListener("visibilitychange", handleTabClosing);
     return () => {
@@ -97,7 +98,7 @@ function App() {
         </Grid>
         <Grid item xs={12} sx={{ px: 1, mb: 1 }}>
           {questionState[questionNumber] === "lost" && (
-            <Alert severity="info">
+            <Alert severity="info" sx={{ mb: 1, mx: 2 }}>
               Answer was {answer}
               {fullAnswer ? `, as in ${fullAnswer}` : ""}
             </Alert>
