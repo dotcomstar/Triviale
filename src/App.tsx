@@ -98,7 +98,7 @@ function App() {
         </Grid>
         <Grid item xs={12} sx={{ px: 1, mb: 1 }}>
           {questionState[questionNumber] === "lost" && (
-            <Alert severity="info">
+            <Alert severity="info" sx={{ mb: 1, mx: 2 }}>
               Answer was {answer}
               {fullAnswer ? `, as in ${fullAnswer}` : ""}
             </Alert>

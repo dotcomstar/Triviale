@@ -73,11 +73,11 @@ const ExpandableText = ({ children }: Props) => {
           sx={{
             mb: 1,
             width:
-              questionState[questionNumber] === "won"
-                ? customWidth
-                : `calc(min(100vw - 16px, ${answer.length * 52}px + ${
+              questionState[questionNumber] === "inProgress"
+                ? `calc(min(100vw - 16px, ${answer.length * 52}px + ${
                     (answer.length - 1) * 5
-                  }px))`,
+                  }px))`
+                : customWidth,
           }}
         >
           {gameState === "inProgress"
