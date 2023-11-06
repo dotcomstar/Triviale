@@ -37,10 +37,11 @@ const ExpandableText = ({ children }: Props) => {
     (acc, guess) => acc + (guess === "won" ? 1 : 0),
     0
   );
+  const customWidth = "calc(100% - 48px)";
 
   return (
     <Stack alignItems={"center"}>
-      <Paper elevation={2} sx={{ mb: 2, mx: 3, width: "calc(100% - 48px)" }}>
+      <Paper elevation={2} sx={{ mb: 2, mx: 3, width: customWidth }}>
         <Typography fontSize="large" m={2}>
           {summary}
         </Typography>
@@ -69,7 +70,15 @@ const ExpandableText = ({ children }: Props) => {
               ? "text"
               : "contained"
           }
-          sx={{ mb: 1, width: "calc(min(100vw - 16px, 500px - 16px))" }}
+          sx={{
+            mb: 1,
+            width:
+              questionState[questionNumber] === "won"
+                ? customWidth
+                : `calc(min(100vw - 16px, ${answer.length * 52}px + ${
+                    (answer.length - 1) * 5
+                  }px))`,
+          }}
         >
           {gameState === "inProgress"
             ? questionState[questionNumber] === "inProgress"
