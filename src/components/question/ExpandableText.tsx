@@ -39,8 +39,8 @@ const ExpandableText = ({ children }: Props) => {
   );
 
   return (
-    <Stack>
-      <Paper elevation={2} sx={{ mb: 2 }}>
+    <Stack alignItems={"center"}>
+      <Paper elevation={2} sx={{ mb: 2, mx: 3, width: "calc(100% - 48px)" }}>
         <Typography fontSize="large" m={2}>
           {summary}
         </Typography>
@@ -69,7 +69,7 @@ const ExpandableText = ({ children }: Props) => {
               ? "text"
               : "contained"
           }
-          sx={{ mb: 1 }}
+          sx={{ mb: 1, width: "calc(min(100vw - 16px, 500px - 16px))" }}
         >
           {gameState === "inProgress"
             ? questionState[questionNumber] === "inProgress"
