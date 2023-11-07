@@ -46,10 +46,10 @@ const GameRow = ({ guess, statuses = [] }: GameRowProps) => {
       ))}
       {emptyCells.map((_, i) => (
         <>
-          <Cell key={i} nthLetter={guess.length + i + 1} />
+          <Cell key={i + guess.length} nthLetter={guess.length + i + 1} />
           {i < answer.length - guess.length - 1 && (
             <Box
-              key={`after ${i}`}
+              key={`after ${i + guess.length}`}
               sx={{
                 width: "5px",
                 borderBottom: 2,
