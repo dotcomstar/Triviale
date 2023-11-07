@@ -31,7 +31,7 @@ const Cell = ({ nthLetter, value, status = undefined }: CellProps) => {
         border: status ? "none" : "2px solid",
         borderColor: `${value ? "primary.light" : "primary.dark"}`,
         borderRadius: 10,
-        height: matches ? "52px" : "42px",
+        height: matches ? "52px" : "48px",
         width: "52px",
         backgroundColor: status?.main,
         overflow: "clip",

@@ -1,4 +1,4 @@
-import { Alert, Grid, useMediaQuery } from "@mui/material";
+import { Alert, Grid, Paper, useMediaQuery } from "@mui/material";
 import { useEffect } from "react";
 import ThemedLayout from "./components/ThemedLayout";
 import GameGrid from "./components/grid/GameGrid";
@@ -93,18 +93,27 @@ function App() {
         <Grid item xs={12}>
           <ProgressBar />
         </Grid>
-        <Grid item xs={12} sx={{ mx: 0, pt: 1 }}>
-          <ExpandableText>{question}</ExpandableText>
-        </Grid>
-        <Grid item xs={12} sx={{ px: 1, mb: 1 }}>
-          {questionState[questionNumber] === "lost" && (
-            <Alert severity="info" sx={{ mb: 1, mx: 2 }}>
-              Answer was {answer}
-              {fullAnswer ? `, as in ${fullAnswer}` : ""}
-            </Alert>
-          )}
-          <GameGrid />
-        </Grid>
+        <Paper
+          elevation={0}
+          sx={{
+            maxHeight: matches ? "100vh" : "calc(100vh - 290px)",
+            overflow: "auto",
+          }}
+        >
+          <Grid item xs={12} sx={{ mx: 0, pt: 1 }}>
+            <ExpandableText>{question}</ExpandableText>
+          </Grid>
+          <Grid item xs={12} sx={{ px: 1, mb: 1 }}>
+            {questionState[questionNumber] === "lost" && (
+              <Alert severity="info" sx={{ mb: 1, mx: 2 }}>
+                Answer was {answer}
+                {fullAnswer ? `, as in ${fullAnswer}` : ""}
+              </Alert>
+            )}
+            <GameGrid />
+          </Grid>
+        </Paper>
+
         <Grid item xs={12} sx={{ px: 0 }} overflow={"scroll"}>
           <Keyboard
             onChar={(c) => {
