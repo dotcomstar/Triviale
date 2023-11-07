@@ -62,14 +62,21 @@ const StatsDialog = ({
     .map((question, i) => {
       let prevCorrect = false;
       let q = questionDetails(i);
+      let numSkipped = 0;
+      let countedSkipped = false;
       return (
         question
           .map((g) => {
             if (g.join("") === q[1] || prevCorrect) {
               prevCorrect = true;
+              if (!countedSkipped) {
+                countedSkipped = true;
+                points += numSkipped * 0.5;
+              }
               points += 1;
               return "✅";
             } else if (g.includes(SKIP_LETTER)) {
+              numSkipped += 1;
               return "⏭️";
             } else {
               return "❌";
