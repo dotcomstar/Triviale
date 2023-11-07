@@ -97,7 +97,7 @@ function App() {
           <Paper
             elevation={0}
             sx={{
-              maxHeight: matches ? "100vh" : "calc(100vh - 290px)",
+              maxHeight: matches ? "100dvh" : "calc(100dvh - 290px)",
               overflow: "auto",
             }}
           >
