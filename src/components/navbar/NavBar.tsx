@@ -1,17 +1,16 @@
-import { Box, Paper, Stack, Typography, useMediaQuery } from "@mui/material";
+import { Paper, Stack, Typography, useMediaQuery } from "@mui/material";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import React from "react";
+import { GAME_TITLE } from "../../constants/strings";
+import useDialogStore from "../../stores/dialogStore";
 import HamburgerDrawer from "./drawer/HamburgerDrawer";
 import HelpButton from "./help/HelpButton";
 import HelpDialog from "./help/HelpDialog";
 import SettingsButton from "./settings/SettingsButton";
-import StatsButton from "./stats/StatsButton";
-import logo from "/jacks_its_ac_design.webp";
-import useDialogStore from "../../stores/dialogStore";
-import StatsDialog from "./stats/StatsDialog";
 import SettingsDialog from "./settings/SettingsDialog";
-import { GAME_TITLE, LOGO_ALT } from "../../constants/strings";
+import StatsButton from "./stats/StatsButton";
+import StatsDialog from "./stats/StatsDialog";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
