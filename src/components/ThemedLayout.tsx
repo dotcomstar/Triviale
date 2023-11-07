@@ -70,9 +70,6 @@ const ThemedLayout = ({ children }: Props) => {
           h3: {
             fontFamily: "Crimson, Roboto, Arial, sans-serif",
           },
-          body2: {
-            fontFamily: "Crimson, Roboto, Arial, sans-serif",
-          },
         },
         components: {
           MuiCssBaseline: {

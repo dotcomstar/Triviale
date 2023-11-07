@@ -10,6 +10,7 @@ export interface CustomDialogProps {
   ariaLabeledBy: string;
   children: ReactNode;
   dialogTitle?: string;
+  fullScreen?: boolean;
 }
 
 const CustomDialog = ({
@@ -20,6 +21,7 @@ const CustomDialog = ({
   children,
   ariaLabeledBy,
   dialogTitle = "",
+  fullScreen = false,
 }: CustomDialogProps) => {
   const handleClose = () => {
     onClose();
@@ -34,6 +36,7 @@ const CustomDialog = ({
       aria-labelledby={ariaLabeledBy}
       keepMounted
       fullWidth
+      fullScreen={fullScreen}
       maxWidth="sm"
       sx={{ zIndex: "modal", mx: 0 }}
     >

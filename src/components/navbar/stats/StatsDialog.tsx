@@ -109,6 +109,7 @@ const StatsDialog = ({
       ariaDescribedBy={STATS_DIALOG_ARIA}
       ariaLabeledBy={STATISTICS_TITLE}
       dialogTitle={STATISTICS_TITLE}
+      fullScreen
     >
       <Snackbar
         open={showCopied}
