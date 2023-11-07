@@ -18,12 +18,7 @@ const GameRow = ({ guess, statuses = [] }: GameRowProps) => {
   const emptyCells = Array.from(Array(answer.length - guess.length));
 
   return (
-    <Stack
-      direction="row"
-      justifyContent="center"
-      alignItems="center"
-      // spacing="5px"
-    >
+    <Stack direction="row" justifyContent="center" alignItems="center">
       {guess.map((letter, i) => (
         <>
           {i !== 0 && (
