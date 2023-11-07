@@ -1,4 +1,5 @@
 import { Alert, Grid, useMediaQuery } from "@mui/material";
+import { useEffect } from "react";
 import ThemedLayout from "./components/ThemedLayout";
 import GameGrid from "./components/grid/GameGrid";
 import Keyboard from "./components/keyboard/Keyboard";
@@ -6,13 +7,12 @@ import NavBar from "./components/navbar/NavBar";
 import ProgressBar from "./components/progressBar/ProgressBar";
 import ExpandableText from "./components/question/ExpandableText";
 import { MAX_CHALLENGES } from "./constants/settings";
+import useDailyIndex, { getPositiveIndex } from "./hooks/useDailyIndex";
 import useQuestions from "./hooks/useQuestions";
 import useCurrGuessStore from "./stores/currGuessStore";
-import useGameStateStore from "./stores/gameStateStore";
-import useDailyIndex, { getPositiveIndex } from "./hooks/useDailyIndex";
-import useHardModeStore from "./stores/hardModeStore";
 import useDialogStore from "./stores/dialogStore";
-import { useEffect } from "react";
+import useGameStateStore from "./stores/gameStateStore";
+import useHardModeStore from "./stores/hardModeStore";
 
 function App() {
   const { data } = useQuestions();
@@ -37,7 +37,7 @@ function App() {
   const question = data[safeIndex].question;
   const answer = data[safeIndex].answer.toLocaleUpperCase();
   const fullAnswer = data[safeIndex].fullAnswer;
-  const openStats = useDialogStore((s) => s.setStatsOpen);
+  const { setStatsOpen } = useDialogStore();
   const matches = useMediaQuery("(min-width:600px)");
 
   // Running on unload or beforeunload is unreliable according to https://developer.chrome.com/articles/page-lifecycle-api/#legacy-lifecycle-apis-to-avoid
@@ -158,7 +158,7 @@ function App() {
                 } else {
                   loseGame();
                 }
-                openStats(true);
+                setStatsOpen(true);
                 return;
               }
               if (

@@ -7,9 +7,13 @@ interface HighContrastStore {
 }
 
 const useHighContrastStore = create<HighContrastStore>((set) => ({
-  highContrast: false,
-  toggleHighContrast: () =>
-    set((state) => ({ highContrast: !state.highContrast })),
+  highContrast: localStorage.getItem("highContrast") === "true",
+  toggleHighContrast: () => {
+    set((state) => {
+      localStorage.setItem("highContrast", (!state.highContrast).toString());
+      return { highContrast: !state.highContrast };
+    });
+  },
 }));
 
 if (process.env.NODE_ENV === "development")
