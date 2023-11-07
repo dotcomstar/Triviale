@@ -42,22 +42,15 @@ const NavBar = () => {
         justifyContent="space-between"
         alignItems="center"
         px="calc(max(3vw,20px))"
+        // sx={{ borderBottom: 1, borderColor: "darkgray" }}
       >
         <Stack direction="row" alignItems="center">
           <HamburgerDrawer size={matches ? "large" : "small"} />
-          {matches && <Paper elevation={0} sx={{ width: "43px" }} />}
+          {matches && (
+            <Paper elevation={0} sx={{ width: "calc(10px + min(8vw,58px))" }} />
+          )}
         </Stack>
         <Stack direction="row" alignItems="center">
-          <Box
-            component="img"
-            sx={{
-              width: "calc(min(8vw,58px))",
-              height: "calc(min(8vw,58px))",
-              borderRadius: 2.6,
-            }}
-            alt={LOGO_ALT}
-            src={logo}
-          />
           <Typography translate="no" variant="h3" fontSize={"1.5REM"}>
             {GAME_TITLE}
           </Typography>
