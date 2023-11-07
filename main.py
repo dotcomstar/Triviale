@@ -11,18 +11,39 @@ __email__      = "jetrlee@gmail.com"
 __status__     = "Development"
 
 import json
+import boto3
+
+client = boto3.client('dynamodb')
 
 def lambda_handler(event, context):
-  courses = []
   response =  {
     "isBase64Encoded": True,
     "statusCode": 200,
   }
+  date = None
   if 'queryStringParameters' in event:
-    courses = event['queryStringParameters']['courses'].split(',')
+    date = event['queryStringParameters']['date']
   else:
-    courses = event['courses']
-  response['body'] = json.dumps(main(courses=courses, is_dev=False))  # This is called by an AWS Lambda function.
+    date = event['date']
+  
+  # [VULN] SQL Injection  
+  data = client.get_item(
+    TableName='trivialle-questions',
+    Key={
+        'date': {
+          'S': date
+        }
+    }
+  )
+  response = {
+      'statusCode': 200,
+      'body': json.dumps(data),
+      'headers': {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+  }
+
   return response
 
 def main(is_dev=True):
