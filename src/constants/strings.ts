@@ -28,7 +28,7 @@ export const SKIP_BUTTON_TEXT = "Reveal the next clue";
 export const NEXT_QUESTIONS_TEXT = "Next Question";
 
 export const HARD_MODE_ALERT_MESSAGE =
-  "Hard Mode can be enabled only at the start!";
+  "Hard Mode can be toggled only at the start of the game!";
 export const HARD_MODE_LABEL = "Hard Mode";
 export const HARD_MODE_DESCRIPTION = "Only one answer per question";
 export const DARK_MODE_LABEL = "Dark Theme";
