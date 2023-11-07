@@ -34,6 +34,7 @@ const Cell = ({ nthLetter, value, status = undefined }: CellProps) => {
         height: matches ? "52px" : "42px",
         width: "52px",
         backgroundColor: status?.main,
+        overflow: "clip",
       }}
     >
       <Typography
