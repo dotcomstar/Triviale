@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import React, { ReactNode, useEffect } from "react";
 import useHighContrastStore from "../stores/highContrastStore";
+import CrimsonWoff2 from "/src/fonts/crimson-text-v19-latin-regular.woff2";
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
@@ -65,6 +66,28 @@ const ThemedLayout = ({ children }: Props) => {
   let theme = React.useMemo(
     () =>
       createTheme({
+        typography: {
+          h3: {
+            fontFamily: "Crimson, Roboto, Arial, sans-serif",
+          },
+          body2: {
+            fontFamily: "Crimson, Roboto, Arial, sans-serif",
+          },
+        },
+        components: {
+          MuiCssBaseline: {
+            styleOverrides: `
+              @font-face {
+                font-family: 'Crimson';
+                font-style: normal;
+                font-display: swap;
+                font-weight: 400;
+                src: local('Crimson'), local('Arvo-Regular'), url(${CrimsonWoff2}) format('woff2');
+                unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
+              }
+            `,
+          },
+        },
         palette: {
           mode: mode === "dark" ? "dark" : "light",
           ...(mode === "light"
