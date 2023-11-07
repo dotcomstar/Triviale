@@ -42,7 +42,6 @@ const NavBar = () => {
         justifyContent="space-between"
         alignItems="center"
         px="calc(max(3vw,20px))"
-        // sx={{ borderBottom: 1, borderColor: "darkgray" }}
       >
         <Stack direction="row" alignItems="center">
           <HamburgerDrawer size={matches ? "large" : "small"} />
