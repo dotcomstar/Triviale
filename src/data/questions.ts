@@ -205,7 +205,6 @@ const questions: Question[] = [
   {
     question: `This location lies south of the Kaibab Plateau, and is home to a group of basement rocks named for Vishnu. This landmark is home to a "house" named for the Hopi people, whose myths described its creation.  The Hualapai tribe operates a glass "skywalk" above this location, which formed due to erosion from the Colorado River. Many tourists drive to this location from cities like Flagstaff and Phoenix. For 10 points, name this large gorge in Arizona.`,
     answer: "Grand Canyon",
-    fullAnswer: "The Grand Canyon",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2004N.pdf",
     category: GEOGRAPHY,
   },
@@ -268,7 +267,6 @@ const questions: Question[] = [
   {
     question: `John Keats wrote a poem titled "On Sitting Down to Read [this play] Once Again." In this play, a character declares "as flies to wanton boys are we to the gods; they kill us for their sport." A character disguised as Tom O'Bedlam leads Gloucester off an imaginary cliff in this play. This play opens with the flattering of the title character by his daughters Regan and Goneril. Name this Shakespearean tragedy about the title monarch, who exiles his daughter Cordelia.`,
     answer: "King Lear",
-    fullAnswer: "King Lear",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
     category: ART_AND_LITERATURE,
   },
@@ -287,7 +285,6 @@ const questions: Question[] = [
   {
     question: `One performer in this ballet stands en pointe while performing 32 fouettés in a pas de deux. It's not by Mozart, but this ballet's score was edited by Riccardo Drigo for its revival by Lev Ivanov and Marius Petipa.  Lead ballerinas playing the role of this ballet's heroine often wear a black dress to also perform Odile, the daughter of the evil sorcerer von Rothbart. Name this Tchaikovsky ballet, in which Odette is cursed to turn into the title bird.`,
     answer: "Swan Lake",
-    fullAnswer: "Swan Lake",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
     category: ART_AND_LITERATURE,
   },

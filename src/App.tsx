@@ -35,7 +35,8 @@ function App() {
   const dailyIndex = useDailyIndex();
   const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
   const question = data[safeIndex].question;
-  const answer = data[safeIndex].answer.toLocaleUpperCase().replace(/\s+/g, "");
+  const answerWithSpaces = data[safeIndex].answer.toLocaleUpperCase();
+  const answer = answerWithSpaces.replace(/\s+/g, "");
   const fullAnswer = data[safeIndex].fullAnswer;
   const { setStatsOpen } = useDialogStore();
   const matches = useMediaQuery("(min-width:600px)");
@@ -107,7 +108,7 @@ function App() {
             <Grid item xs={12} sx={{ px: 1, mb: 1 }}>
               {questionState[questionNumber] === "lost" && (
                 <Alert severity="info" sx={{ mb: 1, mx: 2 }}>
-                  Answer was {answer}
+                  Answer was {answerWithSpaces}
                   {fullAnswer ? `, as in ${fullAnswer}` : ""}
                 </Alert>
               )}
