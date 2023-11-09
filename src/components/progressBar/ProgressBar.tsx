@@ -5,7 +5,7 @@ import useGameStateStore from "../../stores/gameStateStore";
 
 const ProgressBar = () => {
   const resetGuess = useCurrGuessStore((s) => s.resetGuess);
-  const { moveToQuestion, questionState } = useGameStateStore();
+  const { moveToQuestion, questionState, guesses } = useGameStateStore();
 
   return (
     <Stack
@@ -29,7 +29,12 @@ const ProgressBar = () => {
             disableElevation
             color={
               questionState[i] === "inProgress"
-                ? undefined
+                ? guesses[i].reduce(
+                    (acc, guess) => acc + (guess.length > 0 ? 1 : 0),
+                    0
+                  ) > 0
+                  ? "warning"
+                  : undefined
                 : questionState[i] === "won"
                 ? "success"
                 : "error"
