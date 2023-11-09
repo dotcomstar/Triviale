@@ -12,7 +12,8 @@ const GameGrid = () => {
   const questionNumber = useGameStateStore((s) => s.questionNumber);
   const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
   const question = useQuestionByID(safeIndex);
-  const answer = question?.answer.toLocaleUpperCase()!;
+  const answerWithSpaces = question?.answer.toLocaleUpperCase()!;
+  const answer = answerWithSpaces.replace(/\s+/g, "")!;
   const currGuess = useCurrGuessStore((s) => s.guess);
   const guesses = useGameStateStore((s) => s.guesses);
   const theme = useTheme();

@@ -35,7 +35,7 @@ function App() {
   const dailyIndex = useDailyIndex();
   const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
   const question = data[safeIndex].question;
-  const answer = data[safeIndex].answer.toLocaleUpperCase();
+  const answer = data[safeIndex].answer.toLocaleUpperCase().replace(/\s+/g, "");
   const fullAnswer = data[safeIndex].fullAnswer;
   const { setStatsOpen } = useDialogStore();
   const matches = useMediaQuery("(min-width:600px)");
