@@ -48,7 +48,7 @@ const StatsDialog = ({
   const questionDetails = (id: number) => {
     const safeIndex = getPositiveIndex(dailyIndex + id);
     const q = useQuestionByID(safeIndex);
-    return [q?.category!, q?.answer.toLocaleUpperCase()!];
+    return [q?.category!, q?.answer.toLocaleUpperCase()!.replace(/\s+/g, "")];
   };
 
   let points = questionState.reduce(
