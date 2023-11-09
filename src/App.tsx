@@ -91,7 +91,7 @@ function App() {
         <Grid item xs={12}>
           <NavBar />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} px={1}>
           <ProgressBar />
         </Grid>
         <Grid item xs={12}>
