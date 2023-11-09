@@ -14,7 +14,8 @@ const GameRow = ({ guess, statuses = [] }: GameRowProps) => {
   const questionNumber = useGameStateStore((s) => s.questionNumber);
   const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
   const question = useQuestionByID(safeIndex);
-  const answer = question?.answer.toLocaleUpperCase()!;
+  const answerWithSpaces = question?.answer.toLocaleUpperCase()!;
+  const answer = answerWithSpaces.replace(/\s+/g, "")!;
   const emptyCells = Array.from(Array(answer.length - guess.length));
   const theme = useTheme();
 
@@ -27,8 +28,8 @@ const GameRow = ({ guess, statuses = [] }: GameRowProps) => {
             <Box
               key={`after ${i}`}
               sx={{
-                width: "5px",
-                borderBottom: 2,
+                width: answerWithSpaces[i + 1] === " " ? "10px" : "5px",
+                borderBottom: answerWithSpaces[i + 1] === " " ? 0 : 2,
                 borderColor:
                   statuses[i] === theme.palette.success &&
                   statuses[i + 1] === theme.palette.success
@@ -51,8 +52,12 @@ const GameRow = ({ guess, statuses = [] }: GameRowProps) => {
             <Box
               key={`after ${i + guess.length}`}
               sx={{
-                width: "5px",
-                borderBottom: 2,
+                width:
+                  answerWithSpaces[guess.length + i + 1] === " "
+                    ? "10px"
+                    : "5px",
+                borderBottom:
+                  answerWithSpaces[guess.length + i + 1] === " " ? 0 : 2,
                 borderColor: "primary.dark",
               }}
             />

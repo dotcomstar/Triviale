@@ -27,7 +27,9 @@ export const getStatus = (val: string | undefined) => {
   const dailyIndex = useDailyIndex();
   const questionNumber = useGameStateStore((s) => s.questionNumber);
   const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
-  const answer = useQuestionByID(safeIndex)?.answer.toLocaleUpperCase();
+  const answerWithSpaces =
+    useQuestionByID(safeIndex)?.answer.toLocaleUpperCase()!;
+  const answer = answerWithSpaces.replace(/\s+/g, "")!;
   const guesses = useGameStateStore((s) => s.guesses);
 
   if (

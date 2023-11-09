@@ -32,7 +32,7 @@ const ExpandableText = ({ children }: Props) => {
   const randomIndex = Math.floor(Math.random() * WIN_MESSAGES.length);
   const dailyIndex = useDailyIndex();
   const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
-  const answer = useQuestionByID(safeIndex)?.answer!;
+  const answer = useQuestionByID(safeIndex)?.answer!.replace(/\s+/g, "")!;
   const numWon = questionState.reduce(
     (acc, guess) => acc + (guess === "won" ? 1 : 0),
     0
