@@ -7,6 +7,7 @@ interface CurrGuessStore {
   deleteChar: () => void;
   addChar: (char: string) => void;
   resetGuess: () => void;
+  importGuess: (cachedGuess: string[]) => void;
 }
 
 const useCurrGuessStore = create<CurrGuessStore>((set) => ({
@@ -23,6 +24,8 @@ const useCurrGuessStore = create<CurrGuessStore>((set) => ({
       index: state.index + 1,
     })),
   resetGuess: () => set(() => ({ guess: [], index: 0 })),
+  importGuess: (cachedGuess: string[]) =>
+    set(() => ({ guess: cachedGuess, index: cachedGuess.length })),
 }));
 
 if (process.env.NODE_ENV === "development")

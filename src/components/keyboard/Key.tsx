@@ -10,8 +10,9 @@ type Props = {
   width: string;
   isRevealing?: boolean;
   hasNext?: boolean;
-  status?: ButtonOwnProps["color"];
   id?: string;
+  status?: ButtonOwnProps["color"];
+  autoFocus?: boolean;
 };
 
 const Key = ({
@@ -20,9 +21,10 @@ const Key = ({
   onClick,
   width,
   isRevealing,
+  id,
   status = undefined,
   fontSize = 20,
-  id,
+  autoFocus = false,
 }: Props) => {
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     onClick(value);
@@ -47,6 +49,7 @@ const Key = ({
       color={status}
       id={id}
       disableFocusRipple={!!id}
+      autoFocus={autoFocus}
     >
       <Typography sx={{ fontWeight: "bold", fontSize: fontSize }}>
         {children || value}

@@ -23,28 +23,33 @@ const getKeyWidth = (numKeys: number, multiplier: number) => {
 };
 
 // TODO: Speed up getting status
-export const getStatus = (val: string | undefined) => {
+const getStatus = (val: string | undefined) => {
   const dailyIndex = useDailyIndex();
   const questionNumber = useGameStateStore((s) => s.questionNumber);
+  const guessNumber = useGameStateStore((s) => s.guessNumber);
   const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
   const answerWithSpaces =
     useQuestionByID(safeIndex)?.answer.toLocaleUpperCase()!;
   const answer = answerWithSpaces.replace(/\s+/g, "")!;
   const guesses = useGameStateStore((s) => s.guesses);
 
+  // If the letter has been used thus far in a submitted guess
   if (
     val &&
     guesses[questionNumber].reduce(
-      (accumulator, guess) => accumulator || guess.includes(val),
+      (accumulator, guess, i) =>
+        accumulator || (guess.includes(val) && i < guessNumber[questionNumber]),
       false
     )
   ) {
     if (answer?.includes(val)) {
       if (
         guesses[questionNumber].reduce(
-          (accumulator, guess) =>
+          (accumulator, guess, i) =>
             accumulator ||
-            guess.filter((c, i) => c === val && c === answer[i]).length !== 0,
+            (i < guessNumber[questionNumber] &&
+              guess.filter((c, i) => c === val && c === answer[i]).length !==
+                0),
           false
         )
       ) {
@@ -83,6 +88,7 @@ const Keyboard = ({
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
       if (e.key === "Backspace") {
+        document.getElementById("ENTER_KEY")?.focus();
         onDelete();
       } else {
         const key = e.key.toLocaleUpperCase();
@@ -138,6 +144,7 @@ const Keyboard = ({
           value="ENTER"
           onClick={onClick}
           id={"ENTER_KEY"}
+          autoFocus
         >
           {ENTER_TEXT}
         </Key>

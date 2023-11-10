@@ -4,8 +4,9 @@ import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
 
 const ProgressBar = () => {
-  const resetGuess = useCurrGuessStore((s) => s.resetGuess);
-  const { moveToQuestion, questionState, guesses } = useGameStateStore();
+  const importGuess = useCurrGuessStore((s) => s.importGuess);
+  const { moveToQuestion, questionState, guesses, guessNumber } =
+    useGameStateStore();
 
   return (
     <Stack
@@ -21,16 +22,16 @@ const ProgressBar = () => {
           <>
             <Button
               key={i}
-              // fullWidth
               variant="contained"
               onClick={() => {
-                resetGuess();
                 moveToQuestion(i);
+                importGuess(guesses[i][guessNumber[i]]);
               }}
               disableElevation
               color={
                 questionState[i] === "inProgress"
-                  ? guesses[i].reduce(
+                  ? // Check if game has been started yet
+                    guesses[i].reduce(
                       (acc, guess) => acc + (guess.length > 0 ? 1 : 0),
                       0
                     ) > 0

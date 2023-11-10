@@ -8,7 +8,7 @@ export interface GameStateImport {
   gameState: WinState;
   questionState: WinState[];
   questionNumber: number;
-  guessNumber: number;
+  guessNumber: number[];
   guesses: string[][][];
 }
 
@@ -16,8 +16,9 @@ export interface GameStateStore {
   gameState: WinState;
   questionState: WinState[];
   questionNumber: number;
-  guessNumber: number;
+  guessNumber: number[];
   makeGuess: (guess: string[]) => void;
+  cacheGuess: (guess: string[]) => void;
   moveToQuestion: (id: number) => void;
   moveToNextQuestion: () => void;
   winQuestion: (id: number) => void;
@@ -32,7 +33,7 @@ const useGameStateStore = create<GameStateStore>((set) => ({
   gameState: "inProgress",
   questionState: Array(QUESTIONS_PER_DAY).fill("inProgress"),
   questionNumber: 0,
-  guessNumber: 0,
+  guessNumber: Array(QUESTIONS_PER_DAY).fill(0),
   guesses: [
     Array(MAX_CHALLENGES).fill([]),
     Array(MAX_CHALLENGES).fill([]),
@@ -63,27 +64,39 @@ const useGameStateStore = create<GameStateStore>((set) => ({
     }));
   },
   moveToQuestion: (id: number) =>
-    set((state) => ({
+    set(() => ({
       questionNumber: id,
-      guessNumber: state.guesses[id].reduce(
-        (acc, guess) => acc + (guess.length > 0 ? 1 : 0),
-        0
-      ),
     })),
   moveToNextQuestion: () =>
     set((state) => ({
       questionNumber: state.questionState.indexOf("inProgress"),
-      guessNumber: state.guesses[
-        state.questionState.indexOf("inProgress")
-      ].reduce((acc, guess) => acc + (guess.length > 0 ? 1 : 0), 0),
     })),
   makeGuess: (guess: string[]) => {
     set((state) => ({
-      guessNumber: state.guessNumber + 1,
+      guessNumber: [
+        ...state.guessNumber.map((num, i) =>
+          i === state.questionNumber ? num + 1 : num
+        ),
+      ],
       guesses: [
         ...state.guesses.map((val, i) =>
           i === state.questionNumber
-            ? val.map((g, ig) => (ig === state.guessNumber ? guess : g))
+            ? val.map((g, ig) =>
+                ig === state.guessNumber[state.questionNumber] ? guess : g
+              )
+            : val
+        ),
+      ],
+    }));
+  },
+  cacheGuess: (guess: string[]) => {
+    set((state) => ({
+      guesses: [
+        ...state.guesses.map((val, i) =>
+          i === state.questionNumber
+            ? val.map((g, ig) =>
+                ig === state.guessNumber[state.questionNumber] ? guess : g
+              )
             : val
         ),
       ],

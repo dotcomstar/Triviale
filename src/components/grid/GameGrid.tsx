@@ -18,7 +18,7 @@ const GameGrid = () => {
   const guesses = useGameStateStore((s) => s.guesses);
   const theme = useTheme();
 
-  // TODO: Memoize and possible export this function?
+  // TODO: Memoize and possibly export this function?
   const getStatuses = (guess: string[]) => {
     const answerArr = answer.split("");
     const statuses = Array(guess.length).fill(theme.palette.error); // Fill with 'incorrect' color by default
@@ -65,7 +65,7 @@ const GameGrid = () => {
         (q, i) =>
           i === questionNumber
             ? q.map((g, gi) =>
-                gi === guessNumber ? (
+                gi === guessNumber[i] ? (
                   // Current guess
                   <GameRow guess={currGuess} key={gi} />
                 ) : (

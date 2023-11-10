@@ -17,7 +17,8 @@ import useHardModeStore from "./stores/hardModeStore";
 function App() {
   const { data } = useQuestions();
   const hardMode = useHardModeStore((s) => s.hardMode);
-  const { addChar, deleteChar, index, guess, resetGuess } = useCurrGuessStore();
+  const { addChar, deleteChar, index, guess, resetGuess, importGuess } =
+    useCurrGuessStore();
   const {
     questionNumber,
     makeGuess,
@@ -31,6 +32,7 @@ function App() {
     loseQuestion,
     guesses,
     importGame,
+    cacheGuess,
   } = useGameStateStore();
   const dailyIndex = useDailyIndex();
   const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
@@ -79,6 +81,11 @@ function App() {
         guesses: pastGuesses["guesses"],
       };
       importGame(pastGame);
+      importGuess(
+        pastGame.guesses[pastGame.questionNumber][
+          pastGame.guessNumber[pastGame.questionNumber]
+        ]
+      );
     } else {
       // No previous guesses
       console.log("No previous guesses");
@@ -126,6 +133,7 @@ function App() {
                 questionState[questionNumber] === "inProgress"
               ) {
                 addChar(c);
+                cacheGuess([...guess, c]);
               }
             }}
             onDelete={() => {
@@ -145,7 +153,10 @@ function App() {
                   document.getElementById("ExpandableButton")?.focus();
                   finalGuess = true;
                   won = true;
-                } else if (guessNumber >= MAX_CHALLENGES - 1 || hardMode) {
+                } else if (
+                  guessNumber[questionNumber] >= MAX_CHALLENGES - 1 ||
+                  hardMode
+                ) {
                   loseQuestion(questionNumber);
                   document.getElementById("ExpandableButton")?.focus();
                   finalGuess = true;
