@@ -17,7 +17,8 @@ import useHardModeStore from "./stores/hardModeStore";
 function App() {
   const { data } = useQuestions();
   const hardMode = useHardModeStore((s) => s.hardMode);
-  const { addChar, deleteChar, index, guess, resetGuess } = useCurrGuessStore();
+  const { addChar, deleteChar, index, guess, resetGuess, importGuess } =
+    useCurrGuessStore();
   const {
     questionNumber,
     makeGuess,
@@ -31,11 +32,13 @@ function App() {
     loseQuestion,
     guesses,
     importGame,
+    cacheGuess,
   } = useGameStateStore();
   const dailyIndex = useDailyIndex();
   const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
   const question = data[safeIndex].question;
-  const answer = data[safeIndex].answer.toLocaleUpperCase().replace(/\s+/g, "");
+  const answerWithSpaces = data[safeIndex].answer.toLocaleUpperCase();
+  const answer = answerWithSpaces.replace(/\s+/g, "");
   const fullAnswer = data[safeIndex].fullAnswer;
   const { setStatsOpen } = useDialogStore();
   const matches = useMediaQuery("(min-width:600px)");
@@ -78,6 +81,11 @@ function App() {
         guesses: pastGuesses["guesses"],
       };
       importGame(pastGame);
+      importGuess(
+        pastGame.guesses[pastGame.questionNumber][
+          pastGame.guessNumber[pastGame.questionNumber]
+        ]
+      );
     } else {
       // No previous guesses
       console.log("No previous guesses");
@@ -90,7 +98,7 @@ function App() {
         <Grid item xs={12}>
           <NavBar />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} px={1}>
           <ProgressBar />
         </Grid>
         <Grid item xs={12}>
@@ -107,7 +115,7 @@ function App() {
             <Grid item xs={12} sx={{ px: 1, mb: 1 }}>
               {questionState[questionNumber] === "lost" && (
                 <Alert severity="info" sx={{ mb: 1, mx: 2 }}>
-                  Answer was {answer}
+                  Answer was {answerWithSpaces}
                   {fullAnswer ? `, as in ${fullAnswer}` : ""}
                 </Alert>
               )}
@@ -125,11 +133,13 @@ function App() {
                 questionState[questionNumber] === "inProgress"
               ) {
                 addChar(c);
+                cacheGuess([...guess, c]);
               }
             }}
             onDelete={() => {
               console.log("delete");
               deleteChar();
+              cacheGuess(guess.filter((_, i) => i !== guess.length - 1));
             }}
             onEnter={() => {
               console.log("enter");
@@ -144,7 +154,10 @@ function App() {
                   document.getElementById("ExpandableButton")?.focus();
                   finalGuess = true;
                   won = true;
-                } else if (guessNumber >= MAX_CHALLENGES - 1 || hardMode) {
+                } else if (
+                  guessNumber[questionNumber] >= MAX_CHALLENGES - 1 ||
+                  hardMode
+                ) {
                   loseQuestion(questionNumber);
                   document.getElementById("ExpandableButton")?.focus();
                   finalGuess = true;

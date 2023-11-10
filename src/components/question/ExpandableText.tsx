@@ -18,12 +18,13 @@ interface Props {
 
 const ExpandableText = ({ children }: Props) => {
   if (!children) return null;
-  const guessNumber = useGameStateStore((s) => s.guessNumber) + 1;
+  const { gameState, moveToNextQuestion, questionNumber } = useGameStateStore();
+  const guessNumber =
+    useGameStateStore((s) => s.guessNumber[questionNumber]) + 1;
   const length = children.length / MAX_CHALLENGES; // TODO: Split questions more intelligently.
   const makeGuess = useGameStateStore((s) => s.makeGuess);
   const resetGuess = useCurrGuessStore((s) => s.resetGuess);
   const questionState = useGameStateStore((s) => s.questionState);
-  const { gameState, moveToNextQuestion, questionNumber } = useGameStateStore();
   const summary =
     guessNumber < MAX_CHALLENGES &&
     questionState[questionNumber] === "inProgress"
