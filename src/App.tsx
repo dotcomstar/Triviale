@@ -139,6 +139,7 @@ function App() {
             onDelete={() => {
               console.log("delete");
               deleteChar();
+              cacheGuess(guess.filter((_, i) => i !== guess.length - 1));
             }}
             onEnter={() => {
               console.log("enter");
