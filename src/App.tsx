@@ -84,11 +84,13 @@ function App() {
         guesses: pastGuesses["guesses"],
       };
       importGame(pastGame);
-      importGuess(
-        pastGame.guesses[pastGame.questionNumber][
-          pastGame.guessNumber[pastGame.questionNumber]
-        ]
-      );
+      if (pastGame.gameState === "inProgress") {
+        importGuess(
+          pastGame.guesses[pastGame.questionNumber][
+            pastGame.guessNumber[pastGame.questionNumber]
+          ]
+        );
+      }
     } else {
       // No previous guesses
       console.log("No previous guesses");
