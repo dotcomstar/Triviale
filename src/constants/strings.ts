@@ -1,6 +1,8 @@
 export const GAME_TITLE = "Trivialle";
 export const LOGO_ALT = `${GAME_TITLE} Logo`;
 export const GAME_URL = "https://trivialle.vercel.app/";
+export const CONTACT_EMAIL = "jetrlee@gmail.com";
+export const ABOUT_AUTHOR_URL = "https://jetrlee.vercel.app/";
 
 import { MAX_CHALLENGES, QUESTIONS_PER_DAY } from "./settings";
 
@@ -71,3 +73,7 @@ export const DATEPICKER_TODAY_TEXT = "today";
 export const ARCHIVE_GAMEDATE_TEXT = "Game date";
 
 export const PLACEHOLDER_TEXT = "Coming soon";
+
+export const FEEDBACK_TEXT = "Feedback";
+export const BUG_REPORT_TEXT = "Bug Report";
+export const EMAIL_TEXT = "Email";
