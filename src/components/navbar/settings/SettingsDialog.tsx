@@ -1,12 +1,24 @@
-import { DialogProps, Divider, List, ListItem } from "@mui/material";
-import ColorModeSwitch from "./ColorModeSwitch";
-import HardModeSwitch from "./HardModeSwitch";
-import HighContrastSwitch from "./HighContrastSwitch";
-import CustomDialog from "../CustomDialog";
 import {
+  DialogProps,
+  Divider,
+  Link,
+  List,
+  ListItem,
+  Stack,
+  Typography,
+} from "@mui/material";
+import {
+  ABOUT_AUTHOR_URL,
+  BUG_REPORT_TEXT,
+  FEEDBACK_TEXT,
   SETTINGS_DIALOG_ARIA,
   SETTINGS_TITLE,
 } from "../../../constants/strings";
+import CustomDialog from "../CustomDialog";
+import ColorModeSwitch from "./ColorModeSwitch";
+import EmailButton from "./EmailButton";
+import HardModeSwitch from "./HardModeSwitch";
+import HighContrastSwitch from "./HighContrastSwitch";
 
 export interface SettingsDialogProps {
   open: boolean;
@@ -42,6 +54,34 @@ const SettingsDialog = ({
         <Divider component="li" sx={{ mx: 2 }} />
         <ListItem>
           <HighContrastSwitch />
+        </ListItem>
+        <Divider component="li" sx={{ mx: 2 }} />
+        <ListItem>
+          <EmailButton text={FEEDBACK_TEXT} />
+        </ListItem>
+        <Divider component="li" sx={{ mx: 2 }} />
+        <ListItem>
+          <EmailButton text={BUG_REPORT_TEXT} />
+        </ListItem>
+        <Divider component="li" sx={{ mx: 2 }} />
+        <ListItem>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            width={"100%"}
+          >
+            <Typography>About the Author</Typography>
+            <Link
+              href={ABOUT_AUTHOR_URL}
+              title={`About the author`}
+              color={"inherit"}
+              target="_blank"
+              rel="noopener"
+            >
+              URL
+            </Link>
+          </Stack>
         </ListItem>
       </List>
     </CustomDialog>
