@@ -5,7 +5,7 @@ const ART_AND_LITERATURE = "ART/LIT";
 const RELIGION = "REL";
 const GEOGRAPHY = "GEO";
 const POP_CULTURE = "POP";
-// const COMPUTER_SCIENCE = "CS";
+const COMPUTER_SCIENCE = "CS";
 const SPORTS = "SPO";
 
 export interface Question {
@@ -320,62 +320,163 @@ const questions: Question[] = [
   //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2004N.pdf",
   //   category: HISTORY,
   // },
-  {
-    question: `Samuel Wragg exchanged medical supplies for prisoners with this man after he set up a blockade around Charles Town in South Carolina. Despite parting ways with Stede Bonnet, this man returned to his old life with the Adventure, the successor to the Queen Anne's Revenge. Though his actual name is unknown, this man's name was often given as Edward Teach. Name this pirate, who was nicknamed for his dark facial hair.`,
-    answer: "Blackbeard",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
-    category: HISTORY,
-  },
-  {
-    question: `One work by this composer features a bass echo a B-flat major melody played by the trombone in the "Tuba Mirum" section. This composer's requiem in D minor was commissioned by Count von Walsegg and completed by Franz Süssmayr after his death in 1791. The only two symphonies in a minor key by this composer are the "Little" and "Great" G minor symphonies. Name this Austrian composer of the "Jupiter" Symphony, The Magic Flute, and  Turkish March.`,
-    answer: "Mozart",
-    fullAnswer: "Wolfgang Amadeus Mozart",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
-    category: ART_AND_LITERATURE,
-  },
-  {
-    question: `In this tissue, calsequestrin binds to calcium ions in the sarcoplasmic reticulum, which, when released, binds to troponin. The functional unit of this tissue is the sarcomere. This tissue contains the proteins actin and myosin. Types of this tissue include smooth and striated. Name this tissue attached to bone that is responsible for contraction, examples of which include the bicep.`,
-    answer: "muscle",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
-    category: SCIENCE,
-  },
-  {
-    question: `John Keats wrote a poem titled "On Sitting Down to Read [this play] Once Again." In this play, a character declares "as flies to wanton boys are we to the gods; they kill us for their sport." A character disguised as Tom O'Bedlam leads Gloucester off an imaginary cliff in this play. This play opens with the flattering of the title character by his daughters Regan and Goneril. Name this Shakespearean tragedy about the title monarch, who exiles his daughter Cordelia.`,
-    answer: "King Lear",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
-    category: ART_AND_LITERATURE,
-  },
-  {
-    question: `The motion of two parts of these entities can be considered separately, according to the Born-Oppenheimer approximation. Arnold Sommerfeld introduced the azimuthal quantum number and elliptical paths to a model of these entities created by Ernest Rutherford. Niels Bohr formulated the planetary model of these entities, which can undergo alpha and beta decay. Name these entities that consist of electrons that follow clearly defined circular shells, which surround a central nucleus`,
-    answer: "atoms",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
-    category: SCIENCE,
-  },
-  {
-    question: `A treaty involving these animals was negotiated by Megasthenes with Seleucus I, who was paid 500 of them to go away. Pyrrhus of Epirus was the first to try invading Rome using these animals, which were present in most ancient Indian armies. Use of these animals failed at Zama when Scipio Africanus defeated the army of Carthage. Name these large animals that Hannibal brought across the Alps.`,
-    answer: "elephants",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
-    category: HISTORY,
-  },
-  {
-    question: `In 1994, thieves stealing this painting left a note reading "Thanks for the poor security." This painting, the most famous of its painter's series The Frieze of Life, sees two men walking on a bridge behind the central figure. The eruption of Krakatoa may have inspired the red sky in this painting, set on a fjord overlooking Oslo. Name this painting by Edvard Munch, in which a figure holds his face while doing the title action.`,
-    answer: "The Scream",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2005N.pdf",
-    category: ART_AND_LITERATURE,
-  },
-  {
-    question: `This Senator wrote the 7th of March speech, and later declared "Liberty and Union, now and forever, one and inseparable" in a rebuttal to Senator Robert K. Hayne. With John C. Calhoun and Henry Clay, this senator formed the "Great Triumvirate." This man negotiated a border treaty with Lord Ashburton in 1842.  Name this Senator from Massachusetts, who shares his name with a famous English language `,
-    answer: "Webster",
-    fullAnswer: "Daniel Webster",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2005N.pdf",
-    category: HISTORY,
-  },
-  {
-    question: `This country's residents used the hashtag #thisismydam to support the construction of its Grand Renaissance Dam. This country contains Lake Tana, which is the source of the Blue Nile. This country lost its Red Sea coastline after neighboring Eritrea became independent from it, and it comprises the Horn of Africa, along with Djibouti and Somalia. Name this country, home to the capital Addis Ababa.`,
-    answer: "Ethiopia",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2005N.pdf",
-    category: GEOGRAPHY,
-  },
+  // {
+  //   question: `Samuel Wragg exchanged medical supplies for prisoners with this man after he set up a blockade around Charles Town in South Carolina. Despite parting ways with Stede Bonnet, this man returned to his old life with the Adventure, the successor to the Queen Anne's Revenge. Though his actual name is unknown, this man's name was often given as Edward Teach. Name this pirate, who was nicknamed for his dark facial hair.`,
+  //   answer: "Blackbeard",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
+  //   category: HISTORY,
+  // },
+  // {
+  //   question: `One work by this composer features a bass echo a B-flat major melody played by the trombone in the "Tuba Mirum" section. This composer's requiem in D minor was commissioned by Count von Walsegg and completed by Franz Süssmayr after his death in 1791. The only two symphonies in a minor key by this composer are the "Little" and "Great" G minor symphonies. Name this Austrian composer of the "Jupiter" Symphony, The Magic Flute, and  Turkish March.`,
+  //   answer: "Mozart",
+  //   fullAnswer: "Wolfgang Amadeus Mozart",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
+  //   category: ART_AND_LITERATURE,
+  // },
+  // {
+  //   question: `In this tissue, calsequestrin binds to calcium ions in the sarcoplasmic reticulum, which, when released, binds to troponin. The functional unit of this tissue is the sarcomere. This tissue contains the proteins actin and myosin. Types of this tissue include smooth and striated. Name this tissue attached to bone that is responsible for contraction, examples of which include the bicep.`,
+  //   answer: "muscle",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
+  //   category: SCIENCE,
+  // },
+  // {
+  //   question: `John Keats wrote a poem titled "On Sitting Down to Read [this play] Once Again." In this play, a character declares "as flies to wanton boys are we to the gods; they kill us for their sport." A character disguised as Tom O'Bedlam leads Gloucester off an imaginary cliff in this play. This play opens with the flattering of the title character by his daughters Regan and Goneril. Name this Shakespearean tragedy about the title monarch, who exiles his daughter Cordelia.`,
+  //   answer: "King Lear",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2002N.pdf",
+  //   category: ART_AND_LITERATURE,
+  // },
+  // {
+  //   question: `The motion of two parts of these entities can be considered separately, according to the Born-Oppenheimer approximation. Arnold Sommerfeld introduced the azimuthal quantum number and elliptical paths to a model of these entities created by Ernest Rutherford. Niels Bohr formulated the planetary model of these entities, which can undergo alpha and beta decay. Name these entities that consist of electrons that follow clearly defined circular shells, which surround a central nucleus`,
+  //   answer: "atoms",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
+  //   category: SCIENCE,
+  // },
+  // {
+  //   question: `A treaty involving these animals was negotiated by Megasthenes with Seleucus I, who was paid 500 of them to go away. Pyrrhus of Epirus was the first to try invading Rome using these animals, which were present in most ancient Indian armies. Use of these animals failed at Zama when Scipio Africanus defeated the army of Carthage. Name these large animals that Hannibal brought across the Alps.`,
+  //   answer: "elephants",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2003N.pdf",
+  //   category: HISTORY,
+  // },
+  // {
+  //   question: `In 1994, thieves stealing this painting left a note reading "Thanks for the poor security." This painting, the most famous of its painter's series The Frieze of Life, sees two men walking on a bridge behind the central figure. The eruption of Krakatoa may have inspired the red sky in this painting, set on a fjord overlooking Oslo. Name this painting by Edvard Munch, in which a figure holds his face while doing the title action.`,
+  //   answer: "The Scream",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2005N.pdf",
+  //   category: ART_AND_LITERATURE,
+  // },
+  // {
+  //   question: `This Senator wrote the 7th of March speech, and later declared "Liberty and Union, now and forever, one and inseparable" in a rebuttal to Senator Robert K. Hayne. With John C. Calhoun and Henry Clay, this senator formed the "Great Triumvirate." This man negotiated a border treaty with Lord Ashburton in 1842.  Name this Senator from Massachusetts, who shares his name with a famous English language `,
+  //   answer: "Webster",
+  //   fullAnswer: "Daniel Webster",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2005N.pdf",
+  //   category: HISTORY,
+  // },
+  // {
+  //   question: `This country's residents used the hashtag #thisismydam to support the construction of its Grand Renaissance Dam. This country contains Lake Tana, which is the source of the Blue Nile. This country lost its Red Sea coastline after neighboring Eritrea became independent from it, and it comprises the Horn of Africa, along with Djibouti and Somalia. Name this country, home to the capital Addis Ababa.`,
+  //   answer: "Ethiopia",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2005N.pdf",
+  //   category: GEOGRAPHY,
+  // },
+  // {
+  //   question: `This thinker blamed social issues on not calling things by their proper names, a problem he resolved with his "rectification of names." This mentor of Mencius advocated for archery and calligraphy in his "Six Arts," which are essential to becoming a perfect gentleman. This thinker developed five kinds of relationships, which are subject to filial piety. Name this Ancient Chinese philosopher, whose thoughts are collected in the Analects.`,
+  //   answer: "Confucius",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2005N.pdf",
+  //   category: HISTORY,
+  // },
+  // {
+  //   question: `Proponents of this religion from Iona lost a debate at Whitby, as chronicled in a history of this religion by Bede. Asser wrote a biography of a ruler of this religion, who created the Doom Book. Hundreds of adherents of this religion were killed by Norsemen during the Raid on Lindisfarne. One adherent of this religion apocryphally drove every snake in Ireland into the sea. Name this general religion of Alfred the Great and Saint Patrick.`,
+  //   answer: "Christianity",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2005N.pdf",
+  //   category: RELIGION,
+  // },
+  // {
+  //   question: `This author of True Allegiance became the youngest nationally syndicated columnist in the United States at age 17. This author interviewed Benjamin Netanyahu after a much-publicized trip to Israel. In 2010, this author controversially tweeted "Israelis like to build. Arabs like to bomb crap and live in open sewage." This author popularized the phrase "facts don't care about your feelings." Name this conservative commentator, who co-founded The Daily Wire.`,
+  //   answer: "Shapiro",
+  //   fullAnswer: "Ben Shapiro",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2005N.pdf",
+  //   category: POP_CULTURE,
+  // },
+  // {
+  //   question: `The arrest of John Lawrence Jr. for being one of these people led to a Texas law being ruled unconstitutional in Lawrence v. Texas. Omar Manteen shot 49 of these people at the Pulse nightclub. These people could not openly serve in the military under the "Don't Ask, Don't Tell" policy. Obergefell v Hodges granted these people a right that was previously restricted under the Defense of Marriage Act. Name these people, who are represented by the rainbow pride flag.`,
+  //   answer: "LGBTQ",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+  //   category: HISTORY,
+  // },
+  // {
+  //   question: `In contrast to their flocculent type, the "grand design" type of these objects has a well-defined structure.  These objects, which include M87, occupy parts of the Hubble tuning fork diagram. The Magellanic clouds are "dwarf" types of these objects. The central bulge of one type of these objects contains a supermassive black hole. Name these astronomical objects, which include the Milky Way.`,
+  //   answer: "galaxy",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+  //   category: SCIENCE,
+  // },
+  // // {
+  // //   question: `A song by this composer features a chord progression used in Dizzy Gillespie's "Salt Peanuts." A bluesinspired aria about when "the livin' is easy" was created by this composer of "I Got Rhythm" for an opera set
+  // // in Charleston's Catfish Row. A train ride to Boston inspired this composer of "Summertime" to write a
+  // // piece which begins with Ross Gorman's improvised clarinet glissando. Name this composer of Porgy
+  // // and Bess and Rhapsody in Blue.`,
+  // //   answer: "Gershwin",
+  // //   fullAnswer: "George Gershwin",
+  // //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+  // //   category: ART_AND_LITERATURE,
+  // // },
+  // {
+  //   question: `A letter in this novel that mentions a "country of eternal light" is written by an explorer to his sister. A character from this novel wonders why he does not have an Eve after reading Paradise Lost at Safie's cottage.  Margaret Saville is sent letters by Robert Walton in the frame story of this novel. The protagonist of this novel is friends with Henry Clerval, who is murdered by the invention of the protagonist. Name this novel about the scientist Victor and the monster he creates, by Mary Shelley.`,
+  //   answer: "Frankenstein",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+  //   category: ART_AND_LITERATURE,
+  // },
+  // {
+  //   question: `In 2019, this man released the heavily auto-tuned rap single "RIP Harambe." This man intends to build a network of tunnels for transportation in Los Angeles with his Boring Company. This man launched his sports car into space, along with a "Falcon Heavy" rocket. This richest South African in history attempted to back out of, but later completed, a proposed $44 billion deal to buy Twitter in July 2022. Name this founder of SpaceX and CEO of Tesla.`,
+  //   answer: "Elon Musk",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+  //   category: POP_CULTURE,
+  // },
+  // {
+  //   question: `These items were found at a site called the "Big Hole" in Kimberley. The Kollur mine produced several of these items, such as the Koh-i-Noor and one named "Hope." Cecil Rhodes made his fortune by founding a group that mined these items, De Beers. A 1930s Hollywood ad campaign inaugurated these items' use in wedding rings. Identify these precious stones, the hardest mineral on Earth.`,
+  //   answer: "Diamonds",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+  //   category: HISTORY,
+  // },
+  // {
+  //   question: `In The Lucifer Effect, this experiment was compared to the atrocities at Abu Ghraib. This experiment ended after six days due to the objections of Christina Maslach. One participant in this event gained the nickname "John Wayne" for his cruelty. Phillip Zimbardo conducted what 1971 experiment, in which subjects were divided into "guards" and "inmates," conducted at a California university?`,
+  //   answer: "Stanford Prison",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+  //   category: SCIENCE,
+  // },
+  // {
+  //   question: `Many retailers in this city accept the Octopus cards needed to access its Mass Transit Railway. The densest housing settlement ever constructed was a now-destroyed "walled city" on this city's Kowloon Peninsula. This city on the Pearl River forms a megalopolis with Guangzhou and Macau. Name this Special Administrative Region, which Great Britain ceded to China in 1997.`,
+  //   answer: "Hong Kong",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+  //   category: GEOGRAPHY,
+  // },
+  // {
+  //   question: `This man was the first beneficiary of Operation Rebirth, which was led by Abraham Erskine. This man returned to life after Namor the Sub-Mariner accidentally broke the ice he had been encased in since the end of World War II. This enemy of Red Skull befriended Bucky Barnes shortly after being injected with supersoldier serum. Name this hero, also known as Steve Rogers, who carries a trademark red, white, and blue shield.`,
+  //   answer: "Captain America",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+  //   category: POP_CULTURE,
+  // },
+  // {
+  //   question: `This event's denial at the Council of Salamanca was described in a mythologized Washington Irving biography of its leader. Alfred Crosby coined the name for a process began by this event, in which European syphilis rates increased. This event started an "exchange" which saw potatoes enter Europe for the first time. The Niña, Pinta, and Santa Maria were used in what 1492 event, in which a certain explorer landed in the Americas?`,
+  //   answer: "Voyage of Columbus",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+  //   category: HISTORY,
+  // },
+  // {
+  //   question: `Lindlar's catalyst may be used to react this molecule with an alkyne. This molecule is produced, along with carbon dioxide, in the water-gas shift reaction. By definition, this molecule is assigned a reduction potential of zero. This molecule is combined with oxygen in fuel cells that power cars. This gas reacts with nitrogen in the Haber process to form ammonia. Name this diatomic gas of the element with atomic number one.`,
+  //   answer: "Hydrogen",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+  //   category: SCIENCE,
+  // },
+  // {
+  //   question: `A kind of this material similar to milk, called lattimo, was made by producers on the Venetian island of Murano. Dale Chihuly is an artist best known for working with this material, which makes up the shade of Tiffany lamps. This material can be shaped by blowing into a hollow clay rod. This material is used in circular "rose" apertures on the walls of many Gothic cathedrals. Name this material, which is "stained" in many church windows.`,
+  //   answer: "glass",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+  //   category: ART_AND_LITERATURE,
+  // },
+  // {
+  //   question: `In one song, this artist referenced his extended stay at Mercedes-Benz Stadium with the line "they playin' soccer in my backyard." The name of this artist's mother is chanted to her heartbeat's rhythm to begin an album by him, featuring the song "Jail." This artist, who released a 2022 album on his "stem player," called a comedian dating his ex-wife "Skete" in a feud with Pete Davidson. Name this rapper behind Donda and ex-husband of Kim Kardashian.`,
+  //   answer: "Kanye West",
+  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+  //   category: POP_CULTURE,
+  // },
   {
     question: `The separation of these peoples' children from their families was detailed in the Bringing them Home Report. National Sorry Day commemorates the mistreatment of these people's "Stolen Generations." These peoples' myths feature a sandstone rock formation once named for Henry Ayers, Uluru. Name these people British explorers met in the Outback, the indigenous peoples of Australia.`,
     answer: "Aboriginals",
@@ -395,105 +496,204 @@ const questions: Question[] = [
     category: SPORTS,
   },
   {
-    question: `This thinker blamed social issues on not calling things by their proper names, a problem he resolved with his "rectification of names." This mentor of Mencius advocated for archery and calligraphy in his "Six Arts," which are essential to becoming a perfect gentleman. This thinker developed five kinds of relationships, which are subject to filial piety. Name this Ancient Chinese philosopher, whose thoughts are collected in the Analects.`,
-    answer: "Confucius",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2005N.pdf",
-    category: HISTORY,
-  },
-  {
-    question: `Proponents of this religion from Iona lost a debate at Whitby, as chronicled in a history of this religion by Bede. Asser wrote a biography of a ruler of this religion, who created the Doom Book. Hundreds of adherents of this religion were killed by Norsemen during the Raid on Lindisfarne. One adherent of this religion apocryphally drove every snake in Ireland into the sea. Name this general religion of Alfred the Great and Saint Patrick.`,
-    answer: "Christianity",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2005N.pdf",
+    question: `In Bahai, the Nineteen Day Fast ends on one of these holidays, called Nowruz. On one of these holidays,
+    which occurs fifteen days before the Lantern Festival, children are given red envelopes filled with money. A
+    Jewish one of these holidays is the first of the High Holy Days and takes place nine days before Yom Kippur.
+    Rosh Hashanah is what type of holiday, which falls on January 1st in the Gregorian Calendar?`,
+    answer: "New Years",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
     category: RELIGION,
   },
   {
-    question: `This author of True Allegiance became the youngest nationally syndicated columnist in the United States at age 17. This author interviewed Benjamin Netanyahu after a much-publicized trip to Israel. In 2010, this author controversially tweeted "Israelis like to build. Arabs like to bomb crap and live in open sewage." This author popularized the phrase "facts don't care about your feelings." Name this conservative commentator, who co-founded The Daily Wire.`,
-    answer: "Shapiro",
-    fullAnswer: "Ben Shapiro",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2005N.pdf",
-    category: POP_CULTURE,
-  },
-  {
-    question: `The arrest of John Lawrence Jr. for being one of these people led to a Texas law being ruled unconstitutional in Lawrence v. Texas. Omar Manteen shot 49 of these people at the Pulse nightclub. These people could not openly serve in the military under the "Don't Ask, Don't Tell" policy. Obergefell v Hodges granted these people a right that was previously restricted under the Defense of Marriage Act. Name these people, who are represented by the rainbow pride flag.`,
-    answer: "LGBTQ",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+    question: `This practice was controlled by wealthy Basque merchants at Grand Banks in Newfoundland. The Magna
+  Carta outlawed the use of weirs in this practice in England. One war over this practice ended after the
+  UNCLOS defined Exclusive Economic Zones as within a range of 200 nautical miles. Iceland and England
+  fought a series of late 20th century “wars” over this practice in the North Sea. Name this practice,
+  which often yields animals like cod.`,
+    answer: "fishing",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
     category: HISTORY,
   },
   {
-    question: `In contrast to their flocculent type, the "grand design" type of these objects has a well-defined structure.  These objects, which include M87, occupy parts of the Hubble tuning fork diagram. The Magellanic clouds are "dwarf" types of these objects. The central bulge of one type of these objects contains a supermassive black hole. Name these astronomical objects, which include the Milky Way.`,
-    answer: "galaxy",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+    question: `A stream of electrons moving by a series of cavity resonators generates this kind of radiation in a cavity
+    magnetron. This radiation is commonly used to induce dielectric heating in substances with high water
+    content. Metals with fine points produce sparks when exposed to this kind of radiation. This radiation lies
+    between radio and infrared waves. Name this radiation, which is used by a kitchen appliance of the
+    same name to quickly heat food.`,
+    answer: "microwave",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
     category: SCIENCE,
   },
-  // {
-  //   question: `A song by this composer features a chord progression used in Dizzy Gillespie's "Salt Peanuts." A bluesinspired aria about when "the livin' is easy" was created by this composer of "I Got Rhythm" for an opera set
-  // in Charleston's Catfish Row. A train ride to Boston inspired this composer of "Summertime" to write a
-  // piece which begins with Ross Gorman's improvised clarinet glissando. Name this composer of Porgy
-  // and Bess and Rhapsody in Blue.`,
-  //   answer: "Gershwin",
-  //   fullAnswer: "George Gershwin",
-  //   url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
-  //   category: ART_AND_LITERATURE,
-  // },
   {
-    question: `A letter in this novel that mentions a "country of eternal light" is written by an explorer to his sister. A character from this novel wonders why he does not have an Eve after reading Paradise Lost at Safie's cottage.  Margaret Saville is sent letters by Robert Walton in the frame story of this novel. The protagonist of this novel is friends with Henry Clerval, who is murdered by the invention of the protagonist. Name this novel about the scientist Victor and the monster he creates, by Mary Shelley.`,
-    answer: "Frankenstein",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
-    category: ART_AND_LITERATURE,
-  },
-  {
-    question: `In 2019, this man released the heavily auto-tuned rap single "RIP Harambe." This man intends to build a network of tunnels for transportation in Los Angeles with his Boring Company. This man launched his sports car into space, along with a "Falcon Heavy" rocket. This richest South African in history attempted to back out of, but later completed, a proposed $44 billion deal to buy Twitter in July 2022. Name this founder of SpaceX and CEO of Tesla.`,
-    answer: "Elon Musk",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+    question: `Richard E. Grant plays this character in a scene where he tricks the monster Alioth with a hologram of
+  his home. A “Kid” version of this character was sent to the Void after killing his brother. This character’s
+  variants, such as Sylvie, appear in a TV series centered around the TVA. This character tells a Titan that he
+  will “never be a God” before being murdered by Thanos. Name this character primarily played by
+  Tom Hiddleston, a trickster god from Asgard who names a 2021 Marvel TV series.`,
+    answer: "Loki",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
     category: POP_CULTURE,
   },
   {
-    question: `These items were found at a site called the "Big Hole" in Kimberley. The Kollur mine produced several of these items, such as the Koh-i-Noor and one named "Hope." Cecil Rhodes made his fortune by founding a group that mined these items, De Beers. A 1930s Hollywood ad campaign inaugurated these items' use in wedding rings. Identify these precious stones, the hardest mineral on Earth.`,
-    answer: "Diamonds",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+    question: `DNA testing of this man’s mother, “The Younger Lady,” in KV35 proved this man was born from an
+    incestous marriage. Arthur Conan Doyle suggested Lord Carnavon’s death was caused by “elementals”
+    produced by this man’s priests. Howard Carter discovered this man and his gold death mask in the Valley
+    of the Kings in Thebes. Name this pharaoh who died young, and whose tomb was discovered remarkably intact.`,
+    answer: "King Tut",
+    fullAnswer: "King Tutankhamun",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
     category: HISTORY,
   },
   {
-    question: `In The Lucifer Effect, this experiment was compared to the atrocities at Abu Ghraib. This experiment ended after six days due to the objections of Christina Maslach. One participant in this event gained the nickname "John Wayne" for his cruelty. Phillip Zimbardo conducted what 1971 experiment, in which subjects were divided into "guards" and "inmates," conducted at a California university?`,
-    answer: "Stanford Prison",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+    question: `The quantity named after this man times elementary charge gives Faraday’s constant. This man's number equals the universal gas constant,
+  divided by Boltzmann’s constant. The quantity named after this man multiplies atomic mass units to yield molar mass, since this is the
+  number of atoms in 12 grams of carbon-12. The quantity named after this man is defined as 6.022 times 10-to-the-23rd. 
+  Identify this man's constant, which is equal to the number of molecules in one mole.`,
+    answer: "Avogadro",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
     category: SCIENCE,
   },
   {
-    question: `Many retailers in this city accept the Octopus cards needed to access its Mass Transit Railway. The densest housing settlement ever constructed was a now-destroyed "walled city" on this city's Kowloon Peninsula. This city on the Pearl River forms a megalopolis with Guangzhou and Macau. Name this Special Administrative Region, which Great Britain ceded to China in 1997.`,
-    answer: "Hong Kong",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+    question: `This empire, whose history is recorded in the Mendoza Codex, built artificial islands called chinampas for
+agriculture. This empire waged ritual Flower Wars against neighbors, such as Cholula and Tlaxcala. This
+Nahuatl-speaking empire had success against invaders on La Noche Triste, but their capital was captured by
+Hernan Cortes in 1521. Name this Mexican empire ruled by Montezuma, which was centered on
+Tenochtitlan.`,
+    answer: "Aztec",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
+    category: HISTORY,
+  },
+  {
+    question: `These locations are the home of a group of organisms whose species include the “staghorn” and
+  “elkhorn." The Great Blue Hole can be found within one of these locations, named after the country of Belize.
+  The largest of the “barrier” type of these locations is located off the coast of Queensland, Australia. Name these complex marine ecosystems, which primarily consist of the namesake cnidarians.`,
+    answer: "Coral Reefs",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `A similar-looking sibling of this creature guarded the cattle of Geryon and was named Orthus. In the
+  Aeneid, the Cumaean Sibyl laces a honey cake with drugs to put this creature to sleep. Heracles wrestled and
+  defeated this creature in his twelfth and final labor. Name this three-headed dog from Greek
+  mythology, the guardian of the underworld.`,
+    answer: "Cerberus",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
+    category: RELIGION,
+  },
+  {
+    question: `This figure prophesied that a tower collapsing was due to a pair of red and white dragons after he was
+  brought to King Vortigern. This mythological character was trapped by his student Viviane, and built the
+  burial place of Aurelius Ambrosius, Stonehenge. This man sealed the sword in the stone to determine the next
+  king of Britain. Name this wizard, who advised King Arthur.`,
+    answer: "Merlin",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2011N.pdf",
+    category: RELIGION,
+  },
+  {
+    question: `A political cartoon depicts an act signed by this President as a turtle who bites a man shouting at the
+  “cursed Ograbme.” During this man’s presidency, James Monroe negotiated with French diplomats over the
+  sale of land that he later sent the Lewis and Clark Expedition to explore. Slaves like Sally Hemmings lived at
+  this man’s estate, Monticello. The Declaration of Independence was drafted by what third U. S.
+  President?`,
+    answer: "Jefferson",
+    fullAnswer: "Thomas Jefferson",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2011N.pdf",
+    category: HISTORY,
+  },
+  {
+    question: `Two of these animals with crescent moons on their foreheads advise the Sailor Guardians in the Sailor
+  Moon series. One of these animals has twelve legs and takes the form of a “bus” in My Neighbor Totoro. A
+  character that is one of these animals is a member of a group that includes Wobbuffet. That character, who
+  is one of these animals, evolves into Persian and is part of a trio with Jesse and James. Name these
+  animals that anime characters often have “ears” of, and include Meowth in Pokémon.`,
+    answer: "Cats",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2011N.pdf",
+    category: POP_CULTURE,
+  },
+  {
+    question: `This force is described by a gauge theory with symmetry group SU(3). Asymptotic freedom and color
+  confinement are properties of this force, which is described by quantum chromodynamics. This fundamental
+  force is mediated by the gluon, and holds together protons and neutrons in a nucleus. As its name suggests, this
+  force has a higher strength than the gravitational, electromagnetic, and weak forces. For 10 points, name this most
+  powerful fundamental force.`,
+    answer: "Strong force",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2011N.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `In this country, Myles and Damien Sanderson were suspected of carrying out an attack in 13 separate
+  locations. This country’s leader declared a state of emergency after truckers protesting Covid regulations
+  shut down roads in one region. In September of 2022, this country experienced its worst mass stabbing in history in
+  Saskatchewan. Name this country led by Justin Trudeau from Ottawa.`,
+    answer: "Canada",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2011N.pdf",
+    category: HISTORY,
+  },
+  {
+    question: `The Busy Beaver function is computed using a construct named for this man. The halting problem is
+  undecidable on a class of “machines” named for this man, which consists of an infinite tape of symbols. The
+  imitation game developed by this man is typically framed in terms of a human trying to determine whether
+  he is speaking to a computer. Name this “father of computer science,” who names a “test” for AI.`,
+    answer: "Turing",
+    fullAnswer: "Alan Turing",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2012N.pdf",
+    category: COMPUTER_SCIENCE,
+  },
+  {
+    question: `One saint associated with this holiday slapped the heretic Arius in the face at the First Council of Nicaea.
+  This day takes place twelve days before the Epiphany and one day after the end of Advent. This day begins
+  with a Midnight Mass and celebrants singing “carols,” such as “Silent Night.” Name this holiday,
+  during which Santa Claus brings children gifts, celebrated on December 25th.`,
+    answer: "Christmas",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2012N.pdf",
+    category: RELIGION,
+  },
+  {
+    question: `A part-Pakistani character on this show initially died by being crushed under her sister Kamilah’s statue.
+  Mindy St. Clair inhabits a “medium” location in this show that is later joined by Derek, a boyfriend Janet
+  creates. In this show’s first season, the dim-witted Jason Mendoza pretends to be a monk while working with
+  Chidi and Eleanor to uncover why they are in an idyllic afterlife, despite the less than stellar lives they led. Name this NBC show, whose title location is contrasted with the Bad Place.`,
+    answer: "The Good Place",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2012N.pdf",
+    category: POP_CULTURE,
+  },
+  {
+    question: `A planar ring is aromatic if it has 2 plus a multiple of this number of pi electrons, according to Hückel's
+  rule. White phosphorus molecules have this many atoms each. This is the oxidation state of carbon in carbon
+  dioxide. The central atom has this many bonds in a molecule with seesaw geometry and tetrahedral
+  geometry. This is the number of electrons in a double bond. Name this number of hydrogens in
+  methane and the atomic number of beryllium.`,
+    answer: "Four",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2012N.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `This country’s national dish is a notoriously pungent shark meat food, called hakarl. This country has the
+  world’s oldest parliament, the Althing. Tourists to this country’s Golden Circle can see the geysers Strokkur
+  and Geysir and the waterfall Gullfoss. This European country has the (*) northernmost capital city in the world
+  and, along with Greenland, was misleadingly named by the Vikings that first inhabited it. For 10 points, name this
+  island country, whose capital is Reykjavik.`,
+    answer: "Iceland",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2012N.pdf",
     category: GEOGRAPHY,
   },
   {
-    question: `This man was the first beneficiary of Operation Rebirth, which was led by Abraham Erskine. This man returned to life after Namor the Sub-Mariner accidentally broke the ice he had been encased in since the end of World War II. This enemy of Red Skull befriended Bucky Barnes shortly after being injected with supersoldier serum. Name this hero, also known as Steve Rogers, who carries a trademark red, white, and blue shield.`,
-    answer: "Captain America",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+    question: `At the 1904 Summer Olympics, this event was won by Thomas Hicks, who was given brandy mixed with
+  rat poison during it. The company Ineos sponsonsored a race where an athlete from Kenya who competes in
+  this event, Eliud Kipchoge, unofficially broke the two hour barrier for completing it. Boston hosts a race of
+  this type, which was the site of a 2013 bombing. An ancient battle is the namesake of what longdistance race that lasts 26.2 miles?`,
+    answer: "Marathon",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2012N.pdf",
     category: POP_CULTURE,
   },
   {
-    question: `This event's denial at the Council of Salamanca was described in a mythologized Washington Irving biography of its leader. Alfred Crosby coined the name for a process began by this event, in which European syphilis rates increased. This event started an "exchange" which saw potatoes enter Europe for the first time. The Niña, Pinta, and Santa Maria were used in what 1492 event, in which a certain explorer landed in the Americas?`,
-    answer: "Voyage of Columbus",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
-    category: HISTORY,
-  },
-  {
-    question: `Lindlar's catalyst may be used to react this molecule with an alkyne. This molecule is produced, along with carbon dioxide, in the water-gas shift reaction. By definition, this molecule is assigned a reduction potential of zero. This molecule is combined with oxygen in fuel cells that power cars. This gas reacts with nitrogen in the Haber process to form ammonia. Name this diatomic gas of the element with atomic number one.`,
-    answer: "Hydrogen",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
+    question: `The sum of this quantity around a closed loop equals zero, according to Kirchhoff's second law. For a
+  parallel-plate capacitor, this quantity equals its electric field times plate separation. Power is equal to (*)
+  current times this quantity. This quantity is equal to current times resistance, according to Ohm’s Law. Batteries
+  generate a difference in, for 10 points, what quantity, which is symbolized V?`,
+    answer: "Voltage",
+    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2012N.pdf",
     category: SCIENCE,
-  },
-  {
-    question: `A kind of this material similar to milk, called lattimo, was made by producers on the Venetian island of Murano. Dale Chihuly is an artist best known for working with this material, which makes up the shade of Tiffany lamps. This material can be shaped by blowing into a hollow clay rod. This material is used in circular "rose" apertures on the walls of many Gothic cathedrals. Name this material, which is "stained" in many church windows.`,
-    answer: "glass",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
-    category: ART_AND_LITERATURE,
-  },
-  {
-    question: `In one song, this artist referenced his extended stay at Mercedes-Benz Stadium with the line "they playin' soccer in my backyard." The name of this artist's mother is chanted to her heartbeat's rhythm to begin an album by him, featuring the song "Jail." This artist, who released a 2022 album on his "stem player," called a comedian dating his ex-wife "Skete" in a feud with Pete Davidson. Name this rapper behind Donda and ex-husband of Kim Kardashian.`,
-    answer: "Kanye West",
-    url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2007N.pdf",
-    category: POP_CULTURE,
   },
 ];
 
