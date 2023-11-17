@@ -496,201 +496,130 @@ const questions: Question[] = [
     category: SPORTS,
   },
   {
-    question: `In Bahai, the Nineteen Day Fast ends on one of these holidays, called Nowruz. On one of these holidays,
-    which occurs fifteen days before the Lantern Festival, children are given red envelopes filled with money. A
-    Jewish one of these holidays is the first of the High Holy Days and takes place nine days before Yom Kippur.
-    Rosh Hashanah is what type of holiday, which falls on January 1st in the Gregorian Calendar?`,
+    question: `In Bahai, the Nineteen Day Fast ends on one of these holidays, called Nowruz. On one of these holidays, which occurs fifteen days before the Lantern Festival, children are given red envelopes filled with money. A Jewish one of these holidays is the first of the High Holy Days and takes place nine days before Yom Kippur.  Rosh Hashanah is what type of holiday, which falls on January 1st in the Gregorian Calendar?`,
     answer: "New Years",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
     category: RELIGION,
   },
   {
-    question: `This practice was controlled by wealthy Basque merchants at Grand Banks in Newfoundland. The Magna
-  Carta outlawed the use of weirs in this practice in England. One war over this practice ended after the
-  UNCLOS defined Exclusive Economic Zones as within a range of 200 nautical miles. Iceland and England
-  fought a series of late 20th century “wars” over this practice in the North Sea. Name this practice,
-  which often yields animals like cod.`,
+    question: `This practice was controlled by wealthy Basque merchants at Grand Banks in Newfoundland. The Magna Carta outlawed the use of weirs in this practice in England. One war over this practice ended after the UNCLOS defined Exclusive Economic Zones as within a range of 200 nautical miles. Iceland and England fought a series of late 20th century “wars” over this practice in the North Sea. Name this practice, which often yields animals like cod.`,
     answer: "fishing",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
     category: HISTORY,
   },
   {
-    question: `A stream of electrons moving by a series of cavity resonators generates this kind of radiation in a cavity
-    magnetron. This radiation is commonly used to induce dielectric heating in substances with high water
-    content. Metals with fine points produce sparks when exposed to this kind of radiation. This radiation lies
-    between radio and infrared waves. Name this radiation, which is used by a kitchen appliance of the
-    same name to quickly heat food.`,
+    question: `A stream of electrons moving by a series of cavity resonators generates this kind of radiation in a cavity magnetron. This radiation is commonly used to induce dielectric heating in substances with high water content. Metals with fine points produce sparks when exposed to this kind of radiation. This radiation lies between radio and infrared waves. Name this radiation, which is used by a kitchen appliance of the same name to quickly heat food.`,
     answer: "microwave",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
     category: SCIENCE,
   },
   {
-    question: `Richard E. Grant plays this character in a scene where he tricks the monster Alioth with a hologram of
-  his home. A “Kid” version of this character was sent to the Void after killing his brother. This character’s
-  variants, such as Sylvie, appear in a TV series centered around the TVA. This character tells a Titan that he
-  will “never be a God” before being murdered by Thanos. Name this character primarily played by
-  Tom Hiddleston, a trickster god from Asgard who names a 2021 Marvel TV series.`,
+    question: `Richard E. Grant plays this character in a scene where he tricks the monster Alioth with a hologram of his home. A “Kid” version of this character was sent to the Void after killing his brother. This character's variants, such as Sylvie, appear in a TV series centered around the TVA. This character tells a Titan that he will “never be a God” before being murdered by Thanos. Name this character primarily played by Tom Hiddleston, a trickster god from Asgard who names a 2021 Marvel TV series.`,
     answer: "Loki",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
     category: POP_CULTURE,
   },
   {
-    question: `DNA testing of this man’s mother, “The Younger Lady,” in KV35 proved this man was born from an
-    incestous marriage. Arthur Conan Doyle suggested Lord Carnavon’s death was caused by “elementals”
-    produced by this man’s priests. Howard Carter discovered this man and his gold death mask in the Valley
-    of the Kings in Thebes. Name this pharaoh who died young, and whose tomb was discovered remarkably intact.`,
+    question: `DNA testing of this man's mother, “The Younger Lady,” in KV35 proved this man was born from an incestous marriage. Arthur Conan Doyle suggested Lord Carnavon's death was caused by “elementals” produced by this man's priests. Howard Carter discovered this man and his gold death mask in the Valley of the Kings in Thebes. Name this pharaoh who died young, and whose tomb was discovered remarkably intact.`,
     answer: "King Tut",
     fullAnswer: "King Tutankhamun",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
     category: HISTORY,
   },
   {
-    question: `The quantity named after this man times elementary charge gives Faraday’s constant. This man's number equals the universal gas constant,
-  divided by Boltzmann’s constant. The quantity named after this man multiplies atomic mass units to yield molar mass, since this is the
-  number of atoms in 12 grams of carbon-12. The quantity named after this man is defined as 6.022 times 10-to-the-23rd. 
-  Identify this man's constant, which is equal to the number of molecules in one mole.`,
+    question: `The quantity named after this man times elementary charge gives Faraday's constant. This man's number equals the universal gas constant, divided by Boltzmann's constant. The quantity named after this man multiplies atomic mass units to yield molar mass, since this is the number of atoms in 12 grams of carbon-12. The quantity named after this man is defined as 6.022 times 10-to-the-23rd.  Identify this man's constant, which is equal to the number of molecules in one mole.`,
     answer: "Avogadro",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
     category: SCIENCE,
   },
   {
-    question: `This empire, whose history is recorded in the Mendoza Codex, built artificial islands called chinampas for
-agriculture. This empire waged ritual Flower Wars against neighbors, such as Cholula and Tlaxcala. This
-Nahuatl-speaking empire had success against invaders on La Noche Triste, but their capital was captured by
-Hernan Cortes in 1521. Name this Mexican empire ruled by Montezuma, which was centered on
-Tenochtitlan.`,
+    question: `This empire, whose history is recorded in the Mendoza Codex, built artificial islands called chinampas for agriculture. This empire waged ritual Flower Wars against neighbors, such as Cholula and Tlaxcala. This Nahuatl-speaking empire had success against invaders on La Noche Triste, but their capital was captured by Hernan Cortes in 1521. Name this Mexican empire ruled by Montezuma, which was centered on Tenochtitlan.`,
     answer: "Aztec",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
     category: HISTORY,
   },
   {
-    question: `These locations are the home of a group of organisms whose species include the “staghorn” and
-  “elkhorn." The Great Blue Hole can be found within one of these locations, named after the country of Belize.
-  The largest of the “barrier” type of these locations is located off the coast of Queensland, Australia. Name these complex marine ecosystems, which primarily consist of the namesake cnidarians.`,
+    question: `These locations are the home of a group of organisms whose species include the “staghorn” and “elkhorn." The Great Blue Hole can be found within one of these locations, named after the country of Belize.  The largest of the “barrier” type of these locations is located off the coast of Queensland, Australia. Name these complex marine ecosystems, which primarily consist of the namesake cnidarians.`,
     answer: "Coral Reefs",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
     category: SCIENCE,
   },
   {
-    question: `A similar-looking sibling of this creature guarded the cattle of Geryon and was named Orthus. In the
-  Aeneid, the Cumaean Sibyl laces a honey cake with drugs to put this creature to sleep. Heracles wrestled and
-  defeated this creature in his twelfth and final labor. Name this three-headed dog from Greek
-  mythology, the guardian of the underworld.`,
+    question: `A similar-looking sibling of this creature guarded the cattle of Geryon and was named Orthus. In the Aeneid, the Cumaean Sibyl laces a honey cake with drugs to put this creature to sleep. Heracles wrestled and defeated this creature in his twelfth and final labor. Name this three-headed dog from Greek mythology, the guardian of the underworld.`,
     answer: "Cerberus",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2010N.pdf",
     category: RELIGION,
   },
   {
-    question: `This figure prophesied that a tower collapsing was due to a pair of red and white dragons after he was
-  brought to King Vortigern. This mythological character was trapped by his student Viviane, and built the
-  burial place of Aurelius Ambrosius, Stonehenge. This man sealed the sword in the stone to determine the next
-  king of Britain. Name this wizard, who advised King Arthur.`,
+    question: `This figure prophesied that a tower collapsing was due to a pair of red and white dragons after he was brought to King Vortigern. This mythological character was trapped by his student Viviane, and built the burial place of Aurelius Ambrosius, Stonehenge. This man sealed the sword in the stone to determine the next king of Britain. Name this wizard, who advised King Arthur.`,
     answer: "Merlin",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2011N.pdf",
     category: RELIGION,
   },
   {
-    question: `A political cartoon depicts an act signed by this President as a turtle who bites a man shouting at the
-  “cursed Ograbme.” During this man’s presidency, James Monroe negotiated with French diplomats over the
-  sale of land that he later sent the Lewis and Clark Expedition to explore. Slaves like Sally Hemmings lived at
-  this man’s estate, Monticello. The Declaration of Independence was drafted by what third U. S.
-  President?`,
+    question: `A political cartoon depicts an act signed by this President as a turtle who bites a man shouting at the “cursed Ograbme.” During this man's presidency, James Monroe negotiated with French diplomats over the sale of land that he later sent the Lewis and Clark Expedition to explore. Slaves like Sally Hemmings lived at this man's estate, Monticello. The Declaration of Independence was drafted by what third U. S.  President?`,
     answer: "Jefferson",
     fullAnswer: "Thomas Jefferson",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2011N.pdf",
     category: HISTORY,
   },
   {
-    question: `Two of these animals with crescent moons on their foreheads advise the Sailor Guardians in the Sailor
-  Moon series. One of these animals has twelve legs and takes the form of a “bus” in My Neighbor Totoro. A
-  character that is one of these animals is a member of a group that includes Wobbuffet. That character, who
-  is one of these animals, evolves into Persian and is part of a trio with Jesse and James. Name these
-  animals that anime characters often have “ears” of, and include Meowth in Pokémon.`,
+    question: `Two of these animals with crescent moons on their foreheads advise the Sailor Guardians in the Sailor Moon series. One of these animals has twelve legs and takes the form of a “bus” in My Neighbor Totoro. A character that is one of these animals is a member of a group that includes Wobbuffet. That character, who is one of these animals, evolves into Persian and is part of a trio with Jesse and James. Name these animals that anime characters often have “ears” of, and include Meowth in Pokémon.`,
     answer: "Cats",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2011N.pdf",
     category: POP_CULTURE,
   },
   {
-    question: `This force is described by a gauge theory with symmetry group SU(3). Asymptotic freedom and color
-  confinement are properties of this force, which is described by quantum chromodynamics. This fundamental
-  force is mediated by the gluon, and holds together protons and neutrons in a nucleus. As its name suggests, this
-  force has a higher strength than the gravitational, electromagnetic, and weak forces. For 10 points, name this most
-  powerful fundamental force.`,
+    question: `This force is described by a gauge theory with symmetry group SU(3). Asymptotic freedom and color confinement are properties of this force, which is described by quantum chromodynamics. This fundamental force is mediated by the gluon, and holds together protons and neutrons in a nucleus. As its name suggests, this force has a higher strength than the gravitational, electromagnetic, and weak forces. Name this most powerful fundamental force.`,
     answer: "Strong force",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2011N.pdf",
     category: SCIENCE,
   },
   {
-    question: `In this country, Myles and Damien Sanderson were suspected of carrying out an attack in 13 separate
-  locations. This country’s leader declared a state of emergency after truckers protesting Covid regulations
-  shut down roads in one region. In September of 2022, this country experienced its worst mass stabbing in history in
-  Saskatchewan. Name this country led by Justin Trudeau from Ottawa.`,
+    question: `In this country, Myles and Damien Sanderson were suspected of carrying out an attack in 13 separate locations. This country's leader declared a state of emergency after truckers protesting Covid regulations shut down roads in one region. In September of 2022, this country experienced its worst mass stabbing in history in Saskatchewan. Name this country led by Justin Trudeau from Ottawa.`,
     answer: "Canada",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2011N.pdf",
     category: HISTORY,
   },
   {
-    question: `The Busy Beaver function is computed using a construct named for this man. The halting problem is
-  undecidable on a class of “machines” named for this man, which consists of an infinite tape of symbols. The
-  imitation game developed by this man is typically framed in terms of a human trying to determine whether
-  he is speaking to a computer. Name this “father of computer science,” who names a “test” for AI.`,
+    question: `The Busy Beaver function is computed using a construct named for this man. The halting problem is undecidable on a class of “machines” named for this man, which consists of an infinite tape of symbols. The imitation game developed by this man is typically framed in terms of a human trying to determine whether he is speaking to a computer. Name this “father of computer science,” who names a “test” for AI.`,
     answer: "Turing",
     fullAnswer: "Alan Turing",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2012N.pdf",
     category: COMPUTER_SCIENCE,
   },
   {
-    question: `One saint associated with this holiday slapped the heretic Arius in the face at the First Council of Nicaea.
-  This day takes place twelve days before the Epiphany and one day after the end of Advent. This day begins
-  with a Midnight Mass and celebrants singing “carols,” such as “Silent Night.” Name this holiday,
-  during which Santa Claus brings children gifts, celebrated on December 25th.`,
+    question: `One saint associated with this holiday slapped the heretic Arius in the face at the First Council of Nicaea.  This day takes place twelve days before the Epiphany and one day after the end of Advent. This day begins with a Midnight Mass and celebrants singing “carols,” such as “Silent Night.” Name this holiday, during which Santa Claus brings children gifts, celebrated on December 25th.`,
     answer: "Christmas",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2012N.pdf",
     category: RELIGION,
   },
   {
-    question: `A part-Pakistani character on this show initially died by being crushed under her sister Kamilah’s statue.
-  Mindy St. Clair inhabits a “medium” location in this show that is later joined by Derek, a boyfriend Janet
-  creates. In this show’s first season, the dim-witted Jason Mendoza pretends to be a monk while working with
-  Chidi and Eleanor to uncover why they are in an idyllic afterlife, despite the less than stellar lives they led. Name this NBC show, whose title location is contrasted with the Bad Place.`,
+    question: `A part-Pakistani character on this show initially died by being crushed under her sister Kamilah's statue.  Mindy St. Clair inhabits a “medium” location in this show that is later joined by Derek, a boyfriend Janet creates. In this show's first season, the dim-witted Jason Mendoza pretends to be a monk while working with Chidi and Eleanor to uncover why they are in an idyllic afterlife, despite the less than stellar lives they led. Name this NBC show, whose title location is contrasted with the Bad Place.`,
     answer: "The Good Place",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2012N.pdf",
     category: POP_CULTURE,
   },
   {
-    question: `A planar ring is aromatic if it has 2 plus a multiple of this number of pi electrons, according to Hückel's
-  rule. White phosphorus molecules have this many atoms each. This is the oxidation state of carbon in carbon
-  dioxide. The central atom has this many bonds in a molecule with seesaw geometry and tetrahedral
-  geometry. This is the number of electrons in a double bond. Name this number of hydrogens in
-  methane and the atomic number of beryllium.`,
+    question: `A planar ring is aromatic if it has 2 plus a multiple of this number of pi electrons, according to Hückel's rule. White phosphorus molecules have this many atoms each. This is the oxidation state of carbon in carbon dioxide. The central atom has this many bonds in a molecule with seesaw geometry and tetrahedral geometry. This is the number of electrons in a double bond. Name this number of hydrogens in methane and the atomic number of beryllium.`,
     answer: "Four",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2012N.pdf",
     category: SCIENCE,
   },
   {
-    question: `This country’s national dish is a notoriously pungent shark meat food, called hakarl. This country has the
-  world’s oldest parliament, the Althing. Tourists to this country’s Golden Circle can see the geysers Strokkur
-  and Geysir and the waterfall Gullfoss. This European country has the (*) northernmost capital city in the world
-  and, along with Greenland, was misleadingly named by the Vikings that first inhabited it. For 10 points, name this
-  island country, whose capital is Reykjavik.`,
+    question: `This country's national dish is a notoriously pungent shark meat food, called hakarl. This country has the world's oldest parliament, the Althing. Tourists to this country's Golden Circle can see the geysers Strokkur and Geysir and the waterfall Gullfoss. This European country has the northernmost capital city in the world and, along with Greenland, was misleadingly named by the Vikings that first inhabited it. Name this island country, whose capital is Reykjavik.`,
     answer: "Iceland",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2012N.pdf",
     category: GEOGRAPHY,
   },
   {
-    question: `At the 1904 Summer Olympics, this event was won by Thomas Hicks, who was given brandy mixed with
-  rat poison during it. The company Ineos sponsonsored a race where an athlete from Kenya who competes in
-  this event, Eliud Kipchoge, unofficially broke the two hour barrier for completing it. Boston hosts a race of
-  this type, which was the site of a 2013 bombing. An ancient battle is the namesake of what longdistance race that lasts 26.2 miles?`,
+    question: `At the 1904 Summer Olympics, this event was won by Thomas Hicks, who was given brandy mixed with rat poison during it. The company Ineos sponsonsored a race where an athlete from Kenya who competes in this event, Eliud Kipchoge, unofficially broke the two hour barrier for completing it. Boston hosts a race of this type, which was the site of a 2013 bombing. An ancient battle is the namesake of what longdistance race that lasts 26.2 miles?`,
     answer: "Marathon",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2012N.pdf",
     category: POP_CULTURE,
   },
   {
-    question: `The sum of this quantity around a closed loop equals zero, according to Kirchhoff's second law. For a
-  parallel-plate capacitor, this quantity equals its electric field times plate separation. Power is equal to (*)
-  current times this quantity. This quantity is equal to current times resistance, according to Ohm’s Law. Batteries
-  generate a difference in, for 10 points, what quantity, which is symbolized V?`,
+    question: `The sum of this quantity around a closed loop equals zero, according to Kirchhoff's second law. For a parallel-plate capacitor, this quantity equals its electric field times plate separation. Power is equal to current times this quantity. This quantity is equal to current times resistance, according to Ohm's Law. Batteries generate a difference in what quantity, which is symbolized V?`,
     answer: "Voltage",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2012N.pdf",
     category: SCIENCE,
