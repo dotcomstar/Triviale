@@ -104,7 +104,7 @@ const StatsDialog = ({
             0
           )}/${QUESTIONS_PER_DAY}`,
           text: textToShare,
-          url: "https://trivialle.vercel.app/",
+          // url: "https://trivialle.vercel.app/",
         })
         .then(() => console.log("Successful share"))
         .catch((error) => console.log("Error sharing", error));
