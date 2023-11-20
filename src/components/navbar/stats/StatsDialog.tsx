@@ -100,12 +100,10 @@ const StatsDialog = ({
       navigator
         .share({
           text: textToShare,
-          // url: "https://trivialle.vercel.app/",
         })
         .then(() => console.log("Successful share"))
         .catch((error) => {
           console.log("Error sharing", error);
-          handleCopy();
         });
     } else {
       handleCopy();
