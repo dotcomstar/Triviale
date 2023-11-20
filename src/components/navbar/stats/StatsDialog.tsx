@@ -1,4 +1,4 @@
-import { Box, DialogProps, Snackbar, Stack, Typography } from "@mui/material";
+import { DialogProps, Snackbar, Typography } from "@mui/material";
 import copy from "copy-to-clipboard";
 import { useState } from "react";
 import { ALERT_TIME_MS } from "../../../constants/settings";
@@ -7,13 +7,13 @@ import {
   GAME_TITLE,
   GUESS_DISTRIBUTION_TEXT,
   IN_TEXT,
+  PLACEHOLDER_TEXT,
   SHARE_LINK,
   SHARE_POINTS,
   SKIP_LETTER,
   STATISTICS_TITLE,
   STATS_DIALOG_ARIA,
 } from "../../../constants/strings";
-import { ALL_CATEGORIES } from "../../../data/questions";
 import useDailyIndex, { getPositiveIndex } from "../../../hooks/useDailyIndex";
 import useQuestionByID from "../../../hooks/useQuestionByID";
 import useGameStateStore from "../../../stores/gameStateStore";
@@ -126,7 +126,10 @@ const StatsDialog = ({
       >
         {GUESS_DISTRIBUTION_TEXT}
       </Typography>
-      {ALL_CATEGORIES.map((c) => (
+      <Typography sx={{ m: 3, my: 0, fontSize: "20px" }} fontStyle={"italic"}>
+        {PLACEHOLDER_TEXT}
+      </Typography>
+      {/* {ALL_CATEGORIES.map((c) => (
         <Stack
           direction={"row"}
           sx={{ pb: 1 }}
@@ -150,7 +153,7 @@ const StatsDialog = ({
           </Stack>
           <Typography sx={{ mr: 1 }}>3.4</Typography>
         </Stack>
-      ))}
+      ))} */}
 
       <ShareButton onShare={handleShare} />
       <Snackbar // Alert message when stats are copied
