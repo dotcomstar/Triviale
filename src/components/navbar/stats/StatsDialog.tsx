@@ -1,7 +1,7 @@
 import { Box, DialogProps, Snackbar, Stack, Typography } from "@mui/material";
 import copy from "copy-to-clipboard";
 import { useState } from "react";
-import { ALERT_TIME_MS, QUESTIONS_PER_DAY } from "../../../constants/settings";
+import { ALERT_TIME_MS } from "../../../constants/settings";
 import {
   GAME_COPIED_MESSAGE,
   GAME_TITLE,
@@ -103,7 +103,10 @@ const StatsDialog = ({
           // url: "https://trivialle.vercel.app/",
         })
         .then(() => console.log("Successful share"))
-        .catch((error) => console.log("Error sharing", error));
+        .catch((error) => {
+          console.log("Error sharing", error);
+          handleShare();
+        });
     } else {
       handleShare();
     }
