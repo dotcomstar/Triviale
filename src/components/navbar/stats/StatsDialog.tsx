@@ -1,13 +1,7 @@
-import { ShareOutlined } from "@mui/icons-material";
-import {
-  Button,
-  DialogProps,
-  Snackbar,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { DialogProps, Snackbar, Typography } from "@mui/material";
 import copy from "copy-to-clipboard";
 import { useState } from "react";
+import { ALERT_TIME_MS } from "../../../constants/settings";
 import {
   GAME_COPIED_MESSAGE,
   GAME_TITLE,
@@ -16,17 +10,16 @@ import {
   PLACEHOLDER_TEXT,
   SHARE_LINK,
   SHARE_POINTS,
-  SHARE_TEXT,
   SKIP_LETTER,
   STATISTICS_TITLE,
   STATS_DIALOG_ARIA,
 } from "../../../constants/strings";
+import useDailyIndex, { getPositiveIndex } from "../../../hooks/useDailyIndex";
 import useQuestionByID from "../../../hooks/useQuestionByID";
 import useGameStateStore from "../../../stores/gameStateStore";
 import useHardModeStore from "../../../stores/hardModeStore";
 import CustomDialog from "../CustomDialog";
-import useDailyIndex, { getPositiveIndex } from "../../../hooks/useDailyIndex";
-import { ALERT_TIME_MS } from "../../../constants/settings";
+import ShareButton from "./ShareButton";
 
 export interface StatsDialogProps {
   open: boolean;
@@ -94,11 +87,29 @@ const StatsDialog = ({
   const handleClose = () => {
     onClose();
   };
-  const handleShare = () => {
+
+  const handleCopy = () => {
     setShowCopied(true);
     copy(textToShare, {
       debug: true,
     });
+  };
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          text: textToShare,
+          // url: "https://trivialle.vercel.app/",
+        })
+        .then(() => console.log("Successful share"))
+        .catch((error) => {
+          console.log("Error sharing", error);
+          handleCopy();
+        });
+    } else {
+      handleCopy();
+    }
   };
 
   return (
@@ -110,31 +121,48 @@ const StatsDialog = ({
       ariaLabeledBy={STATISTICS_TITLE}
       dialogTitle={STATISTICS_TITLE}
     >
-      <Snackbar
+      <Typography
+        sx={{ m: 3, my: 0, mb: 1, fontSize: "20px", fontWeight: "bold" }}
+      >
+        {GUESS_DISTRIBUTION_TEXT}
+      </Typography>
+      <Typography sx={{ m: 3, my: 0, fontSize: "20px" }} fontStyle={"italic"}>
+        {PLACEHOLDER_TEXT}
+      </Typography>
+      {/* {ALL_CATEGORIES.map((c) => (
+        <Stack
+          direction={"row"}
+          sx={{ pb: 1 }}
+          display={"flex"}
+          justifyContent={"space-between"}
+        >
+          <Stack direction={"row"} justifyContent={"left"}>
+            <Box width={"60px"}>
+              <Typography sx={{ mx: 2 }}>{c}</Typography>
+            </Box>
+            <Box
+              bgcolor={"success.main"}
+              width={c === "HIS" || c === "GEO" ? "100px" : "150px"}
+              justifyContent={"end"}
+              display={"flex"}
+            >
+              <Typography sx={{ mr: 1 }} color={"#FFFFFF"}>
+                {c === "HIS" || c === "GEO" ? 2 : 3}
+              </Typography>
+            </Box>
+          </Stack>
+          <Typography sx={{ mr: 1 }}>3.4</Typography>
+        </Stack>
+      ))} */}
+
+      <ShareButton onShare={handleShare} />
+      <Snackbar // Alert message when stats are copied
         open={showCopied}
         onClose={() => setShowCopied(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={ALERT_TIME_MS}
         message={GAME_COPIED_MESSAGE}
       />
-      <Typography sx={{ m: 3, my: 0, fontSize: "20px" }}>
-        {GUESS_DISTRIBUTION_TEXT}
-      </Typography>
-      <Typography sx={{ m: 3, my: 0, fontSize: "20px" }} fontStyle={"italic"}>
-        {PLACEHOLDER_TEXT}
-      </Typography>
-      <Stack justifyContent={"center"} alignItems={"center"} sx={{ p: 2 }}>
-        <Button
-          variant="contained"
-          color="success"
-          disableElevation
-          sx={{ borderRadius: 10, width: "50%" }}
-          endIcon={<ShareOutlined />}
-          onClick={handleShare}
-        >
-          {SHARE_TEXT}
-        </Button>
-      </Stack>
     </CustomDialog>
   );
 };
