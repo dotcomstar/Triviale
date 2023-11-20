@@ -81,7 +81,7 @@ const StatsDialog = ({
         " \n"
       );
     })
-    .join("")}${SHARE_POINTS(points)}`;
+    .join("")}${SHARE_POINTS(points)}\n${SHARE_LINK}`;
   const [showCopied, setShowCopied] = useState(false);
 
   const handleClose = () => {
@@ -89,7 +89,7 @@ const StatsDialog = ({
   };
   const handleShare = () => {
     setShowCopied(true);
-    copy(textToShare + "\n" + SHARE_LINK, {
+    copy(textToShare, {
       debug: true,
     });
   };
