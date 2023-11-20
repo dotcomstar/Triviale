@@ -1,12 +1,19 @@
 const SCIENCE = "SCI";
 const HISTORY = "HIS";
-const ART_AND_LITERATURE = "ART/LIT";
+const ART_AND_LITERATURE = "ART";
 // const MATH = "MATH";
 const RELIGION = "REL";
 const GEOGRAPHY = "GEO";
 const POP_CULTURE = "POP";
-const COMPUTER_SCIENCE = "CS";
-const SPORTS = "SPO";
+
+export const ALL_CATEGORIES = [
+  ART_AND_LITERATURE,
+  HISTORY,
+  SCIENCE,
+  RELIGION,
+  GEOGRAPHY,
+  POP_CULTURE,
+];
 
 export interface Question {
   question: string;
@@ -493,7 +500,7 @@ const questions: Question[] = [
     question: `This team was called "Baseball's Great Experiment" in a 2014 Sports Illustrated cover that predicted a future World Series win. While pitching for this team, Framber Valdez gave up the first ever World Series leadoff home run to Jorge Soler. A 2019 investigation revealed that banging on garbage cans signaled opponents' signs that this team "stole." Jose Altuve plays for this team, which lost the 2021 World Series. Name this team that plays in Texas' largest city.`,
     answer: "Astros",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2005N.pdf",
-    category: SPORTS,
+    category: POP_CULTURE,
   },
   {
     question: `In Bahai, the Nineteen Day Fast ends on one of these holidays, called Nowruz. On one of these holidays, which occurs fifteen days before the Lantern Festival, children are given red envelopes filled with money. A Jewish one of these holidays is the first of the High Holy Days and takes place nine days before Yom Kippur.  Rosh Hashanah is what type of holiday, which falls on January 1st in the Gregorian Calendar?`,
@@ -586,7 +593,7 @@ const questions: Question[] = [
     answer: "Turing",
     fullAnswer: "Alan Turing",
     url: "https://files.quizbowlpackets.com/2806/KICKOFF%20Novice%20Packet%2012N.pdf",
-    category: COMPUTER_SCIENCE,
+    category: SCIENCE,
   },
   {
     question: `One saint associated with this holiday slapped the heretic Arius in the face at the First Council of Nicaea.  This day takes place twelve days before the Epiphany and one day after the end of Advent. This day begins with a Midnight Mass and celebrants singing “carols,” such as “Silent Night.” Name this holiday, during which Santa Claus brings children gifts, celebrated on December 25th.`,
