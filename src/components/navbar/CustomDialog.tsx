@@ -10,7 +10,6 @@ export interface CustomDialogProps {
   ariaLabeledBy: string;
   children: ReactNode;
   dialogTitle?: string;
-  id?: string;
 }
 
 const CustomDialog = ({
@@ -20,7 +19,6 @@ const CustomDialog = ({
   ariaDescribedBy,
   children,
   ariaLabeledBy,
-  id,
   dialogTitle = "",
 }: CustomDialogProps) => {
   const handleClose = () => {
@@ -38,7 +36,6 @@ const CustomDialog = ({
       fullWidth
       maxWidth="sm"
       sx={{ zIndex: "modal", mx: 0 }}
-      id={id}
     >
       <DialogTitle
         sx={{ fontWeight: "bold", fontSize: "28px", pb: dialogTitle ? 0 : 1 }}

@@ -87,15 +87,15 @@ const StatsDialog = ({
   const handleClose = () => {
     onClose();
   };
-  const handleShare = () => {
+
+  const handleCopy = () => {
     setShowCopied(true);
     copy(textToShare, {
       debug: true,
     });
   };
 
-  const shareButton = document.getElementById("StatsDialogID");
-  shareButton?.addEventListener("click", (_) => {
+  const handleShare = () => {
     if (navigator.share) {
       navigator
         .share({
@@ -105,12 +105,12 @@ const StatsDialog = ({
         .then(() => console.log("Successful share"))
         .catch((error) => {
           console.log("Error sharing", error);
-          handleShare();
+          handleCopy();
         });
     } else {
-      handleShare();
+      handleCopy();
     }
-  });
+  };
 
   return (
     <CustomDialog
@@ -120,7 +120,6 @@ const StatsDialog = ({
       ariaDescribedBy={STATS_DIALOG_ARIA}
       ariaLabeledBy={STATISTICS_TITLE}
       dialogTitle={STATISTICS_TITLE}
-      id={"StatsDialogID"}
     >
       <Typography
         sx={{ m: 3, my: 0, mb: 1, fontSize: "20px", fontWeight: "bold" }}
@@ -153,7 +152,7 @@ const StatsDialog = ({
         </Stack>
       ))}
 
-      <ShareButton onShare={() => null} />
+      <ShareButton onShare={handleShare} />
       <Snackbar // Alert message when stats are copied
         open={showCopied}
         onClose={() => setShowCopied(false)}
