@@ -99,10 +99,6 @@ const StatsDialog = ({
     if (navigator.share) {
       navigator
         .share({
-          title: `${GAME_TITLE} ${solutionIndex} ${questionState.reduce(
-            (acc, guess) => acc + (guess === "won" ? 1 : 0),
-            0
-          )}/${QUESTIONS_PER_DAY}`,
           text: textToShare,
           // url: "https://trivialle.vercel.app/",
         })
