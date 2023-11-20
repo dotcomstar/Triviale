@@ -81,7 +81,7 @@ const StatsDialog = ({
         " \n"
       );
     })
-    .join("")}${SHARE_POINTS(points)}\n${SHARE_LINK}`;
+    .join("")}${SHARE_POINTS(points)}`;
   const [showCopied, setShowCopied] = useState(false);
 
   const handleClose = () => {
@@ -89,7 +89,7 @@ const StatsDialog = ({
   };
   const handleShare = () => {
     setShowCopied(true);
-    copy(textToShare, {
+    copy(textToShare + "\n" + SHARE_LINK, {
       debug: true,
     });
   };
@@ -100,7 +100,7 @@ const StatsDialog = ({
       navigator
         .share({
           title: "Web Share API Draft",
-          text: "Take a look at this spec!",
+          text: textToShare,
           url: "https://trivialle.vercel.app/",
         })
         .then(() => console.log("Successful share"))
