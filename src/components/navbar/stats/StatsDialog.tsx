@@ -94,6 +94,22 @@ const StatsDialog = ({
     });
   };
 
+  const shareButton = document.getElementById("StatsDialogID");
+  shareButton?.addEventListener("click", (_) => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Web Share API Draft",
+          text: "Take a look at this spec!",
+          url: "https://trivialle.vercel.app/",
+        })
+        .then(() => console.log("Successful share"))
+        .catch((error) => console.log("Error sharing", error));
+    } else {
+      handleShare();
+    }
+  });
+
   return (
     <CustomDialog
       onClose={handleClose}
@@ -102,6 +118,7 @@ const StatsDialog = ({
       ariaDescribedBy={STATS_DIALOG_ARIA}
       ariaLabeledBy={STATISTICS_TITLE}
       dialogTitle={STATISTICS_TITLE}
+      id={"StatsDialogID"}
     >
       <Typography
         sx={{ m: 3, my: 0, mb: 1, fontSize: "20px", fontWeight: "bold" }}
@@ -134,7 +151,7 @@ const StatsDialog = ({
         </Stack>
       ))}
 
-      <ShareButton onShare={handleShare} />
+      <ShareButton onShare={() => null} />
       <Snackbar // Alert message when stats are copied
         open={showCopied}
         onClose={() => setShowCopied(false)}
