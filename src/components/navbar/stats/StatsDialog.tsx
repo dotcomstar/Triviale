@@ -1,6 +1,5 @@
 import { Box, DialogProps, Snackbar, Stack, Typography } from "@mui/material";
 import copy from "copy-to-clipboard";
-import { Share } from "react-native";
 import { useState } from "react";
 import { ALERT_TIME_MS } from "../../../constants/settings";
 import {
@@ -92,10 +91,6 @@ const StatsDialog = ({
     setShowCopied(true);
     copy(textToShare, {
       debug: true,
-    });
-    Share.share({
-      title: "a title",
-      message: "some message",
     });
   };
 
