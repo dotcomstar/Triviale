@@ -11,6 +11,7 @@ import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 import useQuestionByID from "../../hooks/useQuestionByID";
 import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
+import useDialogStore from "../../stores/dialogStore";
 
 interface Props {
   children: string;
@@ -25,6 +26,7 @@ const ExpandableText = ({ children }: Props) => {
   const makeGuess = useGameStateStore((s) => s.makeGuess);
   const resetGuess = useCurrGuessStore((s) => s.resetGuess);
   const questionState = useGameStateStore((s) => s.questionState);
+  const setStatsOpen = useDialogStore((s) => s.setStatsOpen);
   const summary =
     guessNumber < MAX_CHALLENGES &&
     questionState[questionNumber] === "inProgress"
@@ -63,6 +65,9 @@ const ExpandableText = ({ children }: Props) => {
             if (questionState[questionNumber] === "inProgress") {
               makeGuess(Array(answer.length).fill(SKIP_LETTER));
               resetGuess();
+            }
+            if (gameState !== "inProgress") {
+              setStatsOpen(true);
             }
           }}
           color="secondary"
