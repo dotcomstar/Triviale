@@ -6,7 +6,7 @@ export const firstGameDate = new Date(2023, 11, 13);
 export const periodInDays = 1;
 const oneDay = 1000 * 60 * 60 * 24; // One day Time in ms (milliseconds)
 // const presentDate = new Date();
-const presentDate = new Date(new Date().getTime() + 1 * oneDay); // Temp offset so new questions come the second day and not the first
+const presentDate = new Date(new Date().getTime() + 0 * oneDay); // Temp offset so new questions come the second day and not the first
 
 const len = questions.length;
 
