@@ -12,6 +12,7 @@ import useQuestionByID from "../../hooks/useQuestionByID";
 import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
 import useDialogStore from "../../stores/dialogStore";
+import useOnscreenKeyboardOnlyStore from "../../stores/onscreenKeyboardOnlyStore";
 
 interface Props {
   children: string;
@@ -27,6 +28,9 @@ const ExpandableText = ({ children }: Props) => {
   const resetGuess = useCurrGuessStore((s) => s.resetGuess);
   const questionState = useGameStateStore((s) => s.questionState);
   const setStatsOpen = useDialogStore((s) => s.setStatsOpen);
+  const onscreenKeyboardOnly = useOnscreenKeyboardOnlyStore(
+    (s) => s.onscreenKeyboardOnly
+  );
   const summary =
     guessNumber < MAX_CHALLENGES &&
     questionState[questionNumber] === "inProgress"
@@ -53,7 +57,7 @@ const ExpandableText = ({ children }: Props) => {
         questionState[questionNumber] !== "inProgress") && (
         <Button
           id="ExpandableButton"
-          disableFocusRipple
+          disableFocusRipple={!onscreenKeyboardOnly}
           onClick={() => {
             if (
               questionState[questionNumber] !== "inProgress" &&

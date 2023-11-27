@@ -1,6 +1,8 @@
 import { Button, ButtonOwnProps, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import { REVEAL_TIME_MS } from "../../constants/settings";
+import useOnscreenKeyboardOnlyStore from "../../stores/onscreenKeyboardOnlyStore";
+import { ENTER_KEY_ID } from "../../constants/strings";
 
 type Props = {
   children?: ReactNode;
@@ -21,15 +23,20 @@ const Key = ({
   onClick,
   width,
   isRevealing,
-  id,
+  id = value,
   status = undefined,
   fontSize = 20,
   autoFocus = false,
 }: Props) => {
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     onClick(value);
-    event.currentTarget.blur();
+    if (!onscreenKeyboardOnly) {
+      event.currentTarget.blur();
+    }
   };
+  const onscreenKeyboardOnly = useOnscreenKeyboardOnlyStore(
+    (s) => s.onscreenKeyboardOnly
+  );
 
   return (
     <Button
@@ -48,8 +55,8 @@ const Key = ({
       size="small"
       color={status}
       id={id}
-      disableFocusRipple={!!id}
-      autoFocus={autoFocus}
+      disableFocusRipple={id === ENTER_KEY_ID && !onscreenKeyboardOnly}
+      autoFocus={autoFocus && !onscreenKeyboardOnly}
     >
       <Typography sx={{ fontWeight: "bold", fontSize: fontSize }}>
         {children || value}

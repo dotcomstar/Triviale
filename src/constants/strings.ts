@@ -36,6 +36,9 @@ export const HARD_MODE_DESCRIPTION = "Only one answer per question";
 export const DARK_MODE_LABEL = "Dark Theme";
 export const HIGH_CONTRAST_MODE_LABEL = "High Contrast Mode";
 export const HIGH_CONTRAST_MODE_DESCRIPTION = "For improved color vision";
+export const ONSCREEN_KEYBOARD_ONLY_LABEL = "Onscreen Keyboard Input Only";
+export const ONSCREEN_KEYBOARD_ONLY_DESCRIPTION =
+  "Ignore key input except from the onscreen keyboard. Most helpful for users using speech recognition or other assistive devices.";
 export const CORRECT_WORD_MESSAGE = (solution: string) =>
   `The word was ${solution}`;
 export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
@@ -77,3 +80,5 @@ export const PLACEHOLDER_TEXT = "Coming soon";
 export const FEEDBACK_TEXT = "Feedback";
 export const BUG_REPORT_TEXT = "Bug Report";
 export const EMAIL_TEXT = "Email";
+
+export const ENTER_KEY_ID = "ENTER_KEY";

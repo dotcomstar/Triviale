@@ -19,6 +19,7 @@ import ColorModeSwitch from "./ColorModeSwitch";
 import EmailButton from "./EmailButton";
 import HardModeSwitch from "./HardModeSwitch";
 import HighContrastSwitch from "./HighContrastSwitch";
+import OnscreenKeyboardOnlySwitch from "./OnscreenKeyboardOnlySwitch";
 
 export interface SettingsDialogProps {
   open: boolean;
@@ -54,6 +55,10 @@ const SettingsDialog = ({
         <Divider component="li" sx={{ mx: 2 }} />
         <ListItem>
           <HighContrastSwitch />
+        </ListItem>
+        <Divider component="li" sx={{ mx: 2 }} />
+        <ListItem>
+          <OnscreenKeyboardOnlySwitch />
         </ListItem>
         <Divider component="li" sx={{ mx: 2 }} />
         <ListItem>

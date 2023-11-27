@@ -1,11 +1,12 @@
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import { Icon, Stack } from "@mui/material";
 import { useEffect } from "react";
-import { ENTER_TEXT } from "../../constants/strings";
+import { ENTER_KEY_ID, ENTER_TEXT } from "../../constants/strings";
 import Key from "./Key";
 import useGameStateStore from "../../stores/gameStateStore";
 import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 import useQuestionByID from "../../hooks/useQuestionByID";
+import useOnscreenKeyboardOnlyStore from "../../stores/onscreenKeyboardOnlyStore";
 
 type KeyboardProps = {
   onChar: (value: string) => void;
@@ -74,6 +75,9 @@ const Keyboard = ({
   const topRowKeyWidth = getKeyWidth(numTopRowKeys, 1);
   const defaultKeyWidth = getKeyWidth(numDefaultRowKeys, 1);
   const enterDeleteWidth = getKeyWidth(numDefaultRowKeys, 1.5);
+  const onscreenKeyboardOnly = useOnscreenKeyboardOnlyStore(
+    (s) => s.onscreenKeyboardOnly
+  );
 
   const onClick = (value: string) => {
     if (value === "ENTER") {
@@ -87,14 +91,19 @@ const Keyboard = ({
 
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
-      if (e.key === "Backspace") {
-        document.getElementById("ENTER_KEY")?.focus();
+      if (e.key === "Backspace" && !onscreenKeyboardOnly) {
+        document.getElementById(ENTER_KEY_ID)?.focus();
         onDelete();
       } else {
         const key = e.key.toLocaleUpperCase();
         // TODO: check this test if the range works with non-english letters
-        if (key.length === 1 && key >= "A" && key <= "Z") {
-          document.getElementById("ENTER_KEY")?.focus();
+        if (
+          key.length === 1 &&
+          key >= "A" &&
+          key <= "Z" &&
+          !onscreenKeyboardOnly
+        ) {
+          document.getElementById(ENTER_KEY_ID)?.focus();
           onChar(key);
         }
       }
@@ -120,8 +129,8 @@ const Keyboard = ({
             key={key}
             onClick={onClick}
             width={topRowKeyWidth}
-            isRevealing={isRevealing}
             status={getStatus(key)}
+            isRevealing={isRevealing}
           />
         ))}
       </Stack>
@@ -143,7 +152,7 @@ const Keyboard = ({
           width={enterDeleteWidth}
           value="ENTER"
           onClick={onClick}
-          id={"ENTER_KEY"}
+          id={ENTER_KEY_ID}
           autoFocus
         >
           {ENTER_TEXT}
