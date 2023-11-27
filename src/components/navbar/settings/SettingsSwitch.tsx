@@ -20,7 +20,11 @@ const SettingsSwitch = ({
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Stack direction="column">
           <Typography>{label}</Typography>
-          {caption && <Typography variant="caption">{caption}</Typography>}
+          {caption && (
+            <Typography variant="caption" pr={"2vw"}>
+              {caption}
+            </Typography>
+          )}
         </Stack>
         <IOSSwitch checked={checked} onChange={onChange} />
       </Stack>
