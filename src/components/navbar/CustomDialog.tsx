@@ -10,6 +10,8 @@ export interface CustomDialogProps {
   ariaLabeledBy: string;
   children: ReactNode;
   dialogTitle?: string;
+  fullScreen?: boolean;
+  centerTitle?: boolean;
 }
 
 const CustomDialog = ({
@@ -20,6 +22,8 @@ const CustomDialog = ({
   children,
   ariaLabeledBy,
   dialogTitle = "",
+  fullScreen = false,
+  centerTitle = false,
 }: CustomDialogProps) => {
   const handleClose = () => {
     onClose();
@@ -35,10 +39,13 @@ const CustomDialog = ({
       keepMounted
       fullWidth
       maxWidth="sm"
-      sx={{ zIndex: "modal", mx: 0 }}
+      fullScreen={fullScreen}
+      sx={{ zIndex: "modal", mx: 0, mb: 2 }}
     >
       <DialogTitle
         sx={{ fontWeight: "bold", fontSize: "28px", pb: dialogTitle ? 0 : 1 }}
+        justifyContent={centerTitle ? "center" : undefined}
+        display={"flex"}
       >
         {dialogTitle}
       </DialogTitle>

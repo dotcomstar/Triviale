@@ -6,6 +6,7 @@ import {
   ListItem,
   Stack,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import {
   ABOUT_AUTHOR_URL,
@@ -35,6 +36,7 @@ const SettingsDialog = ({
   const handleClose = () => {
     onClose();
   };
+  const matches = useMediaQuery("(min-width:600px)");
 
   return (
     <CustomDialog
@@ -43,8 +45,11 @@ const SettingsDialog = ({
       TransitionComponent={TransitionComponent}
       ariaDescribedBy={SETTINGS_DIALOG_ARIA}
       ariaLabeledBy={SETTINGS_TITLE}
+      dialogTitle={SETTINGS_TITLE}
+      fullScreen={!matches}
+      centerTitle
     >
-      <List>
+      <List sx={{ mx: matches ? 1 : 2 }}>
         <ListItem>
           <HardModeSwitch />
         </ListItem>
