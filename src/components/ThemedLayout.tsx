@@ -95,7 +95,7 @@ const ThemedLayout = ({ children }: Props) => {
                   light: "#878A8C",
                   dark: "#D3D6DA",
                 },
-                error: { main: "#787C7E" },
+                error: { main: "#787C7E", dark: "#FFF" },
                 info: { main: "#FF0000" },
                 ...(highContrast
                   ? {
@@ -114,7 +114,7 @@ const ThemedLayout = ({ children }: Props) => {
                   light: "#565758",
                   dark: "#3A3A3C",
                 },
-                error: { main: "#3A3A3C" },
+                error: { main: "#3A3A3C", dark: "#121213" },
                 info: { main: "#FF0000" },
                 ...(highContrast
                   ? {

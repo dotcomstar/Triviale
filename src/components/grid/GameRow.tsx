@@ -7,14 +7,19 @@ import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 interface GameRowProps {
   guess: string[];
   statuses?: PaletteColor[];
+  answerOverride?: string;
 }
 
-const GameRow = ({ guess, statuses = [] }: GameRowProps) => {
+const GameRow = ({ guess, statuses = [], answerOverride }: GameRowProps) => {
   const dailyIndex = useDailyIndex();
   const questionNumber = useGameStateStore((s) => s.questionNumber);
   const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
   const question = useQuestionByID(safeIndex);
-  const answerWithSpaces = question?.answer.toLocaleUpperCase()!;
+  let ans = question?.answer;
+  if (answerOverride) {
+    ans = answerOverride;
+  }
+  const answerWithSpaces = ans?.toLocaleUpperCase()!;
   const answer = answerWithSpaces.replace(/\s+/g, "")!;
   const emptyCells = Array.from(Array(answer.length - guess.length));
   const theme = useTheme();
@@ -46,10 +51,11 @@ const GameRow = ({ guess, statuses = [] }: GameRowProps) => {
                     statuses[i] === theme.palette.success &&
                     statuses[i + 1] === theme.palette.success
                       ? statuses[i].main
-                      : statuses[i] === theme.palette.error ||
-                        statuses[i + 1] === theme.palette.error ||
-                        statuses[i] === theme.palette.warning ||
-                        statuses[i + 1] === theme.palette.warning
+                      : !answerOverride &&
+                        (statuses[i] === theme.palette.error ||
+                          statuses[i + 1] === theme.palette.error ||
+                          statuses[i] === theme.palette.warning ||
+                          statuses[i + 1] === theme.palette.warning)
                       ? "primary.dark"
                       : "primary.light",
                 }}

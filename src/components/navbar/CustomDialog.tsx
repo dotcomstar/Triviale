@@ -1,4 +1,10 @@
-import { Dialog, DialogProps, DialogTitle, IconButton } from "@mui/material";
+import {
+  Dialog,
+  DialogProps,
+  DialogTitle,
+  IconButton,
+  useTheme,
+} from "@mui/material";
 import { ReactNode } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -29,6 +35,8 @@ const CustomDialog = ({
     onClose();
   };
 
+  const theme = useTheme();
+
   return (
     <Dialog
       onClose={handleClose}
@@ -41,6 +49,12 @@ const CustomDialog = ({
       maxWidth="sm"
       fullScreen={fullScreen}
       sx={{ zIndex: "modal", mx: 0, mb: 2 }}
+      PaperProps={{
+        style: {
+          backgroundColor: theme.palette.error.dark,
+          backgroundImage: "unset",
+        },
+      }}
     >
       <DialogTitle
         sx={{ fontWeight: "bold", fontSize: "28px", pb: dialogTitle ? 0 : 1 }}
