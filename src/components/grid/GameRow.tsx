@@ -26,7 +26,11 @@ const GameRow = ({ guess, statuses = [], answerOverride }: GameRowProps) => {
   let numSpacesForward = 1;
 
   return (
-    <Stack direction="row" justifyContent="center" alignItems="center">
+    <Stack
+      direction="row"
+      justifyContent={answerOverride ? "left" : "center"}
+      alignItems="center"
+    >
       {guess.map((letter, i) => {
         let shouldSkip = false;
         if (answerWithSpaces[i + numSpacesForward] === " ") {

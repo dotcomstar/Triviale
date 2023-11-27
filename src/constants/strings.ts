@@ -11,9 +11,15 @@ export const HELP_NUM_TRIES = `Try to answer the question before it's finished b
 export const HELP_NUM_QUESTIONS = `Total of ${QUESTIONS_PER_DAY} questions per day.`;
 export const HELP_HOW_TILE_COLORS_CHANGE =
   "          The color of the tiles will change to show how close your guess was to the word.";
+export const HELP_CORRECT_LETTER_AND_SPOT =
+  "B is in the word and in the correct spot.";
+export const HELP_CORRECT_LETTER_WRONG_SPOT =
+  "R is in the word but in the wrong spot.";
+export const HELP_WRONG_LETTER = "T is not in the word in any spot.";
 export const HELP_BUTTON_ARIA = "help";
 export const HELP_TITLE = "Help";
 export const HELP_DIALOG_ARIA = "help-dialog-slide";
+export const EXAMPLES_TEXT = "Examples";
 
 export const SETTINGS_BUTTON_ARIA = "settings";
 export const SETTINGS_TITLE = "Settings";
