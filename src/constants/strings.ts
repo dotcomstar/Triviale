@@ -4,10 +4,10 @@ export const GAME_URL = "https://trivialle.vercel.app/";
 export const CONTACT_EMAIL = "jetrlee@gmail.com";
 export const ABOUT_AUTHOR_URL = "https://jetrlee.vercel.app/";
 
-import { MAX_CHALLENGES, QUESTIONS_PER_DAY } from "./settings";
+import { QUESTIONS_PER_DAY } from "./settings";
 
 export const HELP_HOW_TO_PLAY = "How To Play";
-export const HELP_NUM_TRIES = `Find what is being talked about through ${MAX_CHALLENGES} hints. The first hint is the hardest. Reveal more hints by guessing or skipping your guess.`;
+export const HELP_NUM_TRIES = `Try to answer the question before it's finished being asked. Reveal more hints by guessing or skipping your guess.`;
 export const HELP_NUM_QUESTIONS = `Total of ${QUESTIONS_PER_DAY} questions per day.`;
 export const HELP_HOW_TILE_COLORS_CHANGE =
   "          The color of the tiles will change to show how close your guess was to the word.";
