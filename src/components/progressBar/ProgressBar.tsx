@@ -2,11 +2,15 @@ import { Box, Button, Stack } from "@mui/material";
 import { QUESTIONS_PER_DAY } from "../../constants/settings";
 import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
+import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
+import useQuestions from "../../hooks/useQuestions";
 
 const ProgressBar = () => {
   const importGuess = useCurrGuessStore((s) => s.importGuess);
   const { moveToQuestion, questionState, guesses, guessNumber } =
     useGameStateStore();
+  const dailyIndex = useDailyIndex();
+  const { data } = useQuestions();
 
   return (
     <Stack
@@ -43,7 +47,7 @@ const ProgressBar = () => {
               }
               sx={{ borderRadius: 30, width: "calc(100% / 3)" }}
             >
-              {`Q${i + 1}`}
+              {`Q${i + 1}, ${data[getPositiveIndex(dailyIndex + i)].category}`}
             </Button>
             {i < arr.length - 1 && (
               <Box
