@@ -1,10 +1,4 @@
-import {
-  Button,
-  DialogProps,
-  Snackbar,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { DialogProps, Snackbar, Typography } from "@mui/material";
 import copy from "copy-to-clipboard";
 import { useState } from "react";
 import { ALERT_TIME_MS } from "../../../constants/settings";
@@ -13,7 +7,6 @@ import {
   GAME_TITLE,
   GUESS_DISTRIBUTION_TEXT,
   IN_TEXT,
-  PLACEHOLDER_TEXT,
   SHARE_LINK,
   SHARE_POINTS,
   SKIP_LETTER,
@@ -25,10 +18,10 @@ import useQuestionByID from "../../../hooks/useQuestionByID";
 import useGameStateStore from "../../../stores/gameStateStore";
 import useHardModeStore from "../../../stores/hardModeStore";
 import CustomDialog from "../CustomDialog";
-import ShareButton from "./ShareButton";
-import GuessDistribution from "./GuessDistribution";
-import { ShareOutlined } from "@mui/icons-material";
 import AdvancedStatsButton from "./AdvancedStatsButton";
+import GuessDistribution from "./GuessDistribution";
+import ShareButton from "./ShareButton";
+import PlaceHolderText from "../../PlaceHolderText";
 
 export interface StatsDialogProps {
   open: boolean;
@@ -155,9 +148,7 @@ const StatsDialog = ({
       >
         {GUESS_DISTRIBUTION_TEXT}
       </Typography>
-      {/* <Typography sx={{ m: 3, my: 0, fontSize: "20px" }} fontStyle={"italic"}>
-        {PLACEHOLDER_TEXT}
-      </Typography> */}
+
       <GuessDistribution sx={{ m: 3, my: 0, fontSize: "20px" }} />
       <ShareButton onShare={handleShare} />
       <AdvancedStatsButton onClick={() => console.log("Open advanced stats")} />
