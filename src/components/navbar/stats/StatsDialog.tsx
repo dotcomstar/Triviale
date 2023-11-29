@@ -21,7 +21,6 @@ import CustomDialog from "../CustomDialog";
 import AdvancedStatsButton from "./AdvancedStatsButton";
 import GuessDistribution from "./GuessDistribution";
 import ShareButton from "./ShareButton";
-import PlaceHolderText from "../../PlaceHolderText";
 
 export interface StatsDialogProps {
   open: boolean;

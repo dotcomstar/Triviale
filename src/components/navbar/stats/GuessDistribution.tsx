@@ -1,6 +1,17 @@
 import { MAX_CHALLENGES } from "../../../constants/settings";
-import { ALL_CATEGORIES } from "../../../data/questions";
 import { Box, Stack, SxProps, Typography } from "@mui/material";
+
+// We want to store total # questions correct, total # questions attempted,
+//      # questions in category correct, # questions in category attempted
+// Eg. Get from localStorage or account:
+//     {Guessed in 1: 2, Guessed in 2: 10, Guessed in 3: 40,
+//      Guessed in 4: 26, Guessed in 5: 16}
+//      {Today's guesses: (Q1, HIS = 4), (Q2, POP = 3), (Q3, SCI = 2)}
+// Then add today's guesses to total # of questions guessed in that many attempts
+// And also keep track of a similar running total for each category.
+// We only show the sum of all categories by default because it looks cleaner.
+// But, we will allow users to see graphs for each category,
+// along with an average guess length for that category, under 'Advanced Stats'
 
 interface GuessDistributionProps {
   sx: SxProps;
