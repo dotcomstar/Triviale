@@ -22,20 +22,24 @@ const GuessDistribution = ({ sx }: GuessDistributionProps) => {
     <>
       {Array(MAX_CHALLENGES)
         .fill("")
-        .map((c, i) => (
+        .map((_, i) => (
           <Stack
             direction={"row"}
             sx={{ pb: 1, ...sx }}
             display={"flex"}
             justifyContent={"space-between"}
           >
-            <Stack direction={"row"} justifyContent={"left"}>
+            <Stack
+              direction={"row"}
+              justifyContent={"left"}
+              sx={{ width: "100%" }}
+            >
               <Box width={"60px"}>
                 <Typography sx={{ mx: 2 }}>{i + 1}</Typography>
               </Box>
               <Box
                 bgcolor={i === 1 || i === 3 ? "success.main" : "primary.light"}
-                width={i === 1 || i === 3 ? "150px" : "100px"}
+                width={i === 1 || i === 3 ? "70%" : "10%"}
                 justifyContent={"end"}
                 display={"flex"}
               >
