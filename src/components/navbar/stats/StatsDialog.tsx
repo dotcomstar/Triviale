@@ -1,4 +1,10 @@
-import { DialogProps, Snackbar, Typography } from "@mui/material";
+import {
+  Button,
+  DialogProps,
+  Snackbar,
+  Stack,
+  Typography,
+} from "@mui/material";
 import copy from "copy-to-clipboard";
 import { useState } from "react";
 import { ALERT_TIME_MS } from "../../../constants/settings";
@@ -20,6 +26,9 @@ import useGameStateStore from "../../../stores/gameStateStore";
 import useHardModeStore from "../../../stores/hardModeStore";
 import CustomDialog from "../CustomDialog";
 import ShareButton from "./ShareButton";
+import GuessDistribution from "./GuessDistribution";
+import { ShareOutlined } from "@mui/icons-material";
+import AdvancedStatsButton from "./AdvancedStatsButton";
 
 export interface StatsDialogProps {
   open: boolean;
@@ -146,36 +155,12 @@ const StatsDialog = ({
       >
         {GUESS_DISTRIBUTION_TEXT}
       </Typography>
-      <Typography sx={{ m: 3, my: 0, fontSize: "20px" }} fontStyle={"italic"}>
+      {/* <Typography sx={{ m: 3, my: 0, fontSize: "20px" }} fontStyle={"italic"}>
         {PLACEHOLDER_TEXT}
-      </Typography>
-      {/* {ALL_CATEGORIES.map((c) => (
-        <Stack
-          direction={"row"}
-          sx={{ pb: 1 }}
-          display={"flex"}
-          justifyContent={"space-between"}
-        >
-          <Stack direction={"row"} justifyContent={"left"}>
-            <Box width={"60px"}>
-              <Typography sx={{ mx: 2 }}>{c}</Typography>
-            </Box>
-            <Box
-              bgcolor={"success.main"}
-              width={c === "HIS" || c === "GEO" ? "100px" : "150px"}
-              justifyContent={"end"}
-              display={"flex"}
-            >
-              <Typography sx={{ mr: 1 }} color={"#FFFFFF"}>
-                {c === "HIS" || c === "GEO" ? 2 : 3}
-              </Typography>
-            </Box>
-          </Stack>
-          <Typography sx={{ mr: 1 }}>3.4</Typography>
-        </Stack>
-      ))} */}
-
+      </Typography> */}
+      <GuessDistribution sx={{ m: 3, my: 0, fontSize: "20px" }} />
       <ShareButton onShare={handleShare} />
+      <AdvancedStatsButton onClick={() => console.log("Open advanced stats")} />
       <Snackbar // Alert message when stats are copied
         open={showCopied}
         onClose={() => setShowCopied(false)}

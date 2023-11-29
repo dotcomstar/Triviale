@@ -66,6 +66,8 @@ export const NEW_WORD_TEXT = "New word in";
 export const SHARE_TEXT = "Share";
 export const SHARE_FAILURE_TEXT =
   "Unable to share the results. This feature is available only in secure contexts (HTTPS), in some or all supporting browsers.";
+export const ADVANCED_STATS_LABEL = "Advanced Stats";
+export const ADVANCED_STATS_ARIA_LABEL = "Open advanced stats";
 export const MIGRATE_BUTTON_TEXT = "Transfer";
 export const MIGRATE_DESCRIPTION_TEXT =
   "Click here to transfer your statistics to a new device.";
