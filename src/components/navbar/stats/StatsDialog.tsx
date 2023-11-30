@@ -18,8 +18,8 @@ import useQuestionByID from "../../../hooks/useQuestionByID";
 import useGameStateStore from "../../../stores/gameStateStore";
 import useHardModeStore from "../../../stores/hardModeStore";
 import CustomDialog from "../CustomDialog";
-import AdvancedStatsButton from "./AdvancedStatsButton";
-import GuessDistribution from "./GuessDistribution";
+// import AdvancedStatsButton from "./AdvancedStatsButton";
+// import GuessDistribution from "./GuessDistribution";
 import ShareButton from "./ShareButton";
 import PlaceHolderText from "../../PlaceHolderText";
 
