@@ -21,6 +21,7 @@ import CustomDialog from "../CustomDialog";
 import AdvancedStatsButton from "./AdvancedStatsButton";
 import GuessDistribution from "./GuessDistribution";
 import ShareButton from "./ShareButton";
+import PlaceHolderText from "../../PlaceHolderText";
 
 export interface StatsDialogProps {
   open: boolean;
@@ -147,10 +148,10 @@ const StatsDialog = ({
       >
         {GUESS_DISTRIBUTION_TEXT}
       </Typography>
-
-      <GuessDistribution sx={{ m: 3, my: 0, fontSize: "20px" }} />
+      <PlaceHolderText />
+      {/* <GuessDistribution sx={{ m: 3, my: 0, fontSize: "20px" }} /> */}
       <ShareButton onShare={handleShare} />
-      <AdvancedStatsButton onClick={() => console.log("Open advanced stats")} />
+      {/* <AdvancedStatsButton onClick={() => console.log("Open advanced stats")} /> */}
       <Snackbar // Alert message when stats are copied
         open={showCopied}
         onClose={() => setShowCopied(false)}
