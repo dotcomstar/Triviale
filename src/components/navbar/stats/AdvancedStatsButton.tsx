@@ -13,7 +13,10 @@ const AdvancedStatsButton = ({ onClick }: AdvancedStatsButtonProps) => {
     <Stack justifyContent={"center"} alignItems={"center"} sx={{ pb: 2 }}>
       <Button
         disableElevation
-        sx={{ width: "70%" }}
+        sx={{
+          width: "70%",
+          color: "secondary.main",
+        }}
         onClick={onClick}
         aria-label={ADVANCED_STATS_ARIA_LABEL}
       >

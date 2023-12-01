@@ -1,4 +1,4 @@
-import { DialogProps, Snackbar, Typography } from "@mui/material";
+import { DialogProps, Snackbar, Stack, Typography } from "@mui/material";
 import copy from "copy-to-clipboard";
 import { useState } from "react";
 import { ALERT_TIME_MS } from "../../../constants/settings";
@@ -17,11 +17,13 @@ import useDailyIndex, { getPositiveIndex } from "../../../hooks/useDailyIndex";
 import useQuestionByID from "../../../hooks/useQuestionByID";
 import useGameStateStore from "../../../stores/gameStateStore";
 import useHardModeStore from "../../../stores/hardModeStore";
-import CustomDialog from "../CustomDialog";
-// import AdvancedStatsButton from "./AdvancedStatsButton";
-// import GuessDistribution from "./GuessDistribution";
-import ShareButton from "./ShareButton";
+import useStatsStore from "../../../stores/statsStore";
 import PlaceHolderText from "../../PlaceHolderText";
+import CustomDialog from "../CustomDialog";
+import AdvancedStatsButton from "./AdvancedStatsButton";
+import GuessDistribution from "./GuessDistribution";
+import PastGamesStats from "./PastGamesStats";
+import ShareButton from "./ShareButton";
 
 export interface StatsDialogProps {
   open: boolean;
@@ -47,6 +49,7 @@ const StatsDialog = ({
     const q = useQuestionByID(safeIndex);
     return [q?.category!, q?.answer.toLocaleUpperCase()!.replace(/\s+/g, "")];
   };
+  const [advancedStatsOpen, setAdvancedStatsOpen] = useState(false);
 
   let points = questionState.reduce(
     (acc, val) => acc + (val === "won" ? 5 : 0),
@@ -143,15 +146,22 @@ const StatsDialog = ({
       ariaLabeledBy={STATISTICS_TITLE}
       dialogTitle={STATISTICS_TITLE}
     >
+      <PastGamesStats sx={{ mb: 1 }} />
       <Typography
         sx={{ m: 3, my: 0, mb: 1, fontSize: "20px", fontWeight: "bold" }}
       >
         {GUESS_DISTRIBUTION_TEXT}
       </Typography>
-      <PlaceHolderText />
-      {/* <GuessDistribution sx={{ m: 3, my: 0, fontSize: "20px" }} /> */}
+      <GuessDistribution sx={{ m: 3, my: 0, fontSize: "20px" }} />
       <ShareButton onShare={handleShare} />
-      {/* <AdvancedStatsButton onClick={() => console.log("Open advanced stats")} /> */}
+      <AdvancedStatsButton
+        onClick={() => setAdvancedStatsOpen(!advancedStatsOpen)}
+      />
+      {advancedStatsOpen && (
+        <Stack borderRadius={1}>
+          <PlaceHolderText sx={{ m: 3, mt: 0, fontSize: "20px" }} />
+        </Stack>
+      )}
       <Snackbar // Alert message when stats are copied
         open={showCopied}
         onClose={() => setShowCopied(false)}

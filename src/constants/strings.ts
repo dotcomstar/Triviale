@@ -71,10 +71,10 @@ export const ADVANCED_STATS_ARIA_LABEL = "Open advanced stats";
 export const MIGRATE_BUTTON_TEXT = "Transfer";
 export const MIGRATE_DESCRIPTION_TEXT =
   "Click here to transfer your statistics to a new device.";
-export const TOTAL_TRIES_TEXT = "Total tries";
-export const SUCCESS_RATE_TEXT = "Success rate";
-export const CURRENT_STREAK_TEXT = "Current streak";
-export const BEST_STREAK_TEXT = "Best streak";
+export const TOTAL_TRIES_TEXT = "Played";
+export const SUCCESS_RATE_TEXT = "Win %";
+export const CURRENT_STREAK_TEXT = "Current Streak";
+export const BEST_STREAK_TEXT = "Max Streak";
 export const DISCOURAGE_INAPP_BROWSER_TEXT =
   "You are using an embedded browser and may experience problems sharing or saving your results. We encourage you rather to use your device's default browser.";
 

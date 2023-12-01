@@ -1,13 +1,13 @@
-import { Typography } from "@mui/material";
+import { SxProps, Typography } from "@mui/material";
 import { PLACEHOLDER_TEXT } from "../constants/strings";
 
 interface PlaceHolderTextProps {
-  size?: string;
+  sx?: SxProps;
 }
 
-const PlaceHolderText = ({ size = "20px" }: PlaceHolderTextProps) => {
+const PlaceHolderText = ({ sx }: PlaceHolderTextProps) => {
   return (
-    <Typography sx={{ m: 3, my: 0, fontSize: size }} fontStyle={"italic"}>
+    <Typography sx={{ ...sx }} fontStyle={"italic"}>
       {PLACEHOLDER_TEXT}
     </Typography>
   );
