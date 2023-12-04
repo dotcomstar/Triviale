@@ -58,7 +58,7 @@ function App() {
 
   const matches = useMediaQuery("(min-width:600px)");
 
-  const allCategories = Array(QUESTIONS_PER_DAY)
+  const todaysCategories = Array(QUESTIONS_PER_DAY)
     .fill("")
     .map((_, i) => data[getPositiveIndex(dailyIndex + i)].category);
 
@@ -249,38 +249,43 @@ function App() {
                     ).length - 1
                 );
                 indexOfLastGuess.forEach((guessIndex, questionIndex) => {
-                  todaysQuestionsGuessedIn[guessIndex] +=
+                  let guessIncrease =
                     questionState[questionIndex] === "won" ||
                     (questionIndex === questionNumber &&
                       hasOneMoreGuess &&
                       guess.join("") === answer)
                       ? 1
                       : 0;
+                  todaysQuestionsGuessedIn[guessIndex] += guessIncrease;
+                  let c = todaysCategories[questionIndex];
+                  if (advancedStats) {
+                    advancedStats[c] = {
+                      ...advancedStats[c],
+                      questionsGuessedIn: advancedStats[
+                        c
+                      ].questionsGuessedIn.map((val, i) =>
+                        i === guessIndex ? val + guessIncrease : val
+                      ),
+                    };
+                  }
                 });
-                const todaysAdvancedStats = allCategories.reduce(
-                  (acc, category) => {
-                    let advancedTodaysQuestionGuessedIn =
-                      Array(MAX_CHALLENGES).fill(0);
-                    return {
-                      ...acc,
-                      [category]: {
-                        numQuestionsAttempted: allCategories.filter(
-                          (cat) => cat === category
-                        ).length,
-                        questionsGuessedIn: advancedTodaysQuestionGuessedIn,
-                        changedToday: advancedTodaysQuestionGuessedIn.map(
+                if (advancedStats) {
+                  todaysCategories.forEach(
+                    (c) =>
+                      (advancedStats[c] = {
+                        ...advancedStats[c],
+                        numQuestionsAttempted:
+                          advancedStats[c].numQuestionsAttempted + 1,
+                        changedToday: advancedStats[c].questionsGuessedIn.map(
                           (v) => v > 0
                         ),
-                      },
-                    };
-                  },
-                  {}
-                );
+                      })
+                  );
+                }
                 logGame({
                   numQuestionsAttempted: QUESTIONS_PER_DAY,
                   questionsGuessedIn: todaysQuestionsGuessedIn,
                   changedToday: todaysQuestionsGuessedIn.map((v) => v > 0),
-                  advancedStats: todaysAdvancedStats,
                 });
                 setStatsOpen(true);
                 return;

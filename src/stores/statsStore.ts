@@ -53,8 +53,6 @@ const useStatsStore = create<StatsStore>((set) => ({
     set((state) => ({
       numQuestionsAttempted:
         state.numQuestionsAttempted + game.numQuestionsAttempted,
-      // FIXME: Implement merging advanced stats.
-      advancedStats: { ...state.advancedStats },
       questionsGuessedIn: state.questionsGuessedIn.map(
         (v, i) => v + game.questionsGuessedIn[i]
       ),
