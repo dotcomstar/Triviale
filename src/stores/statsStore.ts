@@ -16,10 +16,6 @@ export interface StatsStore extends StatsStoreImport {
 }
 
 const useStatsStore = create<StatsStore>((set) => ({
-  //   totalGuesses: [1, 2, 7, 12, 8],  // For testing
-  //   totalCorrect: [0, 1, 2, 10, 6],
-  //   totalGuesses: [1, 0, 1, 0, 1],
-  //   totalCorrect: [1, 0, 1, 0, 1],
   numQuestionsAttempted: 0,
   questionsGuessedIn: Array(MAX_CHALLENGES).fill(0),
   changedToday: Array(MAX_CHALLENGES).fill(false),

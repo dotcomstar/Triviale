@@ -81,6 +81,7 @@ function App() {
         numQuestionsAttempted: numQuestionsAttempted,
         questionsGuessedIn: questionsGuessedIn,
         changedToday: changedToday,
+        dailyIndex: dailyIndex,
       })
     );
   };
@@ -91,12 +92,15 @@ function App() {
     const existingStats = localStorage.getItem("gameStats") || "{}";
     console.log(existingStats);
     const pastStats = JSON.parse(existingStats);
-    if (pastStats["totalGuesses"]) {
+    if (pastStats["numQuestionsAttempted"]) {
       console.log("Importing past stats");
       const pastData = {
         numQuestionsAttempted: pastStats["numQuestionsAttempted"],
         questionsGuessedIn: pastStats["questionsGuessedIn"],
-        changedToday: pastStats["changedToday"],
+        changedToday:
+          pastStats["dailyIndex"] === dailyIndex
+            ? pastStats["changedToday"]
+            : Array(MAX_CHALLENGES).fill(false),
       };
       importStats(pastData);
     } else {
@@ -230,15 +234,20 @@ function App() {
                 // Report the current game's stats
                 let todaysQuestionsGuessedIn = Array(MAX_CHALLENGES).fill(0);
                 let indexOfLastGuess = guesses.map(
-                  (q) =>
-                    q.reduce((acc, v) => acc + (v.join("") !== "" ? 1 : 0), 0) -
-                    1
+                  (allGuessesForQuestion) =>
+                    allGuessesForQuestion.filter(
+                      (singleGuess) => singleGuess.join() !== ""
+                    ).length - 1
                 );
                 indexOfLastGuess.forEach(
-                  (e) => (todaysQuestionsGuessedIn[e] += 1)
-                );
-                console.log(
-                  `Last Guess: ${indexOfLastGuess}, ${todaysQuestionsGuessedIn}`
+                  (e, i) =>
+                    (todaysQuestionsGuessedIn[e] +=
+                      questionState[i] === "won" ||
+                      (i === questionNumber &&
+                        hasOneMoreGuess &&
+                        guess.join("") === answer)
+                        ? 1
+                        : 0)
                 );
                 logGame({
                   numQuestionsAttempted: QUESTIONS_PER_DAY,
