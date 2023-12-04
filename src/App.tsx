@@ -13,6 +13,7 @@ import useCurrGuessStore from "./stores/currGuessStore";
 import useDialogStore from "./stores/dialogStore";
 import useGameStateStore from "./stores/gameStateStore";
 import useHardModeStore from "./stores/hardModeStore";
+import useStatsStore from "./stores/statsStore";
 
 function App() {
   const { data } = useQuestions();
@@ -41,6 +42,9 @@ function App() {
   const answer = answerWithSpaces.replace(/\s+/g, "");
   const fullAnswer = data[safeIndex].fullAnswer;
   const { setStatsOpen } = useDialogStore();
+  const { importStats } = useStatsStore();
+  const { totalCorrect, totalGuesses, changedToday } = useStatsStore();
+
   const matches = useMediaQuery("(min-width:600px)");
 
   // Running on unload or beforeunload is unreliable according to https://developer.chrome.com/articles/page-lifecycle-api/#legacy-lifecycle-apis-to-avoid
@@ -64,14 +68,42 @@ function App() {
         guesses: guesses,
       })
     );
+    localStorage.setItem(
+      "gameStats",
+      JSON.stringify({
+        totalGuesses: totalGuesses,
+        totalCorrect: totalCorrect,
+        changedToday: changedToday,
+      })
+    );
   };
 
+  // Get past stats on page load
+  useEffect(() => {
+    // Check if the user has already made guesses today.
+    const existingStats = localStorage.getItem("gameStats") || "{}";
+    console.log(existingStats);
+    const pastStats = JSON.parse(existingStats);
+    if (pastStats["totalGuesses"]) {
+      console.log("Importing past stats");
+      const pastData = {
+        totalGuesses: pastStats["totalGuesses"],
+        totalCorrect: pastStats["totalCorrect"],
+        changedToday: pastStats["changedToday"],
+      };
+      importStats(pastData);
+    } else {
+      console.log("No previous stats");
+    }
+  }, []);
+
+  // Get a game in progress from today.
   useEffect(() => {
     // Check if the user has already made guesses today.
     const existingGuesses = localStorage.getItem("prevGame") || "{}";
     console.log(existingGuesses);
     const pastGuesses = JSON.parse(existingGuesses);
-    if (pastGuesses["pastOffset"] === dailyIndex && MANUAL_OFFSET === 1) {
+    if (pastGuesses["pastOffset"] === dailyIndex && MANUAL_OFFSET === 0) {
       console.log("Importing past guesses");
       const pastGame = {
         gameState: pastGuesses["gameState"],

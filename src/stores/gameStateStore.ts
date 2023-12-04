@@ -12,11 +12,7 @@ export interface GameStateImport {
   guesses: string[][][];
 }
 
-export interface GameStateStore {
-  gameState: WinState;
-  questionState: WinState[];
-  questionNumber: number;
-  guessNumber: number[];
+export interface GameStateStore extends GameStateImport {
   makeGuess: (guess: string[]) => void;
   cacheGuess: (guess: string[]) => void;
   moveToQuestion: (id: number) => void;
@@ -25,7 +21,6 @@ export interface GameStateStore {
   loseQuestion: (id: number) => void;
   winGame: () => void;
   loseGame: () => void;
-  guesses: string[][][];
   importGame: (pastStore: GameStateImport) => void;
 }
 

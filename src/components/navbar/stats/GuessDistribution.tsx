@@ -1,5 +1,6 @@
+import { Box, Stack, SxProps, Typography, useMediaQuery } from "@mui/material";
 import { MAX_CHALLENGES } from "../../../constants/settings";
-import { Box, Stack, SxProps, Typography } from "@mui/material";
+import useStatsStore from "../../../stores/statsStore";
 
 // We want to store total # questions correct, total # questions attempted,
 //      # questions in category correct, # questions in category attempted
@@ -18,14 +19,22 @@ interface GuessDistributionProps {
 }
 
 const GuessDistribution = ({ sx }: GuessDistributionProps) => {
+  const { totalCorrect, changedToday } = useStatsStore();
+  const maxNumCorrect = totalCorrect.reduce(
+    (acc, numCorrect) => Math.max(acc, numCorrect),
+    1
+  );
+  const matches = useMediaQuery("(min-width:400px)");
+  const baseLength = matches ? 7 : 15;
+
   return (
-    <>
+    <Stack sx={{ ...sx }}>
       {Array(MAX_CHALLENGES)
         .fill("")
         .map((_, i) => (
           <Stack
             direction={"row"}
-            sx={{ pb: 1, ...sx }}
+            sx={{ pb: 1 }}
             display={"flex"}
             justifyContent={"space-between"}
           >
@@ -38,19 +47,24 @@ const GuessDistribution = ({ sx }: GuessDistributionProps) => {
                 <Typography sx={{ mx: 2 }}>{i + 1}</Typography>
               </Box>
               <Box
-                bgcolor={i === 1 || i === 3 ? "success.main" : "primary.light"}
-                width={i === 1 || i === 3 ? "70%" : "10%"}
+                boxSizing={"border-box"}
+                bgcolor={changedToday[i] ? "success.main" : "primary.light"}
+                // A width between 10% and 70% looks good.
+                width={`${
+                  baseLength +
+                  (totalCorrect[i] / maxNumCorrect) * (70 - baseLength)
+                }%`}
                 justifyContent={"end"}
                 display={"flex"}
               >
-                <Typography sx={{ mr: 1 }} color={"#FFFFFF"}>
-                  {i === 1 || i === 3 ? 3 : 2}
+                <Typography sx={{ mr: 1.5 }} color={"#FFFFFF"}>
+                  {totalCorrect[i]}
                 </Typography>
               </Box>
             </Stack>
           </Stack>
         ))}
-    </>
+    </Stack>
   );
 };
 
