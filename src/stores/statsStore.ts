@@ -1,13 +1,22 @@
 import { create } from "zustand";
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { MAX_CHALLENGES } from "../constants/settings";
+import { ALL_CATEGORIES } from "../data/questions";
 
-export interface StatsStoreImport {
+interface BaseStatsStoreImport {
   numQuestionsAttempted: number;
   questionsGuessedIn: number[];
   changedToday: boolean[];
+}
+
+type AdvancedStat = {
+  [category: string]: BaseStatsStoreImport;
+};
+
+export interface StatsStoreImport extends BaseStatsStoreImport {
   currentStreak?: number;
   maxStreak?: number;
+  advancedStats: AdvancedStat[];
 }
 
 export interface StatsStore extends StatsStoreImport {
@@ -21,6 +30,15 @@ const useStatsStore = create<StatsStore>((set) => ({
   changedToday: Array(MAX_CHALLENGES).fill(false),
   currentStreak: 1,
   maxStreak: 0,
+  advancedStats: ALL_CATEGORIES.map((category) => {
+    return {
+      [category]: {
+        numQuestionsAttempted: 0,
+        questionsGuessedIn: Array(MAX_CHALLENGES).fill(0),
+        changedToday: Array(MAX_CHALLENGES).fill(false),
+      },
+    };
+  }),
   importStats: (pastStore: StatsStoreImport) => {
     set(() => ({
       numQuestionsAttempted: pastStore.numQuestionsAttempted,
