@@ -110,6 +110,7 @@ function App() {
           pastStats["dailyIndex"] === dailyIndex
             ? pastStats["changedToday"]
             : Array(MAX_CHALLENGES).fill(false),
+        advancedStats: pastStats["advancedStats"],
       };
       importStats(pastData);
     } else {

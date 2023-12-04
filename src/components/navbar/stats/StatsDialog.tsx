@@ -23,6 +23,8 @@ import ShareButton from "./ShareButton";
 import PastGamesStats from "./PastGamesStats";
 import GuessDistribution from "./GuessDistribution";
 import AdvancedStatsButton from "./AdvancedStatsButton";
+import { ALL_CATEGORIES } from "../../../data/questions";
+import useStatsStore from "../../../stores/statsStore";
 
 export interface StatsDialogProps {
   open: boolean;
@@ -48,6 +50,7 @@ const StatsDialog = ({
     const q = useQuestionByID(safeIndex);
     return [q?.category!, q?.answer.toLocaleUpperCase()!.replace(/\s+/g, "")];
   };
+  const { advancedStats } = useStatsStore();
   const [advancedStatsOpen, setAdvancedStatsOpen] = useState(false);
 
   let points = questionState.reduce(
@@ -160,6 +163,11 @@ const StatsDialog = ({
       {advancedStatsOpen && (
         <Stack borderRadius={1}>
           <PlaceHolderText sx={{ m: 3, mt: 0, fontSize: "20px" }} />
+          {ALL_CATEGORIES.map((c) => (
+            <Typography sx={{ m: 3, mt: 0, fontSize: "20px" }}>
+              {c} : {advancedStats ? advancedStats[c].numQuestionsAttempted : 0}
+            </Typography>
+          ))}
         </Stack>
       )}
       <Snackbar // Alert message when stats are copied
