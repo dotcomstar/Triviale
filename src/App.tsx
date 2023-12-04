@@ -43,6 +43,7 @@ function App() {
   const fullAnswer = data[safeIndex].fullAnswer;
   const { setStatsOpen } = useDialogStore();
   const { importStats } = useStatsStore();
+  const { totalCorrect, totalGuesses, changedToday } = useStatsStore();
 
   const matches = useMediaQuery("(min-width:600px)");
 
@@ -67,6 +68,14 @@ function App() {
         guesses: guesses,
       })
     );
+    localStorage.setItem(
+      "gameStats",
+      JSON.stringify({
+        totalGuesses: totalGuesses,
+        totalCorrect: totalCorrect,
+        changedToday: changedToday,
+      })
+    );
   };
 
   // Get past stats on page load
@@ -75,11 +84,12 @@ function App() {
     const existingStats = localStorage.getItem("gameStats") || "{}";
     console.log(existingStats);
     const pastStats = JSON.parse(existingStats);
-    if (pastStats["totalGames"] > 0) {
+    if (pastStats["totalGuesses"]) {
       console.log("Importing past stats");
       const pastData = {
         totalGuesses: pastStats["totalGuesses"],
         totalCorrect: pastStats["totalCorrect"],
+        changedToday: pastStats["changedToday"],
       };
       importStats(pastData);
     } else {

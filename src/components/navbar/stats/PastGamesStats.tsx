@@ -1,9 +1,6 @@
 import { Grid, SxProps, Typography } from "@mui/material";
 import useStatsStore from "../../../stores/statsStore";
 import {
-  BEST_STREAK_TEXT,
-  CURRENT_STREAK_TEXT,
-  PLACEHOLDER_TEXT,
   SUCCESS_RATE_TEXT,
   TOTAL_TRIES_TEXT,
 } from "../../../constants/strings";
@@ -13,22 +10,22 @@ interface PastGamesStatsProps {
 }
 
 const PastGamesStats = ({ sx }: PastGamesStatsProps) => {
-  const { totalCorrect, totalGuesses, currentStreak, maxStreak } =
-    useStatsStore();
+  const { totalCorrect, totalGuesses } = useStatsStore();
   const sumTotalCorrect = totalCorrect.reduce(
     (acc, numCorrect) => acc + numCorrect,
     0
   );
-  const sumTotalGuesses = Math.max(
-    1,
-    totalGuesses.reduce((acc, numGuesses) => acc + numGuesses, 0)
+  const sumTotalGuesses = totalGuesses.reduce(
+    (acc, numGuesses) => acc + numGuesses,
+    0
   );
+  const nonZeroSumTotalGuesses = Math.max(sumTotalGuesses, 1);
 
   return (
     <Grid container sx={sx}>
       {[
         sumTotalGuesses,
-        Math.round((sumTotalCorrect / sumTotalGuesses) * 100),
+        Math.round((sumTotalCorrect / nonZeroSumTotalGuesses) * 100),
       ].map((s) => (
         <Grid item xs={6}>
           <Typography
