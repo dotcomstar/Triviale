@@ -1,4 +1,4 @@
-import { DialogProps, Snackbar, Stack, Typography } from "@mui/material";
+import { DialogProps, Snackbar, Typography } from "@mui/material";
 import copy from "copy-to-clipboard";
 import { useState } from "react";
 import { ALERT_TIME_MS } from "../../../constants/settings";
@@ -17,13 +17,12 @@ import useDailyIndex, { getPositiveIndex } from "../../../hooks/useDailyIndex";
 import useQuestionByID from "../../../hooks/useQuestionByID";
 import useGameStateStore from "../../../stores/gameStateStore";
 import useHardModeStore from "../../../stores/hardModeStore";
-import PlaceHolderText from "../../PlaceHolderText";
 import CustomDialog from "../CustomDialog";
+import AdvancedStats from "./AdvancedStats";
 import AdvancedStatsButton from "./AdvancedStatsButton";
 import GuessDistribution from "./GuessDistribution";
 import PastGamesStats from "./PastGamesStats";
 import ShareButton from "./ShareButton";
-import AdvancedStats from "./AdvancedStats";
 
 export interface StatsDialogProps {
   open: boolean;

@@ -1,4 +1,4 @@
-import { Grid, Stack, SxProps, Typography } from "@mui/material";
+import { Grid, SxProps, Typography } from "@mui/material";
 import { ALL_CATEGORIES } from "../../../data/questions";
 import useStatsStore from "../../../stores/statsStore";
 
