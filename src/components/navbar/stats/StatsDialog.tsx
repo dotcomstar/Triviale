@@ -19,12 +19,11 @@ import useGameStateStore from "../../../stores/gameStateStore";
 import useHardModeStore from "../../../stores/hardModeStore";
 import PlaceHolderText from "../../PlaceHolderText";
 import CustomDialog from "../CustomDialog";
-import ShareButton from "./ShareButton";
-import PastGamesStats from "./PastGamesStats";
-import GuessDistribution from "./GuessDistribution";
 import AdvancedStatsButton from "./AdvancedStatsButton";
-import { ALL_CATEGORIES } from "../../../data/questions";
-import useStatsStore from "../../../stores/statsStore";
+import GuessDistribution from "./GuessDistribution";
+import PastGamesStats from "./PastGamesStats";
+import ShareButton from "./ShareButton";
+import AdvancedStats from "./AdvancedStats";
 
 export interface StatsDialogProps {
   open: boolean;
@@ -50,7 +49,7 @@ const StatsDialog = ({
     const q = useQuestionByID(safeIndex);
     return [q?.category!, q?.answer.toLocaleUpperCase()!.replace(/\s+/g, "")];
   };
-  const { advancedStats } = useStatsStore();
+
   const [advancedStatsOpen, setAdvancedStatsOpen] = useState(false);
 
   let points = questionState.reduce(
@@ -153,23 +152,13 @@ const StatsDialog = ({
         sx={{ m: 3, my: 0, mb: 1, fontSize: "20px", fontWeight: "bold" }}
       >
         {GUESS_DISTRIBUTION_TEXT}
-        {/* <PlaceHolderText sx={{ mt: 0, fontSize: "20px" }} /> */}
       </Typography>
       <GuessDistribution sx={{ m: 3, my: 0, fontSize: "20px" }} />
       <ShareButton onShare={handleShare} />
       <AdvancedStatsButton
         onClick={() => setAdvancedStatsOpen(!advancedStatsOpen)}
       />
-      {advancedStatsOpen && (
-        <Stack borderRadius={1}>
-          <PlaceHolderText sx={{ m: 3, mt: 0, fontSize: "20px" }} />
-          {ALL_CATEGORIES.map((c) => (
-            <Typography sx={{ m: 3, mt: 0, fontSize: "20px" }}>
-              {c} : {advancedStats ? advancedStats[c].numQuestionsAttempted : 0}
-            </Typography>
-          ))}
-        </Stack>
-      )}
+      {advancedStatsOpen && <AdvancedStats />}
       <Snackbar // Alert message when stats are copied
         open={showCopied}
         onClose={() => setShowCopied(false)}
