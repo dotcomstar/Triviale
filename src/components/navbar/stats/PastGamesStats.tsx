@@ -10,21 +10,17 @@ interface PastGamesStatsProps {
 }
 
 const PastGamesStats = ({ sx }: PastGamesStatsProps) => {
-  const { totalCorrect, totalGuesses } = useStatsStore();
-  const sumTotalCorrect = totalCorrect.reduce(
+  const { questionsGuessedIn, numQuestionsAttempted } = useStatsStore();
+  const sumTotalCorrect = questionsGuessedIn.reduce(
     (acc, numCorrect) => acc + numCorrect,
     0
   );
-  const sumTotalGuesses = totalGuesses.reduce(
-    (acc, numGuesses) => acc + numGuesses,
-    0
-  );
-  const nonZeroSumTotalGuesses = Math.max(sumTotalGuesses, 1);
+  const nonZeroSumTotalGuesses = Math.max(numQuestionsAttempted, 1);
 
   return (
     <Grid container sx={sx}>
       {[
-        sumTotalGuesses,
+        numQuestionsAttempted,
         Math.round((sumTotalCorrect / nonZeroSumTotalGuesses) * 100),
       ].map((s) => (
         <Grid item xs={6}>

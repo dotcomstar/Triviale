@@ -58,6 +58,7 @@ const ExpandableText = ({ children }: Props) => {
         <Button
           id="ExpandableButton"
           disableFocusRipple={!onscreenKeyboardOnly}
+          autoFocus={!onscreenKeyboardOnly}
           onClick={() => {
             if (
               questionState[questionNumber] !== "inProgress" &&

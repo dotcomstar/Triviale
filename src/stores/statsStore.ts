@@ -3,8 +3,8 @@ import { mountStoreDevtool } from "simple-zustand-devtools";
 import { MAX_CHALLENGES } from "../constants/settings";
 
 export interface StatsStoreImport {
-  totalGuesses: number[];
-  totalCorrect: number[];
+  numQuestionsAttempted: number;
+  questionsGuessedIn: number[];
   changedToday: boolean[];
   currentStreak?: number;
   maxStreak?: number;
@@ -16,28 +16,31 @@ export interface StatsStore extends StatsStoreImport {
 }
 
 const useStatsStore = create<StatsStore>((set) => ({
-  //   totalGuesses: [1, 2, 7, 12, 8],
+  //   totalGuesses: [1, 2, 7, 12, 8],  // For testing
   //   totalCorrect: [0, 1, 2, 10, 6],
   //   totalGuesses: [1, 0, 1, 0, 1],
   //   totalCorrect: [1, 0, 1, 0, 1],
-  totalGuesses: Array(MAX_CHALLENGES).fill(0),
-  totalCorrect: Array(MAX_CHALLENGES).fill(0),
+  numQuestionsAttempted: 0,
+  questionsGuessedIn: Array(MAX_CHALLENGES).fill(0),
+  changedToday: Array(MAX_CHALLENGES).fill(false),
   currentStreak: 1,
   maxStreak: 0,
-  changedToday: Array(MAX_CHALLENGES).fill(false),
   importStats: (pastStore: StatsStoreImport) => {
     set(() => ({
-      totalGuesses: pastStore.totalGuesses,
-      totalCorrect: pastStore.totalCorrect,
+      numQuestionsAttempted: pastStore.numQuestionsAttempted,
+      questionsGuessedIn: pastStore.questionsGuessedIn,
       changedToday: pastStore.changedToday,
       currentStreak: pastStore.currentStreak,
     }));
   },
   logGame: (game: StatsStoreImport) => {
-    set(() => ({
-      totalGuesses: game.totalGuesses,
-      totalCorrect: game.totalCorrect,
-      changedToday: game.changedToday,
+    set((state) => ({
+      numQuestionsAttempted:
+        state.numQuestionsAttempted + game.numQuestionsAttempted,
+      questionsGuessedIn: state.questionsGuessedIn.map(
+        (v, i) => v + game.questionsGuessedIn[i]
+      ),
+      changedToday: state.changedToday.map((v, i) => v || game.changedToday[i]),
     }));
   },
 }));

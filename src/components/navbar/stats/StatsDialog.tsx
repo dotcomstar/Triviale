@@ -1,4 +1,4 @@
-import { DialogProps, Snackbar, Typography } from "@mui/material";
+import { DialogProps, Snackbar, Stack, Typography } from "@mui/material";
 import copy from "copy-to-clipboard";
 import { useState } from "react";
 import { ALERT_TIME_MS } from "../../../constants/settings";
@@ -20,6 +20,9 @@ import useHardModeStore from "../../../stores/hardModeStore";
 import PlaceHolderText from "../../PlaceHolderText";
 import CustomDialog from "../CustomDialog";
 import ShareButton from "./ShareButton";
+import PastGamesStats from "./PastGamesStats";
+import GuessDistribution from "./GuessDistribution";
+import AdvancedStatsButton from "./AdvancedStatsButton";
 
 export interface StatsDialogProps {
   open: boolean;
@@ -45,7 +48,7 @@ const StatsDialog = ({
     const q = useQuestionByID(safeIndex);
     return [q?.category!, q?.answer.toLocaleUpperCase()!.replace(/\s+/g, "")];
   };
-  // const [advancedStatsOpen, setAdvancedStatsOpen] = useState(false);
+  const [advancedStatsOpen, setAdvancedStatsOpen] = useState(false);
 
   let points = questionState.reduce(
     (acc, val) => acc + (val === "won" ? 5 : 0),
@@ -142,23 +145,23 @@ const StatsDialog = ({
       ariaLabeledBy={STATISTICS_TITLE}
       dialogTitle={STATISTICS_TITLE}
     >
-      {/* <PastGamesStats sx={{ mb: 1 }} /> */}
+      <PastGamesStats sx={{ mb: 1 }} />
       <Typography
         sx={{ m: 3, my: 0, mb: 1, fontSize: "20px", fontWeight: "bold" }}
       >
         {GUESS_DISTRIBUTION_TEXT}
-        <PlaceHolderText sx={{ mt: 0, fontSize: "20px" }} />
+        {/* <PlaceHolderText sx={{ mt: 0, fontSize: "20px" }} /> */}
       </Typography>
-      {/* <GuessDistribution sx={{ m: 3, my: 0, fontSize: "20px" }} /> */}
+      <GuessDistribution sx={{ m: 3, my: 0, fontSize: "20px" }} />
       <ShareButton onShare={handleShare} />
-      {/* <AdvancedStatsButton
+      <AdvancedStatsButton
         onClick={() => setAdvancedStatsOpen(!advancedStatsOpen)}
       />
       {advancedStatsOpen && (
         <Stack borderRadius={1}>
           <PlaceHolderText sx={{ m: 3, mt: 0, fontSize: "20px" }} />
         </Stack>
-      )} */}
+      )}
       <Snackbar // Alert message when stats are copied
         open={showCopied}
         onClose={() => setShowCopied(false)}

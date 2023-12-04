@@ -19,8 +19,8 @@ interface GuessDistributionProps {
 }
 
 const GuessDistribution = ({ sx }: GuessDistributionProps) => {
-  const { totalCorrect, changedToday } = useStatsStore();
-  const maxNumCorrect = totalCorrect.reduce(
+  const { questionsGuessedIn, changedToday } = useStatsStore();
+  const maxCorrectGuess = questionsGuessedIn.reduce(
     (acc, numCorrect) => Math.max(acc, numCorrect),
     1
   );
@@ -52,13 +52,13 @@ const GuessDistribution = ({ sx }: GuessDistributionProps) => {
                 // A width between 10% and 70% looks good.
                 width={`${
                   baseLength +
-                  (totalCorrect[i] / maxNumCorrect) * (70 - baseLength)
+                  (questionsGuessedIn[i] / maxCorrectGuess) * (70 - baseLength)
                 }%`}
                 justifyContent={"end"}
                 display={"flex"}
               >
                 <Typography sx={{ mr: 1.5 }} color={"#FFFFFF"}>
-                  {totalCorrect[i]}
+                  {questionsGuessedIn[i]}
                 </Typography>
               </Box>
             </Stack>

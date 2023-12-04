@@ -6,7 +6,11 @@ import Keyboard from "./components/keyboard/Keyboard";
 import NavBar from "./components/navbar/NavBar";
 import ProgressBar from "./components/progressBar/ProgressBar";
 import ExpandableText from "./components/question/ExpandableText";
-import { MANUAL_OFFSET, MAX_CHALLENGES } from "./constants/settings";
+import {
+  MANUAL_OFFSET,
+  MAX_CHALLENGES,
+  QUESTIONS_PER_DAY,
+} from "./constants/settings";
 import useDailyIndex, { getPositiveIndex } from "./hooks/useDailyIndex";
 import useQuestions from "./hooks/useQuestions";
 import useCurrGuessStore from "./stores/currGuessStore";
@@ -14,6 +18,7 @@ import useDialogStore from "./stores/dialogStore";
 import useGameStateStore from "./stores/gameStateStore";
 import useHardModeStore from "./stores/hardModeStore";
 import useStatsStore from "./stores/statsStore";
+import useOnscreenKeyboardOnlyStore from "./stores/onscreenKeyboardOnlyStore";
 
 function App() {
   const { data } = useQuestions();
@@ -42,8 +47,10 @@ function App() {
   const answer = answerWithSpaces.replace(/\s+/g, "");
   const fullAnswer = data[safeIndex].fullAnswer;
   const { setStatsOpen } = useDialogStore();
-  const { importStats } = useStatsStore();
-  const { totalCorrect, totalGuesses, changedToday } = useStatsStore();
+  const { importStats, logGame } = useStatsStore();
+  const { questionsGuessedIn, numQuestionsAttempted, changedToday } =
+    useStatsStore();
+  const { onscreenKeyboardOnly } = useOnscreenKeyboardOnlyStore();
 
   const matches = useMediaQuery("(min-width:600px)");
 
@@ -71,8 +78,8 @@ function App() {
     localStorage.setItem(
       "gameStats",
       JSON.stringify({
-        totalGuesses: totalGuesses,
-        totalCorrect: totalCorrect,
+        numQuestionsAttempted: numQuestionsAttempted,
+        questionsGuessedIn: questionsGuessedIn,
         changedToday: changedToday,
       })
     );
@@ -87,8 +94,8 @@ function App() {
     if (pastStats["totalGuesses"]) {
       console.log("Importing past stats");
       const pastData = {
-        totalGuesses: pastStats["totalGuesses"],
-        totalCorrect: pastStats["totalCorrect"],
+        numQuestionsAttempted: pastStats["numQuestionsAttempted"],
+        questionsGuessedIn: pastStats["questionsGuessedIn"],
         changedToday: pastStats["changedToday"],
       };
       importStats(pastData);
@@ -185,7 +192,9 @@ function App() {
               if (index === answer.length) {
                 if (guess.join("") === answer) {
                   winQuestion(questionNumber);
-                  document.getElementById("ExpandableButton")?.focus();
+                  if (!onscreenKeyboardOnly) {
+                    document.getElementById("ExpandableButton")?.focus();
+                  }
                   finalGuess = true;
                   won = true;
                 } else if (
@@ -193,7 +202,9 @@ function App() {
                   hardMode
                 ) {
                   loseQuestion(questionNumber);
-                  document.getElementById("ExpandableButton")?.focus();
+                  if (!onscreenKeyboardOnly) {
+                    document.getElementById("ExpandableButton")?.focus();
+                  }
                   finalGuess = true;
                 } else {
                   console.log("Incorrect :(");
@@ -216,6 +227,24 @@ function App() {
                 } else {
                   loseGame();
                 }
+                // Report the current game's stats
+                let todaysQuestionsGuessedIn = Array(MAX_CHALLENGES).fill(0);
+                let indexOfLastGuess = guesses.map(
+                  (q) =>
+                    q.reduce((acc, v) => acc + (v.join("") !== "" ? 1 : 0), 0) -
+                    1
+                );
+                indexOfLastGuess.forEach(
+                  (e) => (todaysQuestionsGuessedIn[e] += 1)
+                );
+                console.log(
+                  `Last Guess: ${indexOfLastGuess}, ${todaysQuestionsGuessedIn}`
+                );
+                logGame({
+                  numQuestionsAttempted: QUESTIONS_PER_DAY,
+                  questionsGuessedIn: todaysQuestionsGuessedIn,
+                  changedToday: todaysQuestionsGuessedIn.map((v) => v > 0),
+                });
                 setStatsOpen(true);
                 return;
               }
