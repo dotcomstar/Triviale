@@ -1,13 +1,22 @@
 import { create } from "zustand";
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { MAX_CHALLENGES } from "../constants/settings";
+import { ALL_CATEGORIES } from "../data/questions";
 
-export interface StatsStoreImport {
-  totalGuesses: number[];
-  totalCorrect: number[];
+interface BaseStatsStoreImport {
+  numQuestionsAttempted: number;
+  questionsGuessedIn: number[];
   changedToday: boolean[];
+}
+
+type AdvancedStat = {
+  [category: string]: BaseStatsStoreImport;
+};
+
+export interface StatsStoreImport extends BaseStatsStoreImport {
   currentStreak?: number;
   maxStreak?: number;
+  advancedStats?: AdvancedStat;
 }
 
 export interface StatsStore extends StatsStoreImport {
@@ -16,28 +25,38 @@ export interface StatsStore extends StatsStoreImport {
 }
 
 const useStatsStore = create<StatsStore>((set) => ({
-  //   totalGuesses: [1, 2, 7, 12, 8],
-  //   totalCorrect: [0, 1, 2, 10, 6],
-  //   totalGuesses: [1, 0, 1, 0, 1],
-  //   totalCorrect: [1, 0, 1, 0, 1],
-  totalGuesses: Array(MAX_CHALLENGES).fill(0),
-  totalCorrect: Array(MAX_CHALLENGES).fill(0),
+  numQuestionsAttempted: 0,
+  questionsGuessedIn: Array(MAX_CHALLENGES).fill(0),
+  changedToday: Array(MAX_CHALLENGES).fill(false),
   currentStreak: 1,
   maxStreak: 0,
-  changedToday: Array(MAX_CHALLENGES).fill(false),
+  advancedStats: ALL_CATEGORIES.reduce((acc, category) => {
+    return {
+      ...acc,
+      [category]: {
+        numQuestionsAttempted: 0,
+        questionsGuessedIn: Array(MAX_CHALLENGES).fill(0),
+        changedToday: Array(MAX_CHALLENGES).fill(false),
+      },
+    };
+  }, {}),
   importStats: (pastStore: StatsStoreImport) => {
     set(() => ({
-      totalGuesses: pastStore.totalGuesses,
-      totalCorrect: pastStore.totalCorrect,
+      numQuestionsAttempted: pastStore.numQuestionsAttempted,
+      questionsGuessedIn: pastStore.questionsGuessedIn,
       changedToday: pastStore.changedToday,
       currentStreak: pastStore.currentStreak,
+      advancedStats: pastStore.advancedStats,
     }));
   },
   logGame: (game: StatsStoreImport) => {
-    set(() => ({
-      totalGuesses: game.totalGuesses,
-      totalCorrect: game.totalCorrect,
-      changedToday: game.changedToday,
+    set((state) => ({
+      numQuestionsAttempted:
+        state.numQuestionsAttempted + game.numQuestionsAttempted,
+      questionsGuessedIn: state.questionsGuessedIn.map(
+        (v, i) => v + game.questionsGuessedIn[i]
+      ),
+      changedToday: state.changedToday.map((v, i) => v || game.changedToday[i]),
     }));
   },
 }));

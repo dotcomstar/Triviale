@@ -6,7 +6,11 @@ import Keyboard from "./components/keyboard/Keyboard";
 import NavBar from "./components/navbar/NavBar";
 import ProgressBar from "./components/progressBar/ProgressBar";
 import ExpandableText from "./components/question/ExpandableText";
-import { MANUAL_OFFSET, MAX_CHALLENGES } from "./constants/settings";
+import {
+  MANUAL_OFFSET,
+  MAX_CHALLENGES,
+  QUESTIONS_PER_DAY,
+} from "./constants/settings";
 import useDailyIndex, { getPositiveIndex } from "./hooks/useDailyIndex";
 import useQuestions from "./hooks/useQuestions";
 import useCurrGuessStore from "./stores/currGuessStore";
@@ -14,6 +18,7 @@ import useDialogStore from "./stores/dialogStore";
 import useGameStateStore from "./stores/gameStateStore";
 import useHardModeStore from "./stores/hardModeStore";
 import useStatsStore from "./stores/statsStore";
+import useOnscreenKeyboardOnlyStore from "./stores/onscreenKeyboardOnlyStore";
 
 function App() {
   const { data } = useQuestions();
@@ -42,10 +47,20 @@ function App() {
   const answer = answerWithSpaces.replace(/\s+/g, "");
   const fullAnswer = data[safeIndex].fullAnswer;
   const { setStatsOpen } = useDialogStore();
-  const { importStats } = useStatsStore();
-  const { totalCorrect, totalGuesses, changedToday } = useStatsStore();
+  const { importStats, logGame } = useStatsStore();
+  const {
+    questionsGuessedIn,
+    numQuestionsAttempted,
+    changedToday,
+    advancedStats,
+  } = useStatsStore();
+  const { onscreenKeyboardOnly } = useOnscreenKeyboardOnlyStore();
 
   const matches = useMediaQuery("(min-width:600px)");
+
+  const todaysCategories = Array(QUESTIONS_PER_DAY)
+    .fill("")
+    .map((_, i) => data[getPositiveIndex(dailyIndex + i)].category);
 
   // Running on unload or beforeunload is unreliable according to https://developer.chrome.com/articles/page-lifecycle-api/#legacy-lifecycle-apis-to-avoid
   useEffect(() => {
@@ -71,9 +86,11 @@ function App() {
     localStorage.setItem(
       "gameStats",
       JSON.stringify({
-        totalGuesses: totalGuesses,
-        totalCorrect: totalCorrect,
+        numQuestionsAttempted: numQuestionsAttempted,
+        questionsGuessedIn: questionsGuessedIn,
         changedToday: changedToday,
+        dailyIndex: dailyIndex,
+        advancedStats: advancedStats,
       })
     );
   };
@@ -84,12 +101,16 @@ function App() {
     const existingStats = localStorage.getItem("gameStats") || "{}";
     console.log(existingStats);
     const pastStats = JSON.parse(existingStats);
-    if (pastStats["totalGuesses"]) {
+    if (pastStats["numQuestionsAttempted"]) {
       console.log("Importing past stats");
       const pastData = {
-        totalGuesses: pastStats["totalGuesses"],
-        totalCorrect: pastStats["totalCorrect"],
-        changedToday: pastStats["changedToday"],
+        numQuestionsAttempted: pastStats["numQuestionsAttempted"],
+        questionsGuessedIn: pastStats["questionsGuessedIn"],
+        changedToday:
+          pastStats["dailyIndex"] === dailyIndex
+            ? pastStats["changedToday"]
+            : Array(MAX_CHALLENGES).fill(false),
+        advancedStats: pastStats["advancedStats"],
       };
       importStats(pastData);
     } else {
@@ -185,7 +206,9 @@ function App() {
               if (index === answer.length) {
                 if (guess.join("") === answer) {
                   winQuestion(questionNumber);
-                  document.getElementById("ExpandableButton")?.focus();
+                  if (!onscreenKeyboardOnly) {
+                    document.getElementById("ExpandableButton")?.focus();
+                  }
                   finalGuess = true;
                   won = true;
                 } else if (
@@ -193,7 +216,9 @@ function App() {
                   hardMode
                 ) {
                   loseQuestion(questionNumber);
-                  document.getElementById("ExpandableButton")?.focus();
+                  if (!onscreenKeyboardOnly) {
+                    document.getElementById("ExpandableButton")?.focus();
+                  }
                   finalGuess = true;
                 } else {
                   console.log("Incorrect :(");
@@ -216,6 +241,53 @@ function App() {
                 } else {
                   loseGame();
                 }
+                // Report the current game's stats
+                let todaysQuestionsGuessedIn = Array(MAX_CHALLENGES).fill(0);
+                let indexOfLastGuess = guesses.map(
+                  (allGuessesForQuestion) =>
+                    allGuessesForQuestion.filter(
+                      (singleGuess) => singleGuess.join() !== ""
+                    ).length - 1
+                );
+                indexOfLastGuess.forEach((guessIndex, questionIndex) => {
+                  let guessIncrease =
+                    questionState[questionIndex] === "won" ||
+                    (questionIndex === questionNumber &&
+                      hasOneMoreGuess &&
+                      guess.join("") === answer)
+                      ? 1
+                      : 0;
+                  todaysQuestionsGuessedIn[guessIndex] += guessIncrease;
+                  let c = todaysCategories[questionIndex];
+                  if (advancedStats) {
+                    advancedStats[c] = {
+                      ...advancedStats[c],
+                      questionsGuessedIn: advancedStats[
+                        c
+                      ].questionsGuessedIn.map((val, i) =>
+                        i === guessIndex ? val + guessIncrease : val
+                      ),
+                    };
+                  }
+                });
+                if (advancedStats) {
+                  todaysCategories.forEach(
+                    (c) =>
+                      (advancedStats[c] = {
+                        ...advancedStats[c],
+                        numQuestionsAttempted:
+                          advancedStats[c].numQuestionsAttempted + 1,
+                        changedToday: advancedStats[c].questionsGuessedIn.map(
+                          (v) => v > 0
+                        ),
+                      })
+                  );
+                }
+                logGame({
+                  numQuestionsAttempted: QUESTIONS_PER_DAY,
+                  questionsGuessedIn: todaysQuestionsGuessedIn,
+                  changedToday: todaysQuestionsGuessedIn.map((v) => v > 0),
+                });
                 setStatsOpen(true);
                 return;
               }

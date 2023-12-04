@@ -26,6 +26,7 @@ const questions: Question[] = [
   {
     question: `This man lamented a “total and unmitigated defeat” in the House of Commons shortly before a vote to approve the Munich Agreement. This man rued that Soviet influence extended to a line “from Stettin in the Baltic to Trieste in the Adriatic,” which he called the “iron curtain.” The “Finest Hour” and “Blood, Toil, Tears, and Sweat” speeches were also delivered by what Prime Minister of the UK during World War II?`,
     answer: "Churchill",
+    fullAnswer: "Winston Churchill",
     url: "https://files.quizbowlpackets.com/2852/Round1.pdf",
     category: HISTORY,
   },
