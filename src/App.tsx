@@ -103,7 +103,7 @@ function App() {
     const existingGuesses = localStorage.getItem("prevGame") || "{}";
     console.log(existingGuesses);
     const pastGuesses = JSON.parse(existingGuesses);
-    if (pastGuesses["pastOffset"] === dailyIndex && MANUAL_OFFSET === 1) {
+    if (pastGuesses["pastOffset"] === dailyIndex && MANUAL_OFFSET === 0) {
       console.log("Importing past guesses");
       const pastGame = {
         gameState: pastGuesses["gameState"],
