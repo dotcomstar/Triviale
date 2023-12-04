@@ -16,7 +16,7 @@ type AdvancedStat = {
 export interface StatsStoreImport extends BaseStatsStoreImport {
   currentStreak?: number;
   maxStreak?: number;
-  advancedStats: AdvancedStat[];
+  advancedStats?: AdvancedStat;
 }
 
 export interface StatsStore extends StatsStoreImport {
@@ -30,27 +30,31 @@ const useStatsStore = create<StatsStore>((set) => ({
   changedToday: Array(MAX_CHALLENGES).fill(false),
   currentStreak: 1,
   maxStreak: 0,
-  advancedStats: ALL_CATEGORIES.map((category) => {
+  advancedStats: ALL_CATEGORIES.reduce((acc, category) => {
     return {
+      ...acc,
       [category]: {
         numQuestionsAttempted: 0,
         questionsGuessedIn: Array(MAX_CHALLENGES).fill(0),
         changedToday: Array(MAX_CHALLENGES).fill(false),
       },
     };
-  }),
+  }, {}),
   importStats: (pastStore: StatsStoreImport) => {
     set(() => ({
       numQuestionsAttempted: pastStore.numQuestionsAttempted,
       questionsGuessedIn: pastStore.questionsGuessedIn,
       changedToday: pastStore.changedToday,
       currentStreak: pastStore.currentStreak,
+      advancedStats: pastStore.advancedStats,
     }));
   },
   logGame: (game: StatsStoreImport) => {
     set((state) => ({
       numQuestionsAttempted:
         state.numQuestionsAttempted + game.numQuestionsAttempted,
+      // FIXME: Implement merging advanced stats.
+      advancedStats: { ...state.advancedStats },
       questionsGuessedIn: state.questionsGuessedIn.map(
         (v, i) => v + game.questionsGuessedIn[i]
       ),

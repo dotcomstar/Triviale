@@ -48,11 +48,19 @@ function App() {
   const fullAnswer = data[safeIndex].fullAnswer;
   const { setStatsOpen } = useDialogStore();
   const { importStats, logGame } = useStatsStore();
-  const { questionsGuessedIn, numQuestionsAttempted, changedToday } =
-    useStatsStore();
+  const {
+    questionsGuessedIn,
+    numQuestionsAttempted,
+    changedToday,
+    advancedStats,
+  } = useStatsStore();
   const { onscreenKeyboardOnly } = useOnscreenKeyboardOnlyStore();
 
   const matches = useMediaQuery("(min-width:600px)");
+
+  const allCategories = Array(QUESTIONS_PER_DAY)
+    .fill("")
+    .map((_, i) => data[getPositiveIndex(dailyIndex + i)].category);
 
   // Running on unload or beforeunload is unreliable according to https://developer.chrome.com/articles/page-lifecycle-api/#legacy-lifecycle-apis-to-avoid
   useEffect(() => {
@@ -82,6 +90,7 @@ function App() {
         questionsGuessedIn: questionsGuessedIn,
         changedToday: changedToday,
         dailyIndex: dailyIndex,
+        advancedStats: advancedStats,
       })
     );
   };
@@ -239,20 +248,39 @@ function App() {
                       (singleGuess) => singleGuess.join() !== ""
                     ).length - 1
                 );
-                indexOfLastGuess.forEach(
-                  (e, i) =>
-                    (todaysQuestionsGuessedIn[e] +=
-                      questionState[i] === "won" ||
-                      (i === questionNumber &&
-                        hasOneMoreGuess &&
-                        guess.join("") === answer)
-                        ? 1
-                        : 0)
+                indexOfLastGuess.forEach((guessIndex, questionIndex) => {
+                  todaysQuestionsGuessedIn[guessIndex] +=
+                    questionState[questionIndex] === "won" ||
+                    (questionIndex === questionNumber &&
+                      hasOneMoreGuess &&
+                      guess.join("") === answer)
+                      ? 1
+                      : 0;
+                });
+                const todaysAdvancedStats = allCategories.reduce(
+                  (acc, category) => {
+                    let advancedTodaysQuestionGuessedIn =
+                      Array(MAX_CHALLENGES).fill(0);
+                    return {
+                      ...acc,
+                      [category]: {
+                        numQuestionsAttempted: allCategories.filter(
+                          (cat) => cat === category
+                        ).length,
+                        questionsGuessedIn: advancedTodaysQuestionGuessedIn,
+                        changedToday: advancedTodaysQuestionGuessedIn.map(
+                          (v) => v > 0
+                        ),
+                      },
+                    };
+                  },
+                  {}
                 );
                 logGame({
                   numQuestionsAttempted: QUESTIONS_PER_DAY,
                   questionsGuessedIn: todaysQuestionsGuessedIn,
                   changedToday: todaysQuestionsGuessedIn.map((v) => v > 0),
+                  advancedStats: todaysAdvancedStats,
                 });
                 setStatsOpen(true);
                 return;
