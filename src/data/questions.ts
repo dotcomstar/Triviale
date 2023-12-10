@@ -135,7 +135,7 @@ const questions: Question[] = [
   },
   {
     question: `This painting was once vandalized with the words “Kill all lies.” This painting was made for the 1937 World’s Fair in Paris and was based on an article by George Steer. Nazi Germany referred to this painting as “a hodgepodge of body parts that any four-year-old could have painted”. When asked to describe this painting’s symbolism, the artist stated “This bull is a bull and this horse is a horse.” The horse in this painting is screaming above a person on the ground holding a broken sword. Name this painting based on a Spanish Civil War bombing, made by Pablo Picasso.`,
-    answer: "Gurernica",
+    answer: "Guernica",
     url: "https://files.quizbowlpackets.com/2324/01.pdf",
     category: ART_AND_LITERATURE,
   },
