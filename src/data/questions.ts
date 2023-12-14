@@ -26,7 +26,7 @@ export interface Question {
   category: Category;
 }
 
-interface MondoDBQuestion {
+export interface MondoDBQuestion {
   _id: { $numberInt: string };
   questions: Question[];
 }
