@@ -1,3 +1,7 @@
+import { Category } from "@mui/icons-material";
+
+type Category = "SCI" | "HIS" | "ART" | "REL" | "GEO" | "POP";
+
 const SCIENCE = "SCI";
 const HISTORY = "HIS";
 const ART_AND_LITERATURE = "ART";
@@ -5,7 +9,7 @@ const RELIGION = "REL";
 const GEOGRAPHY = "GEO";
 const POP_CULTURE = "POP";
 
-export const ALL_CATEGORIES = [
+export const ALL_CATEGORIES: Category[] = [
   ART_AND_LITERATURE,
   HISTORY,
   SCIENCE,
@@ -19,34 +23,58 @@ export interface Question {
   answer: string;
   fullAnswer?: string;
   url?: string;
-  category: string;
+  category: Category;
 }
+
+interface MondoDBQuestion {
+  _id: { $numberInt: string };
+  questions: Question[];
+}
+
+export const mongoDBQuestions: MondoDBQuestion[] = [
+  {
+    _id: { $numberInt: "20231215" },
+    questions: [
+      {
+        category: "SCI",
+        answer: "tongue",
+        question:
+          "A “geographic” pattern of patches can appear on this organ due to leukoplakia. This organ’s frenulum is tied to another body part in ankylo-glossia, and a protruding one is symptomatic of Down syndrome. It is not a tail, but chameleons possess a prehensile one of these organs that is covered in spiny papillae to assist cats with grooming. Sublingual salivary glands and taste buds are associated with, for fice points, which muscular organ inside the mouth?",
+        url: "https://files.quizbowlpackets.com/2701/Replacements.pdf",
+      },
+      {
+        category: "GEO",
+        question:
+          "Oxfam was founded to alleviate a famine in this country. This country celebrates “No Day,” a holiday that commemorates a refusal to cooperate with Benito Mussolini, given by Prime Minister Ioannis Metaxas.  The Earl of Elgin looted marble sculptures from this country, and the British Museum refuses to repatriate them. Since 2007, a debt crisis has plagued, for five points, what country where the Parthenon stands in Athens?",
+        answer: "Greece",
+        url: "https://files.quizbowlpackets.com/2701/Replacements.pdf",
+      },
+      {
+        question:
+          'Formed in Liverpool in 1960, this legendary British rock band is widely regarded as one of the most influential in the history of popular music. Hits like "Hey Jude," "Let It Be," and "A Hard Day\'s Night" are just a glimpse of their extensive discography. With members like John Lennon, Paul McCartney, George Harrison, and Ringo Starr, they achieved global fame and success. What is the name of this iconic group that played a pivotal role in shaping the landscape of rock and roll, and whose name sounds like an insect?',
+        answer: "The Beatles",
+        category: "POP",
+      },
+    ],
+  },
+];
 
 const questions: Question[] = [
   {
-    question: `A god in this culture, Ometeotl split into two gods to create the world. A heroic god in this culture used the bones of previous humans and his own blood to create the Fifth Sun after journeying through Mictlan. This culture venerated a “Left-Handed Hummingbird” and a “Feathered Serpent” named Huitzilopochtli and Quetzalcoatl. For five points, name this culture whose myths included the story of the founding of Tenochtitlan in modern Mexico City.`,
-    answer: "Aztec",
-    url: "https://files.quizbowlpackets.com/2852/Round11.pdf",
-    category: HISTORY,
-  },
-  {
-    question: `In this city, Sir Edwin Lutyens developed a Bungalow Zone for the British in the early 20th century.  After the Battle of Karnal, the looting of this nearby city included the capture of the Koh-i-Noor diamond and the Peacock Throne. The Lahori Gate is the main entrance to this city’s Red Fort, which became the imperial residence of the Mughals under Shah Jahan. Prior to 1911, Calcutta held this city’s primary status.  For five points, name this city whose “New” district is the capital of India.`,
-    answer: "Delhi",
-    url: "https://files.quizbowlpackets.com/2852/Round11.pdf",
-    category: HISTORY,
-  },
-  {
-    question: `Velocimetry of blood-flow works because of this effect. which predicts a “shift” that depends on the ratio in two differences in speed. The relativistic form of this effect causes a redshift due to the expansion of the universe. This effect occurs when wavefronts appear closer together for an observer if they are moving towards a source. For five points, name this effect that explains why an ambulance siren seems to change pitch.`,
-    answer: "Doppler",
-    fullAnswer: "Doppler Effect",
-    url: "https://files.quizbowlpackets.com/2852/Round11.pdf",
-    category: SCIENCE,
-  },
-  {
-    question: `In this novel, John Seward receives letters describing Renfield’s madness and begging him to help Arthur Holmwood’s sick fiancee. A professor in this novel packs a paste of communion wafers around the door of Lucy Westenra’s tomb and in the boxes of earth that the title character transports to England from Transylvania.  Abraham Van Helsing, Mina Murray, and Jonathan Harker hunt the title Count in, for five points, what Bram Stoker novel about an archetypical vampire?`,
-    answer: "Dracula",
-    url: "https://files.quizbowlpackets.com/2701/Replacements.pdf",
+    question: `This fictional creature was played in various renditions by actors such as Boris Karloff, David Howard Thornton, Matthew Morrison, Jim Carrey, and Benedict Cumberbatch. According to a song by Tyler, The Creator, “He’s a mean one.” Others describe this character as being as “cuddly as a cactus" and speculated him to be born with a heart "two sizes too small." For five points, name this green Dr. Seuss character who begins his eponymous book attempting to ruin Christmas in Whoville.`,
+    answer: "The Grinch",
     category: ART_AND_LITERATURE,
+  },
+  {
+    question: `This person was the last Britsh monarch of the House of Hanover. During her reign, Great Britain celebrated her Golden and Diamond Jubilees. Born the daughter of Prince Edward and Queen Charlotte, this woman married her first cousin, Prince Albert of Saxe-Coburg and Gotha, in 1840. Their nine children married into royal and noble families across the continent, earning this woman the sobriquet "grandmother of Europe". For five points, name Britain’s second-longest reigning monarch, who lends her name to the largest waterfall in the world and an era characterized by evolutionary breakthroughs in the arts and sciences.`,
+    answer: "Victoria",
+    fullAnswer: "Queen Victoria",
+    category: HISTORY,
+  },
+  {
+    question: `This self-regulating biological process was first described by French physiologist Claude Bernard in 1849. In 1932, Joseph Barcroft a British physiologist, was the first to say that higher brain function required this biological process. The name for this process stems from the Neo Latin and Greek words meaning “similar” and “standing still.” For five points, name this process which maintains the state of variables such as body temperature, blood glucose, and blood oxygen content.`,
+    answer: "Homeostasis",
+    category: SCIENCE,
   },
   {
     question: `While serving the 54th Massachusetts Regiment, this figure is said to have served Robert Gould Shaw his last meal before Gould died assaulting Fort Wagner. A month earlier, almost 800 people were freed in raids along the Combahee River co-planned by this woman, who led numerous groups across the Ohio River.  “Moses” was the nickname of, for five points, what escaped slave who proclaimed she never lost a soul while conducting others along the Underground Railroad?`,
@@ -120,24 +148,36 @@ const questions: Question[] = [
     category: SCIENCE,
   },
   {
-    question: `The end of this man’s rule included the Night of the Murdered Poets, and he invented the fictitious Doctor’s Plot. His policies caused the holodomor famine in the Ukraine, and this liquidator of the kulaks was denounced in a “Secret Speech” by Khruschev. This developer of Five-Year Plans and “socialism in one country” drove out Leon Trotsky. For 10 points, name this Soviet leader who instigated the Great Purge and fought Hitler in World War II after succeeding Lenin.`,
-    answer: "Stalin",
-    fullAnswer: "Joseph Stalin",
-    url: "https://www.norcalquizbowl.org/?page_id=25",
-    category: HISTORY,
+    question: `This country celebrates its Independence Day annually on August 15. In 2023, this country had an estimated GDP (PPP) of $13 trillion. The national flower for this country is the lotus and the national fruit is the mango. Occupying approximately 1.3mil sq mi, this country located in South Asia has an estimated population of around 1.4 billion. For five points, name this country with where the Ganges river flows and the capital is New Delhi.`,
+    answer: "India",
+    category: GEOGRAPHY,
   },
   {
-    question: `One of the leagues in this sport faced a 2017 boycott led by Nicky Spiva and Hannah Leathers over unequal gender representation. Henry Callahan, who was killed in 1982, is the namesake of both an award given to college players in this sport and a move in which a defender scores a point. The two main positions in this sport are handler and cutter; handlers make the important throws. Types of throws in this sport are called the “scoober” and the “high release flick”. Like football, the goal of this sport is to advance over the goal line into the end zone. Name this sport overseen by the World Flying Disc Federation that is played with a frisbee.`,
-    answer: "ultimate",
-    fullAnswer: "Ultimate Frisbee",
-    url: "https://files.quizbowlpackets.com/2324/01.pdf",
+    question: `This American singer, songwriter, and actress married and then divorced Dalton Gomez. According to the RIAA, all of this woman’s studio albums are certified platinum or higher. She rose to fame for playing Cat Valentine in the Nickelodeon television series Victorious and has released popular albums such as “Thank U, Next.” For five points, name this woman whose last name is a Starbucks drink size.`,
+    answer: "Ariana Grande",
     category: POP_CULTURE,
   },
   {
-    question: `This painting was once vandalized with the words “Kill all lies.” This painting was made for the 1937 World’s Fair in Paris and was based on an article by George Steer. Nazi Germany referred to this painting as “a hodgepodge of body parts that any four-year-old could have painted”. When asked to describe this painting’s symbolism, the artist stated “This bull is a bull and this horse is a horse.” The horse in this painting is screaming above a person on the ground holding a broken sword. Name this painting based on a Spanish Civil War bombing, made by Pablo Picasso.`,
-    answer: "Guernica",
-    url: "https://files.quizbowlpackets.com/2324/01.pdf",
-    category: ART_AND_LITERATURE,
+    question: `This statesman succeeded Benjamin Franklin in 1785 as Minister to France. This prominent Founding Father is featured on the $2 bill and died on July 4th, 1826 at his home in Monticello. As a Democratic-Republican politician, this man served as Secretary of State under Washington and Vice President under John Adams. For five points, name this third US President who authored the Declaration of Independence.`,
+    answer: "Jefferson",
+    fullAnswer: "Thomas Jefferson",
+    category: HISTORY,
+  },
+  {
+    question: `This famous video-game character was stabbed during reveal trailers for Sephiroth and Ridley in the game Super Smash Bros Ultimate. In his eponymous movie, produced by Universal Pictures and featuring Anya Taylor-Joy, this character was voiced by Chris Pratt. For five points, name this Italian plumber whose brother is Luigi.`,
+    answer: "Mario",
+    category: POP_CULTURE,
+  },
+  {
+    question: `This man authored books such as “A Promised Land,” “The Audacity of Hope,” and “Dreams From My Father.” Born in Honolulu on August 4th, 1961, this man was registered as “Barry” in school from ages six to ten. In 1992, he married Michelle Robinson. Name this 44th US president, for five points, who was elected in 2008 and served as the nation’s first African American president.`,
+    answer: "Obama",
+    fullAnswer: "Barack Obama",
+    category: HISTORY,
+  },
+  {
+    question: `Names the same: Find the name common to all of these people or characters. Richard created the game Magic: The Gathering. James was the 20th president of United States and assassinated after less than 200 days in office. Andrew is a British-American actor who played major roles in Hacksaw Ridge and The Amazing Spider-Man. The fictional lasagna-loving orange cat with human owner Jon Arbuckle.`,
+    answer: "Garfield",
+    category: POP_CULTURE,
   },
 ];
 

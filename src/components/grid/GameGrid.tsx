@@ -23,11 +23,9 @@ const GameGrid = () => {
     const answerArr = answer.split("");
     const statuses = Array(guess.length).fill(theme.palette.error); // Fill with 'incorrect' color by default
     if (guess.includes(SKIPPED_TEXT)) {
-      // Don't compute if the guess was skipped.
-      return;
+      return; // Don't compute if the guess was skipped.
     }
-    const count = new Map();
-    // Get count of all chars in answer
+    const count = new Map(); // Get count of all chars in answer
     // TODO: Compute only once and pass deep copy as param
     for (let i = 0; i < answer.length; i++) {
       let currKey = answer[i];
@@ -66,11 +64,9 @@ const GameGrid = () => {
           i === questionNumber
             ? q.map((g, gi) =>
                 gi === guessNumber[i] ? (
-                  // Current guess
-                  <GameRow guess={currGuess} key={gi} />
+                  <GameRow guess={currGuess} key={gi} /> // Current guess
                 ) : (
-                  // Past guesses
-                  <GameRow guess={g} key={gi} statuses={getStatuses(g)} />
+                  <GameRow guess={g} key={gi} statuses={getStatuses(g)} /> // Past guesses
                 )
               )
             : null // Don't render rows for the non-active question
