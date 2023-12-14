@@ -33,31 +33,29 @@ interface MondoDBQuestion {
 
 export const mongoDBQuestions: MondoDBQuestion[] = [
   {
-    _id: { $numberInt: "20231215" },
+    _id: { $numberInt: "20231217" },
     questions: [
       {
-        category: "SCI",
-        answer: "tongue",
-        question:
-          "A “geographic” pattern of patches can appear on this organ due to leukoplakia. This organ’s frenulum is tied to another body part in ankylo-glossia, and a protruding one is symptomatic of Down syndrome. It is not a tail, but chameleons possess a prehensile one of these organs that is covered in spiny papillae to assist cats with grooming. Sublingual salivary glands and taste buds are associated with, for fice points, which muscular organ inside the mouth?",
-        url: "https://files.quizbowlpackets.com/2701/Replacements.pdf",
+        question: `This country celebrates its Independence Day annually on August 15. In 2023, this country had an estimated GDP (PPP) of $13 trillion. The national flower for this country is the lotus and the national fruit is the mango. Occupying approximately 1.3mil sq mi, this country located in South Asia has an estimated population of around 1.4 billion. For five points, name this country with where the Ganges river flows and the capital is New Delhi.`,
+        answer: "India",
+        category: GEOGRAPHY,
       },
       {
-        category: "GEO",
-        question:
-          "Oxfam was founded to alleviate a famine in this country. This country celebrates “No Day,” a holiday that commemorates a refusal to cooperate with Benito Mussolini, given by Prime Minister Ioannis Metaxas.  The Earl of Elgin looted marble sculptures from this country, and the British Museum refuses to repatriate them. Since 2007, a debt crisis has plagued, for five points, what country where the Parthenon stands in Athens?",
-        answer: "Greece",
-        url: "https://files.quizbowlpackets.com/2701/Replacements.pdf",
+        question: `This American singer, songwriter, and actress married and then divorced Dalton Gomez. According to the RIAA, all of this woman’s studio albums are certified platinum or higher. She rose to fame for playing Cat Valentine in the Nickelodeon television series Victorious and has released popular albums such as “Thank U, Next.” For five points, name this woman whose last name is a Starbucks drink size.`,
+        answer: "Ariana Grande",
+        category: POP_CULTURE,
       },
       {
-        question:
-          'Formed in Liverpool in 1960, this legendary British rock band is widely regarded as one of the most influential in the history of popular music. Hits like "Hey Jude," "Let It Be," and "A Hard Day\'s Night" are just a glimpse of their extensive discography. With members like John Lennon, Paul McCartney, George Harrison, and Ringo Starr, they achieved global fame and success. What is the name of this iconic group that played a pivotal role in shaping the landscape of rock and roll, and whose name sounds like an insect?',
-        answer: "The Beatles",
-        category: "POP",
+        question: `This statesman succeeded Benjamin Franklin in 1785 as Minister to France. This prominent Founding Father is featured on the $2 bill and died on July 4th, 1826 at his home in Monticello. As a Democratic-Republican politician, this man served as Secretary of State under Washington and Vice President under John Adams. For five points, name this third US President who authored the Declaration of Independence.`,
+        answer: "Jefferson",
+        fullAnswer: "Thomas Jefferson",
+        category: HISTORY,
       },
     ],
   },
 ];
+
+// console.log(JSON.stringify(mongoDBQuestions));
 
 const questions: Question[] = [
   {
