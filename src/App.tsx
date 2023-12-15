@@ -15,6 +15,7 @@ import useGameStateStore from "./stores/gameStateStore";
 import useHardModeStore from "./stores/hardModeStore";
 import useStatsStore from "./stores/statsStore";
 import useOnscreenKeyboardOnlyStore from "./stores/onscreenKeyboardOnlyStore";
+import useRetrievedStore from "./stores/retrievedStore";
 
 function App() {
   const { data } = useQuestions();
@@ -39,7 +40,10 @@ function App() {
 
   const matches = useMediaQuery("(min-width:600px)");
   const dailyIndex = useDailyIndex();
-  const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
+  const retrieved = useRetrievedStore((s) => s.retrieved);
+  const safeIndex = getPositiveIndex(
+    questionNumber + (retrieved ? 0 : dailyIndex)
+  );
   const question = data[safeIndex].question;
   const answerWithSpaces = data[safeIndex].answer.toLocaleUpperCase();
   const fullAnswer = data[safeIndex].fullAnswer;

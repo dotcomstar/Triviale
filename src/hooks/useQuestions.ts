@@ -1,4 +1,5 @@
 import questions, { Question } from "../data/questions";
+import useRetrievedStore from "../stores/retrievedStore";
 import useMongoDBQuestions from "./useMongoDBQuestions";
 
 export type QuestionsResponse = {
@@ -6,7 +7,8 @@ export type QuestionsResponse = {
 };
 
 const useQuestions = (): QuestionsResponse => {
-  // Try to get questions with MongoDB API
+  // Try to get questions with MongoDB API.
+  const { setRetrieved } = useRetrievedStore();
   const { data: mongoQuestionsArray } = useMongoDBQuestions();
   let mongoData = null;
   if (mongoQuestionsArray) {
@@ -15,6 +17,8 @@ const useQuestions = (): QuestionsResponse => {
 
   if (mongoData) {
     // Successfully retrieved questions using MongoDB API.
+    console.log("Successfully retrieved questions using MongoDB.");
+    setRetrieved(true);
     return { data: mongoData.questions };
   } else {
     // We were not able to get questions for today.
