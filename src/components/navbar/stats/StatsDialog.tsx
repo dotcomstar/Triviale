@@ -45,8 +45,9 @@ const StatsDialog = ({
   const questionState = useGameStateStore((s) => s.questionState);
   const solutionIndex = date;
   const retrieved = useRetrievedStore((s) => s.retrieved);
+  const offset = retrieved ? 0 : dailyIndex;
   const questionDetails = (id: number) => {
-    const safeIndex = getPositiveIndex(id + (retrieved ? 0 : dailyIndex));
+    const safeIndex = getPositiveIndex(id + offset);
     const q = useQuestionByID(safeIndex);
     return [q?.category!, q?.answer.toLocaleUpperCase()!.replace(/\s+/g, "")];
   };
