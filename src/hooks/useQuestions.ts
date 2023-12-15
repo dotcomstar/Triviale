@@ -8,7 +8,7 @@ export type QuestionsResponse = {
 
 const useQuestions = (): QuestionsResponse => {
   // Try to get questions with MongoDB API.
-  const { setRetrieved } = useRetrievedStore();
+  const setRetrieved = useRetrievedStore((s) => s.setRetrieved);
   const { data: mongoQuestionsArray } = useMongoDBQuestions();
   let mongoData = null;
   if (mongoQuestionsArray) {
