@@ -1,22 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
 import apiClient from "../services/api-client";
 import { MondoDBQuestion } from "../data/questions";
-import useDailyIndex from "./useDailyIndex";
+import { oneDay } from "./useDailyIndex";
+import useTodayAsInt from "./useTodayAsInt";
 
-const useMongoDBQuestions = (courseName: string) =>
-  useQuery<MondoDBQuestion, Error>({
-    queryKey: ["date", useDailyIndex()],
+const today = useTodayAsInt();
+console.log(`Today is ${today}`);
+
+const useMongoDBQuestions = () =>
+  useQuery<MondoDBQuestion[], Error>({
+    queryKey: ["date", today],
     queryFn: () =>
       apiClient
-        .get<MondoDBQuestion>("/questions", {
+        .get<MondoDBQuestion[]>("/questions", {
           params: {
-            name: courseName,
+            date: today,
           },
         })
         .then((res) => res.data),
-    enabled: !!courseName,
     refetchOnWindowFocus: false,
-    staleTime: 2 * 7 * 24 * 60 * 60 * 1000, // 2w
+    staleTime: oneDay, // 1 day
   });
 
 export default useMongoDBQuestions;

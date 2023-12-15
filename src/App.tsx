@@ -36,12 +36,14 @@ function App() {
     importGame,
     cacheGuess,
   } = useGameStateStore();
+
+  const matches = useMediaQuery("(min-width:600px)");
   const dailyIndex = useDailyIndex();
   const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
   const question = data[safeIndex].question;
   const answerWithSpaces = data[safeIndex].answer.toLocaleUpperCase();
-  const answer = answerWithSpaces.replace(/\s+/g, "");
   const fullAnswer = data[safeIndex].fullAnswer;
+  const answer = answerWithSpaces.replace(/\s+/g, "");
   const { setStatsOpen } = useDialogStore();
   const { importStats, logGame } = useStatsStore();
   const {
@@ -51,8 +53,6 @@ function App() {
     advancedStats,
   } = useStatsStore();
   const { onscreenKeyboardOnly } = useOnscreenKeyboardOnlyStore();
-
-  const matches = useMediaQuery("(min-width:600px)");
 
   const todaysCategories = Array(QUESTIONS_PER_DAY)
     .fill("")
