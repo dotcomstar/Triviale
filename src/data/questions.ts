@@ -140,7 +140,7 @@ const questions: Question[] = [
     question: `This monarch was the elder daughter of Prince Albert, duke of York, and his wife, Lady Elizabeth Bowes-Lyon. She was queen regnant of 32 sovereign states over the course of her lifetime and remained the monarch of 15 realms by the time of her death. This woman had four children: Charles, Anne, Andrew, and Edward. From the House of Windsor, this woman was born April 21, 1926, London, England and died September 8, 2022. Who is this longest reigning British Monarch, former Queen of England?    `,
     answer: "Elizabeth",
     fullAnswer: "Queen Elizabeth II",
-    category: SCIENCE,
+    category: HISTORY,
   },
   {
     question: `This country celebrates its Independence Day annually on August 15. In 2023, this country had an estimated GDP (PPP) of $13 trillion. The national flower for this country is the lotus and the national fruit is the mango. Occupying approximately 1.3mil sq mi, this country located in South Asia has an estimated population of around 1.4 billion. For five points, name this country with where the Ganges river flows and the capital is New Delhi.`,
