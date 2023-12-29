@@ -179,23 +179,31 @@ const questions: Question[] = [
     category: POP_CULTURE,
   },
   {
-    question: `Six men in this poem die when their ship passes between Scylla and Charybdis. The hero of this poem tricks Polyphemus, a cyclops, and kills a band of suitors with his son, Telemachus, to reunite with his wife, Penelope. For the point, name this ancient epic poem by Homer in which the title Greek hero returns home to Ithaca.`,
-    answer: "The Odyssey",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round1.pdf",
-    category: ART_AND_LITERATURE,
-  },
-  {
-    question: `The surface form of this quantity is measured with a pyrometer. The first reliable tool for measuring this quantity was a sealed glass tube of mercury. Absolute scales for this quantity include Rankine and Kelvin, and its standard scale is based on the freezing and boiling points of water. For the point, name this quantity recorded in degrees Celsius.`,
-    answer: "temperature",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round1.pdf",
+    question: ` These structures can undergo events classified as Plinian or Strombolian. These structures can cause
+    lahars, which are very quick, wet mudslides, and can release pahoehoe. These natural
+    structures can launch tephra and superheated gas in a pyroclastic flow down their sides. For the point, name
+    these geologic features that, when pressures rise in underground magma chambers, may explosively erupt.`,
+    answer: "volcanoes",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round2.pdf",
     category: SCIENCE,
   },
   {
-    question: `In 1934, the controversial construction of the Parker Dam on this river required the National Guard to muster the Arizona Navy. Dams on this river form the Glen Canyon Dam and Lake Mead, which is formed by the Hoover Dam. For the point, name this river of the American West that flows through the Grand Canyon and starts in the Rocky Mountains of its namesake state.`,
-    answer: "Colorado",
-    fullAnswer: "Colorado River",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round1.pdf",
-    category: GEOGRAPHY,
+    question: `This soldier was declared a martyr by Pope Callixtus III. Saint Michael is a patron saint of France in
+    part because this soldier had visions of Saints Michael, Margaret, and Catherine telling her to escort the
+    Dauphin to Reims, which required her to lift the English siege of Orleans. French
+    armies in the Hundred Years’ War rallied behind, for the point, what peasant girl who was burned at the stake?`,
+    answer: "Joan of Arc",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round2.pdf",
+    category: HISTORY,
+  },
+  {
+    question: `This man Drafted a charter of peace between the Peoples of the Book during the Hijra. in the Cave of
+    Hira, this Seal of the Prophets was told to “Recite!” by the angel Jibreel. To escape persecution, this man led
+    his followers to Medina from Mecca after he received the revelation of the Quran. For the point, name this Final
+    Prophet, the founder of Islam.`,
+    answer: "Muhammad",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round2.pdf",
+    category: RELIGION,
   },
 ];
 
