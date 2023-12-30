@@ -40,7 +40,7 @@ const AdvancedStats = () => {
           <Grid item xs={4}>
             <Typography {...TypProps}>
               {advancedStats
-                ? (
+                ? +(
                     advancedStats[c].questionsGuessedIn.reduce(
                       (acc, v, i) => acc + v * (i + 1),
                       0
