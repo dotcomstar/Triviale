@@ -23,6 +23,7 @@ import AdvancedStatsButton from "./AdvancedStatsButton";
 import GuessDistribution from "./GuessDistribution";
 import PastGamesStats from "./PastGamesStats";
 import ShareButton from "./ShareButton";
+import useRetrievedStore from "../../../stores/retrievedStore";
 
 export interface StatsDialogProps {
   open: boolean;
@@ -43,8 +44,10 @@ const StatsDialog = ({
   const date = new Date().toLocaleDateString();
   const questionState = useGameStateStore((s) => s.questionState);
   const solutionIndex = date;
+  const retrieved = useRetrievedStore((s) => s.retrieved);
+  const offset = retrieved ? 0 : dailyIndex;
   const questionDetails = (id: number) => {
-    const safeIndex = getPositiveIndex(dailyIndex + id);
+    const safeIndex = getPositiveIndex(id + offset);
     const q = useQuestionByID(safeIndex);
     return [q?.category!, q?.answer.toLocaleUpperCase()!.replace(/\s+/g, "")];
   };

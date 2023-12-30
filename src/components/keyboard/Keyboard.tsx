@@ -7,6 +7,7 @@ import useGameStateStore from "../../stores/gameStateStore";
 import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 import useQuestionByID from "../../hooks/useQuestionByID";
 import useOnscreenKeyboardOnlyStore from "../../stores/onscreenKeyboardOnlyStore";
+import useRetrievedStore from "../../stores/retrievedStore";
 
 type KeyboardProps = {
   onChar: (value: string) => void;
@@ -28,7 +29,10 @@ const getStatus = (val: string | undefined) => {
   const dailyIndex = useDailyIndex();
   const questionNumber = useGameStateStore((s) => s.questionNumber);
   const guessNumber = useGameStateStore((s) => s.guessNumber);
-  const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
+  const retrieved = useRetrievedStore((s) => s.retrieved);
+  const safeIndex = getPositiveIndex(
+    questionNumber + (retrieved ? 0 : dailyIndex)
+  );
   const answerWithSpaces =
     useQuestionByID(safeIndex)?.answer.toLocaleUpperCase()!;
   const answer = answerWithSpaces.replace(/\s+/g, "")!;

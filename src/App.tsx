@@ -15,6 +15,7 @@ import useGameStateStore from "./stores/gameStateStore";
 import useHardModeStore from "./stores/hardModeStore";
 import useStatsStore from "./stores/statsStore";
 import useOnscreenKeyboardOnlyStore from "./stores/onscreenKeyboardOnlyStore";
+import useRetrievedStore from "./stores/retrievedStore";
 
 function App() {
   const { data } = useQuestions();
@@ -36,12 +37,17 @@ function App() {
     importGame,
     cacheGuess,
   } = useGameStateStore();
+
+  const matches = useMediaQuery("(min-width:600px)");
   const dailyIndex = useDailyIndex();
-  const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
+  const retrieved = useRetrievedStore((s) => s.retrieved);
+  const safeIndex = getPositiveIndex(
+    questionNumber + (retrieved ? 0 : dailyIndex)
+  );
   const question = data[safeIndex].question;
   const answerWithSpaces = data[safeIndex].answer.toLocaleUpperCase();
-  const answer = answerWithSpaces.replace(/\s+/g, "");
   const fullAnswer = data[safeIndex].fullAnswer;
+  const answer = answerWithSpaces.replace(/\s+/g, "");
   const { setStatsOpen } = useDialogStore();
   const { importStats, logGame } = useStatsStore();
   const {
@@ -51,8 +57,6 @@ function App() {
     advancedStats,
   } = useStatsStore();
   const { onscreenKeyboardOnly } = useOnscreenKeyboardOnlyStore();
-
-  const matches = useMediaQuery("(min-width:600px)");
 
   const todaysCategories = Array(QUESTIONS_PER_DAY)
     .fill("")

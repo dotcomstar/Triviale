@@ -40,10 +40,12 @@ const AdvancedStats = () => {
           <Grid item xs={4}>
             <Typography {...TypProps}>
               {advancedStats
-                ? advancedStats[c].questionsGuessedIn.reduce(
-                    (acc, v, i) => acc + v * (i + 1),
-                    0
-                  ) / Math.max(advancedStats[c].numQuestionsAttempted, 1)
+                ? +(
+                    advancedStats[c].questionsGuessedIn.reduce(
+                      (acc, v, i) => acc + v * (i + 1),
+                      0
+                    ) / Math.max(advancedStats[c].numQuestionsAttempted, 1)
+                  ).toFixed(2)
                 : 0}
             </Typography>
           </Grid>

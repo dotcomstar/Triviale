@@ -4,6 +4,7 @@ import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
 import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 import useQuestions from "../../hooks/useQuestions";
+import useRetrievedStore from "../../stores/retrievedStore";
 
 const ProgressBar = () => {
   const importGuess = useCurrGuessStore((s) => s.importGuess);
@@ -11,6 +12,7 @@ const ProgressBar = () => {
     useGameStateStore();
   const dailyIndex = useDailyIndex();
   const { data } = useQuestions();
+  const retrieved = useRetrievedStore((s) => s.retrieved);
 
   return (
     <Stack
@@ -47,7 +49,10 @@ const ProgressBar = () => {
               }
               sx={{ borderRadius: 30, width: "calc(100% / 3)" }}
             >
-              {`Q${i + 1}, ${data[getPositiveIndex(dailyIndex + i)].category}`}
+              {`Q${i + 1}, ${
+                data[getPositiveIndex(i + (retrieved ? 0 : dailyIndex))]
+                  .category
+              }`}
             </Button>
             {i < arr.length - 1 && (
               <Box

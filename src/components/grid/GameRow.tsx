@@ -3,6 +3,7 @@ import useQuestionByID from "../../hooks/useQuestionByID";
 import useGameStateStore from "../../stores/gameStateStore";
 import Cell from "./Cell";
 import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
+import useRetrievedStore from "../../stores/retrievedStore";
 
 interface GameRowProps {
   guess: string[];
@@ -13,7 +14,10 @@ interface GameRowProps {
 const GameRow = ({ guess, statuses = [], answerOverride }: GameRowProps) => {
   const dailyIndex = useDailyIndex();
   const questionNumber = useGameStateStore((s) => s.questionNumber);
-  const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
+  const retrieved = useRetrievedStore((s) => s.retrieved);
+  const safeIndex = getPositiveIndex(
+    questionNumber + (retrieved ? 0 : dailyIndex)
+  );
   const question = useQuestionByID(safeIndex);
   let ans = question?.answer;
   if (answerOverride) {

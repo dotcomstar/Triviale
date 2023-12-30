@@ -5,12 +5,16 @@ import useQuestionByID from "../../hooks/useQuestionByID";
 import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
 import GameRow from "./GameRow";
+import useRetrievedStore from "../../stores/retrievedStore";
 
 const GameGrid = () => {
   const dailyIndex = useDailyIndex();
   const guessNumber = useGameStateStore((s) => s.guessNumber);
+  const retrieved = useRetrievedStore((s) => s.retrieved);
   const questionNumber = useGameStateStore((s) => s.questionNumber);
-  const safeIndex = getPositiveIndex(dailyIndex + questionNumber);
+  const safeIndex = getPositiveIndex(
+    questionNumber + (retrieved ? 0 : dailyIndex)
+  );
   const question = useQuestionByID(safeIndex);
   const answerWithSpaces = question?.answer.toLocaleUpperCase()!;
   const answer = answerWithSpaces.replace(/\s+/g, "")!;
