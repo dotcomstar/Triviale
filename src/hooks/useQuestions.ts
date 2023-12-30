@@ -1,6 +1,4 @@
 import questions, { Question } from "../data/questions";
-import useRetrievedStore from "../stores/retrievedStore";
-import useMongoDBQuestions from "./useMongoDBQuestions";
 
 export type QuestionsResponse = {
   data: Question[];
