@@ -135,7 +135,7 @@ const questions: Question[] = [
   },
   {
     question: `One of these animals, Tamiu, was entombed with Prince Djhutmose. The Book of the Dead describes Ra as one of these animals biting the serpent Apep, a tribute to these animals’ defense of Egyptian grain storage. Though she originally had the head of a lion, a goddess with the head of this animal guarded mothers and was called Bast. For the point, name these domestic animals revered by ancient Egyptians for their skill at hunting rats and mice.`,
-    answer: "cat",
+    answer: "cats",
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round2.pdf",
     category: HISTORY,
   },
