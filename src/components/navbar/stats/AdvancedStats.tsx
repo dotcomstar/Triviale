@@ -2,9 +2,9 @@ import { Grid, SxProps, Typography } from "@mui/material";
 import { ALL_CATEGORIES } from "../../../data/questions";
 import useStatsStore from "../../../stores/statsStore";
 import {
-  ADV_STATS_AVG_GUESS_TITLE,
-  ADV_STATS_CATEGORY_TITLE,
-  ADV_STATS_PLAYED_TITLE,
+  ADV_STATS_AVG_GUESS_TEXT,
+  ADV_STATS_CATEGORY_TEXT,
+  ADV_STATS_TOTAL_TRIES_TEXT,
 } from "../../../constants/strings";
 
 interface TypographyProps {
@@ -28,9 +28,9 @@ const AdvancedStats = () => {
   return (
     <Grid container alignItems={"center"}>
       {[
-        ADV_STATS_CATEGORY_TITLE,
-        ADV_STATS_PLAYED_TITLE,
-        ADV_STATS_AVG_GUESS_TITLE,
+        ADV_STATS_CATEGORY_TEXT,
+        ADV_STATS_TOTAL_TRIES_TEXT,
+        ADV_STATS_AVG_GUESS_TEXT,
       ].map((s) => (
         <Grid item xs={4}>
           <Typography {...TypProps}>{s}</Typography>

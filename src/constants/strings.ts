@@ -68,24 +68,14 @@ export const SHARE_FAILURE_TEXT =
   "Unable to share the results. This feature is available only in secure contexts (HTTPS), in some or all supporting browsers.";
 export const ADVANCED_STATS_LABEL = "Advanced Stats";
 export const ADVANCED_STATS_ARIA_LABEL = "Open advanced stats";
-export const MIGRATE_BUTTON_TEXT = "Transfer";
-export const MIGRATE_DESCRIPTION_TEXT =
-  "Click here to transfer your statistics to a new device.";
 export const TOTAL_TRIES_TEXT = "Played";
 export const SUCCESS_RATE_TEXT = "Win %";
 export const CURRENT_STREAK_TEXT = "Current Streak";
 export const BEST_STREAK_TEXT = "Max Streak";
-export const DISCOURAGE_INAPP_BROWSER_TEXT =
-  "You are using an embedded browser and may experience problems sharing or saving your results. We encourage you rather to use your device's default browser.";
 
-export const ADV_STATS_CATEGORY_TITLE = "Cat.";
-export const ADV_STATS_PLAYED_TITLE = "Played";
-export const ADV_STATS_AVG_GUESS_TITLE = "Avg Guess";
-
-export const DATEPICKER_TITLE = "Choose a past date";
-export const DATEPICKER_CHOOSE_TEXT = "Choose";
-export const DATEPICKER_TODAY_TEXT = "today";
-export const ARCHIVE_GAMEDATE_TEXT = "Game date";
+export const ADV_STATS_CATEGORY_TEXT = "Cat.";
+export const ADV_STATS_TOTAL_TRIES_TEXT = "Played";
+export const ADV_STATS_AVG_GUESS_TEXT = "Avg Guess";
 
 export const PLACEHOLDER_TEXT = "Coming soon";
 
@@ -94,3 +84,13 @@ export const BUG_REPORT_TEXT = "Bug Report";
 export const EMAIL_TEXT = "Email";
 
 export const ENTER_KEY_ID = "ENTER_KEY";
+
+// export const MIGRATE_BUTTON_TEXT = "Transfer";
+// export const MIGRATE_DESCRIPTION_TEXT =
+//   "Click here to transfer your statistics to a new device.";
+// export const DISCOURAGE_INAPP_BROWSER_TEXT =
+// "You are using an embedded browser and may experience problems sharing or saving your results. We encourage you rather to use your device's default browser.";
+// export const DATEPICKER_TITLE = "Choose a past date";
+// export const DATEPICKER_CHOOSE_TEXT = "Choose";
+// export const DATEPICKER_TODAY_TEXT = "today";
+// export const ARCHIVE_GAMEDATE_TEXT = "Game date";
