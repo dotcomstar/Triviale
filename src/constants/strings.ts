@@ -78,6 +78,10 @@ export const BEST_STREAK_TEXT = "Max Streak";
 export const DISCOURAGE_INAPP_BROWSER_TEXT =
   "You are using an embedded browser and may experience problems sharing or saving your results. We encourage you rather to use your device's default browser.";
 
+export const ADV_STATS_CATEGORY_TITLE = "Cat.";
+export const ADV_STATS_PLAYED_TITLE = "Played";
+export const ADV_STATS_AVG_GUESS_TITLE = "Avg Guess";
+
 export const DATEPICKER_TITLE = "Choose a past date";
 export const DATEPICKER_CHOOSE_TEXT = "Choose";
 export const DATEPICKER_TODAY_TEXT = "today";
