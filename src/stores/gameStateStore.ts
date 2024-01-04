@@ -29,11 +29,7 @@ const useGameStateStore = create<GameStateStore>((set) => ({
   questionState: Array(QUESTIONS_PER_DAY).fill("inProgress"),
   questionNumber: 0,
   guessNumber: Array(QUESTIONS_PER_DAY).fill(0),
-  guesses: [
-    Array(MAX_CHALLENGES).fill([]),
-    Array(MAX_CHALLENGES).fill([]),
-    Array(MAX_CHALLENGES).fill([]),
-  ],
+  guesses: Array(QUESTIONS_PER_DAY).fill(Array(MAX_CHALLENGES).fill([])),
   winGame: () => {
     console.log("Won the game");
     set(() => ({ gameState: "won" }));
