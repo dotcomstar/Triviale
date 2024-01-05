@@ -11,6 +11,7 @@ import SettingsButton from "./settings/SettingsButton";
 import SettingsDialog from "./settings/SettingsDialog";
 import StatsButton from "./stats/StatsButton";
 import StatsDialog from "./stats/StatsDialog";
+import LandingDialog from "../landingPage/LandingDialog";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -29,6 +30,8 @@ const NavBar = () => {
     setStatsOpen,
     isSettingsOpen,
     setSettingsOpen,
+    isLandingOpen,
+    setLandingOpen,
   } = useDialogStore();
   const matches = useMediaQuery("(min-width:600px)");
   return (
@@ -76,6 +79,11 @@ const NavBar = () => {
       <SettingsDialog
         open={isSettingsOpen}
         onClose={() => setSettingsOpen(false)}
+        TransitionComponent={Transition}
+      />
+      <LandingDialog
+        open={isLandingOpen}
+        onClose={() => setLandingOpen(false)}
         TransitionComponent={Transition}
       />
     </>

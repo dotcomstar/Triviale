@@ -4,20 +4,33 @@ import useGameStateStore from "../../stores/gameStateStore";
 import Cell from "./Cell";
 import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 import useRetrievedStore from "../../stores/retrievedStore";
+import useHardModeStore from "../../stores/hardModeStore";
 
 interface GameRowProps {
   guess: string[];
   statuses?: PaletteColor[];
   answerOverride?: string;
+  isPastGuess?: boolean;
 }
 
-const GameRow = ({ guess, statuses = [], answerOverride }: GameRowProps) => {
+const GameRow = ({
+  guess,
+  statuses = [],
+  answerOverride,
+  isPastGuess,
+}: GameRowProps) => {
+  const hardMode = useHardModeStore((s) => s.hardMode);
   const dailyIndex = useDailyIndex();
   const questionNumber = useGameStateStore((s) => s.questionNumber);
   const retrieved = useRetrievedStore((s) => s.retrieved);
   const safeIndex = getPositiveIndex(
     questionNumber + (retrieved ? 0 : dailyIndex)
   );
+  const questionState = useGameStateStore(
+    (s) => s.questionState[questionNumber]
+  );
+  const isInProgress = questionState === "inProgress";
+  const inProgressHardMode = isInProgress && hardMode && !answerOverride;
   const question = useQuestionByID(safeIndex);
   let ans = question?.answer;
   if (answerOverride) {
@@ -25,9 +38,15 @@ const GameRow = ({ guess, statuses = [], answerOverride }: GameRowProps) => {
   }
   const answerWithSpaces = ans?.toLocaleUpperCase()!;
   const answer = answerWithSpaces.replace(/\s+/g, "")!;
-  const emptyCells = Array.from(Array(answer.length - guess.length));
+  const emptyCellsLength =
+    hardMode && !answerOverride
+      ? isPastGuess
+        ? 0
+        : 1
+      : answer.length - guess.length;
+  const emptyCells = Array.from(Array(emptyCellsLength));
   const theme = useTheme();
-  let numSpacesForward = 1;
+  let offsetFromPrevSkipped = 1;
 
   return (
     <Stack
@@ -37,9 +56,9 @@ const GameRow = ({ guess, statuses = [], answerOverride }: GameRowProps) => {
     >
       {guess.map((letter, i) => {
         let shouldSkip = false;
-        if (answerWithSpaces[i + numSpacesForward] === " ") {
+        if (answerWithSpaces[i + offsetFromPrevSkipped] === " ") {
           shouldSkip = true;
-          numSpacesForward += 1;
+          offsetFromPrevSkipped += 1;
         }
         return (
           <>
@@ -49,12 +68,18 @@ const GameRow = ({ guess, statuses = [], answerOverride }: GameRowProps) => {
               value={letter}
               status={statuses[i]}
             />
-            {i < answer.length - 1 && (
+            {(inProgressHardMode ||
+              i < Math.max(guess.length - 1, answer.length - 1)) && ( // Prevents hanging box after the last letter
               <Box
                 key={`after ${i}`}
                 sx={{
-                  width: shouldSkip ? "10px" : "5px",
-                  borderBottom: shouldSkip ? 0 : 2,
+                  width: shouldSkip && inProgressHardMode ? "10px" : "5px",
+                  borderBottom:
+                    shouldSkip ||
+                    inProgressHardMode ||
+                    (hardMode && answer.length !== guess.length) // Don't render boxes for an incorrect length guess
+                      ? 0
+                      : 2,
                   borderColor:
                     statuses[i] === theme.palette.success &&
                     statuses[i + 1] === theme.palette.success
@@ -74,9 +99,11 @@ const GameRow = ({ guess, statuses = [], answerOverride }: GameRowProps) => {
       })}
       {emptyCells.map((_, i) => {
         let shouldSkipEmpty = false;
-        if (answerWithSpaces[i + guess.length + numSpacesForward] === " ") {
+        if (
+          answerWithSpaces[i + guess.length + offsetFromPrevSkipped] === " "
+        ) {
           shouldSkipEmpty = true;
-          numSpacesForward += 1;
+          offsetFromPrevSkipped += 1;
         }
         return (
           <>
@@ -85,8 +112,13 @@ const GameRow = ({ guess, statuses = [], answerOverride }: GameRowProps) => {
               <Box
                 key={`after ${i + guess.length}`}
                 sx={{
-                  width: shouldSkipEmpty ? "10px" : "5px",
-                  borderBottom: shouldSkipEmpty ? 0 : 2,
+                  width: shouldSkipEmpty && inProgressHardMode ? "10px" : "5px",
+                  borderBottom:
+                    shouldSkipEmpty ||
+                    inProgressHardMode ||
+                    (hardMode && answer.length !== guess.length)
+                      ? 0
+                      : 2,
                   borderColor: "primary.dark",
                 }}
               />

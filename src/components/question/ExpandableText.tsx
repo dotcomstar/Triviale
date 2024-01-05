@@ -14,6 +14,7 @@ import useGameStateStore from "../../stores/gameStateStore";
 import useDialogStore from "../../stores/dialogStore";
 import useOnscreenKeyboardOnlyStore from "../../stores/onscreenKeyboardOnlyStore";
 import useRetrievedStore from "../../stores/retrievedStore";
+import useHardModeStore from "../../stores/hardModeStore";
 
 interface Props {
   children: string;
@@ -21,11 +22,13 @@ interface Props {
 
 const ExpandableText = ({ children }: Props) => {
   if (!children) return null;
+  const hardMode = useHardModeStore((s) => s.hardMode);
   const { gameState, moveToNextQuestion, questionNumber } = useGameStateStore();
   const guessNumber =
     useGameStateStore((s) => s.guessNumber[questionNumber]) + 1;
   const length = children.length / MAX_CHALLENGES; // TODO: Split questions more intelligently.
   const makeGuess = useGameStateStore((s) => s.makeGuess);
+  const guess = useCurrGuessStore((s) => s.guess);
   const resetGuess = useCurrGuessStore((s) => s.resetGuess);
   const questionState = useGameStateStore((s) => s.questionState);
   const setStatsOpen = useDialogStore((s) => s.setStatsOpen);
@@ -72,7 +75,7 @@ const ExpandableText = ({ children }: Props) => {
               moveToNextQuestion();
             }
             if (questionState[questionNumber] === "inProgress") {
-              makeGuess(Array(answer.length).fill(SKIP_LETTER));
+              makeGuess(Array(Math.max(guess.length, 1)).fill(SKIP_LETTER));
               resetGuess();
             }
             if (gameState !== "inProgress") {
@@ -88,7 +91,7 @@ const ExpandableText = ({ children }: Props) => {
           sx={{
             mb: 1,
             width:
-              questionState[questionNumber] === "inProgress"
+              questionState[questionNumber] === "inProgress" && !hardMode
                 ? `calc(min(100vw - 16px, ${answer.length * 52}px + ${
                     (answer.length - 1) * 5
                   }px))`

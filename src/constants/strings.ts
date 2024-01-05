@@ -4,8 +4,18 @@ export const GAME_URL = "https://www.triviale.net/";
 export const CONTACT_EMAIL = "jetrlee@gmail.com";
 export const ABOUT_AUTHOR_URL = "https://jetrlee.vercel.app/";
 
+export const NEW_FEATURES_LABEL = "New feature(s):";
+export const NEW_FEATURES_LIST = [
+  "Dedicated landing screen",
+  "Reimagined Hard Mode",
+];
+
 import { QUESTIONS_PER_DAY } from "./settings";
 
+export const LANDING_TITLE = "Landing page";
+export const LANDING_DIALOG_ARIA = "landing-page";
+
+export const ABOUT_AUTHOR_TITLE = "About the author";
 export const HELP_HOW_TO_PLAY = "How To Play";
 export const HELP_NUM_TRIES = `Try to answer the question before it's finished being asked. Reveal more hints by guessing or skipping your guess.`;
 export const HELP_NUM_QUESTIONS = `Total of ${QUESTIONS_PER_DAY} questions per day.`;
@@ -35,10 +45,11 @@ export const SKIPPED_TEXT = "skipped";
 export const SKIP_BUTTON_TEXT = "Reveal the next clue";
 export const NEXT_QUESTIONS_TEXT = "Next Question";
 
+export const PLAY_CLASSIC_MODE_LABEL = "Play Classic";
 export const HARD_MODE_ALERT_MESSAGE =
   "Hard Mode can be toggled only at the start of the game!";
 export const HARD_MODE_LABEL = "Hard Mode";
-export const HARD_MODE_DESCRIPTION = "Only one answer per question";
+export const HARD_MODE_DESCRIPTION = "No clues given about answer length";
 export const DARK_MODE_LABEL = "Dark Theme";
 export const HIGH_CONTRAST_MODE_LABEL = "High Contrast Mode";
 export const HIGH_CONTRAST_MODE_DESCRIPTION = "For improved color vision";
@@ -68,20 +79,14 @@ export const SHARE_FAILURE_TEXT =
   "Unable to share the results. This feature is available only in secure contexts (HTTPS), in some or all supporting browsers.";
 export const ADVANCED_STATS_LABEL = "Advanced Stats";
 export const ADVANCED_STATS_ARIA_LABEL = "Open advanced stats";
-export const MIGRATE_BUTTON_TEXT = "Transfer";
-export const MIGRATE_DESCRIPTION_TEXT =
-  "Click here to transfer your statistics to a new device.";
 export const TOTAL_TRIES_TEXT = "Played";
 export const SUCCESS_RATE_TEXT = "Win %";
 export const CURRENT_STREAK_TEXT = "Current Streak";
 export const BEST_STREAK_TEXT = "Max Streak";
-export const DISCOURAGE_INAPP_BROWSER_TEXT =
-  "You are using an embedded browser and may experience problems sharing or saving your results. We encourage you rather to use your device's default browser.";
 
-export const DATEPICKER_TITLE = "Choose a past date";
-export const DATEPICKER_CHOOSE_TEXT = "Choose";
-export const DATEPICKER_TODAY_TEXT = "today";
-export const ARCHIVE_GAMEDATE_TEXT = "Game date";
+export const ADV_STATS_CATEGORY_TEXT = "Cat.";
+export const ADV_STATS_TOTAL_TRIES_TEXT = "Played";
+export const ADV_STATS_AVG_GUESS_TEXT = "Avg Guess";
 
 export const PLACEHOLDER_TEXT = "Coming soon";
 
@@ -90,3 +95,13 @@ export const BUG_REPORT_TEXT = "Bug Report";
 export const EMAIL_TEXT = "Email";
 
 export const ENTER_KEY_ID = "ENTER_KEY";
+
+// export const MIGRATE_BUTTON_TEXT = "Transfer";
+// export const MIGRATE_DESCRIPTION_TEXT =
+//   "Click here to transfer your statistics to a new device.";
+// export const DISCOURAGE_INAPP_BROWSER_TEXT =
+// "You are using an embedded browser and may experience problems sharing or saving your results. We encourage you rather to use your device's default browser.";
+// export const DATEPICKER_TITLE = "Choose a past date";
+// export const DATEPICKER_CHOOSE_TEXT = "Choose";
+// export const DATEPICKER_TODAY_TEXT = "today";
+// export const ARCHIVE_GAMEDATE_TEXT = "Game date";

@@ -18,6 +18,7 @@ export interface CustomDialogProps {
   dialogTitle?: string;
   fullScreen?: boolean;
   centerTitle?: boolean;
+  zIndex?: string;
 }
 
 const CustomDialog = ({
@@ -30,6 +31,7 @@ const CustomDialog = ({
   dialogTitle = "",
   fullScreen = false,
   centerTitle = false,
+  zIndex = "modal",
 }: CustomDialogProps) => {
   const handleClose = () => {
     onClose();
@@ -48,7 +50,7 @@ const CustomDialog = ({
       fullWidth
       maxWidth="sm"
       fullScreen={fullScreen}
-      sx={{ zIndex: "modal", mx: 0, mb: 2 }}
+      sx={{ zIndex: zIndex, mx: 0, mb: fullScreen ? 0 : 2 }}
       PaperProps={{
         style: {
           backgroundColor: theme.palette.error.dark,

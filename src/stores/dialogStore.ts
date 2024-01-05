@@ -6,9 +6,11 @@ interface DialogStore {
   isHelpOpen: boolean;
   isStatsOpen: boolean;
   isSettingsOpen: boolean;
+  isLandingOpen: boolean;
   setHelpOpen: (b: boolean) => void;
   setStatsOpen: (b: boolean) => void;
   setSettingsOpen: (b: boolean) => void;
+  setLandingOpen: (b: boolean) => void;
 }
 
 const dailyIndex = useDailyIndex();
@@ -19,12 +21,14 @@ const gameStateFinished =
   (pastGuesses["gameState"] === "won" || pastGuesses["gameState"] === "lost");
 
 const useDialogStore = create<DialogStore>((set) => ({
-  isHelpOpen: !gameStateFinished,
+  isHelpOpen: false,
   isStatsOpen: gameStateFinished,
   isSettingsOpen: false,
+  isLandingOpen: !gameStateFinished,
   setHelpOpen: (b: boolean) => set(() => ({ isHelpOpen: b })),
   setStatsOpen: (b: boolean) => set(() => ({ isStatsOpen: b })),
   setSettingsOpen: (b: boolean) => set(() => ({ isSettingsOpen: b })),
+  setLandingOpen: (b: boolean) => set(() => ({ isLandingOpen: b })),
 }));
 
 if (process.env.NODE_ENV === "development")

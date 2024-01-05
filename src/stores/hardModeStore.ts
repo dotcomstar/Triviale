@@ -5,6 +5,7 @@ import useDailyIndex from "../hooks/useDailyIndex";
 interface HardModeStore {
   hardMode: boolean;
   toggleHardMode: () => void;
+  setHardMode: (b: boolean) => void;
 }
 
 const dailyIndex = useDailyIndex();
@@ -20,6 +21,11 @@ const useHardModeStore = create<HardModeStore>((set) => ({
       return { hardMode: !state.hardMode };
     });
   },
+  setHardMode: (b: boolean) =>
+    set(() => {
+      localStorage.setItem("hardMode", b.toString());
+      return { hardMode: b };
+    }),
 }));
 
 if (process.env.NODE_ENV === "development")

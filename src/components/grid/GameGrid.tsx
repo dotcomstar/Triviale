@@ -41,7 +41,7 @@ const GameGrid = () => {
       }
     }
     // Set all correct chars
-    for (let i = 0; i < guess.length; i++) {
+    for (let i = 0; i < answer.length; i++) {
       let currChar = guess[i];
       let currCount: number = count.get(currChar);
       if (currChar === answerArr[i]) {
@@ -58,6 +58,13 @@ const GameGrid = () => {
         count.set(currChar, currCount - 1);
       }
     }
+
+    // // Set all chars outside the designated answer length.
+    // // Eg.answer is Bach but guess is busch, indicate that the last h is
+    // // out of bounds with a separate color.
+    // for (let i = Math.min(guess.length, answer.length); i < guess.length; i++) {
+    //   statuses[i] = theme.palette.error;
+    // }
     return statuses;
   };
 
@@ -70,7 +77,12 @@ const GameGrid = () => {
                 gi === guessNumber[i] ? (
                   <GameRow guess={currGuess} key={gi} /> // Current guess
                 ) : (
-                  <GameRow guess={g} key={gi} statuses={getStatuses(g)} /> // Past guesses
+                  <GameRow
+                    guess={g}
+                    key={gi}
+                    statuses={getStatuses(g)}
+                    isPastGuess={gi < guessNumber[i]}
+                  /> // Past guesses
                 )
               )
             : null // Don't render rows for the non-active question
