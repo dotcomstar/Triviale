@@ -146,7 +146,7 @@ const LandingDialog = ({
             sx={{
               width: "calc(5%)",
               borderBottom: 2,
-              borderColor: "primary.dark",
+              borderColor: "primary.darker",
             }}
           />
           <LandingButton
@@ -161,7 +161,7 @@ const LandingDialog = ({
             sx={{
               width: "calc(5%)",
               borderBottom: 2,
-              borderColor: "primary.dark",
+              borderColor: "primary.darker",
             }}
           />
           <LandingButton

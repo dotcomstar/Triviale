@@ -53,7 +53,7 @@ const CustomDialog = ({
       sx={{ zIndex: zIndex, mx: 0, mb: fullScreen ? 0 : 2 }}
       PaperProps={{
         style: {
-          backgroundColor: theme.palette.error.dark,
+          backgroundColor: theme.palette.info.dark,
           backgroundImage: "unset",
         },
       }}

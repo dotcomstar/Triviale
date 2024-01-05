@@ -8,8 +8,13 @@ import useRetrievedStore from "../../stores/retrievedStore";
 
 const ProgressBar = () => {
   const importGuess = useCurrGuessStore((s) => s.importGuess);
-  const { moveToQuestion, questionState, guesses, guessNumber } =
-    useGameStateStore();
+  const {
+    moveToQuestion,
+    questionState,
+    guesses,
+    guessNumber,
+    questionNumber,
+  } = useGameStateStore();
   const dailyIndex = useDailyIndex();
   const { data } = useQuestions();
   const retrieved = useRetrievedStore((s) => s.retrieved);
@@ -47,7 +52,12 @@ const ProgressBar = () => {
                   ? "success"
                   : "error"
               }
-              sx={{ borderRadius: 30, width: "calc(100% / 3)" }}
+              sx={{
+                borderRadius: 30,
+                width: "calc(100% / 3)",
+                border: i === questionNumber ? 1 : 0,
+                borderColor: "primary.contrastText",
+              }}
             >
               {`Q${i + 1}, ${
                 data[getPositiveIndex(i + (retrieved ? 0 : dailyIndex))]
@@ -59,7 +69,7 @@ const ProgressBar = () => {
                 sx={{
                   width: "calc(5%)",
                   borderBottom: 2,
-                  borderColor: "primary.dark",
+                  borderColor: "primary.darker",
                 }}
               />
             )}

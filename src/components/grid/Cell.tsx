@@ -37,7 +37,7 @@ const Cell = ({
       alignItems="center"
       sx={{
         border: status ? "none" : "2px solid",
-        borderColor: `${value ? "primary.light" : "primary.dark"}`,
+        borderColor: `${value ? "primary.light" : "primary.darker"}`,
         borderRadius: 10,
         height: matches ? "52px" : "48px",
         width: "52px",
