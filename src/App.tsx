@@ -184,7 +184,7 @@ function App() {
             onChar={(c) => {
               console.log(c);
               if (
-                index < answer.length &&
+                (hardMode || index < answer.length) &&
                 questionState[questionNumber] === "inProgress"
               ) {
                 addChar(c);
@@ -203,7 +203,7 @@ function App() {
               let hasOneMoreGuess =
                 questionState.filter((state) => state === "inProgress")
                   .length === 1;
-              if (index === answer.length) {
+              if (index === answer.length || hardMode) {
                 if (guess.join("") === answer) {
                   winQuestion(questionNumber);
                   if (!onscreenKeyboardOnly) {
@@ -211,10 +211,7 @@ function App() {
                   }
                   finalGuess = true;
                   won = true;
-                } else if (
-                  guessNumber[questionNumber] >= MAX_CHALLENGES - 1 ||
-                  hardMode
-                ) {
+                } else if (guessNumber[questionNumber] >= MAX_CHALLENGES - 1) {
                   loseQuestion(questionNumber);
                   if (!onscreenKeyboardOnly) {
                     document.getElementById("ExpandableButton")?.focus();
