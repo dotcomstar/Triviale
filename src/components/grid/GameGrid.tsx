@@ -63,7 +63,7 @@ const GameGrid = () => {
     // Eg.answer is Bach but guess is busch, indicate that the last h is
     // out of bounds with a separate color.
     for (let i = Math.min(guess.length, answer.length); i < guess.length; i++) {
-      statuses[i] = theme.palette.secondary;
+      statuses[i] = theme.palette.error;
     }
     return statuses;
   };

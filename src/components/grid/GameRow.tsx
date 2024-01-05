@@ -26,6 +26,11 @@ const GameRow = ({
   const safeIndex = getPositiveIndex(
     questionNumber + (retrieved ? 0 : dailyIndex)
   );
+  const questionState = useGameStateStore(
+    (s) => s.questionState[questionNumber]
+  );
+  const isInProgress = questionState === "inProgress";
+  const inProgressHardMode = isInProgress && hardMode;
   const question = useQuestionByID(safeIndex);
   let ans = question?.answer;
   if (answerOverride) {
@@ -62,12 +67,18 @@ const GameRow = ({
               value={letter}
               status={statuses[i]}
             />
-            {i < Math.max(guess.length - 1, answer.length - 1) && (
+            {(inProgressHardMode ||
+              i < Math.max(guess.length - 1, answer.length - 1)) && ( // Prevents hanging box after the last letter
               <Box
                 key={`after ${i}`}
                 sx={{
-                  width: shouldSkip && !hardMode ? "10px" : "5px",
-                  borderBottom: shouldSkip || hardMode ? 0 : 2,
+                  width: shouldSkip && inProgressHardMode ? "10px" : "5px",
+                  borderBottom:
+                    shouldSkip ||
+                    inProgressHardMode ||
+                    (hardMode && answer.length !== guess.length)
+                      ? 0
+                      : 2,
                   borderColor:
                     statuses[i] === theme.palette.success &&
                     statuses[i + 1] === theme.palette.success
@@ -100,8 +111,8 @@ const GameRow = ({
               <Box
                 key={`after ${i + guess.length}`}
                 sx={{
-                  width: shouldSkipEmpty && !hardMode ? "10px" : "5px",
-                  borderBottom: shouldSkipEmpty || hardMode ? 0 : 2,
+                  width: shouldSkipEmpty && inProgressHardMode ? "10px" : "5px",
+                  borderBottom: shouldSkipEmpty || inProgressHardMode ? 0 : 2,
                   borderColor: "primary.dark",
                 }}
               />
