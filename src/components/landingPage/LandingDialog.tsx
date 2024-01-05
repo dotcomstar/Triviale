@@ -84,7 +84,7 @@ const LandingDialog = ({
           direction="row"
           justifyContent="center"
           alignItems="center"
-          sx={{ mt: 10 }}
+          sx={{ mt: matches ? 10 : 4 }}
         >
           <Typography translate="no" variant="h3">
             <Cell
@@ -110,7 +110,8 @@ const LandingDialog = ({
           justifyContent="center"
           alignItems="center"
           width={"100%"}
-          pb={6}
+          pb={3}
+          pt={4}
         >
           <Typography>{NEW_FEATURES_LABEL}</Typography>
           <List sx={{ listStyleType: "disc" }}>
@@ -121,7 +122,7 @@ const LandingDialog = ({
         </Stack>
 
         <Stack
-          direction={"row"}
+          direction={matches ? "row" : "column"}
           justifyContent="space-between"
           alignItems="center"
           width={matches ? "70%" : "100%"}
