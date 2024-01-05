@@ -22,6 +22,8 @@ import GameRow from "../grid/GameRow";
 import CustomDialog from "../navbar/CustomDialog";
 import LandingButton from "./LandingButton";
 import Cell from "../grid/Cell";
+import useDialogStore from "../../stores/dialogStore";
+import zIndex from "@mui/material/styles/zIndex";
 
 // TODO: Remove all instances of "HELP"
 
@@ -40,6 +42,7 @@ const LandingDialog = ({
     onClose();
   };
 
+  const setHelpOpen = useDialogStore((s) => s.setHelpOpen);
   const { setHardMode, hardMode } = useHardModeStore();
   const matches = useMediaQuery("(min-width:600px)");
   const guesses = useGameStateStore((s) => s.guesses);
@@ -59,6 +62,7 @@ const LandingDialog = ({
       TransitionComponent={TransitionComponent}
       ariaDescribedBy={HELP_DIALOG_ARIA}
       ariaLabeledBy={HELP_TITLE}
+      zIndex={"2"}
     >
       <Snackbar
         open={invalidToggle}
@@ -135,7 +139,9 @@ const LandingDialog = ({
           </LandingButton>
           <LandingButton
             color="secondary"
-            onClick={() => console.log("How to")}
+            onClick={() => {
+              setHelpOpen(true);
+            }}
           >
             How to Play
           </LandingButton>{" "}
