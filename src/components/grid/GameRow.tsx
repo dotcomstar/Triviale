@@ -30,7 +30,7 @@ const GameRow = ({
     (s) => s.questionState[questionNumber]
   );
   const isInProgress = questionState === "inProgress";
-  const inProgressHardMode = isInProgress && hardMode;
+  const inProgressHardMode = isInProgress && hardMode && !answerOverride;
   const question = useQuestionByID(safeIndex);
   let ans = question?.answer;
   if (answerOverride) {
@@ -38,11 +38,12 @@ const GameRow = ({
   }
   const answerWithSpaces = ans?.toLocaleUpperCase()!;
   const answer = answerWithSpaces.replace(/\s+/g, "")!;
-  const emptyCellsLength = hardMode
-    ? isPastGuess
-      ? 0
-      : 1
-    : answer.length - guess.length;
+  const emptyCellsLength =
+    hardMode && !answerOverride
+      ? isPastGuess
+        ? 0
+        : 1
+      : answer.length - guess.length;
   const emptyCells = Array.from(Array(emptyCellsLength));
   const theme = useTheme();
   let offsetFromPrevSkipped = 1;
