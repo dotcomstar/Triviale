@@ -55,7 +55,7 @@ const ProgressBar = () => {
               sx={{
                 borderRadius: 30,
                 width: "calc(100% / 3)",
-                border: i === questionNumber ? 2 : 0,
+                border: i === questionNumber ? 1 : 0,
                 borderColor: "primary.contrastText",
               }}
             >
