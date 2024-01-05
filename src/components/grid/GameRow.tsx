@@ -76,7 +76,7 @@ const GameRow = ({
                   borderBottom:
                     shouldSkip ||
                     inProgressHardMode ||
-                    (hardMode && answer.length !== guess.length)
+                    (hardMode && answer.length !== guess.length) // Don't render boxes for an incorrect length guess
                       ? 0
                       : 2,
                   borderColor:
