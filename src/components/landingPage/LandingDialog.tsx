@@ -1,34 +1,26 @@
 import {
-  Button,
-  Dialog,
   DialogProps,
-  DialogTitle,
-  Link,
   List,
   ListItem,
   Snackbar,
   Stack,
   Typography,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import CustomDialog from "../navbar/CustomDialog";
-import {
-  HELP_DIALOG_ARIA,
-  HELP_TITLE,
-  HELP_HOW_TO_PLAY,
-  HELP_NUM_TRIES,
-  HELP_NUM_QUESTIONS,
-  HELP_HOW_TILE_COLORS_CHANGE,
-  ABOUT_AUTHOR_TITLE,
-  ABOUT_AUTHOR_URL,
-  HARD_MODE_ALERT_MESSAGE,
-} from "../../constants/strings";
-import SampleGame from "../navbar/help/SampleGame";
-import LandingButton from "./LandingButton";
-import useGameStateStore from "../../stores/gameStateStore";
 import { useState } from "react";
 import { ALERT_TIME_MS } from "../../constants/settings";
+import {
+  GAME_TITLE,
+  HARD_MODE_ALERT_MESSAGE,
+  HELP_DIALOG_ARIA,
+  HELP_TITLE,
+} from "../../constants/strings";
+import useGameStateStore from "../../stores/gameStateStore";
 import useHardModeStore from "../../stores/hardModeStore";
+import GameRow from "../grid/GameRow";
+import CustomDialog from "../navbar/CustomDialog";
+import LandingButton from "./LandingButton";
 
 // TODO: Remove all instances of "HELP"
 
@@ -56,6 +48,7 @@ const LandingDialog = ({
       acc && question.reduce((qAcc, guess) => qAcc && guess.length === 0, true),
     true
   );
+  const theme = useTheme();
 
   return (
     <CustomDialog
@@ -80,15 +73,29 @@ const LandingDialog = ({
         width={"100%"}
         height={"100dvh"}
       >
-        <Typography
-          translate="no"
-          variant="h3"
-          sx={{ fontSize: "20vw", pb: 1, mt: 10 }}
-          justifyContent={"center"}
-          display={"flex"}
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          sx={{ pb: 1, mt: 10 }}
         >
-          Triviale
-        </Typography>
+          <Typography translate="no" sx={{ fontSize: "2rem" }}>
+            <GameRow
+              guess={[GAME_TITLE.toLocaleUpperCase()[0]]}
+              statuses={[theme.palette.success]}
+              answerOverride={GAME_TITLE[0]}
+            />
+          </Typography>
+          <Typography
+            translate="no"
+            variant="h3"
+            sx={{ fontSize: "20vw" }}
+            justifyContent={"center"}
+            display={"flex"}
+          >
+            {GAME_TITLE.slice(1)}
+          </Typography>
+        </Stack>
         <Stack
           direction="column"
           justifyContent="center"
