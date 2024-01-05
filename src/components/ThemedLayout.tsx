@@ -17,6 +17,16 @@ interface Props {
   children: ReactNode;
 }
 
+declare module "@mui/material/styles" {
+  interface PaletteColor {
+    darker?: string;
+  }
+
+  interface SimplePaletteColorOptions {
+    darker?: string;
+  }
+}
+
 const ThemedLayout = ({ children }: Props) => {
   const [mode, setMode] = React.useState<PaletteMode>("light");
   const highContrast = useHighContrastStore((s) => s.highContrast);
@@ -93,11 +103,10 @@ const ThemedLayout = ({ children }: Props) => {
                 primary: {
                   main: "#D3D6DA",
                   light: "#878A8C",
-                  dark: "#D3D6DA",
+                  darker: "#D3D6DA",
                 },
-
-                error: { main: "#787C7E", dark: "#FFF" },
-                info: { main: "#FF0000" },
+                error: { main: "#787C7E" },
+                info: { main: "#FF0000", dark: "#FFF" },
                 ...(highContrast
                   ? {
                       warning: { main: "#85C0F9", contrastText: "#FFFFFF" },
@@ -113,10 +122,10 @@ const ThemedLayout = ({ children }: Props) => {
                 primary: {
                   main: "#818384",
                   light: "#565758",
-                  dark: "#3A3A3C",
+                  darker: "#3A3A3C",
                 },
-                error: { main: "#3A3A3C", dark: "#121213" },
-                info: { main: "#FF0000" },
+                error: { main: "#3A3A3C" },
+                info: { main: "#FF0000", dark: "#121213" },
                 ...(highContrast
                   ? {
                       warning: { main: "#85C0F9", contrastText: "#FFFFFF" },

@@ -89,7 +89,7 @@ const GameRow = ({
                           statuses[i + 1] === theme.palette.error ||
                           statuses[i] === theme.palette.warning ||
                           statuses[i + 1] === theme.palette.warning)
-                      ? "primary.dark"
+                      ? "primary.darker"
                       : "primary.light",
                 }}
               />
@@ -119,7 +119,7 @@ const GameRow = ({
                     (hardMode && answer.length !== guess.length)
                       ? 0
                       : 2,
-                  borderColor: "primary.dark",
+                  borderColor: "primary.darker",
                 }}
               />
             )}
