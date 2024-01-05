@@ -4,7 +4,16 @@ export const GAME_URL = "https://www.triviale.net/";
 export const CONTACT_EMAIL = "jetrlee@gmail.com";
 export const ABOUT_AUTHOR_URL = "https://jetrlee.vercel.app/";
 
+export const NEW_FEATURES_LABEL = "New feature(s):";
+export const NEW_FEATURES_LIST = [
+  "Dedicated landing screen",
+  "Reimagined Hard Mode",
+];
+
 import { QUESTIONS_PER_DAY } from "./settings";
+
+export const LANDING_TITLE = "Landing page";
+export const LANDING_DIALOG_ARIA = "landing-page";
 
 export const ABOUT_AUTHOR_TITLE = "About the author";
 export const HELP_HOW_TO_PLAY = "How To Play";
@@ -36,10 +45,11 @@ export const SKIPPED_TEXT = "skipped";
 export const SKIP_BUTTON_TEXT = "Reveal the next clue";
 export const NEXT_QUESTIONS_TEXT = "Next Question";
 
+export const PLAY_CLASSIC_MODE_LABEL = "Play Classic";
 export const HARD_MODE_ALERT_MESSAGE =
   "Hard Mode can be toggled only at the start of the game!";
 export const HARD_MODE_LABEL = "Hard Mode";
-export const HARD_MODE_DESCRIPTION = "Only one answer per question";
+export const HARD_MODE_DESCRIPTION = "No clues given about answer length";
 export const DARK_MODE_LABEL = "Dark Theme";
 export const HIGH_CONTRAST_MODE_LABEL = "High Contrast Mode";
 export const HIGH_CONTRAST_MODE_DESCRIPTION = "For improved color vision";

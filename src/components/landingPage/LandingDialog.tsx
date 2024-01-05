@@ -14,8 +14,15 @@ import { ALERT_TIME_MS } from "../../constants/settings";
 import {
   GAME_TITLE,
   HARD_MODE_ALERT_MESSAGE,
+  HARD_MODE_LABEL,
   HELP_DIALOG_ARIA,
+  HELP_HOW_TO_PLAY,
   HELP_TITLE,
+  LANDING_DIALOG_ARIA,
+  LANDING_TITLE,
+  NEW_FEATURES_LABEL,
+  NEW_FEATURES_LIST,
+  PLAY_CLASSIC_MODE_LABEL,
 } from "../../constants/strings";
 import useDialogStore from "../../stores/dialogStore";
 import useGameStateStore from "../../stores/gameStateStore";
@@ -23,8 +30,6 @@ import useHardModeStore from "../../stores/hardModeStore";
 import Cell from "../grid/Cell";
 import CustomDialog from "../navbar/CustomDialog";
 import LandingButton from "./LandingButton";
-
-// TODO: Remove all instances of "HELP"
 
 export interface LandingDialogProps {
   open: boolean;
@@ -59,8 +64,8 @@ const LandingDialog = ({
       open={open}
       fullScreen
       TransitionComponent={TransitionComponent}
-      ariaDescribedBy={HELP_DIALOG_ARIA}
-      ariaLabeledBy={HELP_TITLE}
+      ariaDescribedBy={LANDING_DIALOG_ARIA}
+      ariaLabeledBy={LANDING_TITLE}
       zIndex={"2"}
     >
       <Snackbar
@@ -109,9 +114,9 @@ const LandingDialog = ({
           width={"100%"}
           pb={6}
         >
-          <Typography>New feature(s):</Typography>
+          <Typography>{NEW_FEATURES_LABEL}</Typography>
           <List sx={{ listStyleType: "disc" }}>
-            {["Dedicated landing screen", "Reimagined Hard Mode"].map((v) => (
+            {NEW_FEATURES_LIST.map((v) => (
               <ListItem sx={{ display: "list-item" }}>{v}</ListItem>
             ))}
           </List>
@@ -136,7 +141,7 @@ const LandingDialog = ({
               }
             }}
           >
-            Play Classic
+            {PLAY_CLASSIC_MODE_LABEL}
           </LandingButton>
           <Box
             sx={{
@@ -151,7 +156,7 @@ const LandingDialog = ({
               setHelpOpen(true);
             }}
           >
-            How to Play
+            {HELP_HOW_TO_PLAY}
           </LandingButton>
           <Box
             sx={{
@@ -171,7 +176,7 @@ const LandingDialog = ({
               }
             }}
           >
-            Hard Mode
+            {HARD_MODE_LABEL}
           </LandingButton>
         </Stack>
       </Stack>
