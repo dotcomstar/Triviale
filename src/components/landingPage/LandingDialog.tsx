@@ -21,6 +21,7 @@ import useHardModeStore from "../../stores/hardModeStore";
 import GameRow from "../grid/GameRow";
 import CustomDialog from "../navbar/CustomDialog";
 import LandingButton from "./LandingButton";
+import Cell from "../grid/Cell";
 
 // TODO: Remove all instances of "HELP"
 
@@ -39,7 +40,7 @@ const LandingDialog = ({
     onClose();
   };
 
-  const { enableHardMode } = useHardModeStore();
+  const { setHardMode, hardMode } = useHardModeStore();
   const matches = useMediaQuery("(min-width:600px)");
   const guesses = useGameStateStore((s) => s.guesses);
   const [invalidToggle, setInvalidToggle] = useState(false);
@@ -77,19 +78,21 @@ const LandingDialog = ({
           direction="row"
           justifyContent="center"
           alignItems="center"
-          sx={{ pb: 1, mt: 10 }}
+          sx={{ mt: 10 }}
         >
-          <Typography translate="no" sx={{ fontSize: "2rem" }}>
-            <GameRow
-              guess={[GAME_TITLE.toLocaleUpperCase()[0]]}
-              statuses={[theme.palette.success]}
-              answerOverride={GAME_TITLE[0]}
+          <Typography translate="no" variant="h3">
+            <Cell
+              value={GAME_TITLE.toLocaleUpperCase()[0]}
+              status={theme.palette.success}
+              nthLetter={1}
+              fontSizeOverride="10vw"
+              isH3
             />
           </Typography>
           <Typography
             translate="no"
             variant="h3"
-            sx={{ fontSize: "20vw" }}
+            sx={{ fontSize: "12vw" }}
             justifyContent={"center"}
             display={"flex"}
           >
@@ -101,6 +104,7 @@ const LandingDialog = ({
           justifyContent="center"
           alignItems="center"
           width={"100%"}
+          pb={6}
         >
           <Typography>New features:</Typography>
           <List>
@@ -116,7 +120,17 @@ const LandingDialog = ({
           spacing={"5%"}
           sx={{ mb: 10, mx: 2 }}
         >
-          <LandingButton color="warning" onClick={() => onClose()}>
+          <LandingButton
+            color="warning"
+            onClick={() => {
+              if (canToggleHardMode || !hardMode) {
+                setHardMode(false);
+                onClose();
+              } else {
+                setInvalidToggle(true);
+              }
+            }}
+          >
             Play Classic
           </LandingButton>
           <LandingButton
@@ -128,8 +142,8 @@ const LandingDialog = ({
           <LandingButton
             color="warning"
             onClick={() => {
-              if (canToggleHardMode) {
-                enableHardMode();
+              if (canToggleHardMode || hardMode) {
+                setHardMode(true);
                 onClose();
               } else {
                 setInvalidToggle(true);

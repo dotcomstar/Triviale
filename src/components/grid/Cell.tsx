@@ -5,9 +5,17 @@ interface CellProps {
   nthLetter: number;
   value?: string;
   status?: PaletteColor;
+  fontSizeOverride?: string;
+  isH3?: boolean;
 }
 
-const Cell = ({ nthLetter, value, status = undefined }: CellProps) => {
+const Cell = ({
+  nthLetter,
+  value,
+  status = undefined,
+  fontSizeOverride,
+  isH3,
+}: CellProps) => {
   const matches = useMediaQuery("(min-width:600px)");
   const description = `${nthLetter}${
     nthLetter !== 11 && nthLetter % 10 === 1
@@ -38,9 +46,10 @@ const Cell = ({ nthLetter, value, status = undefined }: CellProps) => {
       }}
     >
       <Typography
-        fontSize={"1.5em"}
+        fontSize={fontSizeOverride ? fontSizeOverride : "1.5em"}
         color={status?.contrastText}
         fontWeight={"bold"}
+        variant={isH3 ? "h3" : "body1"}
       >
         {value}
       </Typography>
