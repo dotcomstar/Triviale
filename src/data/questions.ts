@@ -60,7 +60,7 @@ export const mongoDBQuestions: MondoDBQuestion[] = [
 const questions: Question[] = [
   {
     question: `A presidential candidate from this state was criticized for his consulting work with McKinsey for health insurers in Michigan. This state’s politicians include current Democratic presidential candidate Pete Buttigieg, the former mayor of South Bend. Eric Holcomb succeeded Vice President Mike Pence as the governor of, for the point, what Midwestern state west of Ohio?`,
-    answer: "Idaho",
+    answer: "Indiana",
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round3.pdf",
     category: POP_CULTURE,
   },
