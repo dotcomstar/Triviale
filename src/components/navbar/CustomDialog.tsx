@@ -48,7 +48,7 @@ const CustomDialog = ({
       fullWidth
       maxWidth="sm"
       fullScreen={fullScreen}
-      sx={{ zIndex: "modal", mx: 0, mb: 2 }}
+      sx={{ zIndex: "modal", mx: 0, mb: fullScreen ? 0 : 2 }}
       PaperProps={{
         style: {
           backgroundColor: theme.palette.error.dark,

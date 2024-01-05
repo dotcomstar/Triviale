@@ -6,6 +6,7 @@ export const ABOUT_AUTHOR_URL = "https://jetrlee.vercel.app/";
 
 import { QUESTIONS_PER_DAY } from "./settings";
 
+export const ABOUT_AUTHOR_TITLE = "About the author";
 export const HELP_HOW_TO_PLAY = "How To Play";
 export const HELP_NUM_TRIES = `Try to answer the question before it's finished being asked. Reveal more hints by guessing or skipping your guess.`;
 export const HELP_NUM_QUESTIONS = `Total of ${QUESTIONS_PER_DAY} questions per day.`;

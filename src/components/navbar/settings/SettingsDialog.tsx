@@ -9,6 +9,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import {
+  ABOUT_AUTHOR_TITLE,
   ABOUT_AUTHOR_URL,
   BUG_REPORT_TEXT,
   FEEDBACK_TEXT,
@@ -84,7 +85,7 @@ const SettingsDialog = ({
             <Typography>About the Author</Typography>
             <Link
               href={ABOUT_AUTHOR_URL}
-              title={`About the author`}
+              title={ABOUT_AUTHOR_TITLE}
               color={"inherit"}
               target="_blank"
               rel="noopener"
