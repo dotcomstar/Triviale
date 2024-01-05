@@ -41,7 +41,7 @@ const GameGrid = () => {
       }
     }
     // Set all correct chars
-    for (let i = 0; i < Math.min(guess.length, answer.length); i++) {
+    for (let i = 0; i < answer.length; i++) {
       let currChar = guess[i];
       let currCount: number = count.get(currChar);
       if (currChar === answerArr[i]) {
@@ -50,7 +50,7 @@ const GameGrid = () => {
       }
     }
     // Set all containing but in the wrong position chars
-    for (let i = 0; i < Math.min(guess.length, answer.length); i++) {
+    for (let i = 0; i < guess.length; i++) {
       let currChar = guess[i];
       let currCount: number = count.get(currChar);
       if (currCount && currCount > 0 && statuses[i] === theme.palette.error) {
@@ -59,12 +59,12 @@ const GameGrid = () => {
       }
     }
 
-    // Set all chars outside the designated answer length.
-    // Eg.answer is Bach but guess is busch, indicate that the last h is
-    // out of bounds with a separate color.
-    for (let i = Math.min(guess.length, answer.length); i < guess.length; i++) {
-      statuses[i] = theme.palette.error;
-    }
+    // // Set all chars outside the designated answer length.
+    // // Eg.answer is Bach but guess is busch, indicate that the last h is
+    // // out of bounds with a separate color.
+    // for (let i = Math.min(guess.length, answer.length); i < guess.length; i++) {
+    //   statuses[i] = theme.palette.error;
+    // }
     return statuses;
   };
 
