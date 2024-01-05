@@ -1,4 +1,5 @@
 import {
+  Box,
   DialogProps,
   List,
   ListItem,
@@ -137,6 +138,13 @@ const LandingDialog = ({
           >
             Play Classic
           </LandingButton>
+          <Box
+            sx={{
+              width: "calc(5%)",
+              borderBottom: 2,
+              borderColor: "primary.dark",
+            }}
+          />
           <LandingButton
             color="secondary"
             onClick={() => {
@@ -144,7 +152,14 @@ const LandingDialog = ({
             }}
           >
             How to Play
-          </LandingButton>{" "}
+          </LandingButton>
+          <Box
+            sx={{
+              width: "calc(5%)",
+              borderBottom: 2,
+              borderColor: "primary.dark",
+            }}
+          />
           <LandingButton
             color="success"
             onClick={() => {

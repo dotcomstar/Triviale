@@ -113,7 +113,12 @@ const GameRow = ({
                 key={`after ${i + guess.length}`}
                 sx={{
                   width: shouldSkipEmpty && inProgressHardMode ? "10px" : "5px",
-                  borderBottom: shouldSkipEmpty || inProgressHardMode ? 0 : 2,
+                  borderBottom:
+                    shouldSkipEmpty ||
+                    inProgressHardMode ||
+                    (hardMode && answer.length !== guess.length)
+                      ? 0
+                      : 2,
                   borderColor: "primary.dark",
                 }}
               />
