@@ -16,14 +16,12 @@ import {
   HELP_DIALOG_ARIA,
   HELP_TITLE,
 } from "../../constants/strings";
+import useDialogStore from "../../stores/dialogStore";
 import useGameStateStore from "../../stores/gameStateStore";
 import useHardModeStore from "../../stores/hardModeStore";
-import GameRow from "../grid/GameRow";
+import Cell from "../grid/Cell";
 import CustomDialog from "../navbar/CustomDialog";
 import LandingButton from "./LandingButton";
-import Cell from "../grid/Cell";
-import useDialogStore from "../../stores/dialogStore";
-import zIndex from "@mui/material/styles/zIndex";
 
 // TODO: Remove all instances of "HELP"
 
@@ -110,9 +108,11 @@ const LandingDialog = ({
           width={"100%"}
           pb={6}
         >
-          <Typography>New features:</Typography>
-          <List>
-            <ListItem>Reimagined Hard Mode</ListItem>
+          <Typography>New feature(s):</Typography>
+          <List sx={{ listStyleType: "disc" }}>
+            {["Dedicated landing screen", "Reimagined Hard Mode"].map((v) => (
+              <ListItem sx={{ display: "list-item" }}>{v}</ListItem>
+            ))}
           </List>
         </Stack>
 
@@ -125,7 +125,7 @@ const LandingDialog = ({
           sx={{ mb: 10, mx: 2 }}
         >
           <LandingButton
-            color="warning"
+            color="success"
             onClick={() => {
               if (canToggleHardMode || !hardMode) {
                 setHardMode(false);
@@ -146,7 +146,7 @@ const LandingDialog = ({
             How to Play
           </LandingButton>{" "}
           <LandingButton
-            color="warning"
+            color="success"
             onClick={() => {
               if (canToggleHardMode || hardMode) {
                 setHardMode(true);

@@ -11,10 +11,15 @@ const LandingButton = ({ children, color, onClick }: LandingButtonProps) => {
   const matches = useMediaQuery("(min-width:600px)");
   return (
     <Button
-      sx={{ borderRadius: 10, width: matches ? "25%" : "30%" }}
+      sx={{
+        borderRadius: 10,
+        width: matches ? "25%" : "30%",
+        fontWeight: "semibold",
+      }}
       variant="contained"
       color={color}
       onClick={onClick}
+      disableElevation
     >
       {children}
     </Button>
