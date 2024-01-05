@@ -75,7 +75,11 @@ const ExpandableText = ({ children }: Props) => {
               moveToNextQuestion();
             }
             if (questionState[questionNumber] === "inProgress") {
-              makeGuess(Array(Math.max(guess.length, 1)).fill(SKIP_LETTER));
+              if (hardMode) {
+                makeGuess(Array(Math.max(guess.length, 1)).fill(SKIP_LETTER));
+              } else {
+                makeGuess(Array(answer.length).fill(SKIP_LETTER));
+              }
               resetGuess();
             }
             if (gameState !== "inProgress") {
