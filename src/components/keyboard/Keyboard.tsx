@@ -8,6 +8,7 @@ import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 import useQuestionByID from "../../hooks/useQuestionByID";
 import useOnscreenKeyboardOnlyStore from "../../stores/onscreenKeyboardOnlyStore";
 import useRetrievedStore from "../../stores/retrievedStore";
+import useHardModeStore from "../../stores/hardModeStore";
 
 type KeyboardProps = {
   onChar: (value: string) => void;
@@ -82,6 +83,7 @@ const Keyboard = ({
   const onscreenKeyboardOnly = useOnscreenKeyboardOnlyStore(
     (s) => s.onscreenKeyboardOnly
   );
+  const hardMode = useHardModeStore((s) => s.hardMode);
 
   const onClick = (value: string) => {
     if (value === "ENTER") {
@@ -98,6 +100,8 @@ const Keyboard = ({
       if (e.key === "Backspace" && !onscreenKeyboardOnly) {
         document.getElementById(ENTER_KEY_ID)?.focus();
         onDelete();
+      } else if (e.key === " " && hardMode) {
+        e.preventDefault();
       } else {
         const key = e.key.toLocaleUpperCase();
         // TODO: check this test if the range works with non-english letters

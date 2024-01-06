@@ -5,10 +5,7 @@ export const CONTACT_EMAIL = "jetrlee@gmail.com";
 export const ABOUT_AUTHOR_URL = "https://jetrlee.vercel.app/";
 
 export const NEW_FEATURES_LABEL = "New feature(s):";
-export const NEW_FEATURES_LIST = [
-  "Dedicated landing screen",
-  "Reimagined Hard Mode",
-];
+export const NEW_FEATURES_LIST = ["Fixed unintended skipping with spacebar"];
 
 import { QUESTIONS_PER_DAY } from "./settings";
 
