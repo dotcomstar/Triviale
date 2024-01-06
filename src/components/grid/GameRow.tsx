@@ -73,7 +73,7 @@ const GameRow = ({
               <Box
                 key={`after ${i}`}
                 sx={{
-                  width: shouldSkip && inProgressHardMode ? "10px" : "5px",
+                  width: shouldSkip && !inProgressHardMode ? "10px" : "5px",
                   borderBottom:
                     shouldSkip ||
                     inProgressHardMode ||
@@ -112,7 +112,7 @@ const GameRow = ({
               <Box
                 key={`after ${i + guess.length}`}
                 sx={{
-                  width: shouldSkipEmpty && inProgressHardMode ? "10px" : "5px",
+                  width: shouldSkipEmpty && !inProgressHardMode ? "10px" : "5px",
                   borderBottom:
                     shouldSkipEmpty ||
                     inProgressHardMode ||
