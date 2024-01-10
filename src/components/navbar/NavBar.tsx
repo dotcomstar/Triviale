@@ -1,4 +1,4 @@
-import { Paper, Stack, Typography, useMediaQuery } from "@mui/material";
+import { Box, Paper, Stack, Typography, useMediaQuery } from "@mui/material";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import React from "react";
@@ -12,6 +12,7 @@ import SettingsDialog from "./settings/SettingsDialog";
 import StatsButton from "./stats/StatsButton";
 import StatsDialog from "./stats/StatsDialog";
 import LandingDialog from "../landingPage/LandingDialog";
+import { useNavigate } from "react-router-dom";
 
 interface NavBarProps {
   hasBottomBorder?: boolean;
@@ -38,6 +39,7 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
     setLandingOpen,
   } = useDialogStore();
   const matches = useMediaQuery("(min-width:600px)");
+  const navigate = useNavigate();
   return (
     <>
       <Stack
@@ -56,11 +58,13 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
             <Paper elevation={0} sx={{ width: "calc(10px + min(8vw,58px))" }} />
           )}
         </Stack>
-        <Stack direction="row" alignItems="center">
-          <Typography translate="no" variant="h3" fontSize={"1.5REM"}>
-            {GAME_TITLE}
-          </Typography>
-        </Stack>
+        <Box onClick={() => navigate("/")}>
+          <Stack direction="row" alignItems="center">
+            <Typography translate="no" variant="h3" fontSize={"1.5REM"}>
+              {GAME_TITLE}
+            </Typography>
+          </Stack>
+        </Box>
         {matches ? (
           <Stack direction="row" alignItems="center">
             <HelpButton />
