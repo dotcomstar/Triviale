@@ -16,9 +16,10 @@ import HelpButton from "../help/HelpButton";
 import StatsButton from "../stats/StatsButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import SubscribeButton from "./SubscribeButton";
+import LogoutButton from "../../auth/LogoutButton";
 
 const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
-  const { loginWithRedirect } = useAuth0();
+  const { loginWithRedirect, logout } = useAuth0();
   const [expanded, setExpanded] = React.useState(false);
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -61,6 +62,15 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
           >
             <LoginButton startEdge />
             <ListItemText primary={"Login"} />
+          </ListItem>
+          <ListItem
+            sx={{ justifyContent: "space-between" }}
+            onClick={() =>
+              logout({ logoutParams: { returnTo: window.location.origin } })
+            }
+          >
+            <LogoutButton startEdge />
+            <ListItemText primary={"Log Out"} />
           </ListItem>
 
           <ListItem

@@ -15,8 +15,8 @@ const NewFeaturesList = () => {
       pb={3}
       pt={4}
     >
-      <Typography>{NEW_FEATURES_LABEL}</Typography>
-      <List sx={{ listStyleType: "disc" }}>
+      <Typography color={"black"}>{NEW_FEATURES_LABEL}</Typography>
+      <List sx={{ listStyleType: "disc", color: "black" }}>
         {NEW_FEATURES_LIST.map((feature) => (
           <ListItem key={feature} sx={{ display: "list-item" }}>
             {feature}
