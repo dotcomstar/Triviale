@@ -5,7 +5,7 @@ export const CONTACT_EMAIL = "jetrlee@gmail.com";
 export const ABOUT_AUTHOR_URL = "https://jetrlee.vercel.app/";
 
 export const NEW_FEATURES_LABEL = "New feature(s):";
-export const NEW_FEATURES_LIST = ["Fixed unintended skipping with spacebar"];
+export const NEW_FEATURES_LIST = ["Updated questions for Jan 9th"];
 
 import { QUESTIONS_PER_DAY } from "./settings";
 
