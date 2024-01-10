@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material";
-import { LOCALE } from "../../constants/strings";
+import { EDITED_BY, LOCALE } from "../../constants/strings";
 
 const LandingDateInfo = () => {
   const options: { month: "long" } = { month: "long" };
@@ -13,7 +13,7 @@ const LandingDateInfo = () => {
       <Typography fontWeight={"bold"}>
         {month} {date}, {year}
       </Typography>
-      <Typography>Edited by Jet Lee</Typography>
+      <Typography>{EDITED_BY}</Typography>
     </Stack>
   );
 };
