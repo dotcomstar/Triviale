@@ -1,6 +1,5 @@
 import { Stack, Typography } from "@mui/material";
 import { LOCALE } from "../../constants/strings";
-import useDailyIndex from "../../hooks/useDailyIndex";
 
 const LandingDateInfo = () => {
   const options: { month: "long" } = { month: "long" };
@@ -8,7 +7,7 @@ const LandingDateInfo = () => {
   const date = today.getDate();
   const month = new Intl.DateTimeFormat(LOCALE, options).format(today);
   const year = today.getFullYear();
-  const dailyIndex = useDailyIndex();
+
   return (
     <Stack direction={"column"}>
       <Typography fontWeight={"bold"}>
