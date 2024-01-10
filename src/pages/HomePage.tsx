@@ -1,23 +1,24 @@
-import { Alert, Grid, Paper, useMediaQuery } from "@mui/material";
+import { useMediaQuery, Grid, Paper, Alert } from "@mui/material";
 import { useEffect } from "react";
-import ThemedLayout from "./components/ThemedLayout";
-import GameGrid from "./components/grid/GameGrid";
-import Keyboard from "./components/keyboard/Keyboard";
-import NavBar from "./components/navbar/NavBar";
-import ProgressBar from "./components/progressBar/ProgressBar";
-import ExpandableText from "./components/question/ExpandableText";
-import { MAX_CHALLENGES, QUESTIONS_PER_DAY } from "./constants/settings";
-import useDailyIndex, { getPositiveIndex } from "./hooks/useDailyIndex";
-import useQuestions from "./hooks/useQuestions";
-import useCurrGuessStore from "./stores/currGuessStore";
-import useDialogStore from "./stores/dialogStore";
-import useGameStateStore from "./stores/gameStateStore";
-import useHardModeStore from "./stores/hardModeStore";
-import useStatsStore from "./stores/statsStore";
-import useOnscreenKeyboardOnlyStore from "./stores/onscreenKeyboardOnlyStore";
-import useRetrievedStore from "./stores/retrievedStore";
+import ThemedLayout from "../components/ThemedLayout";
+import LoginButton from "../components/auth/LoginButton";
+import GameGrid from "../components/grid/GameGrid";
+import NavBar from "../components/navbar/NavBar";
+import ProgressBar from "../components/progressBar/ProgressBar";
+import ExpandableText from "../components/question/ExpandableText";
+import { QUESTIONS_PER_DAY, MAX_CHALLENGES } from "../constants/settings";
+import useDailyIndex, { getPositiveIndex } from "../hooks/useDailyIndex";
+import useQuestions from "../hooks/useQuestions";
+import useCurrGuessStore from "../stores/currGuessStore";
+import useDialogStore from "../stores/dialogStore";
+import useGameStateStore from "../stores/gameStateStore";
+import useHardModeStore from "../stores/hardModeStore";
+import useOnscreenKeyboardOnlyStore from "../stores/onscreenKeyboardOnlyStore";
+import useRetrievedStore from "../stores/retrievedStore";
+import useStatsStore from "../stores/statsStore";
+import Keyboard from "../components/keyboard/Keyboard";
 
-function App() {
+const HomePage = () => {
   const { data } = useQuestions();
   const hardMode = useHardModeStore((s) => s.hardMode);
   const { addChar, deleteChar, index, guess, resetGuess, importGuess } =
@@ -149,6 +150,7 @@ function App() {
 
   return (
     <ThemedLayout>
+      <LoginButton />
       <Grid container paddingY={matches ? 1 : 0}>
         <Grid item xs={12}>
           <NavBar />
@@ -302,6 +304,6 @@ function App() {
       </Grid>
     </ThemedLayout>
   );
-}
+};
 
-export default App;
+export default HomePage;
