@@ -13,8 +13,9 @@ const LandingButton = ({ children, color, onClick }: LandingButtonProps) => {
     <Button
       sx={{
         borderRadius: 10,
-        width: matches ? "25%" : "35%",
+        width: matches ? "100%" : "50%",
         fontWeight: "semibold",
+        height: "8vh",
       }}
       variant="contained"
       color={color}

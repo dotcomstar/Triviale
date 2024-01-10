@@ -1,6 +1,7 @@
-# Triviale
+# [Triviale]
+[Triviale]: https://www.triviale.net/
 
-A daily trivia puzzle game.
+A daily trivia puzzle game. Try to answer the question before it's finished being asked!
 
 Frontend is written in React.
 
@@ -9,7 +10,7 @@ Frontend is written in React.
 - Three new questions every day
 - Expand a question to get more info
 - Answer the question in a Wordle-style
-- Hard mode (only one guess per question)
+- Hard mode (no information is given about the answer's length)
 - Dark mode
 - High contrast mode
 
