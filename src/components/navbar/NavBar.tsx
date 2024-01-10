@@ -13,6 +13,10 @@ import StatsButton from "./stats/StatsButton";
 import StatsDialog from "./stats/StatsDialog";
 import LandingDialog from "../landingPage/LandingDialog";
 
+interface NavBarProps {
+  hasBottomBorder?: boolean;
+}
+
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>;
@@ -22,7 +26,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const NavBar = () => {
+const NavBar = ({ hasBottomBorder }: NavBarProps) => {
   const {
     isHelpOpen,
     setHelpOpen,
@@ -43,6 +47,7 @@ const NavBar = () => {
         paddingTop={matches ? "10px" : "4px"}
         justifyContent="space-between"
         alignItems="center"
+        sx={{ borderBottom: hasBottomBorder ? 1 : 0, borderColor: "DarkGray" }}
         px="calc(max(3vw,20px))"
       >
         <Stack direction="row" alignItems="center">
