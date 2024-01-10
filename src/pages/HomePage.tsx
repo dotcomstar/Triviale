@@ -1,12 +1,12 @@
-import { useMediaQuery, Grid, Paper, Alert } from "@mui/material";
+import { Alert, Grid, Paper, useMediaQuery } from "@mui/material";
 import { useEffect } from "react";
 import ThemedLayout from "../components/ThemedLayout";
-import LoginButton from "../components/auth/LoginButton";
 import GameGrid from "../components/grid/GameGrid";
+import Keyboard from "../components/keyboard/Keyboard";
 import NavBar from "../components/navbar/NavBar";
 import ProgressBar from "../components/progressBar/ProgressBar";
 import ExpandableText from "../components/question/ExpandableText";
-import { QUESTIONS_PER_DAY, MAX_CHALLENGES } from "../constants/settings";
+import { MAX_CHALLENGES, QUESTIONS_PER_DAY } from "../constants/settings";
 import useDailyIndex, { getPositiveIndex } from "../hooks/useDailyIndex";
 import useQuestions from "../hooks/useQuestions";
 import useCurrGuessStore from "../stores/currGuessStore";
@@ -16,7 +16,6 @@ import useHardModeStore from "../stores/hardModeStore";
 import useOnscreenKeyboardOnlyStore from "../stores/onscreenKeyboardOnlyStore";
 import useRetrievedStore from "../stores/retrievedStore";
 import useStatsStore from "../stores/statsStore";
-import Keyboard from "../components/keyboard/Keyboard";
 
 const HomePage = () => {
   const { data } = useQuestions();

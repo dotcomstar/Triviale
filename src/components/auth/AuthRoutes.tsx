@@ -1,5 +1,3 @@
-import React from "react";
-
 const AuthRoutes = () => {
   return <div>AuthRoutes</div>;
 };
