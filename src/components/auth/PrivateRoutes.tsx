@@ -1,22 +1,20 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import NavBar from "../navbar/NavBar";
 import { Outlet } from "react-router-dom";
-import useDialogStore from "../../stores/dialogStore";
+import ThemedLayout from "../ThemedLayout";
+import NavBar from "../navbar/NavBar";
 
 const PrivateRoutes = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
-  const closeAllDialogs = useDialogStore((s) => s.closeAllDialogs);
-  closeAllDialogs();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
-  if (isLoading) {
-    return <div>Loading ...</div>;
+  if (!isAuthenticated) {
+    loginWithRedirect();
   }
 
   return (
-    <>
+    <ThemedLayout>
       <NavBar hasBottomBorder />
       <Outlet />
-    </>
+    </ThemedLayout>
   );
 };
 

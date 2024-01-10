@@ -19,7 +19,7 @@ import SubscribeButton from "./SubscribeButton";
 import LogoutButton from "../../auth/LogoutButton";
 
 const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
-  const { loginWithRedirect, logout } = useAuth0();
+  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const [expanded, setExpanded] = React.useState(false);
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -56,22 +56,26 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
           <CloseIcon />
         </IconButton>
         <List>
-          <ListItem
-            sx={{ justifyContent: "space-between" }}
-            onClick={() => loginWithRedirect()}
-          >
-            <LoginButton startEdge />
-            <ListItemText primary={"Login"} />
-          </ListItem>
-          <ListItem
-            sx={{ justifyContent: "space-between" }}
-            onClick={() =>
-              logout({ logoutParams: { returnTo: window.location.origin } })
-            }
-          >
-            <LogoutButton startEdge />
-            <ListItemText primary={"Log Out"} />
-          </ListItem>
+          {!isAuthenticated && (
+            <ListItem
+              sx={{ justifyContent: "space-between" }}
+              onClick={() => loginWithRedirect()}
+            >
+              <LoginButton startEdge />
+              <ListItemText primary={"Login"} />
+            </ListItem>
+          )}
+          {isAuthenticated && (
+            <ListItem
+              sx={{ justifyContent: "space-between" }}
+              onClick={() =>
+                logout({ logoutParams: { returnTo: window.location.origin } })
+              }
+            >
+              <LogoutButton startEdge />
+              <ListItemText primary={"Log Out"} />
+            </ListItem>
+          )}
 
           <ListItem
             sx={{ justifyContent: "space-between" }}
