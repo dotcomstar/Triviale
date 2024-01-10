@@ -2,7 +2,11 @@ import { Stack, Typography, useTheme } from "@mui/material";
 import { GAME_TITLE } from "../../constants/strings";
 import Cell from "../grid/Cell";
 
-const LandingLogo = () => {
+interface LandingLogoProps {
+  fontColor: string;
+}
+
+const LandingLogo = ({ fontColor }: LandingLogoProps) => {
   const theme = useTheme();
   return (
     <Stack direction="row" justifyContent="center" alignItems="center">
@@ -13,6 +17,7 @@ const LandingLogo = () => {
           nthLetter={1}
           fontSizeOverride="10vw"
           isH3
+          fontColor={fontColor}
         />
       </Typography>
       <Typography

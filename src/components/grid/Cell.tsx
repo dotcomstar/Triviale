@@ -7,6 +7,7 @@ interface CellProps {
   status?: PaletteColor;
   fontSizeOverride?: string;
   isH3?: boolean;
+  fontColor?: string;
 }
 
 const Cell = ({
@@ -15,6 +16,7 @@ const Cell = ({
   status = undefined,
   fontSizeOverride,
   isH3,
+  fontColor,
 }: CellProps) => {
   const matches = useMediaQuery("(min-width:600px)");
   const description = `${nthLetter}${
@@ -47,7 +49,7 @@ const Cell = ({
     >
       <Typography
         fontSize={fontSizeOverride ? fontSizeOverride : "1.5em"}
-        color={status?.contrastText}
+        color={fontColor ? fontColor : status?.contrastText}
         fontWeight={"bold"}
         variant={isH3 ? "h3" : "body1"}
       >

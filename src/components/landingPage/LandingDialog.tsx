@@ -4,6 +4,7 @@ import CustomDialog from "../navbar/CustomDialog";
 import LandingButtons from "./LandingButtons";
 import LandingLogo from "./LandingLogo";
 import NewFeaturesList from "./NewFeaturesList";
+import LandingDateInfo from "./LandingDateInfo";
 
 export interface LandingDialogProps {
   open: boolean;
@@ -21,6 +22,7 @@ const LandingDialog = ({
   };
 
   const matches = useMediaQuery("(min-width:600px)");
+  const backgroundColor = "#E3E3E1";
 
   return (
     <CustomDialog
@@ -31,6 +33,7 @@ const LandingDialog = ({
       ariaDescribedBy={LANDING_DIALOG_ARIA}
       ariaLabeledBy={LANDING_TITLE}
       zIndex={"2"}
+      backgroundColor={backgroundColor}
     >
       <Stack
         direction="column"
@@ -41,10 +44,11 @@ const LandingDialog = ({
         sx={{ my: matches ? 20 : 8 }}
       >
         <Stack direction="column">
-          <LandingLogo />
+          <LandingLogo fontColor={backgroundColor} />
           <NewFeaturesList />
+          <LandingButtons onClose={handleClose} />
         </Stack>
-        <LandingButtons onClose={handleClose} />
+        <LandingDateInfo />
       </Stack>
     </CustomDialog>
   );
