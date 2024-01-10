@@ -150,7 +150,6 @@ const HomePage = () => {
 
   return (
     <ThemedLayout>
-      <LoginButton />
       <Grid container paddingY={matches ? 1 : 0}>
         <Grid item xs={12}>
           <NavBar />

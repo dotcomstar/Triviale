@@ -17,8 +17,10 @@ const NewFeaturesList = () => {
     >
       <Typography>{NEW_FEATURES_LABEL}</Typography>
       <List sx={{ listStyleType: "disc" }}>
-        {NEW_FEATURES_LIST.map((v) => (
-          <ListItem sx={{ display: "list-item" }}>{v}</ListItem>
+        {NEW_FEATURES_LIST.map((feature) => (
+          <ListItem key={feature} sx={{ display: "list-item" }}>
+            {feature}
+          </ListItem>
         ))}
       </List>
     </Stack>
