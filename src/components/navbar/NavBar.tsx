@@ -13,6 +13,9 @@ import StatsButton from "./stats/StatsButton";
 import StatsDialog from "./stats/StatsDialog";
 import LandingDialog from "../landingPage/LandingDialog";
 import { useNavigate } from "react-router-dom";
+import ProfileButton from "../auth/ProfileButton";
+import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from "../auth/LoginButton";
 
 interface NavBarProps {
   hasBottomBorder?: boolean;
@@ -39,6 +42,7 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
     setLandingOpen,
   } = useDialogStore();
   const matches = useMediaQuery("(min-width:600px)");
+  const { user, isAuthenticated, isLoading } = useAuth0();
   const navigate = useNavigate();
   return (
     <>
@@ -70,6 +74,7 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
             <HelpButton />
             <StatsButton />
             <SettingsButton />
+            {isAuthenticated ? <ProfileButton /> : <LoginButton />}
           </Stack>
         ) : (
           <SettingsButton size="small" />
