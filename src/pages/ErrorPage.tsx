@@ -1,6 +1,10 @@
-import { isRouteErrorResponse, useRouteError } from "react-router-dom";
+import {
+  isRouteErrorResponse,
+  useNavigate,
+  useRouteError,
+} from "react-router-dom";
 import ThemedLayout from "../components/ThemedLayout";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import NavBar from "../components/navbar/NavBar";
 import useDialogStore from "../stores/dialogStore";
 
@@ -9,6 +13,7 @@ const ErrorPage = () => {
   const closeAllDialogs = useDialogStore((s) => s.closeAllDialogs);
   closeAllDialogs();
 
+  const navigate = useNavigate();
   const error = useRouteError();
   let errorMessage: string;
   if (isRouteErrorResponse(error)) {
@@ -32,6 +37,13 @@ const ErrorPage = () => {
         <Grid item xs={12} marginLeft={2}>
           <h1>Oops!</h1>
           <p>{errorMessage}</p>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => navigate("/")}
+          >
+            Return home
+          </Button>
         </Grid>
       </Grid>
     </ThemedLayout>
