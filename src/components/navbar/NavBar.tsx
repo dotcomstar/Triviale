@@ -42,7 +42,7 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
     setLandingOpen,
   } = useDialogStore();
   const matches = useMediaQuery("(min-width:600px)");
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated } = useAuth0();
   const navigate = useNavigate();
   return (
     <>

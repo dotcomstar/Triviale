@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Button } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import LoginIcon from "@mui/icons-material/Login";
 
 interface LoginButtonProps {
   startEdge?: boolean;
@@ -8,7 +9,16 @@ interface LoginButtonProps {
 const LoginButton = ({ startEdge }: LoginButtonProps) => {
   const { loginWithRedirect } = useAuth0();
 
-  return <Button variant="outlined">Login</Button>;
+  return (
+    <IconButton
+      edge={startEdge ? "start" : "end"}
+      color="inherit"
+      aria-label="Login button"
+      onClick={() => loginWithRedirect()}
+    >
+      <LoginIcon fontSize="large" />
+    </IconButton>
+  );
 };
 
 export default LoginButton;

@@ -2,6 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
+import { Avatar, Typography } from "@mui/material";
 
 interface ProfileButtonProps {
   startEdge?: boolean;
@@ -9,6 +10,7 @@ interface ProfileButtonProps {
 
 const ProfileButton = ({ startEdge }: ProfileButtonProps) => {
   const navigate = useNavigate();
+  const { user, isAuthenticated } = useAuth0();
 
   return (
     <IconButton
@@ -17,7 +19,14 @@ const ProfileButton = ({ startEdge }: ProfileButtonProps) => {
       aria-label="Login button"
       onClick={() => navigate("/profile")}
     >
-      <AccountCircle fontSize="large" />
+      {isAuthenticated && (
+        <Avatar
+          src={user?.picture}
+          alt={user?.name}
+          sx={{ bgcolor: "primary.contrastText", height: 35, width: 35 }}
+        />
+      )}
+      {isAuthenticated && <Typography>{user?.name}</Typography>}
     </IconButton>
   );
 };
