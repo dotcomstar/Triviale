@@ -96,6 +96,9 @@ export const EMAIL_TEXT = "Email";
 export const ENTER_KEY_ID = "ENTER_KEY";
 
 export const LOGIN_TITLE = "Login";
+export const LOGIN_ARIA = "login-button";
+export const LOGOUT_ARIA = "logout-button";
+export const PROFILE_ARIA = "profile-button";
 // export const MIGRATE_BUTTON_TEXT = "Transfer";
 // export const MIGRATE_DESCRIPTION_TEXT =
 //   "Click here to transfer your statistics to a new device.";

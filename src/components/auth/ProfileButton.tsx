@@ -3,6 +3,7 @@ import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
 import { Avatar, Typography } from "@mui/material";
+import { PROFILE_ARIA } from "../../constants/strings";
 
 interface ProfileButtonProps {
   startEdge?: boolean;
@@ -16,7 +17,7 @@ const ProfileButton = ({ startEdge }: ProfileButtonProps) => {
     <IconButton
       edge={startEdge ? "start" : "end"}
       color="inherit"
-      aria-label="Login button"
+      aria-label={PROFILE_ARIA}
       onClick={() => navigate("/profile")}
     >
       {isAuthenticated && (
