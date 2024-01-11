@@ -58,16 +58,19 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
       >
         <Stack direction="row" alignItems="center">
           <HamburgerDrawer size={matches ? "large" : "small"} />
-          {matches && (
-            <Paper elevation={0} sx={{ width: "calc(10px + min(8vw,58px))" }} />
-          )}
+          {matches && <Paper elevation={0} />}
         </Stack>
         <Box onClick={() => navigate("/")}>
-          <Stack direction="row" alignItems="center">
-            <Typography translate="no" variant="h3" fontSize={"1.5REM"}>
-              {GAME_TITLE}
-            </Typography>
-          </Stack>
+          <Typography
+            translate="no"
+            variant="h3"
+            fontSize={"1.5REM"}
+            position={"absolute"}
+            left={matches ? "45vw" : "40vw"}
+            top={matches ? "15px" : "10px"}
+          >
+            {GAME_TITLE}
+          </Typography>
         </Box>
         {matches ? (
           <Stack direction="row" alignItems="center">

@@ -26,7 +26,6 @@ const ProfileButton = ({ startEdge }: ProfileButtonProps) => {
           sx={{ bgcolor: "primary.contrastText", height: 35, width: 35 }}
         />
       )}
-      {isAuthenticated && <Typography>{user?.name}</Typography>}
     </IconButton>
   );
 };
