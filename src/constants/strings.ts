@@ -97,6 +97,7 @@ export const BUG_REPORT_TEXT = "Bug Report";
 export const EMAIL_TEXT = "Email";
 export const SUBSCRIBE_TEXT = "Subscribe";
 export const SUBSCRIPTIONS_TEXT = "Subscriptions";
+export const SUBSCRIBE_BUTTON_ARIA = "subscribe-button";
 
 export const ENTER_KEY_ID = "ENTER_KEY";
 

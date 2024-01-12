@@ -8,6 +8,9 @@ import {
   ListItem,
   ListItemText,
   Snackbar,
+  Link,
+  Stack,
+  ListItemButton,
 } from "@mui/material";
 import React, { useState } from "react";
 import {
@@ -29,7 +32,7 @@ import { ALERT_TIME_MS } from "../../../constants/settings";
 const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const [expanded, setExpanded] = useState(false);
-  const [showingMessage, setShowingMessage] = useState(false);
+
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
@@ -85,17 +88,13 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
               <ListItemText primary={"Log Out"} />
             </ListItem>
           )}
-
-          <ListItem
+          <ListItemButton
+            href="https://www.buymeacoffee.com/jetrlee"
             sx={{ justifyContent: "space-between" }}
-            onClick={() => setShowingMessage(true)}
           >
-            <SubscribeButton
-              startEdge
-              onClick={() => setShowingMessage(true)}
-            />
+            <SubscribeButton startEdge />
             <ListItemText primary={SUBSCRIBE_TEXT} />
-          </ListItem>
+          </ListItemButton>
           <ListItem
             onClick={() => setHelpOpen(true)}
             sx={{ justifyContent: "space-between" }}
@@ -114,13 +113,6 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
 
   return (
     <div>
-      <Snackbar
-        open={showingMessage}
-        onClose={() => setShowingMessage(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        autoHideDuration={ALERT_TIME_MS}
-        message={`${SUBSCRIPTIONS_TEXT} ${PLACEHOLDER_TEXT.toLocaleLowerCase()}`}
-      />
       <React.Fragment key={"drawer"}>
         <IconButton
           edge="start"
