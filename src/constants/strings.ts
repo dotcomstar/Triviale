@@ -7,7 +7,10 @@ export const LOCALE = "en-US";
 export const EDITED_BY = "Edited by Jet Lee";
 
 export const NEW_FEATURES_LABEL = "New feature(s):";
-export const NEW_FEATURES_LIST = ["Updated questions for Jan 9th"];
+export const NEW_FEATURES_LIST = [
+  "Fix colors on landing page in dark mode",
+  "Testing logins with Auth0",
+];
 
 import { QUESTIONS_PER_DAY } from "./settings";
 
@@ -95,6 +98,10 @@ export const EMAIL_TEXT = "Email";
 
 export const ENTER_KEY_ID = "ENTER_KEY";
 
+export const LOGIN_TITLE = "Login";
+export const LOGIN_ARIA = "login-button";
+export const LOGOUT_ARIA = "logout-button";
+export const PROFILE_ARIA = "profile-button";
 // export const MIGRATE_BUTTON_TEXT = "Transfer";
 // export const MIGRATE_DESCRIPTION_TEXT =
 //   "Click here to transfer your statistics to a new device.";

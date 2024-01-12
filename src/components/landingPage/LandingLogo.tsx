@@ -27,6 +27,7 @@ const LandingLogo = ({ fontColor }: LandingLogoProps) => {
         fontWeight={"bold"}
         justifyContent={"center"}
         display={"flex"}
+        color={"black"}
       >
         {GAME_TITLE.slice(1)}
       </Typography>
