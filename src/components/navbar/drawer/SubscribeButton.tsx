@@ -3,15 +3,16 @@ import CardMembershipIcon from "@mui/icons-material/CardMembership";
 
 interface SubscribeButtonProps {
   startEdge?: boolean;
+  onClick: () => void;
 }
 
-const SubscribeButton = ({ startEdge }: SubscribeButtonProps) => {
+const SubscribeButton = ({ startEdge, onClick }: SubscribeButtonProps) => {
   return (
     <IconButton
       edge={startEdge ? "start" : "end"}
       color="inherit"
       aria-label={"Subscribe button"}
-      onClick={() => console.log("Subscribe")}
+      onClick={onClick}
     >
       <CardMembershipIcon fontSize="large" />
     </IconButton>

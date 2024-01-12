@@ -95,6 +95,8 @@ export const PLACEHOLDER_TEXT = "Coming soon";
 export const FEEDBACK_TEXT = "Feedback";
 export const BUG_REPORT_TEXT = "Bug Report";
 export const EMAIL_TEXT = "Email";
+export const SUBSCRIBE_TEXT = "Subscribe";
+export const SUBSCRIPTIONS_TEXT = "Subscriptions";
 
 export const ENTER_KEY_ID = "ENTER_KEY";
 
