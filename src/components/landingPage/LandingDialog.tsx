@@ -60,6 +60,7 @@ const LandingDialog = ({
             <LoginButton startEdge color="error" />
           )}
         </Stack>
+        <LandingDateInfo />
       </Stack>
     </CustomDialog>
   );
