@@ -1,8 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import IconButton from "@mui/material/IconButton";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
-import { Avatar, Typography } from "@mui/material";
+import { Avatar } from "@mui/material";
 import { PROFILE_ARIA } from "../../constants/strings";
 
 interface ProfileButtonProps {
