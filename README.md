@@ -3,8 +3,6 @@
 
 A daily trivia puzzle game. Try to answer the question before it's finished being asked!
 
-Frontend is written in React.
-
 ## Features
 
 - Three new questions every day
@@ -13,6 +11,11 @@ Frontend is written in React.
 - Hard mode (no information is given about the answer's length)
 - Dark mode
 - High contrast mode
+- User accounts
+
+## Technical Info
+The front-end is written in React and TypeScript. Questions are stored in a MongoDB database and queried with a REST API. User account logins are handled by Auth0. Currently fine-tuning auto-generated questions with Chat-GPT 4.
+
 
 ## Setup
 
