@@ -5,6 +5,9 @@ import LandingButtons from "./LandingButtons";
 import LandingLogo from "./LandingLogo";
 import NewFeaturesList from "./NewFeaturesList";
 import LandingDateInfo from "./LandingDateInfo";
+import LoginButton from "../auth/LoginButton";
+import ProfileButton from "../auth/ProfileButton";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export interface LandingDialogProps {
   open: boolean;
@@ -22,6 +25,8 @@ const LandingDialog = ({
   };
 
   const matches = useMediaQuery("(min-width:600px)");
+  const { isAuthenticated } = useAuth0();
+
   const backgroundColor = "#E3E3E1";
 
   return (
@@ -48,7 +53,14 @@ const LandingDialog = ({
           <NewFeaturesList />
           <LandingButtons onClose={handleClose} />
         </Stack>
-        <LandingDateInfo />
+        <Stack direction="column" mt={"10px"}>
+          <LandingDateInfo />
+          {isAuthenticated ? (
+            <ProfileButton />
+          ) : (
+            <LoginButton startEdge color="error" />
+          )}
+        </Stack>
       </Stack>
     </CustomDialog>
   );

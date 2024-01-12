@@ -3,6 +3,7 @@ import IconButton from "@mui/material/IconButton";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import { PROFILE_ARIA } from "../../constants/strings";
+import useDialogStore from "../../stores/dialogStore";
 
 interface ProfileButtonProps {
   startEdge?: boolean;
@@ -10,6 +11,7 @@ interface ProfileButtonProps {
 
 const ProfileButton = ({ startEdge }: ProfileButtonProps) => {
   const navigate = useNavigate();
+  const closeAllDialogs = useDialogStore((s) => s.closeAllDialogs);
   const { user, isAuthenticated } = useAuth0();
 
   return (
@@ -17,7 +19,10 @@ const ProfileButton = ({ startEdge }: ProfileButtonProps) => {
       edge={startEdge ? "start" : "end"}
       color="inherit"
       aria-label={PROFILE_ARIA}
-      onClick={() => navigate("/profile")}
+      onClick={() => {
+        closeAllDialogs();
+        navigate("/profile");
+      }}
     >
       {isAuthenticated && (
         <Avatar
