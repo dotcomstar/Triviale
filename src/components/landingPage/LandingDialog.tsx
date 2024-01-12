@@ -26,7 +26,6 @@ const LandingDialog = ({
 
   const matches = useMediaQuery("(min-width:600px)");
   const { isAuthenticated } = useAuth0();
-
   const backgroundColor = "#E3E3E1";
 
   return (
@@ -61,6 +60,7 @@ const LandingDialog = ({
             <LoginButton startEdge color="error" />
           )}
         </Stack>
+        <LandingDateInfo />
       </Stack>
     </CustomDialog>
   );
