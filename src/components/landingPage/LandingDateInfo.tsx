@@ -10,10 +10,10 @@ const LandingDateInfo = () => {
 
   return (
     <Stack direction={"column"}>
-      <Typography fontWeight={"bold"}>
+      <Typography fontWeight={"bold"} color={"black"}>
         {month} {date}, {year}
       </Typography>
-      <Typography>{EDITED_BY}</Typography>
+      <Typography color={"black"}>{EDITED_BY}</Typography>
     </Stack>
   );
 };

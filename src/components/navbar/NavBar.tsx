@@ -1,4 +1,4 @@
-import { Paper, Stack, Typography, useMediaQuery } from "@mui/material";
+import { Box, Paper, Stack, Typography, useMediaQuery } from "@mui/material";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import React from "react";
@@ -12,6 +12,14 @@ import SettingsDialog from "./settings/SettingsDialog";
 import StatsButton from "./stats/StatsButton";
 import StatsDialog from "./stats/StatsDialog";
 import LandingDialog from "../landingPage/LandingDialog";
+import { useNavigate } from "react-router-dom";
+import ProfileButton from "../auth/ProfileButton";
+import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from "../auth/LoginButton";
+
+interface NavBarProps {
+  hasBottomBorder?: boolean;
+}
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -22,7 +30,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const NavBar = () => {
+const NavBar = ({ hasBottomBorder }: NavBarProps) => {
   const {
     isHelpOpen,
     setHelpOpen,
@@ -34,6 +42,8 @@ const NavBar = () => {
     setLandingOpen,
   } = useDialogStore();
   const matches = useMediaQuery("(min-width:600px)");
+  const { isAuthenticated } = useAuth0();
+  const navigate = useNavigate();
   return (
     <>
       <Stack
@@ -43,24 +53,31 @@ const NavBar = () => {
         paddingTop={matches ? "10px" : "4px"}
         justifyContent="space-between"
         alignItems="center"
+        sx={{ borderBottom: hasBottomBorder ? 1 : 0, borderColor: "DarkGray" }}
         px="calc(max(3vw,20px))"
       >
         <Stack direction="row" alignItems="center">
           <HamburgerDrawer size={matches ? "large" : "small"} />
-          {matches && (
-            <Paper elevation={0} sx={{ width: "calc(10px + min(8vw,58px))" }} />
-          )}
+          {matches && <Paper elevation={0} />}
         </Stack>
-        <Stack direction="row" alignItems="center">
-          <Typography translate="no" variant="h3" fontSize={"1.5REM"}>
+        <Box onClick={() => navigate("/")}>
+          <Typography
+            translate="no"
+            variant="h3"
+            fontSize={"1.5REM"}
+            position={"absolute"}
+            left={matches ? "45vw" : "40vw"}
+            top={matches ? "15px" : "10px"}
+          >
             {GAME_TITLE}
           </Typography>
-        </Stack>
+        </Box>
         {matches ? (
           <Stack direction="row" alignItems="center">
             <HelpButton />
             <StatsButton />
             <SettingsButton />
+            {isAuthenticated ? <ProfileButton /> : <LoginButton />}
           </Stack>
         ) : (
           <SettingsButton size="small" />

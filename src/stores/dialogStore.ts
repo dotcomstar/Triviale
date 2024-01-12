@@ -11,6 +11,7 @@ interface DialogStore {
   setStatsOpen: (b: boolean) => void;
   setSettingsOpen: (b: boolean) => void;
   setLandingOpen: (b: boolean) => void;
+  closeAllDialogs: () => void;
 }
 
 const dailyIndex = useDailyIndex();
@@ -29,6 +30,13 @@ const useDialogStore = create<DialogStore>((set) => ({
   setStatsOpen: (b: boolean) => set(() => ({ isStatsOpen: b })),
   setSettingsOpen: (b: boolean) => set(() => ({ isSettingsOpen: b })),
   setLandingOpen: (b: boolean) => set(() => ({ isLandingOpen: b })),
+  closeAllDialogs: () =>
+    set(() => ({
+      isHelpOpen: false,
+      isStatsOpen: false,
+      isSettingsOpen: false,
+      isLandingOpen: false,
+    })),
 }));
 
 if (process.env.NODE_ENV === "development")

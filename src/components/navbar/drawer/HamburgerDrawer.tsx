@@ -1,26 +1,25 @@
-import CardMembershipIcon from "@mui/icons-material/CardMembership";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuRoundedIcon from "@mui/icons-material/Menu";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import {
   Box,
   Drawer,
   IconButton,
   List,
   ListItem,
-  ListItemButton,
-  ListItemIcon,
   ListItemText,
-  useMediaQuery,
 } from "@mui/material";
 import React from "react";
 import { HELP_TITLE, STATISTICS_TITLE } from "../../../constants/strings";
 import useDialogStore from "../../../stores/dialogStore";
+import LoginButton from "../../auth/LoginButton";
 import HelpButton from "../help/HelpButton";
 import StatsButton from "../stats/StatsButton";
+import { useAuth0 } from "@auth0/auth0-react";
+import SubscribeButton from "./SubscribeButton";
+import LogoutButton from "../../auth/LogoutButton";
 
 const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
-  const matches = useMediaQuery("(min-width:600px)");
+  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const [expanded, setExpanded] = React.useState(false);
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -57,34 +56,45 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
           <CloseIcon />
         </IconButton>
         <List>
-          {matches ? (
-            <>
-              {["Login", "Subscribe"].map((text, index) => (
-                <ListItem key={text} disablePadding>
-                  <ListItemButton onClick={() => console.log(text)}>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <CardMembershipIcon />}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-            </>
-          ) : (
-            <>
-              <ListItem
-                onClick={() => setHelpOpen(true)}
-                sx={{ justifyContent: "space-between" }}
-              >
-                <HelpButton startEdge />
-                <ListItemText primary={HELP_TITLE} />
-              </ListItem>
-              <ListItem onClick={() => setStatsOpen(true)}>
-                <StatsButton startEdge />
-                <ListItemText primary={STATISTICS_TITLE} />
-              </ListItem>
-            </>
+          {!isAuthenticated && (
+            <ListItem
+              sx={{ justifyContent: "space-between" }}
+              onClick={() => loginWithRedirect()}
+            >
+              <LoginButton startEdge />
+              <ListItemText primary={"Login"} />
+            </ListItem>
           )}
+          {isAuthenticated && (
+            <ListItem
+              sx={{ justifyContent: "space-between" }}
+              onClick={() =>
+                logout({ logoutParams: { returnTo: window.location.origin } })
+              }
+            >
+              <LogoutButton startEdge />
+              <ListItemText primary={"Log Out"} />
+            </ListItem>
+          )}
+
+          <ListItem
+            sx={{ justifyContent: "space-between" }}
+            onClick={() => console.log("Subscribe")}
+          >
+            <SubscribeButton startEdge />
+            <ListItemText primary={"Subscribe"} />
+          </ListItem>
+          <ListItem
+            onClick={() => setHelpOpen(true)}
+            sx={{ justifyContent: "space-between" }}
+          >
+            <HelpButton startEdge />
+            <ListItemText primary={HELP_TITLE} />
+          </ListItem>
+          <ListItem onClick={() => setStatsOpen(true)}>
+            <StatsButton startEdge />
+            <ListItemText primary={STATISTICS_TITLE} />
+          </ListItem>
         </List>
       </Box>
     );
