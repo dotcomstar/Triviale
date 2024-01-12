@@ -8,8 +8,8 @@ export const EDITED_BY = "Edited by Jet Lee";
 
 export const NEW_FEATURES_LABEL = "New feature(s):";
 export const NEW_FEATURES_LIST = [
-  "Fix colors on landing page in dark mode",
-  "Testing logins with Auth0",
+  "Add logins with Auth0 (No history saving yet)",
+  "Add working subscription button",
 ];
 
 import { QUESTIONS_PER_DAY } from "./settings";
@@ -95,7 +95,7 @@ export const PLACEHOLDER_TEXT = "Coming soon";
 export const FEEDBACK_TEXT = "Feedback";
 export const BUG_REPORT_TEXT = "Bug Report";
 export const EMAIL_TEXT = "Email";
-export const SUBSCRIBE_TEXT = "Subscribe";
+export const SUBSCRIBE_TEXT = "Buy me a coffee";
 export const SUBSCRIPTIONS_TEXT = "Subscriptions";
 export const SUBSCRIBE_BUTTON_ARIA = "subscribe-button";
 

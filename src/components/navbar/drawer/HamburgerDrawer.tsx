@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuRoundedIcon from "@mui/icons-material/Menu";
 import {
@@ -6,28 +7,21 @@ import {
   IconButton,
   List,
   ListItem,
-  ListItemText,
-  Snackbar,
-  Link,
-  Stack,
   ListItemButton,
+  ListItemText,
 } from "@mui/material";
 import React, { useState } from "react";
 import {
   HELP_TITLE,
-  PLACEHOLDER_TEXT,
   STATISTICS_TITLE,
   SUBSCRIBE_TEXT,
-  SUBSCRIPTIONS_TEXT,
 } from "../../../constants/strings";
 import useDialogStore from "../../../stores/dialogStore";
 import LoginButton from "../../auth/LoginButton";
+import LogoutButton from "../../auth/LogoutButton";
 import HelpButton from "../help/HelpButton";
 import StatsButton from "../stats/StatsButton";
-import { useAuth0 } from "@auth0/auth0-react";
 import SubscribeButton from "./SubscribeButton";
-import LogoutButton from "../../auth/LogoutButton";
-import { ALERT_TIME_MS } from "../../../constants/settings";
 
 const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
@@ -90,6 +84,7 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
           )}
           <ListItemButton
             href="https://www.buymeacoffee.com/jetrlee"
+            rel="noopener"
             sx={{ justifyContent: "space-between" }}
           >
             <SubscribeButton startEdge />
