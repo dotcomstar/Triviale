@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuRoundedIcon from "@mui/icons-material/Menu";
 import {
@@ -6,30 +7,26 @@ import {
   IconButton,
   List,
   ListItem,
+  ListItemButton,
   ListItemText,
-  Snackbar,
 } from "@mui/material";
 import React, { useState } from "react";
 import {
   HELP_TITLE,
-  PLACEHOLDER_TEXT,
   STATISTICS_TITLE,
   SUBSCRIBE_TEXT,
-  SUBSCRIPTIONS_TEXT,
 } from "../../../constants/strings";
 import useDialogStore from "../../../stores/dialogStore";
 import LoginButton from "../../auth/LoginButton";
+import LogoutButton from "../../auth/LogoutButton";
 import HelpButton from "../help/HelpButton";
 import StatsButton from "../stats/StatsButton";
-import { useAuth0 } from "@auth0/auth0-react";
 import SubscribeButton from "./SubscribeButton";
-import LogoutButton from "../../auth/LogoutButton";
-import { ALERT_TIME_MS } from "../../../constants/settings";
 
 const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const [expanded, setExpanded] = useState(false);
-  const [showingMessage, setShowingMessage] = useState(false);
+
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
@@ -85,17 +82,14 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
               <ListItemText primary={"Log Out"} />
             </ListItem>
           )}
-
-          <ListItem
+          <ListItemButton
+            href="https://www.buymeacoffee.com/jetrlee"
+            rel="noopener"
             sx={{ justifyContent: "space-between" }}
-            onClick={() => setShowingMessage(true)}
           >
-            <SubscribeButton
-              startEdge
-              onClick={() => setShowingMessage(true)}
-            />
+            <SubscribeButton startEdge />
             <ListItemText primary={SUBSCRIBE_TEXT} />
-          </ListItem>
+          </ListItemButton>
           <ListItem
             onClick={() => setHelpOpen(true)}
             sx={{ justifyContent: "space-between" }}
@@ -114,13 +108,6 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
 
   return (
     <div>
-      <Snackbar
-        open={showingMessage}
-        onClose={() => setShowingMessage(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        autoHideDuration={ALERT_TIME_MS}
-        message={`${SUBSCRIPTIONS_TEXT} ${PLACEHOLDER_TEXT.toLocaleLowerCase()}`}
-      />
       <React.Fragment key={"drawer"}>
         <IconButton
           edge="start"
