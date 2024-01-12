@@ -46,14 +46,14 @@ const LandingDialog = ({
         alignItems="center"
         width={"100%"}
         height={"100dvh"}
-        sx={{ my: matches ? 20 : 8 }}
+        sx={{ mt: matches ? 20 : 8, mb: 8 }}
       >
         <Stack direction="column">
           <LandingLogo fontColor={backgroundColor} />
           <NewFeaturesList />
           <LandingButtons onClose={handleClose} />
         </Stack>
-        <Stack direction="column" mt={"10px"}>
+        <Stack direction="column" mt={"20px"}>
           <LandingDateInfo />
           {isAuthenticated ? (
             <ProfileButton />

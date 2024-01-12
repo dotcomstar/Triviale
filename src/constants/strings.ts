@@ -7,7 +7,10 @@ export const LOCALE = "en-US";
 export const EDITED_BY = "Edited by Jet Lee";
 
 export const NEW_FEATURES_LABEL = "New feature(s):";
-export const NEW_FEATURES_LIST = ["Testing logins with Auth0"];
+export const NEW_FEATURES_LIST = [
+  "Fix colors on landing page in dark mode",
+  "Testing logins with Auth0",
+];
 
 import { QUESTIONS_PER_DAY } from "./settings";
 
