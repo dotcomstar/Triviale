@@ -7,7 +7,7 @@ export const LOCALE = "en-US";
 export const EDITED_BY = "Edited by Jet Lee";
 
 export const NEW_FEATURES_LABEL = "New feature(s):";
-export const NEW_FEATURES_LIST = ["Updated questions for Jan 9th"];
+export const NEW_FEATURES_LIST = ["Testing logins with Auth0"];
 
 import { QUESTIONS_PER_DAY } from "./settings";
 

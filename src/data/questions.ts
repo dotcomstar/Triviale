@@ -71,8 +71,8 @@ const questions: Question[] = [
     category: HISTORY,
   },
   {
-    question: `One of these systems runs eight hundred miles from Prudhoe Bay to the port town of Valdez, and its revenue is used in a Permanent Fund that pays the residents of Alaska. President Trump put down the Standing Rock protest of one of these systems, Dakota Access, that threatened sacred land and drinking water.  Keystone XL is, for the point, one of what type of these constructions that transports crude oil over land?`,
-    answer: "oil pipelines",
+    question: `An example of this system runs eight hundred miles from Prudhoe Bay to the port town of Valdez, and its revenue is used in a Permanent Fund that pays the residents of Alaska. President Trump put down the Standing Rock protest this kind of system, Dakota Access, that threatened sacred land and drinking water.  Keystone XL is, for the point, one of what type of construction that transports crude oil over land?`,
+    answer: "oil pipeline",
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round4.pdf",
     category: POP_CULTURE,
   },
