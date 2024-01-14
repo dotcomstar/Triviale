@@ -163,7 +163,7 @@ const questions: Question[] = [
     category: ART_AND_LITERATURE,
   },
   {
-    question: `These plants are the habitat for cochineals, insects that are harvested to produce a deep red dye. These succulent plants have areoles, small, spiny bumps that defend the plant’s stem. The saguaro is a giant example of this plant found in Sonora and Arizona. For the point, name this plant that typically has excellent water storage abilities to survive in the desert.`,
+    question: `This plant is the habitat for cochineals, insects that are harvested to produce a deep red dye. This succulent plant has areoles, small, spiny bumps that defend the plant’s stem. The saguaro is a giant example of this plant found in Sonora and Arizona. For the point, name this plant that typically has excellent water storage abilities to survive in the desert.`,
     answer: "Cacti",
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round4.pdf",
     category: SCIENCE,
