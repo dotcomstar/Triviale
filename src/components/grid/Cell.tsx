@@ -8,6 +8,7 @@ interface CellProps {
   fontSizeOverride?: string;
   isH3?: boolean;
   fontColor?: string;
+  alternateLean?: boolean;
 }
 
 const Cell = ({
@@ -17,6 +18,7 @@ const Cell = ({
   fontSizeOverride,
   isH3,
   fontColor,
+  alternateLean,
 }: CellProps) => {
   const matches = useMediaQuery("(min-width:600px)");
   const description = `${nthLetter}${
@@ -45,6 +47,10 @@ const Cell = ({
         width: "52px",
         backgroundColor: status?.main,
         overflow: "clip",
+        borderTopLeftRadius: alternateLean ? "100px" : undefined,
+        borderTopRightRadius: alternateLean ? "100px" : undefined,
+        borderBottomLeftRadius: alternateLean ? undefined : "100px",
+        borderBottomRightRadius: alternateLean ? undefined : "100px",
       }}
     >
       <Typography
