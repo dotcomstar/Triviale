@@ -47,10 +47,10 @@ const Cell = ({
         width: "52px",
         backgroundColor: status?.main,
         overflow: "clip",
-        borderTopLeftRadius: alternateLean ? "100px" : undefined,
-        borderTopRightRadius: alternateLean ? "100px" : undefined,
-        borderBottomLeftRadius: alternateLean ? undefined : "100px",
-        borderBottomRightRadius: alternateLean ? undefined : "100px",
+        borderTopLeftRadius: "100px",
+        borderTopRightRadius: alternateLean ? undefined : "100px",
+        borderBottomLeftRadius: alternateLean ? "100px" : undefined,
+        borderBottomRightRadius: "100px",
       }}
     >
       <Typography

@@ -47,7 +47,7 @@ const GameRow = ({
   const emptyCells = Array.from(Array(emptyCellsLength));
   const theme = useTheme();
   let offsetFromPrevSkipped = 1;
-  let prevLean = false;
+  let prevLean = true;
 
   return (
     <Stack
