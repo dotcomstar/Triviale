@@ -128,7 +128,7 @@ const questions: Question[] = [
   },
   {
     question: `This character took the name Vers after having her memories hidden by Yon-Rogg. This character and her best friend, Maria Rambeau, worked with Dr Wendy Lawson on an experimental light-speed engine. This character was teased at the end of Avengers: Infinity War when Nick Fury pulled out a pager to contact her. Carol Danvers is the real name of, for the point, what heroine who was portrayed by Brie Larson in a 2018 film?`,
-    answer: "Captain Marvel",
+    answer: "Ca pt ain Ma rvel",
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round4.pdf",
     category: POP_CULTURE,
   },
