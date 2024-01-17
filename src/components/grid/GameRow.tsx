@@ -47,6 +47,7 @@ const GameRow = ({
   const emptyCells = Array.from(Array(emptyCellsLength));
   const theme = useTheme();
   let offsetFromPrevSkipped = 1;
+  let prevLean = true;
 
   return (
     <Stack
@@ -59,6 +60,7 @@ const GameRow = ({
         if (answerWithSpaces[i + offsetFromPrevSkipped] === " ") {
           shouldSkip = true;
           offsetFromPrevSkipped += 1;
+          prevLean = !prevLean;
         }
         return (
           <>
@@ -67,6 +69,7 @@ const GameRow = ({
               nthLetter={i + 1}
               value={letter}
               status={statuses[i]}
+              alternateLean={!hardMode && prevLean === shouldSkip}
             />
             {(inProgressHardMode ||
               i < Math.max(guess.length - 1, answer.length - 1)) && ( // Prevents hanging box after the last letter
@@ -104,15 +107,21 @@ const GameRow = ({
         ) {
           shouldSkipEmpty = true;
           offsetFromPrevSkipped += 1;
+          prevLean = !prevLean;
         }
         return (
           <>
-            <Cell key={i + guess.length} nthLetter={guess.length + i + 1} />
+            <Cell
+              key={i + guess.length}
+              nthLetter={guess.length + i + 1}
+              alternateLean={!hardMode && prevLean === shouldSkipEmpty}
+            />
             {i < answer.length - guess.length - 1 && (
               <Box
                 key={`after ${i + guess.length}`}
                 sx={{
-                  width: shouldSkipEmpty && !inProgressHardMode ? "10px" : "5px",
+                  width:
+                    shouldSkipEmpty && !inProgressHardMode ? "10px" : "5px",
                   borderBottom:
                     shouldSkipEmpty ||
                     inProgressHardMode ||

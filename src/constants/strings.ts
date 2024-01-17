@@ -7,7 +7,7 @@ export const LOCALE = "en-US";
 export const EDITED_BY = "Edited by Jet Lee";
 
 export const NEW_FEATURES_LABEL = "New feature(s):";
-export const NEW_FEATURES_LIST = ["Fix plurality of Q3 on 9/14/2024"];
+export const NEW_FEATURES_LIST = ["Change cell shape"];
 
 import { QUESTIONS_PER_DAY } from "./settings";
 
