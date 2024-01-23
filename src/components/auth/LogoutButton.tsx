@@ -5,9 +5,10 @@ import { LOGOUT_ARIA } from "../../constants/strings";
 
 interface LogoutButtonProps {
   startEdge?: boolean;
+  maxLeftShift?: boolean;
 }
 
-const LogoutButton = ({ startEdge }: LogoutButtonProps) => {
+const LogoutButton = ({ startEdge, maxLeftShift }: LogoutButtonProps) => {
   const { logout } = useAuth0();
 
   return (
@@ -18,6 +19,7 @@ const LogoutButton = ({ startEdge }: LogoutButtonProps) => {
       onClick={() =>
         logout({ logoutParams: { returnTo: window.location.origin } })
       }
+      sx={{ width: "max-content", pl: maxLeftShift ? 0 : undefined }}
     >
       <LogoutIcon fontSize="large" />
     </IconButton>

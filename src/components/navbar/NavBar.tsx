@@ -80,7 +80,14 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
             {isAuthenticated ? <ProfileButton /> : <LoginButton />}
           </Stack>
         ) : (
-          <SettingsButton size="small" />
+          <Stack direction="row" alignItems="center">
+            <SettingsButton size="small" />
+            {isAuthenticated ? (
+              <ProfileButton size="small" />
+            ) : (
+              <LoginButton size="small" />
+            )}
+          </Stack>
         )}
       </Stack>
       <HelpDialog
