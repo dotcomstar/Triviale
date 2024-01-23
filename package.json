@@ -24,6 +24,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1",
     "simple-zustand-devtools": "^1.1.0",
+    "yarn": "^1.22.21",
     "zustand": "^4.4.3"
   },
   "devDependencies": {
@@ -33,9 +34,12 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
+    "babel-plugin-direct-import": "^1.0.0",
+    "customize-cra": "^1.0.0",
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "react-app-rewired": "^2.2.1",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
   }
