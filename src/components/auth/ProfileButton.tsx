@@ -7,9 +7,10 @@ import useDialogStore from "../../stores/dialogStore";
 
 interface ProfileButtonProps {
   startEdge?: boolean;
+  size?: "large" | "small";
 }
 
-const ProfileButton = ({ startEdge }: ProfileButtonProps) => {
+const ProfileButton = ({ startEdge, size }: ProfileButtonProps) => {
   const navigate = useNavigate();
   const closeAllDialogs = useDialogStore((s) => s.closeAllDialogs);
   const { user, isAuthenticated } = useAuth0();
@@ -28,7 +29,11 @@ const ProfileButton = ({ startEdge }: ProfileButtonProps) => {
         <Avatar
           src={user?.picture}
           alt={user?.name}
-          sx={{ bgcolor: "primary.contrastText", height: 35, width: 35 }}
+          sx={{
+            bgcolor: "primary.contrastText",
+            height: size === "small" ? 20 : 35,
+            width: size === "small" ? 20 : 35,
+          }}
         />
       )}
     </IconButton>
