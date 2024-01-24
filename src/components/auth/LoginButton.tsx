@@ -6,9 +6,14 @@ import { LOGIN_ARIA } from "../../constants/strings";
 interface LoginButtonProps {
   startEdge?: boolean;
   color?: IconButtonOwnProps["color"];
+  size?: "small" | "large";
 }
 
-const LoginButton = ({ startEdge, color }: LoginButtonProps) => {
+const LoginButton = ({
+  startEdge,
+  color,
+  size = "large",
+}: LoginButtonProps) => {
   const { loginWithRedirect } = useAuth0();
 
   return (
@@ -18,7 +23,7 @@ const LoginButton = ({ startEdge, color }: LoginButtonProps) => {
       aria-label={LOGIN_ARIA}
       onClick={() => loginWithRedirect()}
     >
-      <LoginIcon fontSize="large" />
+      <LoginIcon fontSize={size} />
     </IconButton>
   );
 };
