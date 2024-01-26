@@ -2,6 +2,7 @@ import {
   Box,
   PaletteColor,
   Typography,
+  Zoom,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -82,23 +83,22 @@ const Cell = ({
         borderTopRightRadius: alternateLean ? undefined : "100px",
         borderBottomLeftRadius: alternateLean ? "100px" : undefined,
         borderBottomRightRadius: "100px",
-        "&:hover": {
-          transform: "scale(1.2)",
-        },
         transition: () =>
           theme.transitions.create("all", {
             duration: REVEAL_TIME_MS,
           }),
       }}
     >
-      <Typography
-        fontSize={fontSizeOverride ? fontSizeOverride : "1.5em"}
-        color={fontColor ? fontColor : status?.contrastText}
-        fontWeight={"bold"}
-        variant={isH3 ? "h3" : "body1"}
-      >
-        {value}
-      </Typography>
+      <Zoom in={!!value} easing={"cubic-bezier(.29, 1.5, 1, 1)"}>
+        <Typography
+          fontSize={fontSizeOverride ? fontSizeOverride : "1.5em"}
+          color={fontColor ? fontColor : status?.contrastText}
+          fontWeight={"bold"}
+          variant={isH3 ? "h3" : "body1"}
+        >
+          {value}
+        </Typography>
+      </Zoom>
     </Box>
   );
 };
