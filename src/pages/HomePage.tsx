@@ -179,7 +179,7 @@ const HomePage = () => {
           </Paper>
         </Grid>
 
-        <Grid item xs={12} sx={{ px: 0 }} overflow={"scroll"}>
+        <Grid item xs={12} sx={{ px: 0 }}>
           <Keyboard
             onChar={(c) => {
               console.log(c);

@@ -1,5 +1,18 @@
-import { Box, PaletteColor, Typography, useMediaQuery } from "@mui/material";
-import { SKIPPED_TEXT, SKIP_LETTER } from "../../constants/strings";
+import {
+  Box,
+  PaletteColor,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import {
+  ABSENT_TEXT,
+  CORRECT_TEXT,
+  PRESENT_TEXT,
+  SKIPPED_TEXT,
+  SKIP_LETTER,
+} from "../../constants/strings";
+import { REVEAL_TIME_MS } from "../../constants/settings";
 
 interface CellProps {
   nthLetter: number;
@@ -20,7 +33,25 @@ const Cell = ({
   fontColor,
   alternateLean,
 }: CellProps) => {
+  const theme = useTheme();
   const matches = useMediaQuery("(min-width:600px)");
+
+  const getStatusText = (): string => {
+    let statusText = "";
+    if (!status) {
+      return "";
+    }
+    statusText += ", ";
+    if (status === theme.palette.success) {
+      statusText += CORRECT_TEXT;
+    } else if (status === theme.palette.warning) {
+      statusText += PRESENT_TEXT;
+    } else if (status === theme.palette.error) {
+      statusText += ABSENT_TEXT;
+    }
+    return statusText;
+  };
+
   const description = `${nthLetter}${
     nthLetter !== 11 && nthLetter % 10 === 1
       ? "st"
@@ -31,7 +62,7 @@ const Cell = ({
       : "th"
   } letter, ${
     value ? (value === SKIP_LETTER ? SKIPPED_TEXT : value) : "empty"
-  }`;
+  }${getStatusText()}`;
 
   return (
     <Box
@@ -45,12 +76,19 @@ const Cell = ({
         borderRadius: 10,
         height: matches ? "52px" : "48px",
         width: "52px",
-        backgroundColor: status?.main,
+        backgroundColor: status?.main || "info.dark",
         overflow: "clip",
         borderTopLeftRadius: "100px",
         borderTopRightRadius: alternateLean ? undefined : "100px",
         borderBottomLeftRadius: alternateLean ? "100px" : undefined,
         borderBottomRightRadius: "100px",
+        "&:hover": {
+          transform: "scale(1.2)",
+        },
+        transition: () =>
+          theme.transitions.create("all", {
+            duration: REVEAL_TIME_MS,
+          }),
       }}
     >
       <Typography
