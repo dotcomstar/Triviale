@@ -13,7 +13,6 @@ import {
   SKIPPED_TEXT,
   SKIP_LETTER,
 } from "../../constants/strings";
-import { REVEAL_TIME_MS } from "../../constants/settings";
 
 interface CellProps {
   nthLetter: number;
@@ -67,6 +66,7 @@ const Cell = ({
 
   return (
     <Box
+      className={value ? "Triviale-filled" : ""}
       aria-label={description}
       display="flex"
       justifyContent="center"
@@ -83,13 +83,20 @@ const Cell = ({
         borderTopRightRadius: alternateLean ? undefined : "100px",
         borderBottomLeftRadius: alternateLean ? "100px" : undefined,
         borderBottomRightRadius: "100px",
-        transition: () =>
-          theme.transitions.create("all", {
-            duration: REVEAL_TIME_MS,
-          }),
+        // "&.Triviale-filled": {
+        //   transitionTimingFunction: "cubic-bezier(.05, 2, 1, 1)",
+        //   transitionDuration: `${REVEAL_TIME_MS}ms`,
+        //   transitionProperty: "background-color",
+        //   animationDelay: `${REVEAL_TIME_MS * nthLetter}ms`,
+        // },
+        // transition: () =>
+        //   theme.transitions.create("background-color", {
+        //     duration: REVEAL_TIME_MS,
+        //     delay: REVEAL_TIME_MS * nthLetter,
+        //   }),
       }}
     >
-      <Zoom in={!!value} easing={"cubic-bezier(.29, 1.5, 1, 1)"}>
+      <Zoom in={!!value} easing={"cubic-bezier(.05, 2, 1, 1)"}>
         <Typography
           fontSize={fontSizeOverride ? fontSizeOverride : "1.5em"}
           color={fontColor ? fontColor : status?.contrastText}

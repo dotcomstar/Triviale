@@ -7,7 +7,7 @@ export const LOCALE = "en-US";
 export const EDITED_BY = "Edited by Jet Lee";
 
 export const NEW_FEATURES_LABEL = "New feature(s):";
-export const NEW_FEATURES_LIST = ["Change cell shape"];
+export const NEW_FEATURES_LIST = ["Add preliminary typing animations"];
 
 import { QUESTIONS_PER_DAY } from "./settings";
 
