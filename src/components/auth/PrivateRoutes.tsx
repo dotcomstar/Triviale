@@ -1,6 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Outlet } from "react-router-dom";
-import ThemedLayout from "../ThemedLayout";
 import NavBar from "../navbar/NavBar";
 
 const PrivateRoutes = () => {
@@ -11,10 +10,10 @@ const PrivateRoutes = () => {
   }
 
   return (
-    <ThemedLayout>
+    <>
       <NavBar hasBottomBorder />
       <Outlet />
-    </ThemedLayout>
+    </>
   );
 };
 
