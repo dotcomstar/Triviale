@@ -6,6 +6,7 @@ import {
 import { Button, Grid } from "@mui/material";
 import NavBar from "../components/navbar/NavBar";
 import useDialogStore from "../stores/dialogStore";
+import ThemedLayout from "../components/ThemedLayout";
 
 const ErrorPage = () => {
   // Close dialogs on error page
@@ -28,7 +29,7 @@ const ErrorPage = () => {
   }
 
   return (
-    <>
+    <ThemedLayout>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <NavBar hasBottomBorder />
@@ -45,7 +46,7 @@ const ErrorPage = () => {
           </Button>
         </Grid>
       </Grid>
-    </>
+    </ThemedLayout>
   );
 };
 
