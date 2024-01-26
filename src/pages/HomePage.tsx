@@ -1,6 +1,5 @@
 import { Alert, Grid, Paper, useMediaQuery } from "@mui/material";
 import { useEffect } from "react";
-import ThemedLayout from "../components/ThemedLayout";
 import GameGrid from "../components/grid/GameGrid";
 import Keyboard from "../components/keyboard/Keyboard";
 import NavBar from "../components/navbar/NavBar";
@@ -148,7 +147,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <ThemedLayout>
+    <>
       <Grid container paddingY={matches ? 1 : 0}>
         <Grid item xs={12}>
           <NavBar />
@@ -179,7 +178,7 @@ const HomePage = () => {
           </Paper>
         </Grid>
 
-        <Grid item xs={12} sx={{ px: 0 }} overflow={"scroll"}>
+        <Grid item xs={12} sx={{ px: 0 }}>
           <Keyboard
             onChar={(c) => {
               console.log(c);
@@ -300,7 +299,7 @@ const HomePage = () => {
           />
         </Grid>
       </Grid>
-    </ThemedLayout>
+    </>
   );
 };
 
