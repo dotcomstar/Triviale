@@ -7,7 +7,7 @@ export const LOCALE = "en-US";
 export const EDITED_BY = "Edited by Jet Lee";
 
 export const NEW_FEATURES_LABEL = "New feature(s):";
-export const NEW_FEATURES_LIST = ["Change cell shape"];
+export const NEW_FEATURES_LIST = ["Add preliminary typing animations"];
 
 import { QUESTIONS_PER_DAY } from "./settings";
 
@@ -18,6 +18,9 @@ export const ABOUT_AUTHOR_TITLE = "About the author";
 export const HELP_HOW_TO_PLAY = "How To Play";
 export const HELP_NUM_TRIES = `Try to answer the question before it's finished being asked. Reveal more hints by guessing or skipping your guess.`;
 export const HELP_NUM_QUESTIONS = `Total of ${QUESTIONS_PER_DAY} questions per day.`;
+export const PRESENT_TEXT = "present in another position";
+export const ABSENT_TEXT = "absent";
+export const CORRECT_TEXT = "correct";
 export const HELP_HOW_TILE_COLORS_CHANGE =
   "          The color of the tiles will change to show how close your guess was to the word.";
 export const HELP_CORRECT_LETTER_AND_SPOT =

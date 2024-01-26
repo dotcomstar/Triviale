@@ -3,10 +3,10 @@ import {
   useNavigate,
   useRouteError,
 } from "react-router-dom";
-import ThemedLayout from "../components/ThemedLayout";
 import { Button, Grid } from "@mui/material";
 import NavBar from "../components/navbar/NavBar";
 import useDialogStore from "../stores/dialogStore";
+import ThemedLayout from "../components/ThemedLayout";
 
 const ErrorPage = () => {
   // Close dialogs on error page
