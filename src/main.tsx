@@ -12,8 +12,8 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Auth0Provider
-      domain="dev-z5tsx5fdjvquu84a.us.auth0.com"
-      clientId="4MfWKOZbt2rsX7uBrduFt84kYcmrRHta"
+      domain="triviale.us.auth0.com"
+      clientId="uHV7AShHn22WhqjYNvzI1eMFyr1i2Fzr"
       authorizationParams={{
         redirect_uri: window.location.origin,
       }}
