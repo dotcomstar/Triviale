@@ -39,10 +39,10 @@ const LandingButtons = ({ onClose }: LandingButtonsProps) => {
         message={HARD_MODE_ALERT_MESSAGE}
       />
       <Stack
-        direction={matches ? "row" : "column"}
+        direction={matches ? "row" : "column-reverse"}
         justifyContent="center"
         alignItems="center"
-        width={matches ? "40vw" : "100vw"}
+        width={matches ? "40dvw" : "100dvw"}
         spacing={matches ? "5%" : "3%"}
       >
         {canToggleHardMode && (
