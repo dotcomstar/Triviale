@@ -40,13 +40,13 @@ const LandingButtons = ({ onClose }: LandingButtonsProps) => {
       />
       <Stack
         direction={matches ? "row" : "column"}
-        justifyContent="space-between"
+        justifyContent="center"
         alignItems="center"
         width={matches ? "40vw" : "100vw"}
         spacing={matches ? "5%" : "3%"}
       >
         <LandingButton
-          color="success"
+          color={canToggleHardMode ? "success" : "warning"}
           onClick={() => {
             onClose();
           }}
