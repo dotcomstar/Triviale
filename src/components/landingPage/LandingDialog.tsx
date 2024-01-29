@@ -46,6 +46,7 @@ const LandingDialog = ({
         alignItems="center"
         width={"100%"}
         height={"100dvh"}
+        maxHeight={matches ? "100dvh" : "calc(100dvh - 290px)"}
         spacing={matches ? undefined : "4%"}
         sx={{ mt: matches ? 20 : 8, mb: 8, px: 4 }}
       >

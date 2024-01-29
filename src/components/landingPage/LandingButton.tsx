@@ -23,7 +23,7 @@ const LandingButton = ({
         borderRadius: 10,
         width: matches ? "20vw" : "50vw",
         fontWeight: "semibold",
-        height: "8vh",
+        height: "8dvh",
       }}
       variant={variant}
       color={color}
