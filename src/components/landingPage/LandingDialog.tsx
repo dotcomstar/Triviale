@@ -3,11 +3,11 @@ import { LANDING_DIALOG_ARIA, LANDING_TITLE } from "../../constants/strings";
 import CustomDialog from "../navbar/CustomDialog";
 import LandingButtons from "./LandingButtons";
 import LandingLogo from "./LandingLogo";
-import NewFeaturesList from "./NewFeaturesList";
 import LandingDateInfo from "./LandingDateInfo";
 import LoginButton from "../auth/LoginButton";
 import ProfileButton from "../auth/ProfileButton";
 import { useAuth0 } from "@auth0/auth0-react";
+import LandingHelpText from "./LandingHelpText";
 
 export interface LandingDialogProps {
   open: boolean;
@@ -45,13 +45,11 @@ const LandingDialog = ({
         alignItems="center"
         width={"100%"}
         height={"100dvh"}
-        sx={{ mt: matches ? 20 : 8, mb: 8 }}
+        sx={{ mt: matches ? 20 : 8, mb: 8, px: 4 }}
       >
-        <Stack direction="column">
-          <LandingLogo fontColor={backgroundColor} />
-          <NewFeaturesList />
-          <LandingButtons onClose={handleClose} />
-        </Stack>
+        <LandingLogo fontColor={backgroundColor} />
+        <LandingHelpText />
+        <LandingButtons onClose={handleClose} />
         <Stack direction="column" mt={"20px"}>
           <LandingDateInfo />
           {isAuthenticated ? (

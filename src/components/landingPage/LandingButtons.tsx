@@ -4,6 +4,7 @@ import {
   HARD_MODE_LABEL,
   HELP_HOW_TO_PLAY,
   PLAY_CLASSIC_MODE_LABEL,
+  RESUME_PLAY_LABEL,
 } from "../../constants/strings";
 import useDialogStore from "../../stores/dialogStore";
 import useGameStateStore from "../../stores/gameStateStore";
@@ -20,7 +21,7 @@ const LandingButtons = ({ onClose }: LandingButtonsProps) => {
   const matches = useMediaQuery("(min-width:600px)");
   const guesses = useGameStateStore((s) => s.guesses);
   const setHelpOpen = useDialogStore((s) => s.setHelpOpen);
-  const { setHardMode, hardMode } = useHardModeStore();
+  const { setHardMode } = useHardModeStore();
   const canToggleHardMode = guesses.reduce(
     (acc, question) =>
       acc && question.reduce((qAcc, guess) => qAcc && guess.length === 0, true),
@@ -47,37 +48,32 @@ const LandingButtons = ({ onClose }: LandingButtonsProps) => {
         <LandingButton
           color="success"
           onClick={() => {
-            if (canToggleHardMode || !hardMode) {
-              setHardMode(false);
-              onClose();
-            } else {
-              setInvalidToggle(true);
-            }
+            onClose();
           }}
         >
-          {PLAY_CLASSIC_MODE_LABEL}
+          {canToggleHardMode ? PLAY_CLASSIC_MODE_LABEL : RESUME_PLAY_LABEL}
         </LandingButton>
-        <LandingButton
-          color="secondary"
-          onClick={() => {
-            setHelpOpen(true);
-          }}
-        >
-          {HELP_HOW_TO_PLAY}
-        </LandingButton>
-        <LandingButton
-          color="success"
-          onClick={() => {
-            if (canToggleHardMode || hardMode) {
+        {canToggleHardMode && (
+          <LandingButton
+            color="secondary"
+            onClick={() => {
+              setHelpOpen(true);
+            }}
+          >
+            {HELP_HOW_TO_PLAY}
+          </LandingButton>
+        )}
+        {canToggleHardMode && (
+          <LandingButton
+            color="success"
+            onClick={() => {
               setHardMode(true);
               onClose();
-            } else {
-              setInvalidToggle(true);
-            }
-          }}
-        >
-          {HARD_MODE_LABEL}
-        </LandingButton>
+            }}
+          >
+            {HARD_MODE_LABEL}
+          </LandingButton>
+        )}
       </Stack>
     </>
   );

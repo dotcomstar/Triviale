@@ -47,7 +47,11 @@ export const SKIPPED_TEXT = "skipped";
 export const SKIP_BUTTON_TEXT = "Reveal the next clue";
 export const NEXT_QUESTIONS_TEXT = "Next Question";
 
-export const PLAY_CLASSIC_MODE_LABEL = "Play Classic";
+export const PLAY_CLASSIC_MODE_LABEL = "Play";
+export const RESUME_PLAY_LABEL = "Resume";
+export const START_ENCOURAGEMENT_TEXT =
+  "Answer the question before it's finished being asked!";
+export const RESUME_ENCOURAGEMENT_TEXT = "Welcome back! Keep it up!";
 export const HARD_MODE_ALERT_MESSAGE =
   "Hard Mode can be toggled only at the start of the game!";
 export const HARD_MODE_LABEL = "Hard Mode";
