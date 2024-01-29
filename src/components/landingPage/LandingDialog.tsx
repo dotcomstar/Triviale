@@ -8,6 +8,7 @@ import LoginButton from "../auth/LoginButton";
 import ProfileButton from "../auth/ProfileButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import LandingHelpText from "./LandingHelpText";
+import { MOBILE_SCREEN_CUTOFF } from "../../constants/settings";
 
 export interface LandingDialogProps {
   open: boolean;
@@ -24,7 +25,7 @@ const LandingDialog = ({
     onClose();
   };
 
-  const matches = useMediaQuery("(min-width:600px)");
+  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
   const { isAuthenticated } = useAuth0();
   const backgroundColor = "#E3E3E1";
 

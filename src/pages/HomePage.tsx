@@ -5,7 +5,11 @@ import Keyboard from "../components/keyboard/Keyboard";
 import NavBar from "../components/navbar/NavBar";
 import ProgressBar from "../components/progressBar/ProgressBar";
 import ExpandableText from "../components/question/ExpandableText";
-import { MAX_CHALLENGES, QUESTIONS_PER_DAY } from "../constants/settings";
+import {
+  MAX_CHALLENGES,
+  MOBILE_SCREEN_CUTOFF,
+  QUESTIONS_PER_DAY,
+} from "../constants/settings";
 import useDailyIndex, { getPositiveIndex } from "../hooks/useDailyIndex";
 import useQuestions from "../hooks/useQuestions";
 import useCurrGuessStore from "../stores/currGuessStore";
@@ -37,7 +41,7 @@ const HomePage = () => {
     cacheGuess,
   } = useGameStateStore();
 
-  const matches = useMediaQuery("(min-width:600px)");
+  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
   const dailyIndex = useDailyIndex();
   const retrieved = useRetrievedStore((s) => s.retrieved);
   const safeIndex = getPositiveIndex(

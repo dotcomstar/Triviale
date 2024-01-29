@@ -10,7 +10,7 @@ import useDialogStore from "../../stores/dialogStore";
 import useGameStateStore from "../../stores/gameStateStore";
 import useHardModeStore from "../../stores/hardModeStore";
 import LandingButton from "./LandingButton";
-import { ALERT_TIME_MS } from "../../constants/settings";
+import { ALERT_TIME_MS, MOBILE_SCREEN_CUTOFF } from "../../constants/settings";
 import { useState } from "react";
 
 interface LandingButtonsProps {
@@ -18,7 +18,7 @@ interface LandingButtonsProps {
 }
 
 const LandingButtons = ({ onClose }: LandingButtonsProps) => {
-  const matches = useMediaQuery("(min-width:600px)");
+  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
   const guesses = useGameStateStore((s) => s.guesses);
   const setHelpOpen = useDialogStore((s) => s.setHelpOpen);
   const { setHardMode } = useHardModeStore();

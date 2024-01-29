@@ -1,5 +1,6 @@
 import { Button, ButtonOwnProps, useMediaQuery } from "@mui/material";
 import { ReactNode } from "react";
+import { MOBILE_SCREEN_CUTOFF } from "../../constants/settings";
 
 interface LandingButtonProps {
   children: ReactNode;
@@ -8,7 +9,7 @@ interface LandingButtonProps {
 }
 
 const LandingButton = ({ children, color, onClick }: LandingButtonProps) => {
-  const matches = useMediaQuery("(min-width:600px)");
+  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
   return (
     <Button
       sx={{
