@@ -45,7 +45,7 @@ const LandingDialog = ({
         justifyContent="space-between"
         alignItems="center"
         width={"100%"}
-        height={"100svh"}
+        height={"100%"}
         spacing={matches ? undefined : "4%"}
         sx={{ pt: matches ? 20 : 8, pb: 8, px: 4 }}
       >
