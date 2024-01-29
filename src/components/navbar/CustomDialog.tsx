@@ -52,7 +52,7 @@ const CustomDialog = ({
       fullWidth
       maxWidth="sm"
       fullScreen={fullScreen}
-      sx={{ zIndex: zIndex, mx: 0, mb: fullScreen ? 0 : 2 }}
+      sx={{ zIndex: zIndex, mx: 0, pb: fullScreen ? 0 : 2 }}
       PaperProps={{
         style: {
           backgroundColor: backgroundColor

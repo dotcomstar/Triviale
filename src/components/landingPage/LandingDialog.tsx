@@ -45,14 +45,14 @@ const LandingDialog = ({
         justifyContent="space-between"
         alignItems="center"
         width={"100%"}
-        height={"100dvh"}
+        height={"100%"}
         spacing={matches ? undefined : "4%"}
-        sx={{ mt: matches ? 20 : 8, mb: 8, px: 4 }}
+        sx={{ pt: matches ? 20 : 8, pb: 8, px: 4 }}
       >
         <LandingLogo fontColor={backgroundColor} />
         <LandingHelpText />
         <LandingButtons onClose={handleClose} />
-        <Stack direction="column" mt={"20px"}>
+        <Stack direction="column" pt={"20px"}>
           <LandingDateInfo />
           {isAuthenticated ? (
             <ProfileButton />
