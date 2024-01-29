@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import ProfileButton from "../auth/ProfileButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "../auth/LoginButton";
+import { MOBILE_SCREEN_CUTOFF } from "../../constants/settings";
 
 interface NavBarProps {
   hasBottomBorder?: boolean;
@@ -41,9 +42,11 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
     isLandingOpen,
     setLandingOpen,
   } = useDialogStore();
-  const matches = useMediaQuery("(min-width:600px)");
+
+  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
   const { isAuthenticated } = useAuth0();
   const navigate = useNavigate();
+
   return (
     <>
       <Stack

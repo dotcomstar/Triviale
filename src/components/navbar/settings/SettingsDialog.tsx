@@ -22,6 +22,7 @@ import EmailButton from "./EmailButton";
 import HardModeSwitch from "./HardModeSwitch";
 import HighContrastSwitch from "./HighContrastSwitch";
 import OnscreenKeyboardOnlySwitch from "./OnscreenKeyboardOnlySwitch";
+import { MOBILE_SCREEN_CUTOFF } from "../../../constants/settings";
 
 export interface SettingsDialogProps {
   open: boolean;
@@ -37,7 +38,8 @@ const SettingsDialog = ({
   const handleClose = () => {
     onClose();
   };
-  const matches = useMediaQuery("(min-width:600px)");
+
+  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
 
   return (
     <CustomDialog

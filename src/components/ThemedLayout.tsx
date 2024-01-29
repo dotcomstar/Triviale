@@ -18,12 +18,29 @@ interface Props {
 }
 
 declare module "@mui/material/styles" {
+  interface Palette {
+    trivialeBlack: Palette["primary"];
+    trivialeGray: Palette["primary"];
+  }
+
+  interface PaletteOptions {
+    trivialeBlack?: PaletteOptions["primary"];
+    trivialeGray?: PaletteOptions["primary"];
+  }
+
   interface PaletteColor {
     darker?: string;
   }
 
   interface SimplePaletteColorOptions {
     darker?: string;
+  }
+}
+
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    trivialeBlack: true;
+    trivialeGray: true;
   }
 }
 
@@ -72,12 +89,17 @@ const ThemedLayout = ({ children }: Props) => {
     [mode]
   );
 
+  const { palette } = createTheme();
+
   // Update the theme only if the mode changes
   let theme = React.useMemo(
     () =>
       createTheme({
         typography: {
           h3: {
+            fontFamily: "Crimson, Roboto, Arial, sans-serif",
+          },
+          h5: {
             fontFamily: "Crimson, Roboto, Arial, sans-serif",
           },
         },
@@ -96,6 +118,16 @@ const ThemedLayout = ({ children }: Props) => {
           },
         },
         palette: {
+          trivialeBlack: palette.augmentColor({
+            color: {
+              main: "#3A3A3C",
+            },
+          }),
+          trivialeGray: palette.augmentColor({
+            color: {
+              main: "#787C7E",
+            },
+          }),
           mode: mode === "dark" ? "dark" : "light",
           ...(mode === "light"
             ? {

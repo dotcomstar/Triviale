@@ -1,5 +1,8 @@
 import { Box, Stack, SxProps, Typography, useMediaQuery } from "@mui/material";
-import { MAX_CHALLENGES } from "../../../constants/settings";
+import {
+  MAX_CHALLENGES,
+  MOBILE_SCREEN_CUTOFF,
+} from "../../../constants/settings";
 import useStatsStore from "../../../stores/statsStore";
 
 // We want to store total # questions correct, total # questions attempted,
@@ -24,7 +27,8 @@ const GuessDistribution = ({ sx }: GuessDistributionProps) => {
     (acc, numCorrect) => Math.max(acc, numCorrect),
     1
   );
-  const matches = useMediaQuery("(min-width:400px)");
+
+  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
   const baseLength = matches ? 7 : 15;
 
   return (

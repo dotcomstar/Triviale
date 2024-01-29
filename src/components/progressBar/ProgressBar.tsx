@@ -57,6 +57,7 @@ const ProgressBar = () => {
                 width: "calc(100% / 3)",
                 border: i === questionNumber ? 1 : 0,
                 borderColor: "primary.contrastText",
+                textWrap: "nowrap",
               }}
             >
               {`Q${i + 1}, ${

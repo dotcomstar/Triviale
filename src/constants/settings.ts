@@ -5,6 +5,7 @@ export const LONG_ALERT_TIME_MS = 10000;
 export const REVEAL_TIME_MS = 100;
 export const PULSE_TYPE_MS = 150;
 export const MANUAL_OFFSET = 4; // Used to calibrate questions to days mapping
+export const MOBILE_SCREEN_CUTOFF = "600px";
 // export const WELCOME_INFO_MODAL_MS = 350;
 // export const DISCOURAGE_INAPP_BROWSERS = true;
 // export const ENABLE_ARCHIVED_GAMES = false;

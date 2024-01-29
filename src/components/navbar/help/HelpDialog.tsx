@@ -15,6 +15,7 @@ import {
 } from "../../../constants/strings";
 import CustomDialog from "../CustomDialog";
 import SampleGame from "./SampleGame";
+import { MOBILE_SCREEN_CUTOFF } from "../../../constants/settings";
 
 export interface HelpDialogProps {
   open: boolean;
@@ -30,7 +31,7 @@ const HelpDialog = ({
   const handleClose = () => {
     onClose();
   };
-  const matches = useMediaQuery("(min-width:600px)");
+  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
 
   return (
     <CustomDialog
