@@ -59,132 +59,200 @@ export const mongoDBQuestions: MondoDBQuestion[] = [
 
 const questions: Question[] = [
   {
-    question: `A portion of this process is catalyzed by the enzyme RuBisCo. During this process, ATP and NADPH convert carbon dioxide into glucose as part of the Calvin cycle. This process takes place inside thylakoids, a membrane-bound component of chloroplasts. Chlorophyll is vital to, for the point, what process in which plants transform light into energy?`,
-    answer: "photosynthesis",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round6.pdf",
+    question: `Settlers in this state were led by William B. Ide during a revolt commemorated by its state flag, which
+    features a grizzly bear. In the 1840s, John Fremont explored much of this state, including the San Joaquin Valley. For the point, name this western US state whose population boomed from “Forty-Niners”
+    seeking gold near Sacramento.`,
+    answer: "California",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
+    category: HISTORY,
+  },
+  {
+    question: `In a novel titled for this medical condition, the doctor’s wife is the only character not affected by this
+    condition, which is compared to “falling into a milky sea.” The sonnet “When I Consider How My Light
+    is Spent” describes a poet with this medical condition, which may have been caused by a detached retina. For the
+    point, John Milton was affected by what condition that titles a Jose Saramago novel about people losing their ´
+    eyesight?`,
+    answer: "blindness",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
+    category: ART_AND_LITERATURE,
+  },
+  {
+    question: `Litharge, an oxide of this element, is a component of fine crystal. This final element in the uranium decay
+    chain was once used as an antiknock agent added to gasoline. Patients undergoing an x-ray wear an apron
+    with this element as shielding. This element’s high toxicity prevents its modern use in paint and water pipes. For the
+    point, name this metallic element used in bullets, but not pencils, whose symbol is Pb.`,
+    answer: "Lead",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
     category: SCIENCE,
   },
   {
-    question: `Sky-clad Jain monks are required to remove this physical feature by hand. Two of the Five Ks of Sikhism are kanga, an object used to clean this body part, and kesh, which indicates that this body part should remain uncut; as a result, Sikhs often wear this body part coiled under a dastar turban. For the point, name this human body part that may be worn in dreadlocks by Rastas`,
-    answer: "hair",
+    question: `While helping lead this event, Cotton Mather defended the use of “spectral evidence” based on visions.
+    Giles Corey was killed in this event by having heavy stones piled on him because he refused to plead either
+    guilty or innocent. Nineteen people were hanged during, for the point, what 1690s hysteria in Massachusetts in
+    which people were accused of sorcery?`,
+    answer: "Salem witch trials",
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
-    category: RELIGION,
+    category: HISTORY,
   },
   {
-    question: `A Tatar assassin tried to kill this leader’s youngest son, but was stopped by Altani, a woman whom this man honored as a bataar. This man’s original successor, Jochi, led the Golden Horde before he was possibly poisoned, and his son Ogedei defeated the Jin Dynasty. This man’s grandson founded the Yuan Dynasty, which expanded his empire south into China. For the point, name this founder of the Mongol Empire and ancestor of Kublai Khan`,
-    answer: "Genghis Khan",
+    question: `In this story, a princess complains when her grandmother decorates her with eight oysters. This story’s
+    protagonist transforms into sea foam because she is unable to gain a human soul. After rescuing a handsome
+    prince, this story’s title character sells her voice to a sea-witch for a pair of legs, but fails to get a prince to fall in
+    love with her. For the point, name this classic Hans Christian Anderson fable about a title ocean-dwelling girl.`,
+    answer: "The Little Mermaid",
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
-    category: HISTORY,
-  },
-  {
-    question: `In early Christian teachings, this man was the first to plant a vineyard. This son of Lamech cursed his grandson Canaan for the sins of Ham, and repeatedly released a dove to determine whether there was dry land nearby. A covenant from God in the form of a rainbow was received by, for the point, what prophet who built an ark to save his family from a great flood?`,
-    answer: "Noah",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round6.pdf",
-    category: RELIGION,
-  },
-  {
-    question: `This man agreed to a 1931 pact with Lord Irwin in advance of the Second Round Table Conference.  This political figure was assassinated by Nathuram Godse, who believed this man had given too much power to Muslims during the partition of the British Raj. A nonviolent 1930 salt march was led by, for the point, what independence leader who advocated for civil disobedience in India?`,
-    answer: "Gandhi",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round6.pdf",
-    category: HISTORY,
-  },
-  {
-    question: `A boy in this novel shrieks about an “old hell-devil” after receiving a camellia flower, and is defended by Heck Tate, who insists that Bob Ewell killed himself. In this novel, Dill Harris visits a pair of children in Maycomb, Alabama, and Tom Robinson is defended at a racist rape trial by Atticus Finch. For the point, name this novel about Jem and Scout, written by Harper Lee.`,
-    answer: "To Kill a Mockingbird",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round6.pdf",
     category: ART_AND_LITERATURE,
   },
   {
-    question: `In uniform circular motion, a centripetal force creates this quantity, which points radially inward and is equal to velocity squared divided by radius. This quantity, the derivative of velocity, is multiplied by mass to give force in Newton’s Second Law. For the point, name this quantity that is non-zero if an object is changing direction, slowing down, or speeding up.`,
-    answer: "acceleration",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round6.pdf",
-    category: SCIENCE,
-  },
-  {
-    question: `During this war, opposing generals James Wolfe and Louis-Joseph de Montcalm were each killed at the Battle of the Plains of Abraham in Quebec. Fort Necessity was led, and lost, by George Washington at the outset of this war. The 1763 Treaty of Paris gave Canada to the British and ended, for the point, what war that pitted the British and their American colonies against two namesake allies?`,
-    answer: "French and Indian War",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round6.pdf",
-    category: HISTORY,
-  },
-  {
-    question: `After Brazilian President Jair Bolsanaro called this woman a brat, she changed her Twitter biography accordingly. In August 2019, a solar-powered yacht brought this woman to New York City for a UN summit.  “Unite behind the science” is part of the message delivered to politicians during this woman’s strike from school. The 2019 TIME Person of the Year is, for the point, what then-teenaged Swedish climate change activist?`,
-    answer: "Greta Thunberg",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round6.pdf",
-    category: POP_CULTURE,
-  },
-  {
-    question: `This country’s 2004 Orange Revolution occurred after Viktor Yanukovych was accused of voter fraud.  Most countries do not recognize the controversial annexation of this country’s Crimean Peninsula. The Chernobyl disaster took place in, for the point, what Eastern European country where the Euromaidan protests against Russia took place in the capital, Kiev?`,
-    answer: "Ukraine",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round6.pdf",
-    category: HISTORY,
-  },
-  {
-    question: `Thanks largely to this substance, World War II was the first conflict in which more American soldiers died in combat than from disease. Despite being Gram-positive, the Staphylococcus “superbug” MRSA has evolved to survive many derivates of this substance. For the point, name this early antibiotic that was discovered accidentally by Alexander Fleming in a Petri dish. This medicine is still used to treat syphilis, strep throat, and other infections.`,
-    answer: "penicillin",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round5.pdf",
-    category: SCIENCE,
-  },
-  {
-    question: `Richie Havens gave several encores at this event as a stalling tactic while waiting for other performers to arrive. Max Yasgur’s dairy farm near White Lake was the site of this event, whose performers included Jefferson Airplane and Jimi Hendrix. Over four hundred thousand people attended, for the point, what 1969 music festival in upstate New York, often hailed as the high point of the hippie movement?`,
-    answer: "Woodstock",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round6.pdf",
-    category: ART_AND_LITERATURE,
-  },
-  {
-    question: `The United Kingdom uses the TORRO scale to measure the intensity of these events. In the US, the damage caused by these events is used to rank them on an “Enhanced” scale, named for Ted Fujita, that tops out at F5. A “freight train” noise commonly accompanies, for the point, what natural disasters that can include three hundred mile-per-hour winds and a rotating funnel cloud of debris?`,
-    answer: "tornadoes",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round6.pdf",
-    category: SCIENCE,
-  },
-  {
-    question: `This composer transcribed Allegri’s Miserere after listening to it just twice, thus ending a ban on that piece’s copying, during his tour of Europe as a teenager. This composer, who left his Requiem unfinished at his death, composed forty-one symphonies, ending with one named Jupiter. For the point, name this Austrian composer of operas like The Magic Flute and The Marriage of Figaro.`,
-    answer: "Mozart",
-    fullAnswer: "Wolfgang Amadeus Mozart",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round6.pdf",
-    category: ART_AND_LITERATURE,
-  },
-  {
-    question: `This country’s seventeenth century pirate colony of Libertatia used a language derived from Malagasy, a native language of this country. The French overseas region of Mayotte and the island country of Comoros are found in the Mozambique Channel, which separates this country from the mainland. Antananarivo is the capital of, for the point, what large island country off the southeast coast of Africa?`,
-    answer: "Madagascar",
-    fullAnswer: "Republic of Madagascar",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round6.pdf",
+    question: `In 1846, this country’s city of Angostura changed its name to Ciudad Bolivar. The ABC islands of Aruba,
+    Bonaire, and Curac¸ao are just north of this mainland country, a little east of the opening
+    to Lake Maracaibo. The Orinoco River flows through this country into the Atlantic Ocean just northwest of
+    Guyana. For the point, name this South American country, found east of Colombia, whose capital city is Caracas.`,
+    answer: "Venezuela",
+    fullAnswer: "Bolivarian Republic of Venezuela",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
     category: GEOGRAPHY,
   },
   {
-    question: `This city hosted a 1409 Catholic council that elected Alexander V as a third Pope in a failed attempt to end the Western Schism. This city near the mouth of the Arno River was briefly the home of Galileo, who performed a cannonball drop experiment from a structure that was stabilized with lead counterweights in 2008.  For the point, name this Italian city whose cathedral’s bell tower has a world-famous four degree lean.`,
-    answer: "Pisa",
+    question: `This state’s city of Beaumont near Port Arthur is home to Spindletop, the site of a 1901 discovery that
+    triggered an economic boom. Geologists in this state have a hard time studying its Barnett Shale, a formation
+    with massive natural gas reserves, because it lies underneath a sprawling metroplex that includes Plano and
+    Fort Worth. For the point, name this southern US state where the oil industry grew the cities of Dallas and Houston.`,
+    answer: "Texas",
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
-    category: HISTORY,
+    category: GEOGRAPHY,
   },
   {
-    question: `Using these numbers as the side lengths of squares can produce an approximation of the golden spiral.  The ratio between one of these numbers and the next one approaches the golden ratio. Pine cone scales and flower petals often appear in patterns of these numbers. An Italian mathematician names, for the point, what sequence of numbers that starts one, one, two, three, five, and is built by adding the two previous terms?`,
-    answer: "Fibonacci",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
-    category: SCIENCE,
-  },
-  {
-    question: `The ancient Dionysia festival included a competition at which playwrights would submit three plays in this genre and one satyr play. A play in this genre was set near Colonus by Sophocles, who also wrote the plays Antigone and Oedipus, whose title characters’ stubbornness and hubris are the fatal flaws that lead to their downfalls. For the point, name this genre of ancient drama, contrasted with comedy.`,
-    answer: "tragedy",
+    question: `A fifteenth-century statue of this religious figure wears sandals with ornate, knee-length leg guards,
+    and twines his left toes into the beard of a defeated enemy. A bronze sculpture of this young man wears a
+    wide-brimmed hat topped with laurels to represent his victory over a giant from Gath. For ten points, name this
+    biblical king who, in a sculpture by Donatello, stands over the disembodied head of Goliath.`,
+    answer: "David",
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
     category: ART_AND_LITERATURE,
   },
   {
-    question: `This figure was given a crown and necklaces by the Horae and the Graces for her wedding. Zeus ordered Hephaestus to make this woman as a gift for Epimetheus to punish mankind for accepting the gift of fire from this woman’s brother-in-law, Prometheus. For the point, all of the evils in the world were released when what mythological woman opened her namesake “box?”`,
-    answer: "Pandora",
+    question: `Gallium’s sudden tendency to perform this action inspired the title of Sam Kean’s book The Disappearing
+    Spoon. Heat of fusion refers to the energy needed to achieve this process. Spreading rock salt on ice lowers
+    the point at which this process takes place. For the point, name this phase change, the opposite of freezing, in
+    which a solid becomes a liquid.`,
+    answer: "Melting",
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `This literary character is found dead in his laboratory by his servant, Poole, and his friend, J.G.
+    Utterson, to whom this man shows a letter of apology supposedly written by the murderer of Sir Danvers
+    Carrew. Another of this man’s friends, Dr Lanyon, dies of shock after seeing this man reveal the “evil side” of his
+    nature by consuming a potion. For the point, name this fictional doctor who transforms himself into Edward Hyde.`,
+    answer: "Jekyll",
+    fullAnswer: "Doctor Henry “Harry” Jekyll ",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
+    category: ART_AND_LITERATURE,
+  },
+  {
+    question: `The family of Dick Grayson, the original Robin, worked in this type of place. The song “Entry of
+    the Gladiators” is commonly played at this type of place, one of which was operated until 2017 by Ringling
+    Brothers and Barnum and Bailey. For the point, name this type of traveling performance that commonly involves
+    lion tamers, ring masters, and clowns.`,
+    answer: "circus",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
+    category: POP_CULTURE,
+  },
+  {
+    question: `The man who discovered this object’s orbit died in 1742, sixteen years before he could prove that it is
+    periodic. The European Space Agency’s Giotto was one of five spacecraft that studied this object in 1986,
+    the last time it was visible to the naked eye. For the point, name this object that approaches Earth every seventy-six
+    years and is probably the most famous comet.`,
+    answer: "Halleys Comet",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `The Rothschild subspecies of these animals have five ossicones, although most of these animals only
+    have two, as do these animals’ relatives, okapis. Darwin described these animals as “beautifully adapted for
+    browsing on the higher branches of trees.” For the point, name these mammals whose long necks make them the
+    tallest land animals in the world.`,
+    answer: "giraffes",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `This poem’s speaker asks if in “the distant Aidenn” he could “clasp a sainted maiden” after he responds
+    to a strange tapping at his window. An animal in this poem perches on a “pallid bust of Pallas” and seems
+    to taunt the speaker over the death of Lenore by repeating the word “nevermore.” For the point, name this poem
+    about a man driven to despair by a black bird, written by Edgar Allan Poe.`,
+    answer: "The Raven",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
+    category: ART_AND_LITERATURE,
+  },
+  {
+    question: `Decreases in this phenomenon and the LFPR indicates a rise in discouragement. This economic
+    phenomenon can be structural, when it is caused by technological changes, or frictional, which reflects the
+    time spent trying to end this phenomenon. Retired people are not counted by, for the point, what negative
+    economic rate that describes the number of people who aren’t working?`,
+    answer: "unemployment rate",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
+    category: POP_CULTURE,
+  },
+  {
+    question: `This quantity can be defined as momentum squared divided by two times the mass. This quantity is
+    conserved during elastic collisions but not inelastic collisions, and it is calculated by the formula one-half
+    times mass times velocity squared. A roller coaster maximizes this energy at the bottom of a hill. For the
+    point, name this type of energy that is possessed by all moving objects, often contrasted with potential energy`,
+    answer: "Kinetic energy",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `This goddess’s tears turn into red gold when she misses her husband Odr. Half of those killed in battle go
+    to this goddess’s hall, Folkvangr. Loki turned into a fly in an attempt to steal Brisingamen, this goddess’s
+    necklace, and she rides a chariot pulled by cats. Thor dressed like this goddess in order to retrieve his stolen hammer.
+    For the point, name this Norse goddess of love and beauty.`,
+    answer: "Freyja",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
     category: RELIGION,
   },
   {
-    question: `This phenomenon obeys Amontons’ laws, which include the rule that it is independent of the contact area. This phenomenon, which comes in static and kinetic types, has a force equal to mu [mew], its namesake coefficient, times the normal force. Oil and other lubricants can reduce, for the point, what force that opposes motion between two solids moving against each other?`,
-    answer: "friction",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
-    category: SCIENCE,
+    question: `A poem by this writer promises “I will come again, my love / though ‘twere ten thousand mile” and
+    compares love to a “red, red rose.” This poet says “we’ll tak’ a cup o’ kindness yet” and asks “should auld
+    acquaintance be forgot” in his local dialect, which he also used for a poem in which “the best laid schemes o’ Mice
+    an’ Men / gang aft agley.” For the point, name this Scottish poet of “Auld Lang Syne” and “To a Mouse” whose name describes what you would get if you touched a fire.`,
+    answer: "Burns",
+    fullAnswer: "Robert Burns",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
+    category: ART_AND_LITERATURE,
   },
   {
-    question: `A virtuoso player of this instrument, Art Tatum, was a master of its stride style. A quartet led by a musician who played this instrument used unorthodox time signatures in songs like “Take Five” on the album Time Out. Jazz musicians like Thelonious Monk and Dave Brubeck played, for the point, what musical instrument whose standard form has eighty-eight black and white keys?`,
-    answer: "piano",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
+    question: `This artist created a Lobster Telephone and painted a Disintegration of one of his paintings, in which a
+    bare tree trunk separates into segments. Ants crawl on the surface of a red object in a painting by this artist
+    set on a Catalonian beach, in which a distorted face with long eyelashes is draped with a soft-textured clock. For the
+    point, name this Spanish Surrealist artist of The Persistence of Memory`,
+    answer: "Dali",
+    fullAnswer:
+      "Salvador Domingo Felipe Jacinto Dali i Domenech, Marquis de Pubol",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
     category: ART_AND_LITERATURE,
+  },
+  {
+    question: `This ruler legendarily dissolved the world’s largest pearl in vinegar, then drank it to win a bet. A carpet
+    was used to sneak this ruler into the headquarters of Julius Caesar. After losing the Battle of Actium, this
+    ruler supposedly asked for and received a basket of figs, which hid an asp that she then used to commit
+    suicide. For the point, name this Egyptian pharaoh, the lover of Julius Caesar and Marc Antony`,
+    answer: "Cleopatra",
+    fullAnswer: "Cleopatra VII Philopator",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
+    category: HISTORY,
+  },
+  {
+    question: `In a song by this band, Halsey sings “I want something stronger / Than a moment, than a moment, luv”
+    and repeats the phrase “oh, my, my, my.” The albums Wings and 2 Cool 4 Skool are by this group, which
+    became the first K-Pop group to win a Billboard Music Award. “Blood, Sweat, and Tears” and “Boy With
+    Luv” are by, for the point, what seven-member Korean boy band?`,
+    answer: "BTS",
+    fullAnswer: "Bangtan Sonyeondan",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
+    category: POP_CULTURE,
   },
 ];
 
