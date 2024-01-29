@@ -14,18 +14,11 @@ interface DialogStore {
   closeAllDialogs: () => void;
 }
 
-const dailyIndex = useDailyIndex();
-const existingGuesses = localStorage.getItem("prevGame") || "{}";
-const pastGuesses = JSON.parse(existingGuesses);
-const gameStateFinished =
-  pastGuesses["pastOffset"] === dailyIndex &&
-  (pastGuesses["gameState"] === "won" || pastGuesses["gameState"] === "lost");
-
 const useDialogStore = create<DialogStore>((set) => ({
   isHelpOpen: false,
-  isStatsOpen: gameStateFinished,
+  isStatsOpen: false,
   isSettingsOpen: false,
-  isLandingOpen: !gameStateFinished,
+  isLandingOpen: true,
   setHelpOpen: (b: boolean) => set(() => ({ isHelpOpen: b })),
   setStatsOpen: (b: boolean) => set(() => ({ isStatsOpen: b })),
   setSettingsOpen: (b: boolean) => set(() => ({ isSettingsOpen: b })),
