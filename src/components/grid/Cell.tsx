@@ -13,6 +13,7 @@ import {
   SKIPPED_TEXT,
   SKIP_LETTER,
 } from "../../constants/strings";
+import { MOBILE_SCREEN_CUTOFF } from "../../constants/settings";
 
 interface CellProps {
   nthLetter: number;
@@ -34,7 +35,7 @@ const Cell = ({
   alternateLean,
 }: CellProps) => {
   const theme = useTheme();
-  const matches = useMediaQuery("(min-width:600px)");
+  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
 
   const getStatusText = (): string => {
     let statusText = "";
@@ -68,6 +69,7 @@ const Cell = ({
     <Box
       className={value ? "Triviale-filled" : ""}
       aria-label={description}
+      aria-live={value ? "polite" : "off"}
       display="flex"
       justifyContent="center"
       alignItems="center"
