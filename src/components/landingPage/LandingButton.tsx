@@ -6,9 +6,16 @@ interface LandingButtonProps {
   children: ReactNode;
   color: ButtonOwnProps["color"];
   onClick: () => void;
+  // variant?: "contained" | "text" | "outlined";
+  variant?: ButtonOwnProps["variant"];
 }
 
-const LandingButton = ({ children, color, onClick }: LandingButtonProps) => {
+const LandingButton = ({
+  children,
+  onClick,
+  color,
+  variant = "contained",
+}: LandingButtonProps) => {
   const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
   return (
     <Button
@@ -18,7 +25,7 @@ const LandingButton = ({ children, color, onClick }: LandingButtonProps) => {
         fontWeight: "semibold",
         height: "8vh",
       }}
-      variant="contained"
+      variant={variant}
       color={color}
       onClick={onClick}
       disableElevation

@@ -45,17 +45,10 @@ const LandingButtons = ({ onClose }: LandingButtonsProps) => {
         width={matches ? "40vw" : "100vw"}
         spacing={matches ? "5%" : "3%"}
       >
-        <LandingButton
-          color={canToggleHardMode ? "success" : "warning"}
-          onClick={() => {
-            onClose();
-          }}
-        >
-          {canToggleHardMode ? PLAY_CLASSIC_MODE_LABEL : RESUME_PLAY_LABEL}
-        </LandingButton>
         {canToggleHardMode && (
           <LandingButton
-            color="secondary"
+            color="trivialeBlack"
+            variant="outlined"
             onClick={() => {
               setHelpOpen(true);
             }}
@@ -65,7 +58,7 @@ const LandingButtons = ({ onClose }: LandingButtonsProps) => {
         )}
         {canToggleHardMode && (
           <LandingButton
-            color="success"
+            color="trivialeBlack"
             onClick={() => {
               setHardMode(true);
               onClose();
@@ -74,6 +67,14 @@ const LandingButtons = ({ onClose }: LandingButtonsProps) => {
             {HARD_MODE_LABEL}
           </LandingButton>
         )}
+        <LandingButton
+          color={canToggleHardMode ? "success" : "warning"}
+          onClick={() => {
+            onClose();
+          }}
+        >
+          {canToggleHardMode ? PLAY_CLASSIC_MODE_LABEL : RESUME_PLAY_LABEL}
+        </LandingButton>
       </Stack>
     </>
   );
