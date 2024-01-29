@@ -1,17 +1,14 @@
 import { Snackbar, Stack, useMediaQuery } from "@mui/material";
-import {
-  HARD_MODE_ALERT_MESSAGE,
-  HARD_MODE_LABEL,
-  HELP_HOW_TO_PLAY,
-  PLAY_CLASSIC_MODE_LABEL,
-  RESUME_PLAY_LABEL,
-} from "../../constants/strings";
+import { useState } from "react";
+import { ALERT_TIME_MS, MOBILE_SCREEN_CUTOFF } from "../../constants/settings";
+import { HARD_MODE_ALERT_MESSAGE } from "../../constants/strings";
 import useDialogStore from "../../stores/dialogStore";
 import useGameStateStore from "../../stores/gameStateStore";
 import useHardModeStore from "../../stores/hardModeStore";
-import LandingButton from "./LandingButton";
-import { ALERT_TIME_MS, MOBILE_SCREEN_CUTOFF } from "../../constants/settings";
-import { useState } from "react";
+import HardModeLandingButton from "./HardModeLandingButton";
+import HowToPlayLandingButton from "./HowToPlayLandingButton";
+import PlayLandingButton from "./PlayLandingButton";
+import ShareLandingButton from "./ShareLandingButton";
 
 interface LandingButtonsProps {
   onClose: () => void;
@@ -19,8 +16,9 @@ interface LandingButtonsProps {
 
 const LandingButtons = ({ onClose }: LandingButtonsProps) => {
   const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
-  const guesses = useGameStateStore((s) => s.guesses);
+  const { guesses, gameState } = useGameStateStore();
   const setHelpOpen = useDialogStore((s) => s.setHelpOpen);
+  const setStatsOpen = useDialogStore((s) => s.setStatsOpen);
   const { setHardMode } = useHardModeStore();
   const canToggleHardMode = guesses.reduce(
     (acc, question) =>
@@ -39,42 +37,27 @@ const LandingButtons = ({ onClose }: LandingButtonsProps) => {
         message={HARD_MODE_ALERT_MESSAGE}
       />
       <Stack
-        direction={matches ? "row" : "column-reverse"}
+        direction={matches ? "row" : "column"}
         justifyContent="center"
         alignItems="center"
         width={matches ? "40dvw" : "100dvw"}
         spacing={matches ? "5%" : "3%"}
       >
-        {canToggleHardMode && (
-          <LandingButton
-            color="trivialeBlack"
-            variant="outlined"
-            onClick={() => {
-              setHelpOpen(true);
-            }}
-          >
-            {HELP_HOW_TO_PLAY}
-          </LandingButton>
+        {canToggleHardMode && gameState === "inProgress" && (
+          <HowToPlayLandingButton setHelpOpen={setHelpOpen} />
         )}
-        {canToggleHardMode && (
-          <LandingButton
-            color="trivialeBlack"
-            onClick={() => {
-              setHardMode(true);
-              onClose();
-            }}
-          >
-            {HARD_MODE_LABEL}
-          </LandingButton>
+        {gameState === "inProgress" && (
+          <PlayLandingButton
+            onClose={onClose}
+            hasNotStartedPlaying={canToggleHardMode}
+          />
         )}
-        <LandingButton
-          color={canToggleHardMode ? "success" : "warning"}
-          onClick={() => {
-            onClose();
-          }}
-        >
-          {canToggleHardMode ? PLAY_CLASSIC_MODE_LABEL : RESUME_PLAY_LABEL}
-        </LandingButton>
+        {canToggleHardMode && gameState === "inProgress" && (
+          <HardModeLandingButton setHardMode={setHardMode} onClose={onClose} />
+        )}
+        {gameState !== "inProgress" && (
+          <ShareLandingButton onClose={onClose} setStatsOpen={setStatsOpen} />
+        )}
       </Stack>
     </>
   );
