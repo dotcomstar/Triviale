@@ -69,6 +69,7 @@ const Cell = ({
     <Box
       className={value ? "Triviale-filled" : ""}
       aria-label={description}
+      aria-live={value ? "polite" : "off"}
       display="flex"
       justifyContent="center"
       alignItems="center"
