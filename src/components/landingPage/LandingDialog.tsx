@@ -52,7 +52,7 @@ const LandingDialog = ({
         <LandingLogo fontColor={backgroundColor} />
         <LandingHelpText />
         <LandingButtons onClose={handleClose} />
-        <Stack direction="column" mt={"20px"}>
+        <Stack direction="column" pt={"20px"}>
           <LandingDateInfo />
           {isAuthenticated ? (
             <ProfileButton />
