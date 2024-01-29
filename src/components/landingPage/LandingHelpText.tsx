@@ -1,4 +1,4 @@
-import { Stack, Typography, useMediaQuery } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import useGameStateStore from "../../stores/gameStateStore";
 import {
   RESUME_ENCOURAGEMENT_TEXT,
