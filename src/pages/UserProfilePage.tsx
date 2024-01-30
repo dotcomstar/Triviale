@@ -6,6 +6,7 @@ const UserProfilePage = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   if (isLoading) {
+    console.log("Loading page");
     return <div>Loading ...</div>;
   }
 
