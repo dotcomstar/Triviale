@@ -1,13 +1,11 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { Outlet } from "react-router-dom";
 import NavBar from "../navbar/NavBar";
+import { withAuthenticationRequired } from "@auth0/auth0-react";
+import useDialogStore from "../../stores/dialogStore";
 
-const PrivateRoutes = () => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
-
-  if (!isAuthenticated) {
-    loginWithRedirect();
-  }
+const ProtectedElements = () => {
+  const closeAllDialogs = useDialogStore((s) => s.closeAllDialogs);
+  closeAllDialogs();
 
   return (
     <>
@@ -16,5 +14,7 @@ const PrivateRoutes = () => {
     </>
   );
 };
+
+const PrivateRoutes = withAuthenticationRequired(ProtectedElements);
 
 export default PrivateRoutes;
