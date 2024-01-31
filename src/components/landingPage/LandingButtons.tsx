@@ -37,7 +37,7 @@ const LandingButtons = ({ onClose }: LandingButtonsProps) => {
         message={HARD_MODE_ALERT_MESSAGE}
       />
       <Stack
-        direction={matches ? "row" : "column"}
+        direction={matches ? "row" : "column-reverse"}
         justifyContent="center"
         alignItems="center"
         width={matches ? "40dvw" : "100dvw"}
@@ -46,14 +46,14 @@ const LandingButtons = ({ onClose }: LandingButtonsProps) => {
         {canToggleHardMode && gameState === "inProgress" && (
           <HowToPlayLandingButton setHelpOpen={setHelpOpen} />
         )}
+        {canToggleHardMode && gameState === "inProgress" && (
+          <HardModeLandingButton setHardMode={setHardMode} onClose={onClose} />
+        )}
         {gameState === "inProgress" && (
           <PlayLandingButton
             onClose={onClose}
             hasNotStartedPlaying={canToggleHardMode}
           />
-        )}
-        {canToggleHardMode && gameState === "inProgress" && (
-          <HardModeLandingButton setHardMode={setHardMode} onClose={onClose} />
         )}
         {gameState !== "inProgress" && (
           <ShareLandingButton onClose={onClose} setStatsOpen={setStatsOpen} />
