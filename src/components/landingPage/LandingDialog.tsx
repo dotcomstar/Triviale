@@ -47,7 +47,7 @@ const LandingDialog = ({
         width={"100%"}
         height={"100%"}
         spacing={matches ? undefined : "4%"}
-        sx={{ pt: matches ? 20 : 8, pb: 8, px: 4 }}
+        sx={{ pt: matches ? 20 : 8, pb: matches ? 8 : 2, px: 4 }}
       >
         <LandingLogo fontColor={backgroundColor} />
         <LandingHelpText />
