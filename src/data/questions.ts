@@ -22,6 +22,8 @@ export interface Question {
   question: string;
   answer: string;
   fullAnswer?: string;
+  altAnswer?: string[];
+  addOns?: string[];
   url?: string;
   category: Category;
 }
@@ -73,6 +75,7 @@ const questions: Question[] = [
     point, John Milton was affected by what condition that titles a Jose Saramago novel about people losing their ´
     eyesight?`,
     answer: "blindness",
+    altAnswer: ["blind"],
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
     category: ART_AND_LITERATURE,
   },
@@ -82,6 +85,7 @@ const questions: Question[] = [
     with this element as shielding. This element’s high toxicity prevents its modern use in paint and water pipes. For the
     point, name this metallic element used in bullets, but not pencils, whose symbol is Pb.`,
     answer: "Lead",
+    altAnswer: ["pb"],
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
     category: SCIENCE,
   },
@@ -91,6 +95,7 @@ const questions: Question[] = [
     guilty or innocent. Nineteen people were hanged during, for the point, what 1690s hysteria in Massachusetts in
     which people were accused of sorcery?`,
     answer: "Salem witch trials",
+    altAnswer: ["Salem witch trial"],
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
     category: HISTORY,
   },
@@ -100,12 +105,13 @@ const questions: Question[] = [
     prince, this story’s title character sells her voice to a sea-witch for a pair of legs, but fails to get a prince to fall in
     love with her. For the point, name this classic Hans Christian Anderson fable about a title ocean-dwelling girl.`,
     answer: "The Little Mermaid",
+    altAnswer: ["Little Mermaid", "lille havfrue", "Den lille havfrue"],
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
     category: ART_AND_LITERATURE,
   },
   {
     question: `In 1846, this country’s city of Angostura changed its name to Ciudad Bolivar. The ABC islands of Aruba,
-    Bonaire, and Curac¸ao are just north of this mainland country, a little east of the opening
+    Bonaire, and Curacao are just north of this mainland country, a little east of the opening
     to Lake Maracaibo. The Orinoco River flows through this country into the Atlantic Ocean just northwest of
     Guyana. For the point, name this South American country, found east of Colombia, whose capital city is Caracas.`,
     answer: "Venezuela",
@@ -146,6 +152,7 @@ const questions: Question[] = [
     Carrew. Another of this man’s friends, Dr Lanyon, dies of shock after seeing this man reveal the “evil side” of his
     nature by consuming a potion. For the point, name this fictional doctor who transforms himself into Edward Hyde.`,
     answer: "Jekyll",
+    addOns: ["Doctor", "Dr", "Harry", "Henry"],
     fullAnswer: "Doctor Henry “Harry” Jekyll ",
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
     category: ART_AND_LITERATURE,
@@ -201,6 +208,7 @@ const questions: Question[] = [
     times mass times velocity squared. A roller coaster maximizes this energy at the bottom of a hill. For the
     point, name this type of energy that is possessed by all moving objects, often contrasted with potential energy`,
     answer: "Kinetic energy",
+    altAnswer: ["kinetic", "KE"],
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
     category: SCIENCE,
   },
@@ -219,6 +227,7 @@ const questions: Question[] = [
     acquaintance be forgot” in his local dialect, which he also used for a poem in which “the best laid schemes o’ Mice
     an’ Men / gang aft agley.” For the point, name this Scottish poet of “Auld Lang Syne” and “To a Mouse” whose name describes what you would get if you touched a fire.`,
     answer: "Burns",
+    addOns: ["Robert", "Rabbie"],
     fullAnswer: "Robert Burns",
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
     category: ART_AND_LITERATURE,
@@ -229,6 +238,7 @@ const questions: Question[] = [
     set on a Catalonian beach, in which a distorted face with long eyelashes is draped with a soft-textured clock. For the
     point, name this Spanish Surrealist artist of The Persistence of Memory`,
     answer: "Dali",
+    addOns: ["Salvador"],
     fullAnswer:
       "Salvador Domingo Felipe Jacinto Dali i Domenech, Marquis de Pubol",
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
@@ -240,6 +250,7 @@ const questions: Question[] = [
     ruler supposedly asked for and received a basket of figs, which hid an asp that she then used to commit
     suicide. For the point, name this Egyptian pharaoh, the lover of Julius Caesar and Marc Antony`,
     answer: "Cleopatra",
+    addOns: ["VII", "Philopator"],
     fullAnswer: "Cleopatra VII Philopator",
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
     category: HISTORY,
@@ -250,6 +261,13 @@ const questions: Question[] = [
     became the first K-Pop group to win a Billboard Music Award. “Blood, Sweat, and Tears” and “Boy With
     Luv” are by, for the point, what seven-member Korean boy band?`,
     answer: "BTS",
+    altAnswer: [
+      "Bangtan Sonyeondan",
+      "Bangtan Boys",
+      "Beyond the Scene",
+      "Bulletproof Boy Scouts",
+      "Bodan Shonendan",
+    ],
     fullAnswer: "Bangtan Sonyeondan",
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
     category: POP_CULTURE,
