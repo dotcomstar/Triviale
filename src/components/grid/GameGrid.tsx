@@ -6,6 +6,7 @@ import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
 import GameRow from "./GameRow";
 import useRetrievedStore from "../../stores/retrievedStore";
+import useHardModeStore from "../../stores/hardModeStore";
 
 const GameGrid = () => {
   const dailyIndex = useDailyIndex();
@@ -20,6 +21,7 @@ const GameGrid = () => {
   const answer = answerWithSpaces.replace(/\s+/g, "")!;
   const currGuess = useCurrGuessStore((s) => s.guess);
   const guesses = useGameStateStore((s) => s.guesses);
+  const hardMode = useHardModeStore((s) => s.hardMode);
   const theme = useTheme();
 
   // TODO: Memoize and possibly export this function?
@@ -68,6 +70,27 @@ const GameGrid = () => {
     return statuses;
   };
 
+  const getBorderColorOverrides = (guess: string[]) => {
+    // Calculate all permutations with addOns and answers.
+    // TODO: Calculate all permutations with addOns and altAnswers as well
+    const permutationsWithAddons =
+      [[], ...(question?.addOns || []), []].flatMap(
+        (d) => question?.addOns?.map((v) => d + answer + v) || []
+      ) || [];
+
+    // An array of all accepted answers in  uppercase with no spaces
+    const allAcceptableAnswers = [
+      question?.answer,
+      ...(question?.altAnswer || []),
+      ...(permutationsWithAddons || []),
+    ].map((v) => v?.toLocaleUpperCase().replace(/\s+/g, ""));
+
+    if (allAcceptableAnswers.includes(guess.join(""))) {
+      return theme.palette.success.main;
+    }
+    return undefined;
+  };
+
   return (
     <Stack direction={"column"} spacing={1}>
       {guesses.map(
@@ -81,6 +104,9 @@ const GameGrid = () => {
                     guess={g}
                     key={gi}
                     statuses={getStatuses(g)}
+                    borderColorOverride={
+                      hardMode ? getBorderColorOverrides(g) : undefined
+                    }
                     isPastGuess={gi < guessNumber[i]}
                   /> // Past guesses
                 )
