@@ -51,6 +51,21 @@ const HomePage = () => {
   const answerWithSpaces = data[safeIndex].answer.toLocaleUpperCase();
   const fullAnswer = data[safeIndex].fullAnswer;
   const answer = answerWithSpaces.replace(/\s+/g, "");
+
+  // Calculate all permutations with addOns and answers.
+  // TODO: Calculate all permutations with addOns and altAnswers as well
+  const permutationsWithAddons =
+    [[], ...(data[safeIndex].addOns || []), []].flatMap(
+      (d) => data[safeIndex].addOns?.map((v) => d + answer + v) || []
+    ) || [];
+
+  // An array of all accepted answers in  uppercase with no spaces
+  const allAcceptableAnswers = [
+    data[safeIndex].answer,
+    ...(data[safeIndex].altAnswer || []),
+    ...(permutationsWithAddons || []),
+  ].map((v) => v.toLocaleUpperCase().replace(/\s+/g, ""));
+
   const { setStatsOpen } = useDialogStore();
   const { importStats, logGame } = useStatsStore();
   const {
@@ -207,7 +222,10 @@ const HomePage = () => {
                 questionState.filter((state) => state === "inProgress")
                   .length === 1;
               if (index === answer.length || hardMode) {
-                if (guess.join("") === answer) {
+                if (
+                  guess.join("") === answer ||
+                  (hardMode && allAcceptableAnswers.includes(guess.join("")))
+                ) {
                   winQuestion(questionNumber);
                   if (!onscreenKeyboardOnly) {
                     document.getElementById("ExpandableButton")?.focus();
@@ -254,7 +272,9 @@ const HomePage = () => {
                     questionState[questionIndex] === "won" ||
                     (questionIndex === questionNumber &&
                       hasOneMoreGuess &&
-                      guess.join("") === answer)
+                      (guess.join("") === answer ||
+                        (hardMode &&
+                          allAcceptableAnswers.includes(guess.join("")))))
                       ? 1
                       : 0;
                   todaysQuestionsGuessedIn[guessIndex] += guessIncrease;

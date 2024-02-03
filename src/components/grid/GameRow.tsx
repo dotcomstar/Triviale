@@ -11,6 +11,7 @@ interface GameRowProps {
   statuses?: PaletteColor[];
   answerOverride?: string;
   isPastGuess?: boolean;
+  borderColorOverride?: string;
 }
 
 const GameRow = ({
@@ -18,6 +19,7 @@ const GameRow = ({
   statuses = [],
   answerOverride,
   isPastGuess,
+  borderColorOverride,
 }: GameRowProps) => {
   const hardMode = useHardModeStore((s) => s.hardMode);
   const dailyIndex = useDailyIndex();
@@ -69,6 +71,7 @@ const GameRow = ({
               nthLetter={i + 1}
               value={letter}
               status={statuses[i]}
+              borderColorOverride={borderColorOverride}
               alternateLean={!hardMode && prevLean === shouldSkip}
             />
             {(inProgressHardMode ||
@@ -84,8 +87,9 @@ const GameRow = ({
                       ? 0
                       : 2,
                   borderColor:
-                    statuses[i] === theme.palette.success &&
-                    statuses[i + 1] === theme.palette.success
+                    borderColorOverride ||
+                    (statuses[i] === theme.palette.success &&
+                      statuses[i + 1] === theme.palette.success)
                       ? statuses[i].main
                       : !answerOverride &&
                         (statuses[i] === theme.palette.error ||

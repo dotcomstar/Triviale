@@ -23,6 +23,7 @@ interface CellProps {
   isH3?: boolean;
   fontColor?: string;
   alternateLean?: boolean;
+  borderColorOverride?: string;
 }
 
 const Cell = ({
@@ -33,6 +34,7 @@ const Cell = ({
   isH3,
   fontColor,
   alternateLean,
+  borderColorOverride,
 }: CellProps) => {
   const theme = useTheme();
   const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
@@ -74,8 +76,10 @@ const Cell = ({
       justifyContent="center"
       alignItems="center"
       sx={{
-        border: status ? "none" : "2px solid",
-        borderColor: `${value ? "primary.light" : "primary.darker"}`,
+        border: status && !borderColorOverride ? "none" : "2px solid",
+        borderColor:
+          borderColorOverride ||
+          `${value ? "primary.light" : "primary.darker"}`,
         borderRadius: 10,
         height: matches ? "52px" : "48px",
         width: "52px",
