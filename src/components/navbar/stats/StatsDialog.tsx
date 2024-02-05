@@ -52,7 +52,20 @@ const StatsDialog = ({
   const questionDetails = (id: number) => {
     const safeIndex = getPositiveIndex(id + offset);
     const q = useQuestionByID(safeIndex);
-    return [q?.category!, q?.answer.toLocaleUpperCase()!.replace(/\s+/g, "")];
+    // Calculate all permutations with addOns and answers.
+    const answerWithSpaces = q?.answer.toLocaleUpperCase()!;
+    const answer = answerWithSpaces.replace(/\s+/g, "")!;
+    const permutationsWithAddons =
+      [[], ...(q?.addOns || []), []].flatMap(
+        (d) => q?.addOns?.map((v) => d + answer + v) || []
+      ) || [];
+    // An array of all accepted answers in  uppercase with no spaces
+    const allAcceptableAnswers = [
+      q?.answer,
+      ...(q?.altAnswer || []),
+      ...(permutationsWithAddons || []),
+    ].map((v) => v?.toLocaleUpperCase().replace(/\s+/g, ""));
+    return [q?.category!, answer, allAcceptableAnswers];
   };
 
   const [advancedStatsOpen, setAdvancedStatsOpen] = useState(false);
@@ -73,7 +86,11 @@ const StatsDialog = ({
       return (
         question
           .map((g) => {
-            if (g.join("") === q[1] || prevCorrect) {
+            if (
+              g.join("") === q[1] ||
+              prevCorrect ||
+              (isHardMode && q[2].includes(g.join("")))
+            ) {
               prevCorrect = true;
               if (!countedSkipped) {
                 countedSkipped = true;
