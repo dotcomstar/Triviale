@@ -61,217 +61,165 @@ export const mongoDBQuestions: MondoDBQuestion[] = [
 
 const questions: Question[] = [
   {
-    question: `Settlers in this state were led by William B. Ide during a revolt commemorated by its state flag, which
-    features a grizzly bear. In the 1840s, John Fremont explored much of this state, including the San Joaquin Valley. For the point, name this western US state whose population boomed from “Forty-Niners”
-    seeking gold near Sacramento.`,
-    answer: "California",
+    question: `Edward Elgar’s last notable work is a concerto for this instrument, which was played by Jacqueline du Pre and Mstislav Rostropovich. Bach composed six solo suites for this instrument, the first of which is a signature piece for Yo-Yo Ma. For the point, name this large string instrument that is smaller than a bass and much larger than a viola`,
+    answer: "Cello",
+    altAnswer: ["violoncello"],
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round9.pdf",
+    category: ART_AND_LITERATURE,
+  },
+  {
+    question: `Thinkers in this field of study were discouraged from using “infinitesimals,” quantities too small to be measured, until Gottfried Leibniz and Isaac Newton independently developed it in the 17th century.  Integrals and derivatives are taught in, for the point, what branch of math that is often taught as an advanced class in high schools?`,
+    answer: "calculus",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round9.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `This philosophy, which teaches that true happiness comes from virtue, was promoted in the Meditations of Marcus Aurelius. Zeno of Citium founded this school of philosophy, whose core idea is that people should not be swayed by desire or fear. For the point, name this ancient philosophy whose name is, today, associated with being calm and unemotional.`,
+    answer: "Stoicism",
+    altAnswer: ["stoic"],
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round9.pdf",
+    category: RELIGION,
+  },
+  {
+    question: `Congressman Charles Wilson pushed to covertly supply this country with Stinger missiles in Operation Cyclone. An ill-fated 1979 Soviet invasion of this country was countered by its mujahideen. In the wake of the September 11th attacks, a US-led NATO coalition invaded, for the points, what country that was liberated by the 2001 ousting of the Taliban from its capital, Kabul?`,
+    answer: "Afghanistan",
+    altAnswer: ["Islamic Republic of Afghanistan"],
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round9.pdf",
+    category: HISTORY,
+  },
+  {
+    question: `The first of this type of material used by humans was meteoric iron, predating the invention of smelting. These materials commonly exhibit better strength than their components. Adding chromium to iron makes one of these materials called stainless steel, and examples of these made with copper include bronze and brass. For the point, give this term for a mixture of two or more metals.`,
+    answer: "Alloy",
+    altAnswer: ["alloys"],
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round9.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `This novel’s epilogue speculates that this book’s narrator may have made use of Mayday’s Underground Femaleroad. This novel’s protagonist butts heads with Serena Joy, the wife of a Commander who plays Scrabble with a woman despite the laws of the Republic of Gilead. For the point, name this novel by Margaret Atwood about Offred, a woman who has been forced to be the title child-bearing slave, which was later adapted to a 2017 drama starring Elisabeth Moss.`,
+    answer: "The Handmaids Tale",
+    altAnswer: ["Handmaids Tale"],
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round9.pdf",
+    category: ART_AND_LITERATURE,
+  },
+  {
+    question: `These objects collect and deposit debris in masses called moraines. These objects can move via basal sliding, which occurs when meltwater reduces ground friction. The Great Lakes were formed from the retreat of these objects. About seventy percent of Earth’s freshwater is stored in, for the point, what large sheets of land-based ice?`,
+    answer: "glaciers",
+    altAnswer: ["glacier", "alpine glaciers"],
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round9.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `One of these mythical figures was rescued from a ring of fire by Siegfried, who cut off her armor.  Brunhilde was one of these daughters of Odin, who were often described as “shield-maidens.” For the point, name these divine women who, in Germanic mythology, carried the souls of dead warriors to the god Odin's hall Valhalla.`,
+    answer: "Valkyries",
+    altAnswer: ["Valkyrie"],
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round9.pdf",
+    category: RELIGION,
+  },
+  {
+    question: `In 1968, this country seized the American research ship Pueblo. This country advocates a state policy of self-reliance called Juche and has clashed with its neighbor in a buffer zone running along the thirty-eighth parallel called the DMZ. For the point, name this Asian country that has been ruled under dictators from the Kim family from its capital of Pyongyang.`,
+    answer: "North Korea",
+    altAnswer: ["DPRK", "Democratic Peoples Republic of Korea"],
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
     category: HISTORY,
   },
   {
-    question: `In a novel titled for this medical condition, the doctor’s wife is the only character not affected by this
-    condition, which is compared to “falling into a milky sea.” The sonnet “When I Consider How My Light
-    is Spent” describes a poet with this medical condition, which may have been caused by a detached retina. For the
-    point, John Milton was affected by what condition that titles a Jose Saramago novel about people losing their ´
-    eyesight?`,
-    answer: "blindness",
-    altAnswer: ["blind"],
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
-    category: ART_AND_LITERATURE,
-  },
-  {
-    question: `Litharge, an oxide of this element, is a component of fine crystal. This final element in the uranium decay
-    chain was once used as an antiknock agent added to gasoline. Patients undergoing an x-ray wear an apron
-    with this element as shielding. This element’s high toxicity prevents its modern use in paint and water pipes. For the
-    point, name this metallic element used in bullets, but not pencils, whose symbol is Pb.`,
-    answer: "Lead",
-    altAnswer: ["pb"],
+    question: `The sarcoplasmic reticulum stores ions of this mineral, which is needed for muscle contraction. Vitamin D assists the absorption of both phosphate and this element in the gut. Seniors may take a supplement of this element to prevent osteoporosis, and children often get their intake by drinking milk. For the point, name this element needed to build strong bones and teeth.`,
+    answer: "Calcium",
+    altAnswer: ["Ca"],
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
     category: SCIENCE,
   },
   {
-    question: `While helping lead this event, Cotton Mather defended the use of “spectral evidence” based on visions.
-    Giles Corey was killed in this event by having heavy stones piled on him because he refused to plead either
-    guilty or innocent. Nineteen people were hanged during, for the point, what 1690s hysteria in Massachusetts in
-    which people were accused of sorcery?`,
-    answer: "Salem witch trials",
-    altAnswer: ["Salem witch trial"],
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
+    question: `Nearly sixty people were killed in this country’s city of Kerman in a stampede during a January 2020 funeral procession. Canada claimed that this country’s military shot down Ukraine International Flight 752.  This country’s Quds Force was led by Qasem Soleimani until he was killed in a drone strike in January 2020.  President Trump has threatened war with, for the point, what country whose capital is Tehran?`,
+    answer: "Iran",
+    altAnswer: ["Islamic Republic of Iran", "Persia"],
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
     category: HISTORY,
   },
   {
-    question: `In this story, a princess complains when her grandmother decorates her with eight oysters. This story’s
-    protagonist transforms into sea foam because she is unable to gain a human soul. After rescuing a handsome
-    prince, this story’s title character sells her voice to a sea-witch for a pair of legs, but fails to get a prince to fall in
-    love with her. For the point, name this classic Hans Christian Anderson fable about a title ocean-dwelling girl.`,
-    answer: "The Little Mermaid",
-    altAnswer: ["Little Mermaid", "lille havfrue", "Den lille havfrue"],
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
-    category: ART_AND_LITERATURE,
-  },
-  {
-    question: `In 1846, this country’s city of Angostura changed its name to Ciudad Bolivar. The ABC islands of Aruba,
-    Bonaire, and Curacao are just north of this mainland country, a little east of the opening
-    to Lake Maracaibo. The Orinoco River flows through this country into the Atlantic Ocean just northwest of
-    Guyana. For the point, name this South American country, found east of Colombia, whose capital city is Caracas.`,
-    answer: "Venezuela",
-    fullAnswer: "Bolivarian Republic of Venezuela",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
-    category: GEOGRAPHY,
-  },
-  {
-    question: `This state’s city of Beaumont near Port Arthur is home to Spindletop, the site of a 1901 discovery that
-    triggered an economic boom. Geologists in this state have a hard time studying its Barnett Shale, a formation
-    with massive natural gas reserves, because it lies underneath a sprawling metroplex that includes Plano and
-    Fort Worth. For the point, name this southern US state where the oil industry grew the cities of Dallas and Houston.`,
-    answer: "Texas",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
-    category: GEOGRAPHY,
-  },
-  {
-    question: `A fifteenth-century statue of this religious figure wears sandals with ornate, knee-length leg guards,
-    and twines his left toes into the beard of a defeated enemy. A bronze sculpture of this young man wears a
-    wide-brimmed hat topped with laurels to represent his victory over a giant from Gath. For ten points, name this
-    biblical king who, in a sculpture by Donatello, stands over the disembodied head of Goliath.`,
-    answer: "David",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
-    category: ART_AND_LITERATURE,
-  },
-  {
-    question: `Gallium’s sudden tendency to perform this action inspired the title of Sam Kean’s book The Disappearing
-    Spoon. Heat of fusion refers to the energy needed to achieve this process. Spreading rock salt on ice lowers
-    the point at which this process takes place. For the point, name this phase change, the opposite of freezing, in
-    which a solid becomes a liquid.`,
-    answer: "Melting",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
-    category: SCIENCE,
-  },
-  {
-    question: `This literary character is found dead in his laboratory by his servant, Poole, and his friend, J.G.
-    Utterson, to whom this man shows a letter of apology supposedly written by the murderer of Sir Danvers
-    Carrew. Another of this man’s friends, Dr Lanyon, dies of shock after seeing this man reveal the “evil side” of his
-    nature by consuming a potion. For the point, name this fictional doctor who transforms himself into Edward Hyde.`,
-    answer: "Jekyll",
-    addOns: ["Doctor", "Dr", "Harry", "Henry"],
-    fullAnswer: "Doctor Henry “Harry” Jekyll ",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
-    category: ART_AND_LITERATURE,
-  },
-  {
-    question: `The family of Dick Grayson, the original Robin, worked in this type of place. The song “Entry of
-    the Gladiators” is commonly played at this type of place, one of which was operated until 2017 by Ringling
-    Brothers and Barnum and Bailey. For the point, name this type of traveling performance that commonly involves
-    lion tamers, ring masters, and clowns.`,
-    answer: "circus",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
-    category: POP_CULTURE,
-  },
-  {
-    question: `The man who discovered this object’s orbit died in 1742, sixteen years before he could prove that it is
-    periodic. The European Space Agency’s Giotto was one of five spacecraft that studied this object in 1986,
-    the last time it was visible to the naked eye. For the point, name this object that approaches Earth every seventy-six
-    years and is probably the most famous comet.`,
-    answer: "Halleys Comet",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
-    category: SCIENCE,
-  },
-  {
-    question: `The Rothschild subspecies of these animals have five ossicones, although most of these animals only
-    have two, as do these animals’ relatives, okapis. Darwin described these animals as “beautifully adapted for
-    browsing on the higher branches of trees.” For the point, name these mammals whose long necks make them the
-    tallest land animals in the world.`,
-    answer: "giraffes",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
-    category: SCIENCE,
-  },
-  {
-    question: `This poem’s speaker asks if in “the distant Aidenn” he could “clasp a sainted maiden” after he responds
-    to a strange tapping at his window. An animal in this poem perches on a “pallid bust of Pallas” and seems
-    to taunt the speaker over the death of Lenore by repeating the word “nevermore.” For the point, name this poem
-    about a man driven to despair by a black bird, written by Edgar Allan Poe.`,
-    answer: "The Raven",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
-    category: ART_AND_LITERATURE,
-  },
-  {
-    question: `Decreases in this phenomenon and the LFPR indicates a rise in discouragement. This economic
-    phenomenon can be structural, when it is caused by technological changes, or frictional, which reflects the
-    time spent trying to end this phenomenon. Retired people are not counted by, for the point, what negative
-    economic rate that describes the number of people who aren’t working?`,
-    answer: "unemployment rate",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round7.pdf",
-    category: POP_CULTURE,
-  },
-  {
-    question: `This quantity can be defined as momentum squared divided by two times the mass. This quantity is
-    conserved during elastic collisions but not inelastic collisions, and it is calculated by the formula one-half
-    times mass times velocity squared. A roller coaster maximizes this energy at the bottom of a hill. For the
-    point, name this type of energy that is possessed by all moving objects, often contrasted with potential energy`,
-    answer: "Kinetic energy",
-    altAnswer: ["kinetic", "KE"],
+    question: `In a tone poem by Modest Mussorgsky, evil spirits celebrate during one of these periods of time on Bald Mountain. This time period appears in the English title of Mozart’s Serenade Number Thirteen that is called a “little” piece of music for this time period. In Saint-Saens’ Danse macabre, a rooster crow representing sunrise ends, for the point, what time period that is depicted in a nocturne?`,
+    answer: "night",
+    altAnswer: [
+      "nights",
+      "Night on Bald Mountain",
+      "noch",
+      "Noch ny lysoy gore",
+      "A Little Night Music",
+      "Eine Kleine Nachtmusik",
+      "Nacht",
+    ],
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
-    category: SCIENCE,
+    category: ART_AND_LITERATURE,
   },
   {
-    question: `This goddess’s tears turn into red gold when she misses her husband Odr. Half of those killed in battle go
-    to this goddess’s hall, Folkvangr. Loki turned into a fly in an attempt to steal Brisingamen, this goddess’s
-    necklace, and she rides a chariot pulled by cats. Thor dressed like this goddess in order to retrieve his stolen hammer.
-    For the point, name this Norse goddess of love and beauty.`,
-    answer: "Freyja",
+    question: `A commercial for a documentary about this politician was the subject of the 2010 Citizens United case, which reformed campaign finance law. John Podesta chaired this politician’s most recent campaign, which included Tim Kaine as running mate. This politician wrote the book What Happened about her campaign for President in 2016. For the point, name this former First Lady who ran for President against Donald Trump.`,
+    answer: "Hillary Clinton",
+    altAnswer: ["Hillary Rodham", "Hillary Rodham Clinton", "Clinton"],
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
+    category: POP_CULTURE,
+  },
+  {
+    question: `This man wrote the hymn “A Mighty Fortress is Our God.” This man was the subject of the Exsurge Domine bull when his refusal to recant at the Diet of Worms led to his excommunication from the Catholic church. Criticisms of the sale of indulgences in the Ninety-Five Theses were written by, for the point, what German monk-turned-reformer who started the Protestant Reformation and is the basis for MLK's name?`,
+    answer: "Martin Luther",
+    altAnswer: ["Luther"],
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
     category: RELIGION,
   },
   {
-    question: `A poem by this writer promises “I will come again, my love / though ‘twere ten thousand mile” and
-    compares love to a “red, red rose.” This poet says “we’ll tak’ a cup o’ kindness yet” and asks “should auld
-    acquaintance be forgot” in his local dialect, which he also used for a poem in which “the best laid schemes o’ Mice
-    an’ Men / gang aft agley.” For the point, name this Scottish poet of “Auld Lang Syne” and “To a Mouse” whose name describes what you would get if you touched a fire.`,
-    answer: "Burns",
-    addOns: ["Robert", "Rabbie"],
-    fullAnswer: "Robert Burns",
+    question: `One of these events, KSN 2011b, was observed giving off a flash of ultraviolet radiation in what is believed to have been caused by the collision of two white dwarves. These events may leave behind a neutron star and create a massive shockwave. Our sun is not large enough to undergo, for the point, what type of incredibly bright and powerful stellar explosion?`,
+    answer: "supernova",
+    altAnswer: [
+      "supernovae",
+      "supernovas",
+      "Type 1a supernova",
+      "Type 1a supernovae",
+      "Type 1a supernovas",
+    ],
     url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
-    category: ART_AND_LITERATURE,
+    category: SCIENCE,
   },
   {
-    question: `This artist created a Lobster Telephone and painted a Disintegration of one of his paintings, in which a
-    bare tree trunk separates into segments. Ants crawl on the surface of a red object in a painting by this artist
-    set on a Catalonian beach, in which a distorted face with long eyelashes is draped with a soft-textured clock. For the
-    point, name this Spanish Surrealist artist of The Persistence of Memory`,
-    answer: "Dali",
-    addOns: ["Salvador"],
-    fullAnswer:
-      "Salvador Domingo Felipe Jacinto Dali i Domenech, Marquis de Pubol",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
-    category: ART_AND_LITERATURE,
-  },
-  {
-    question: `This ruler legendarily dissolved the world’s largest pearl in vinegar, then drank it to win a bet. A carpet
-    was used to sneak this ruler into the headquarters of Julius Caesar. After losing the Battle of Actium, this
-    ruler supposedly asked for and received a basket of figs, which hid an asp that she then used to commit
-    suicide. For the point, name this Egyptian pharaoh, the lover of Julius Caesar and Marc Antony`,
-    answer: "Cleopatra",
-    addOns: ["VII", "Philopator"],
-    fullAnswer: "Cleopatra VII Philopator",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
+    question: `In 2018, this state’s Democratic candidate for governor, Andrew Gillum, lost by fewer than thirty-five thousand votes after a machine recount. The Supreme Court awarded this state’s twenty-five electoral votes to George W. Bush in 2000 after stopping a recount in counties like Broward and Palm Beach. For the point, name this southern US state where governor Ron DeSantis leads from Tallahassee.`,
+    answer: "Florida",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round9.pdf",
     category: HISTORY,
   },
   {
-    question: `In a song by this band, Halsey sings “I want something stronger / Than a moment, than a moment, luv”
-    and repeats the phrase “oh, my, my, my.” The albums Wings and 2 Cool 4 Skool are by this group, which
-    became the first K-Pop group to win a Billboard Music Award. “Blood, Sweat, and Tears” and “Boy With
-    Luv” are by, for the point, what seven-member Korean boy band?`,
-    answer: "BTS",
-    altAnswer: [
-      "Bangtan Sonyeondan",
-      "Bangtan Boys",
-      "Beyond the Scene",
-      "Bulletproof Boy Scouts",
-      "Bodan Shonendan",
-    ],
-    fullAnswer: "Bangtan Sonyeondan",
-    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round8.pdf",
+    question: `This game’s 1972 World Championship was lost by Boris Spassky. In 1999, a team of fifty thousand people voted to use the Sicilian Defense in this game’s “Kasparov versus the World” match. Bobby Fischer was a Grandmaster in this game, whose current world champion is Magnus Carlsen. For the point, name this board game in which players must protect their king from pieces like knights, rooks, and pawns.`,
+    answer: "chess",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round9.pdf",
     category: POP_CULTURE,
   },
+  {
+    question: `According to legend, this man filled a room with fake flowers in order to confuse the Queen of Sheba. In another story, this son of Bathsheba threatened to cut a baby in half to determine which of two women was the child’s mother. Because this man’s father had “shed blood,” this king built the first Temple in Jerusalem. For the point, name this wise biblical king, the son of David.`,
+    answer: "Solomon",
+    addOns: ["King"],
+    altAnswer: ["Schlomo", "Suleiman"],
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round9.pdf",
+    category: RELIGION,
+  },
+  {
+    question: `This man lamented “It is well that war is so terrible, or we should grow too fond of it” during his victory over Ambrose Burnside at the Battle of Fredericksburg. This man, who led the militia that ended John Brown’s raid, was victorious at the Second Battle of Bull Run. For the point, name this general who, on April 9th, 1865, surrendered his Confederate army at Appomattox to Ulysses S. Grant.`,
+    answer: "Lee",
+    altAnswer: ["Robert E Lee", "Robert Edward Lee", "Robert Lee"],
+    fullAnswer: "Robert E. Lee",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round9.pdf",
+    category: HISTORY,
+  },
+  {
+    question: `This architect created two studios named Taliesin, and his Robie House exemplifies the Prairie School of architecture founded by this man. This architect created the New York Guggenheim Museum, and used cantilevers to support the concrete terraces of a house in Pennsylvania over a waterfall. For the point, name this American architect of Fallingwater.`,
+    answer: "Wright",
+    altAnswer: ["Frank Lloyd Wright", "Frank Wright"],
+    fullAnswer: "Frank Lloyd Wright",
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round9.pdf",
+    category: ART_AND_LITERATURE,
+  },
+  {
+    question: `This organ contains masses of lymphatic tissue known as Peyer’s patches. This organ’s surface area is increased by fingerlike villi that can be blunted by celiac disease. This organ, which receives chyme through the pyloric sphincter, consists of the ileum, jejunum, and duodenum. For the point, name this digestive organ that is found between the stomach and a related, larger organ.`,
+    answer: "Small intestine",
+    altAnswer: ["Small intestines", "Small bowel"],
+    url: "https://files.quizbowlpackets.com/2364/SCOP10%20MS%20Round9.pdf",
+    category: SCIENCE,
+  },
 ];
-
 export default questions;
