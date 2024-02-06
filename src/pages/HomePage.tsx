@@ -19,6 +19,8 @@ import useHardModeStore from "../stores/hardModeStore";
 import useOnscreenKeyboardOnlyStore from "../stores/onscreenKeyboardOnlyStore";
 import useRetrievedStore from "../stores/retrievedStore";
 import useStatsStore from "../stores/statsStore";
+import CustomizableText from "../components/question/CustomizableText";
+import useEditingStore from "../stores/editingStore";
 
 const HomePage = () => {
   const { data } = useQuestions();
@@ -44,6 +46,7 @@ const HomePage = () => {
   const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
   const dailyIndex = useDailyIndex();
   const retrieved = useRetrievedStore((s) => s.retrieved);
+  const editing = useEditingStore((s) => s.editing);
   const safeIndex = getPositiveIndex(
     questionNumber + (retrieved ? 0 : dailyIndex)
   );
@@ -183,144 +186,155 @@ const HomePage = () => {
             }}
           >
             <Grid item xs={12} sx={{ mx: 0, pt: 1 }}>
-              <ExpandableText>{question}</ExpandableText>
-            </Grid>
-            <Grid item xs={12} sx={{ px: 1, mb: 1 }}>
-              {questionState[questionNumber] === "lost" && (
-                <Alert severity="info" sx={{ mb: 1, mx: 2 }}>
-                  Answer was {answerWithSpaces}
-                  {fullAnswer ? `, as in ${fullAnswer}` : ""}
-                </Alert>
+              {editing ? (
+                <CustomizableText />
+              ) : (
+                <ExpandableText>{question}</ExpandableText>
               )}
-              <GameGrid />
             </Grid>
+            {!editing && (
+              <Grid item xs={12} sx={{ px: 1, mb: 1 }}>
+                {questionState[questionNumber] === "lost" && (
+                  <Alert severity="info" sx={{ mb: 1, mx: 2 }}>
+                    Answer was {answerWithSpaces}
+                    {fullAnswer ? `, as in ${fullAnswer}` : ""}
+                  </Alert>
+                )}
+                <GameGrid />
+              </Grid>
+            )}
           </Paper>
         </Grid>
 
         <Grid item xs={12} sx={{ px: 0 }}>
-          <Keyboard
-            onChar={(c) => {
-              console.log(c);
-              if (
-                (hardMode || index < answer.length) &&
-                questionState[questionNumber] === "inProgress"
-              ) {
-                addChar(c);
-                cacheGuess([...guess, c]);
-              }
-            }}
-            onDelete={() => {
-              console.log("delete");
-              deleteChar();
-              cacheGuess(guess.filter((_, i) => i !== guess.length - 1));
-            }}
-            onEnter={() => {
-              console.log("enter");
-              let finalGuess = false;
-              let won = false;
-              let hasOneMoreGuess =
-                questionState.filter((state) => state === "inProgress")
-                  .length === 1;
-              if (index === answer.length || hardMode) {
+          {!editing && (
+            <Keyboard
+              onChar={(c) => {
+                console.log(c);
                 if (
-                  guess.join("") === answer ||
-                  (hardMode && allAcceptableAnswers.includes(guess.join("")))
+                  (hardMode || index < answer.length) &&
+                  questionState[questionNumber] === "inProgress"
                 ) {
-                  winQuestion(questionNumber);
-                  if (!onscreenKeyboardOnly) {
-                    document.getElementById("ExpandableButton")?.focus();
-                  }
-                  finalGuess = true;
-                  won = true;
-                } else if (guessNumber[questionNumber] >= MAX_CHALLENGES - 1) {
-                  loseQuestion(questionNumber);
-                  if (!onscreenKeyboardOnly) {
-                    document.getElementById("ExpandableButton")?.focus();
-                  }
-                  finalGuess = true;
-                } else {
-                  console.log("Incorrect :(");
+                  addChar(c);
+                  cacheGuess([...guess, c]);
                 }
-                makeGuess(guess);
-                resetGuess();
-              }
-              if (
-                !questionState.includes("inProgress") ||
-                (hasOneMoreGuess && finalGuess)
-              ) {
+              }}
+              onDelete={() => {
+                console.log("delete");
+                deleteChar();
+                cacheGuess(guess.filter((_, i) => i !== guess.length - 1));
+              }}
+              onEnter={() => {
+                console.log("enter");
+                let finalGuess = false;
+                let won = false;
+                let hasOneMoreGuess =
+                  questionState.filter((state) => state === "inProgress")
+                    .length === 1;
+                if (index === answer.length || hardMode) {
+                  if (
+                    guess.join("") === answer ||
+                    (hardMode && allAcceptableAnswers.includes(guess.join("")))
+                  ) {
+                    winQuestion(questionNumber);
+                    if (!onscreenKeyboardOnly) {
+                      document.getElementById("ExpandableButton")?.focus();
+                    }
+                    finalGuess = true;
+                    won = true;
+                  } else if (
+                    guessNumber[questionNumber] >=
+                    MAX_CHALLENGES - 1
+                  ) {
+                    loseQuestion(questionNumber);
+                    if (!onscreenKeyboardOnly) {
+                      document.getElementById("ExpandableButton")?.focus();
+                    }
+                    finalGuess = true;
+                  } else {
+                    console.log("Incorrect :(");
+                  }
+                  makeGuess(guess);
+                  resetGuess();
+                }
                 if (
-                  questionState.reduce(
-                    (acc, state) => acc && state === "won",
-                    true
-                  ) ||
-                  (hasOneMoreGuess && won)
+                  !questionState.includes("inProgress") ||
+                  (hasOneMoreGuess && finalGuess)
                 ) {
-                  winGame();
-                } else {
-                  loseGame();
-                }
-                // Report the current game's stats
-                let todaysQuestionsGuessedIn = Array(MAX_CHALLENGES).fill(0);
-                let indexOfLastGuess = guesses.map(
-                  (allGuessesForQuestion) =>
-                    allGuessesForQuestion.filter(
-                      (singleGuess) => singleGuess.join() !== ""
-                    ).length - 1
-                );
-                indexOfLastGuess.forEach((guessIndex, questionIndex) => {
-                  let guessIncrease =
-                    questionState[questionIndex] === "won" ||
-                    (questionIndex === questionNumber &&
-                      hasOneMoreGuess &&
-                      (guess.join("") === answer ||
-                        (hardMode &&
-                          allAcceptableAnswers.includes(guess.join("")))))
-                      ? 1
-                      : 0;
-                  todaysQuestionsGuessedIn[guessIndex] += guessIncrease;
-                  let c = todaysCategories[questionIndex];
-                  if (advancedStats) {
-                    advancedStats[c] = {
-                      ...advancedStats[c],
-                      questionsGuessedIn: advancedStats[
-                        c
-                      ].questionsGuessedIn.map((val, i) =>
-                        i === guessIndex ? val + guessIncrease : val
-                      ),
-                    };
+                  if (
+                    questionState.reduce(
+                      (acc, state) => acc && state === "won",
+                      true
+                    ) ||
+                    (hasOneMoreGuess && won)
+                  ) {
+                    winGame();
+                  } else {
+                    loseGame();
                   }
-                });
-                if (advancedStats) {
-                  todaysCategories.forEach(
-                    (c) =>
-                      (advancedStats[c] = {
-                        ...advancedStats[c],
-                        numQuestionsAttempted:
-                          advancedStats[c].numQuestionsAttempted + 1,
-                        changedToday: advancedStats[c].questionsGuessedIn.map(
-                          (v) => v > 0
-                        ),
-                      })
+                  // Report the current game's stats
+                  let todaysQuestionsGuessedIn = Array(MAX_CHALLENGES).fill(0);
+                  let indexOfLastGuess = guesses.map(
+                    (allGuessesForQuestion) =>
+                      allGuessesForQuestion.filter(
+                        (singleGuess) => singleGuess.join() !== ""
+                      ).length - 1
                   );
+                  indexOfLastGuess.forEach((guessIndex, questionIndex) => {
+                    let guessIncrease =
+                      questionState[questionIndex] === "won" ||
+                      (questionIndex === questionNumber &&
+                        hasOneMoreGuess &&
+                        (guess.join("") === answer ||
+                          (hardMode &&
+                            allAcceptableAnswers.includes(guess.join("")))))
+                        ? 1
+                        : 0;
+                    todaysQuestionsGuessedIn[guessIndex] += guessIncrease;
+                    let c = todaysCategories[questionIndex];
+                    if (advancedStats) {
+                      advancedStats[c] = {
+                        ...advancedStats[c],
+                        questionsGuessedIn: advancedStats[
+                          c
+                        ].questionsGuessedIn.map((val, i) =>
+                          i === guessIndex ? val + guessIncrease : val
+                        ),
+                      };
+                    }
+                  });
+                  if (advancedStats) {
+                    todaysCategories.forEach(
+                      (c) =>
+                        (advancedStats[c] = {
+                          ...advancedStats[c],
+                          numQuestionsAttempted:
+                            advancedStats[c].numQuestionsAttempted + 1,
+                          changedToday: advancedStats[c].questionsGuessedIn.map(
+                            (v) => v > 0
+                          ),
+                        })
+                    );
+                  }
+                  logGame({
+                    numQuestionsAttempted: QUESTIONS_PER_DAY,
+                    questionsGuessedIn: todaysQuestionsGuessedIn,
+                    changedToday: todaysQuestionsGuessedIn.map((v) => v > 0),
+                  });
+                  setStatsOpen(true);
+                  return;
                 }
-                logGame({
-                  numQuestionsAttempted: QUESTIONS_PER_DAY,
-                  questionsGuessedIn: todaysQuestionsGuessedIn,
-                  changedToday: todaysQuestionsGuessedIn.map((v) => v > 0),
-                });
-                setStatsOpen(true);
-                return;
-              }
-              if (
-                questionState[questionNumber] !== "inProgress" &&
-                gameState === "inProgress"
-              ) {
-                resetGuess();
-                moveToNextQuestion();
-              }
-            }}
-            isRevealing={false}
-          />
+                if (
+                  questionState[questionNumber] !== "inProgress" &&
+                  gameState === "inProgress"
+                ) {
+                  resetGuess();
+                  moveToNextQuestion();
+                }
+              }}
+              isRevealing={false}
+            />
+          )}
         </Grid>
       </Grid>
     </>
