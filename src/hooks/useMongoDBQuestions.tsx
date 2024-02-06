@@ -5,7 +5,6 @@ import { oneDay } from "./useDailyIndex";
 import useTodayAsInt from "./useTodayAsInt";
 
 const today = useTodayAsInt();
-console.log(`Today is ${today}`);
 
 const useMongoDBQuestions = (questionID?: string) =>
   useQuery<MondoDBQuestion[], Error>({
@@ -19,7 +18,7 @@ const useMongoDBQuestions = (questionID?: string) =>
         })
         .then((res) => res.data),
     refetchOnWindowFocus: false,
-    staleTime: oneDay, // 1 day
+    staleTime: oneDay, // 1 day. How often should custom questions be refetched?
   });
 
 export default useMongoDBQuestions;
