@@ -9,6 +9,8 @@ import useGameStateStore from "../../../stores/gameStateStore";
 import useHardModeStore from "../../../stores/hardModeStore";
 import useHighContrastStore from "../../../stores/highContrastStore";
 import useStatsStore from "../../../stores/statsStore";
+import useRetrievedStore from "../../../stores/retrievedStore";
+import useQuestions from "../../../hooks/useQuestions";
 
 interface EmailButtonProps {
   text: string;
@@ -37,6 +39,8 @@ const EmailButton = ({ text }: EmailButtonProps) => {
     changedToday,
     advancedStats,
   } = useStatsStore();
+  const { retrieved, questionID } = useRetrievedStore(); // Include the questions if the user is playing custom questions
+  const { data } = useQuestions(questionID);
 
   const stats = {
     questionsGuessedIn,
@@ -59,6 +63,7 @@ const EmailButton = ({ text }: EmailButtonProps) => {
     theme: darkTheme,
     highContrast: isHighContrast,
     stats: stats,
+    question: retrieved && data[questionNumber],
   });
 
   return (

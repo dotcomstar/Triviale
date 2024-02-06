@@ -7,7 +7,7 @@ __credits__    = []
 __license__    = "MIT"
 __version__    = "0.1.0"
 __maintainer__ = "Jet Lee"
-__email__      = "jetrlee@gmail.com"
+__email__      = "help.triviale@gmail.com"
 __status__     = "Development"
 
 import os

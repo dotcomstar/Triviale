@@ -7,14 +7,14 @@ import useTodayAsInt from "./useTodayAsInt";
 const today = useTodayAsInt();
 console.log(`Today is ${today}`);
 
-const useMongoDBQuestions = () =>
+const useMongoDBQuestions = (questionID?: string) =>
   useQuery<MondoDBQuestion[], Error>({
-    queryKey: ["date", today],
+    queryKey: questionID ? ["questionID", questionID] : ["date", today],
     queryFn: () =>
       apiClient
         .get<MondoDBQuestion[]>("/questions", {
           params: {
-            date: today,
+            date: questionID ? questionID : today,
           },
         })
         .then((res) => res.data),
