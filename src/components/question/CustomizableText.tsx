@@ -4,7 +4,6 @@ import {
   Button,
   useMediaQuery,
   Autocomplete,
-  Chip,
 } from "@mui/material";
 import { MOBILE_SCREEN_CUTOFF } from "../../constants/settings";
 import useGameStateStore from "../../stores/gameStateStore";

@@ -7,7 +7,7 @@ interface EditingStore {
 }
 
 const useEditingStore = create<EditingStore>((set) => ({
-  editing: true,
+  editing: false,
   setEditing: (b: boolean) => set(() => ({ editing: b })),
 }));
 

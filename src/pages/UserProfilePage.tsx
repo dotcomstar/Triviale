@@ -1,6 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Stack, Typography } from "@mui/material";
 import LogoutButton from "../components/auth/LogoutButton";
+import EditingButton from "../components/question/EditingButton";
 
 const UserProfilePage = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -22,6 +23,7 @@ const UserProfilePage = () => {
         />
         <Typography>{user?.name}</Typography>
         <Typography>{user?.email}</Typography>
+        <EditingButton />
         <LogoutButton startEdge maxLeftShift />
       </Stack>
     )
