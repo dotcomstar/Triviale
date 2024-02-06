@@ -50,11 +50,21 @@ const AdvancedStats = () => {
             <Typography {...TypProps}>
               {advancedStats
                 ? +(
-                    advancedStats[c].questionsGuessedIn.reduce(
-                      (acc, v, i) => acc + v * (i + 1),
-                      0
-                    ) / Math.max(advancedStats[c].numQuestionsAttempted, 1)
-                  ).toFixed(2)
+                    // Get average of user guesses in one category. Calculate weighted values and divide by number of correct guesses. Don't include incorrect attempts in this
+                    (
+                      advancedStats[c].questionsGuessedIn.reduce(
+                        (acc, v, i) => acc + v * (i + 1),
+                        0
+                      ) /
+                      Math.max(
+                        advancedStats[c].questionsGuessedIn.reduce(
+                          (acc, v) => acc + v,
+                          0
+                        ),
+                        1
+                      )
+                    ).toFixed(2)
+                  ) // Round to 2 decimal places.
                 : 0}
             </Typography>
           </Grid>

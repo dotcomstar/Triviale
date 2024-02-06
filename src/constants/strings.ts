@@ -1,7 +1,7 @@
 export const GAME_TITLE = "Triviale";
 export const LOGO_ALT = `${GAME_TITLE} Logo`;
 export const GAME_URL = "https://www.triviale.net/";
-export const CONTACT_EMAIL = "jetrlee@gmail.com";
+export const CONTACT_EMAIL = "help.triviale@gmail.com";
 export const ABOUT_AUTHOR_URL = "https://jetrlee.vercel.app/";
 export const LOCALE = "en-US";
 export const EDITED_BY = "Edited by Jet Lee";
