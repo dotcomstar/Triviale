@@ -8,6 +8,7 @@ import useDailyIndex from "../../../hooks/useDailyIndex";
 import useGameStateStore from "../../../stores/gameStateStore";
 import useHardModeStore from "../../../stores/hardModeStore";
 import useHighContrastStore from "../../../stores/highContrastStore";
+import useStatsStore from "../../../stores/statsStore";
 
 interface EmailButtonProps {
   text: string;
@@ -30,6 +31,19 @@ const EmailButton = ({ text }: EmailButtonProps) => {
   const isHardMode = useHardModeStore((s) => s.hardMode);
   const isHighContrast = useHighContrastStore((s) => s.highContrast);
   const darkTheme = localStorage.getItem("theme");
+  const {
+    questionsGuessedIn,
+    numQuestionsAttempted,
+    changedToday,
+    advancedStats,
+  } = useStatsStore();
+
+  const stats = {
+    questionsGuessedIn,
+    numQuestionsAttempted,
+    changedToday,
+    advancedStats,
+  };
 
   const screenResolution = `${deviceWidth} x ${deviceHeight}`;
   const viewPortSize = `${vw} x ${vh}`;
@@ -44,6 +58,7 @@ const EmailButton = ({ text }: EmailButtonProps) => {
     hardMode: isHardMode,
     theme: darkTheme,
     highContrast: isHighContrast,
+    stats: stats,
   });
 
   return (
