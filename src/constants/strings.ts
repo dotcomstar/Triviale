@@ -106,6 +106,7 @@ export const SUBSCRIBE_BUTTON_ARIA = "subscribe-button";
 
 export const ENTER_KEY_ID = "ENTER_KEY";
 
+export const PROFILE_PAGE_TITLE = "Profile Page";
 export const LOGIN_TITLE = "Login";
 export const LOGIN_ARIA = "login-button";
 export const LOGOUT_ARIA = "logout-button";

@@ -4,6 +4,7 @@ export const ALERT_TIME_MS = 2000;
 export const LONG_ALERT_TIME_MS = 10000;
 export const REVEAL_TIME_MS = 100;
 export const PULSE_TYPE_MS = 150;
+export const THEME_TRANSITION_TIME_MS = 100;
 export const MANUAL_OFFSET = 4; // Used to calibrate questions to days mapping
 export const MOBILE_SCREEN_CUTOFF = "600px";
 export const MAX_CATEGORY_STRING_LENGTH = 3;

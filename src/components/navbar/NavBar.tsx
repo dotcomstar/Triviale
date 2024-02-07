@@ -1,9 +1,26 @@
-import { Box, Paper, Stack, Typography, useMediaQuery } from "@mui/material";
+import { useAuth0 } from "@auth0/auth0-react";
+import {
+  Box,
+  Paper,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  MOBILE_SCREEN_CUTOFF,
+  THEME_TRANSITION_TIME_MS,
+} from "../../constants/settings";
 import { GAME_TITLE } from "../../constants/strings";
 import useDialogStore from "../../stores/dialogStore";
+import useEditingStore from "../../stores/editingStore";
+import LoginButton from "../auth/LoginButton";
+import ProfileButton from "../auth/ProfileButton";
+import LandingDialog from "../landingPage/LandingDialog";
 import HamburgerDrawer from "./drawer/HamburgerDrawer";
 import HelpButton from "./help/HelpButton";
 import HelpDialog from "./help/HelpDialog";
@@ -11,13 +28,6 @@ import SettingsButton from "./settings/SettingsButton";
 import SettingsDialog from "./settings/SettingsDialog";
 import StatsButton from "./stats/StatsButton";
 import StatsDialog from "./stats/StatsDialog";
-import LandingDialog from "../landingPage/LandingDialog";
-import { useNavigate } from "react-router-dom";
-import ProfileButton from "../auth/ProfileButton";
-import { useAuth0 } from "@auth0/auth0-react";
-import LoginButton from "../auth/LoginButton";
-import { MOBILE_SCREEN_CUTOFF } from "../../constants/settings";
-import useEditingStore from "../../stores/editingStore";
 
 interface NavBarProps {
   hasBottomBorder?: boolean;
@@ -44,6 +54,7 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
     setLandingOpen,
   } = useDialogStore();
   const editing = useEditingStore((s) => s.editing);
+  const theme = useTheme();
 
   const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
   const { isAuthenticated } = useAuth0();
@@ -73,7 +84,13 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
             position={"absolute"}
             left={matches ? "45vw" : "40vw"}
             top={matches ? "15px" : "10px"}
-            color={editing ? "info.main" : undefined}
+            color={editing ? "info.main" : "primary.contrastText"}
+            sx={{
+              transition: () =>
+                theme.transitions.create("color", {
+                  duration: `${THEME_TRANSITION_TIME_MS}ms`,
+                }),
+            }}
           >
             {GAME_TITLE}
           </Typography>

@@ -2,7 +2,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Link, Stack, Typography } from "@mui/material";
 import LogoutButton from "../components/auth/LogoutButton";
 import EditingButton from "../components/question/EditingButton";
-import { CONTACT_EMAIL, DELETE_USER_PROFILE_TEXT } from "../constants/strings";
+import {
+  CONTACT_EMAIL,
+  DELETE_USER_PROFILE_TEXT,
+  PROFILE_PAGE_TITLE,
+} from "../constants/strings";
 
 const UserProfilePage = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -16,6 +20,7 @@ const UserProfilePage = () => {
   return (
     isAuthenticated && (
       <Stack direction={"column"} alignItems={"left"} sx={{ m: 4 }} spacing={1}>
+        <Typography variant="h4">{PROFILE_PAGE_TITLE}</Typography>
         <img
           height={"100px"}
           width={"100px"}
