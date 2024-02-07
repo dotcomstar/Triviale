@@ -63,16 +63,16 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
         </IconButton>
         <List>
           {!isAuthenticated && (
-            <ListItem
+            <ListItemButton
               sx={{ justifyContent: "space-between" }}
               onClick={() => loginWithRedirect()}
             >
               <LoginButton startEdge />
               <ListItemText primary={"Login"} />
-            </ListItem>
+            </ListItemButton>
           )}
           {isAuthenticated && (
-            <ListItem
+            <ListItemButton
               sx={{ justifyContent: "space-between" }}
               onClick={() =>
                 logout({ logoutParams: { returnTo: window.location.origin } })
@@ -80,7 +80,7 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
             >
               <LogoutButton startEdge />
               <ListItemText primary={"Log Out"} />
-            </ListItem>
+            </ListItemButton>
           )}
           <ListItemButton
             href="https://www.buymeacoffee.com/jetrlee"
@@ -90,17 +90,17 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
             <SubscribeButton startEdge />
             <ListItemText primary={SUBSCRIBE_TEXT} />
           </ListItemButton>
-          <ListItem
+          <ListItemButton
             onClick={() => setHelpOpen(true)}
             sx={{ justifyContent: "space-between" }}
           >
             <HelpButton startEdge />
             <ListItemText primary={HELP_TITLE} />
-          </ListItem>
-          <ListItem onClick={() => setStatsOpen(true)}>
+          </ListItemButton>
+          <ListItemButton onClick={() => setStatsOpen(true)}>
             <StatsButton startEdge />
             <ListItemText primary={STATISTICS_TITLE} />
-          </ListItem>
+          </ListItemButton>
         </List>
       </Box>
     );
