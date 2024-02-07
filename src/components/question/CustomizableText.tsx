@@ -5,7 +5,10 @@ import {
   useMediaQuery,
   Autocomplete,
 } from "@mui/material";
-import { MOBILE_SCREEN_CUTOFF } from "../../constants/settings";
+import {
+  MAX_CATEGORY_STRING_LENGTH,
+  MOBILE_SCREEN_CUTOFF,
+} from "../../constants/settings";
 import useGameStateStore from "../../stores/gameStateStore";
 import { ALL_CATEGORIES } from "../../data/questions";
 
@@ -68,7 +71,10 @@ const CustomizableText = () => {
               ...params.InputProps,
               sx: { borderRadius: 3 },
             }}
-            inputProps={{ ...params.inputProps, maxLength: 3 }}
+            inputProps={{
+              ...params.inputProps,
+              maxLength: MAX_CATEGORY_STRING_LENGTH,
+            }}
             label="Category"
           />
         )}
