@@ -112,6 +112,7 @@ export const LOGOUT_ARIA = "logout-button";
 export const PROFILE_ARIA = "profile-button";
 export const EDIT_BUTTON_ARIA = "edit questions";
 export const RETURN_FROM_EDIT_BUTTON_ARIA = "play questions";
+export const DELETE_USER_PROFILE_TEXT = "Delete Profile";
 
 // export const MIGRATE_BUTTON_TEXT = "Transfer";
 // export const MIGRATE_DESCRIPTION_TEXT =

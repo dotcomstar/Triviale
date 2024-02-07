@@ -17,6 +17,7 @@ import ProfileButton from "../auth/ProfileButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "../auth/LoginButton";
 import { MOBILE_SCREEN_CUTOFF } from "../../constants/settings";
+import useEditingStore from "../../stores/editingStore";
 
 interface NavBarProps {
   hasBottomBorder?: boolean;
@@ -42,6 +43,7 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
     isLandingOpen,
     setLandingOpen,
   } = useDialogStore();
+  const editing = useEditingStore((s) => s.editing);
 
   const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
   const { isAuthenticated } = useAuth0();
@@ -71,6 +73,7 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
             position={"absolute"}
             left={matches ? "45vw" : "40vw"}
             top={matches ? "15px" : "10px"}
+            color={editing ? "info.main" : undefined}
           >
             {GAME_TITLE}
           </Typography>
