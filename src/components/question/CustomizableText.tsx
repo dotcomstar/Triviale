@@ -11,6 +11,7 @@ import {
 } from "../../constants/settings";
 import useGameStateStore from "../../stores/gameStateStore";
 import { ALL_CATEGORIES } from "../../data/questions";
+import { Control, Controller, UseFormRegister } from "react-hook-form";
 
 const CustomizableText = () => {
   const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);

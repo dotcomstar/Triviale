@@ -21,6 +21,12 @@ import useRetrievedStore from "../stores/retrievedStore";
 import useStatsStore from "../stores/statsStore";
 import CustomizableText from "../components/question/CustomizableText";
 import useEditingStore from "../stores/editingStore";
+import { useForm } from "react-hook-form";
+import { Question } from "../data/questions";
+
+export type FormValues = {
+  customQuestion: Question;
+};
 
 const HomePage = () => {
   const { data } = useQuestions();
@@ -78,6 +84,13 @@ const HomePage = () => {
     advancedStats,
   } = useStatsStore();
   const { onscreenKeyboardOnly } = useOnscreenKeyboardOnlyStore();
+
+  const customQuestions = useCustomQuestionsStore();
+  const { handleSubmit, control, register } = useForm<FormValues>({
+    defaultValues: {
+      customQuestion: "",
+    },
+  });
 
   const todaysCategories = Array(QUESTIONS_PER_DAY)
     .fill("")
