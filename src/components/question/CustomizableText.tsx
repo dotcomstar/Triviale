@@ -29,16 +29,16 @@ const CustomizableText = () => {
         margin="normal"
         minRows={3}
         fullWidth
-        variant="filled"
         label={`Question ${questionNumber + 1}`}
         placeholder="Put your question here"
+        InputProps={{ sx: { borderRadius: 3 } }}
       />
       <TextField
         fullWidth
         margin="normal"
-        variant="filled"
         label="Answer"
         placeholder="Put your answer here"
+        InputProps={{ sx: { borderRadius: 3 } }}
       />
       <Autocomplete
         options={[]}
@@ -48,6 +48,10 @@ const CustomizableText = () => {
         renderInput={(params) => (
           <TextField
             {...params}
+            InputProps={{
+              ...params.InputProps,
+              sx: { borderRadius: 3 },
+            }}
             label="Alt Answers (optional)"
             placeholder="Press enter to add a new answer"
           />
@@ -57,7 +61,17 @@ const CustomizableText = () => {
         options={ALL_CATEGORIES}
         fullWidth
         freeSolo
-        renderInput={(params) => <TextField {...params} label="Category" />}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            InputProps={{
+              ...params.InputProps,
+              sx: { borderRadius: 3 },
+            }}
+            inputProps={{ ...params.inputProps, maxLength: 3 }}
+            label="Category"
+          />
+        )}
       />
       <Button variant="contained" fullWidth color="secondary">
         Save
