@@ -15,7 +15,7 @@ interface QuestionInputFormProps {
   register: UseFormRegister<Question>;
   useAutocomplete?: boolean;
   label: string;
-  placeholder: string;
+  placeholder?: string;
   maxLength?: number;
   minRows?: number;
   options?: readonly string[];
@@ -37,6 +37,7 @@ const QuestionInputForm = ({
   const [value, setValue] = useState<QuestionValueTypes>(
     customQuestions[questionNumber][name]
   );
+  const borderRadius = 3;
 
   const TextFieldInterior = (
     <TextField
@@ -45,12 +46,16 @@ const QuestionInputForm = ({
       fullWidth
       label={label}
       placeholder={placeholder}
-      InputProps={{ sx: { borderRadius: 3 } }}
+      InputProps={{ sx: { borderRadius: borderRadius } }}
       inputProps={{
         maxLength: maxLength && MAX_CATEGORY_STRING_LENGTH,
       }}
       {...register(name, {
         setValueAs: () => value,
+        pattern: {
+          value: /^[a-zA-Z ]*$/,
+          message: "Please Enter Only Letters",
+        },
       })}
     />
   );
@@ -60,7 +65,38 @@ const QuestionInputForm = ({
       options={options || []}
       fullWidth
       freeSolo
-      renderInput={TextFieldInterior}
+      onInputChange={(_, value) => {
+        setValue(value);
+      }}
+      onChange={(_, value) => {
+        setValue(value || "");
+      }}
+      renderInput={(props: TextFieldProps) => (
+        <TextField
+          multiline
+          minRows={minRows}
+          fullWidth
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: 3,
+            },
+          }}
+          label={label}
+          placeholder={placeholder}
+          InputProps={{ sx: { borderRadius: borderRadius } }}
+          inputProps={{
+            maxLength: maxLength && MAX_CATEGORY_STRING_LENGTH,
+          }}
+          {...props}
+          {...register(name, {
+            setValueAs: () => value,
+            pattern: {
+              value: /^[a-zA-Z ]*$/,
+              message: "Please Enter Only Letters",
+            },
+          })}
+        />
+      )}
     />
   );
 

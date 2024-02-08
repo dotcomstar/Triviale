@@ -5,7 +5,7 @@ import {
   TextField,
   useMediaQuery,
 } from "@mui/material";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import {
   MAX_CATEGORY_STRING_LENGTH,
   MOBILE_SCREEN_CUTOFF,
@@ -44,7 +44,7 @@ const CustomizableText = () => {
       >
         <QuestionInputForm
           name={"question"}
-          label={`Question ${questionNumber + 1}`}
+          label={`Question ${questionNumber + 1}*`}
           placeholder="Put your question here"
           control={control}
           register={register}
@@ -52,46 +52,29 @@ const CustomizableText = () => {
         />
         <QuestionInputForm
           name={"answer"}
-          label="Answer"
+          label="Answer*"
           placeholder="Put your answer here"
           control={control}
           register={register}
         />
-        <Autocomplete
-          options={[]}
-          fullWidth
-          freeSolo
-          multiple
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              InputProps={{
-                ...params.InputProps,
-                sx: { borderRadius: 3 },
-              }}
-              label="Alt Answers (optional)"
-              placeholder="Press enter to add a new answer"
-            />
-          )}
+        <QuestionInputForm
+          name={"altAnswer"}
+          label="Alt Answers"
+          placeholder="Press enter to add a new answer"
+          control={control}
+          register={register}
+          useAutocomplete
+          options={[]} // An autocomplete with no options is used to leverage multiple inputs from cards
         />
-        <Autocomplete
+
+        <QuestionInputForm
+          name={"category"}
+          label="Category"
+          control={control}
+          register={register}
+          maxLength={3}
+          useAutocomplete
           options={ALL_CATEGORIES}
-          fullWidth
-          freeSolo
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              InputProps={{
-                ...params.InputProps,
-                sx: { borderRadius: 3 },
-              }}
-              inputProps={{
-                ...params.inputProps,
-                maxLength: MAX_CATEGORY_STRING_LENGTH,
-              }}
-              label="Category"
-            />
-          )}
         />
         <Button variant="contained" fullWidth color="secondary" type="submit">
           Save
