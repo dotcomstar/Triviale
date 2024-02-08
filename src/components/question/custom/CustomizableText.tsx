@@ -4,7 +4,7 @@ import {
   MAX_CATEGORY_STRING_LENGTH,
   MOBILE_SCREEN_CUTOFF,
 } from "../../../constants/settings";
-import questions, { ALL_CATEGORIES, Question } from "../../../data/questions";
+import { ALL_CATEGORIES, Question } from "../../../data/questions";
 import useGameStateStore from "../../../stores/gameStateStore";
 import useCustomQuestionsStore from "../../../stores/customQuestionsStore";
 import QuestionInputForm from "./QuestionInputForm";

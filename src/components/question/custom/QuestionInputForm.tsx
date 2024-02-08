@@ -28,11 +28,11 @@ const QuestionInputForm = ({
   placeholder,
   control,
   register,
-  maxLength,
+  //   maxLength,
   minRows,
   options,
   multiline,
-  onlyLetters,
+  //   onlyLetters,
   multipleAnswers,
 }: QuestionInputFormProps) => {
   const customQuestions = useCustomQuestionsStore((s) => s.customQuestions);
