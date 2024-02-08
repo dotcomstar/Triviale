@@ -15,16 +15,19 @@ const defaultQuestions: Question[] = [
     question: "",
     answer: "",
     category: "ANY",
+    altAnswer: [],
   },
   {
     question: "",
     answer: "",
     category: "ANY",
+    altAnswer: [],
   },
   {
     question: "",
     answer: "",
     category: "ANY",
+    altAnswer: [],
   },
 ];
 

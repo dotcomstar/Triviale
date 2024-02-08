@@ -43,6 +43,7 @@ const QuestionInputForm = ({
   const [value, setValue] = useState<QuestionValueTypes>(
     customQuestions[questionNumber][name]
   );
+  const [inputValue, setInputValue] = useState<string>("");
   const borderRadius = 3;
 
   return (
@@ -51,15 +52,35 @@ const QuestionInputForm = ({
       name={name}
       render={() => (
         <Autocomplete
-          options={options || []}
+          options={options || ([] as readonly string[])}
+          getOptionLabel={(option) => {
+            if (option instanceof Array) {
+              return option[0];
+            } else {
+              return option;
+            }
+          }}
           fullWidth
           freeSolo
           multiple={multipleAnswers}
           onInputChange={(_, v) => {
-            setValue(multipleAnswers ? [...value, v] : v);
+            setInputValue(v);
           }}
-          onChange={(_, value) => {
-            setValue(value || multipleAnswers ? [""] : "");
+          onChange={(_e, _v, reason) => {
+            if (value instanceof Array) {
+              if (reason === "clear") {
+                setValue([]);
+              } else if (reason === "createOption") {
+                setValue([...value, inputValue]);
+              } else if (reason === "removeOption") {
+                console.log(_v);
+                if (_v && _v instanceof Array) {
+                  setValue(value.filter((v) => _v.includes(v)));
+                }
+              }
+            } else {
+              setValue(inputValue);
+            }
           }}
           value={value}
           renderInput={(textFieldProps: TextFieldProps) => (
