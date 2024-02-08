@@ -34,9 +34,9 @@ const QuestionInputForm = ({
 QuestionInputFormProps) => {
   const customQuestions = useCustomQuestionsStore((s) => s.customQuestions);
   const questionNumber = useGameStateStore((s) => s.questionNumber);
-  const defaultValue = customQuestions[questionNumber][name]?.toString() || "";
+  const defaultValue = customQuestions[questionNumber][name];
 
-  const [value, setValue] = useState(defaultValue);
+  const [value, setValue] = useState(defaultValue as string);
   const borderRadius = 3;
 
   return (
