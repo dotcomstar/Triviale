@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Autocomplete, TextField, TextFieldProps } from "@mui/material";
-import { Control, Controller, UseFormRegister, set } from "react-hook-form";
+import { Control, Controller, UseFormRegister } from "react-hook-form";
 import { Question } from "../../../data/questions";
 import useCustomQuestionsStore from "../../../stores/customQuestionsStore";
 import useGameStateStore from "../../../stores/gameStateStore";
@@ -61,12 +61,15 @@ const QuestionInputForm = ({
             }
           }}
           fullWidth
-          freeSolo
+          freeSolo // Allows any string as input
+          autoSelect={true}
+          autoHighlight={true}
           multiple={multipleAnswers}
-          onInputChange={(_, v) => {
+          onInputChange={(_e, v) => {
             setInputValue(v);
           }}
           onChange={(_e, _v, reason) => {
+            console.log(_e);
             if (value instanceof Array) {
               if (reason === "clear") {
                 setValue([]);
@@ -79,10 +82,23 @@ const QuestionInputForm = ({
                 }
               }
             } else {
-              setValue(inputValue);
+              if (reason === "clear") {
+                setInputValue("");
+                setValue("");
+              } else if (
+                reason === "selectOption" ||
+                reason === "createOption"
+              ) {
+                setInputValue(_v as string);
+                setValue(_v as string);
+              } else {
+                // (reason === 'removeOption' || reason === 'blur')
+                setValue(inputValue);
+              }
             }
           }}
           value={value}
+          isOptionEqualToValue={(option, value) => option === value}
           renderInput={(textFieldProps: TextFieldProps) => (
             <TextField
               multiline={multiline}
@@ -99,18 +115,17 @@ const QuestionInputForm = ({
                 ...textFieldProps.InputProps,
                 sx: { borderRadius: borderRadius },
               }}
-              inputProps={{
-                ...textFieldProps.inputProps,
-                maxLength: maxLength,
-              }}
+              //   inputProps={{
+              //     ...textFieldProps.inputProps,
+              //     maxLength: maxLength,
+              //   }}
               {...textFieldProps}
-              type="text"
               {...register(name, {
                 setValueAs: () => value,
-                pattern: {
-                  value: /^[a-zA-Z ]*$/,
-                  message: "Please Enter Only Letters",
-                },
+                // pattern: {
+                //   value: /^[a-zA-Z ]*$/,
+                //   message: "Please Enter Only Letters",
+                // },
               })}
             />
           )}

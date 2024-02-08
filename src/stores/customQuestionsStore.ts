@@ -10,7 +10,7 @@ interface CustomQuestionsStore {
   resetQuestions: () => void;
 }
 
-const defaultQuestions: Question[] = [
+export const defaultQuestions: Question[] = [
   {
     question: "",
     answer: "",

@@ -4,7 +4,7 @@ import {
   MAX_CATEGORY_STRING_LENGTH,
   MOBILE_SCREEN_CUTOFF,
 } from "../../../constants/settings";
-import { ALL_CATEGORIES, Question } from "../../../data/questions";
+import questions, { ALL_CATEGORIES, Question } from "../../../data/questions";
 import useGameStateStore from "../../../stores/gameStateStore";
 import useCustomQuestionsStore from "../../../stores/customQuestionsStore";
 import QuestionInputForm from "./QuestionInputForm";
@@ -16,12 +16,12 @@ const CustomizableText = () => {
 
   const { customQuestions } = useCustomQuestionsStore();
   const { handleSubmit, control, register } = useForm<Question>({
-    defaultValues: customQuestions[questionNumber],
+    defaultValues: customQuestions[questionNumber], // These can come from an async function call as well
   });
 
   const onSubmit: SubmitHandler<Question> = (data: Question) => {
     setQuestion(data, questionNumber);
-    console.log("data: ", data);
+    console.log("data: ", data, " questionIndex: ", questionNumber);
   };
 
   return (

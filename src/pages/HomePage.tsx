@@ -11,7 +11,6 @@ import {
   MOBILE_SCREEN_CUTOFF,
   QUESTIONS_PER_DAY,
 } from "../constants/settings";
-import { Question } from "../data/questions";
 import useDailyIndex, { getPositiveIndex } from "../hooks/useDailyIndex";
 import useQuestions from "../hooks/useQuestions";
 import useCurrGuessStore from "../stores/currGuessStore";
@@ -22,6 +21,7 @@ import useHardModeStore from "../stores/hardModeStore";
 import useOnscreenKeyboardOnlyStore from "../stores/onscreenKeyboardOnlyStore";
 import useRetrievedStore from "../stores/retrievedStore";
 import useStatsStore from "../stores/statsStore";
+import useCustomQuestionsStore from "../stores/customQuestionsStore";
 
 const HomePage = () => {
   const { data } = useQuestions();
