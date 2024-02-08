@@ -43,7 +43,6 @@ const QuestionInputForm = ({
   const [value, setValue] = useState<QuestionValueTypes>(
     customQuestions[questionNumber][name]
   );
-  const [inputValue, setInputValue] = useState<string>("");
   const borderRadius = 3;
 
   return (
@@ -52,7 +51,13 @@ const QuestionInputForm = ({
       name={name}
       render={() => (
         <Autocomplete
+          freeSolo // Allows any string as input
+          fullWidth
+          autoSelect={true}
+          autoHighlight={true}
+          //   multiple={multipleAnswers}
           options={options || ([] as readonly string[])}
+          isOptionEqualToValue={(option, value) => option === value}
           getOptionLabel={(option) => {
             if (option instanceof Array) {
               return option[0];
@@ -60,57 +65,26 @@ const QuestionInputForm = ({
               return option;
             }
           }}
-          fullWidth
-          freeSolo // Allows any string as input
-          autoSelect={true}
-          autoHighlight={true}
-          multiple={multipleAnswers}
           onInputChange={(_e, v) => {
-            setInputValue(v);
+            setValue(v);
           }}
-          onChange={(_e, _v, reason) => {
-            console.log(_e);
-            if (value instanceof Array) {
-              if (reason === "clear") {
-                setValue([]);
-              } else if (reason === "createOption") {
-                setValue([...value, inputValue]);
-              } else if (reason === "removeOption") {
-                console.log(_v);
-                if (_v && _v instanceof Array) {
-                  setValue(value.filter((v) => _v.includes(v)));
-                }
-              }
-            } else {
-              if (reason === "clear") {
-                setInputValue("");
-                setValue("");
-              } else if (
-                reason === "selectOption" ||
-                reason === "createOption"
-              ) {
-                setInputValue(_v as string);
-                setValue(_v as string);
-              } else {
-                // (reason === 'removeOption' || reason === 'blur')
-                setValue(inputValue);
-              }
-            }
+          onChange={(_e, v) => {
+            setValue(v!);
           }}
           value={value}
-          isOptionEqualToValue={(option, value) => option === value}
           renderInput={(textFieldProps: TextFieldProps) => (
             <TextField
+              {...textFieldProps}
+              fullWidth
+              label={label}
+              placeholder={placeholder}
               multiline={multiline}
               minRows={minRows}
-              fullWidth
               sx={{
                 "& .MuiOutlinedInput-root": {
                   borderRadius: 3,
                 },
               }}
-              label={label}
-              placeholder={placeholder}
               InputProps={{
                 ...textFieldProps.InputProps,
                 sx: { borderRadius: borderRadius },
@@ -119,7 +93,6 @@ const QuestionInputForm = ({
               //     ...textFieldProps.inputProps,
               //     maxLength: maxLength,
               //   }}
-              {...textFieldProps}
               {...register(name, {
                 setValueAs: () => value,
                 // pattern: {
