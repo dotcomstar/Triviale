@@ -1,10 +1,4 @@
-import {
-  Autocomplete,
-  Button,
-  Stack,
-  TextField,
-  useMediaQuery,
-} from "@mui/material";
+import { Button, Stack, useMediaQuery } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   MAX_CATEGORY_STRING_LENGTH,
@@ -49,6 +43,8 @@ const CustomizableText = () => {
           control={control}
           register={register}
           minRows={3}
+          multiline
+          options={[]} // An autocomplete with no options is used to leverage multiple inputs from cards
         />
         <QuestionInputForm
           name={"answer"}
@@ -56,6 +52,8 @@ const CustomizableText = () => {
           placeholder="Put your answer here"
           control={control}
           register={register}
+          onlyLetters
+          options={[]} // An autocomplete with no options is used to leverage multiple inputs from cards
         />
         <QuestionInputForm
           name={"altAnswer"}
@@ -63,7 +61,8 @@ const CustomizableText = () => {
           placeholder="Press enter to add a new answer"
           control={control}
           register={register}
-          useAutocomplete
+          onlyLetters
+          multipleAnswers
           options={[]} // An autocomplete with no options is used to leverage multiple inputs from cards
         />
 
@@ -72,8 +71,7 @@ const CustomizableText = () => {
           label="Category"
           control={control}
           register={register}
-          maxLength={3}
-          useAutocomplete
+          maxLength={MAX_CATEGORY_STRING_LENGTH}
           options={ALL_CATEGORIES}
         />
         <Button variant="contained" fullWidth color="secondary" type="submit">
