@@ -8,6 +8,7 @@ import { ALL_CATEGORIES, Question } from "../../../data/questions";
 import useGameStateStore from "../../../stores/gameStateStore";
 import useCustomQuestionsStore from "../../../stores/customQuestionsStore";
 import QuestionInputForm from "./QuestionInputForm";
+import QuestionInputFormMulti from "./QuestionInputFormMulti";
 
 const CustomizableText = () => {
   const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
@@ -55,20 +56,19 @@ const CustomizableText = () => {
           onlyLetters
           options={[]} // An autocomplete with no options is used to leverage multiple inputs from cards
         />
-        <QuestionInputForm
+        <QuestionInputFormMulti
           name={"altAnswer"}
           label="Alt Answers"
           placeholder="Press enter to add a new answer"
           control={control}
           register={register}
           onlyLetters
-          multipleAnswers
           options={[]} // An autocomplete with no options is used to leverage multiple inputs from cards
         />
 
         <QuestionInputForm
           name={"category"}
-          label="Category"
+          label="Category*"
           control={control}
           register={register}
           maxLength={MAX_CATEGORY_STRING_LENGTH}

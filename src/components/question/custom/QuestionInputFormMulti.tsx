@@ -1,9 +1,9 @@
-import { useState } from "react";
 import { Autocomplete, TextField, TextFieldProps } from "@mui/material";
 import { Control, Controller, UseFormRegister } from "react-hook-form";
 import { Question } from "../../../data/questions";
 import useCustomQuestionsStore from "../../../stores/customQuestionsStore";
 import useGameStateStore from "../../../stores/gameStateStore";
+import { useState } from "react";
 
 type QuestionKeyTypes = keyof Question;
 
@@ -34,9 +34,9 @@ const QuestionInputForm = ({
 QuestionInputFormProps) => {
   const customQuestions = useCustomQuestionsStore((s) => s.customQuestions);
   const questionNumber = useGameStateStore((s) => s.questionNumber);
-  const defaultValue = customQuestions[questionNumber][name]?.toString() || "";
+  const defaultValue = customQuestions[questionNumber][name];
 
-  const [value, setValue] = useState(defaultValue);
+  const [value, setValue] = useState(defaultValue as string[]);
   const borderRadius = 3;
 
   return (
@@ -49,18 +49,16 @@ QuestionInputFormProps) => {
           fullWidth
           autoSelect={true}
           autoHighlight={true}
+          multiple
           options={options || ([] as readonly string[])}
           isOptionEqualToValue={(option, value) => option === value}
           getOptionLabel={(option) => {
             return option;
           }}
-          onInputChange={(_e, v) => {
+          onChange={(_e, v) => {
             setValue(v);
           }}
-          onChange={(_e, v) => {
-            setValue(v || "");
-          }}
-          value={value}
+          value={value || []}
           renderInput={(textFieldProps: TextFieldProps) => (
             <TextField
               {...textFieldProps}
