@@ -18,6 +18,7 @@ const useMongoDBQuestions = (questionID?: string) =>
         })
         .then((res) => res.data),
     refetchOnWindowFocus: false,
+    enabled: false, // TODO: Update this in production
     staleTime: oneDay, // 1 day. How often should custom questions be refetched?
   });
 

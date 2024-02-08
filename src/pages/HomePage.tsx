@@ -5,28 +5,23 @@ import Keyboard from "../components/keyboard/Keyboard";
 import NavBar from "../components/navbar/NavBar";
 import ProgressBar from "../components/progressBar/ProgressBar";
 import ExpandableText from "../components/question/ExpandableText";
+import CustomizableText from "../components/question/custom/CustomizableText";
 import {
   MAX_CHALLENGES,
   MOBILE_SCREEN_CUTOFF,
   QUESTIONS_PER_DAY,
 } from "../constants/settings";
+import { Question } from "../data/questions";
 import useDailyIndex, { getPositiveIndex } from "../hooks/useDailyIndex";
 import useQuestions from "../hooks/useQuestions";
 import useCurrGuessStore from "../stores/currGuessStore";
 import useDialogStore from "../stores/dialogStore";
+import useEditingStore from "../stores/editingStore";
 import useGameStateStore from "../stores/gameStateStore";
 import useHardModeStore from "../stores/hardModeStore";
 import useOnscreenKeyboardOnlyStore from "../stores/onscreenKeyboardOnlyStore";
 import useRetrievedStore from "../stores/retrievedStore";
 import useStatsStore from "../stores/statsStore";
-import CustomizableText from "../components/question/CustomizableText";
-import useEditingStore from "../stores/editingStore";
-import { useForm } from "react-hook-form";
-import { Question } from "../data/questions";
-
-export type FormValues = {
-  customQuestion: Question;
-};
 
 const HomePage = () => {
   const { data } = useQuestions();
@@ -84,13 +79,6 @@ const HomePage = () => {
     advancedStats,
   } = useStatsStore();
   const { onscreenKeyboardOnly } = useOnscreenKeyboardOnlyStore();
-
-  const customQuestions = useCustomQuestionsStore();
-  const { handleSubmit, control, register } = useForm<FormValues>({
-    defaultValues: {
-      customQuestion: "",
-    },
-  });
 
   const todaysCategories = Array(QUESTIONS_PER_DAY)
     .fill("")
