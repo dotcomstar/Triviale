@@ -106,10 +106,15 @@ export const SUBSCRIBE_BUTTON_ARIA = "subscribe-button";
 
 export const ENTER_KEY_ID = "ENTER_KEY";
 
+export const PROFILE_PAGE_TITLE = "Profile Page";
 export const LOGIN_TITLE = "Login";
 export const LOGIN_ARIA = "login-button";
 export const LOGOUT_ARIA = "logout-button";
 export const PROFILE_ARIA = "profile-button";
+export const EDIT_BUTTON_ARIA = "edit questions";
+export const RETURN_FROM_EDIT_BUTTON_ARIA = "play questions";
+export const DELETE_USER_PROFILE_TEXT = "Delete Profile";
+
 // export const MIGRATE_BUTTON_TEXT = "Transfer";
 // export const MIGRATE_DESCRIPTION_TEXT =
 //   "Click here to transfer your statistics to a new device.";

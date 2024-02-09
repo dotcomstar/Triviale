@@ -5,21 +5,21 @@ import { oneDay } from "./useDailyIndex";
 import useTodayAsInt from "./useTodayAsInt";
 
 const today = useTodayAsInt();
-console.log(`Today is ${today}`);
 
-const useMongoDBQuestions = () =>
+const useMongoDBQuestions = (questionID?: string) =>
   useQuery<MondoDBQuestion[], Error>({
-    queryKey: ["date", today],
+    queryKey: questionID ? ["questionID", questionID] : ["date", today],
     queryFn: () =>
       apiClient
         .get<MondoDBQuestion[]>("/questions", {
           params: {
-            date: today,
+            date: questionID ? questionID : today,
           },
         })
         .then((res) => res.data),
     refetchOnWindowFocus: false,
-    staleTime: oneDay, // 1 day
+    enabled: false, // TODO: Update this in production
+    staleTime: oneDay, // 1 day. How often should custom questions be refetched?
   });
 
 export default useMongoDBQuestions;
