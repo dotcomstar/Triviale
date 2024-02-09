@@ -1,6 +1,4 @@
-import { Category } from "@mui/icons-material";
-
-type Category = "SCI" | "HIS" | "ART" | "REL" | "GEO" | "POP";
+type Category = "SCI" | "HIS" | "ART" | "REL" | "GEO" | "POP" | string;
 
 const SCIENCE = "SCI";
 const HISTORY = "HIS";
