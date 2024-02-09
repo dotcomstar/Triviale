@@ -1,16 +1,14 @@
-import { Button, Stack, Typography, useMediaQuery } from "@mui/material";
+import { Button, Stack, useMediaQuery } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
 import {
   MAX_CATEGORY_STRING_LENGTH,
   MOBILE_SCREEN_CUTOFF,
 } from "../../../constants/settings";
 import { ALL_CATEGORIES, Question } from "../../../data/questions";
-import useGameStateStore from "../../../stores/gameStateStore";
 import useCustomQuestionsStore from "../../../stores/customQuestionsStore";
+import useGameStateStore from "../../../stores/gameStateStore";
 import QuestionInputForm from "./QuestionInputForm";
 import QuestionInputFormMulti from "./QuestionInputFormMulti";
-import { useEffect } from "react";
 
 const CustomizableText = () => {
   const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
@@ -82,6 +80,7 @@ const CustomizableText = () => {
           control={control}
           register={register}
           onlyLetters
+          errors={errors}
           options={[]} // An autocomplete with no options is used to leverage multiple inputs from cards
         />
         <QuestionInputForm

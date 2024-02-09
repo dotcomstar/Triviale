@@ -43,8 +43,8 @@ const QuestionInputForm = ({
   options,
   multiline,
   errors,
-}: //   onlyLetters,
-QuestionInputFormProps) => {
+  onlyLetters,
+}: QuestionInputFormProps) => {
   const customQuestions = useCustomQuestionsStore((s) => s.customQuestions);
   const questionNumber = useGameStateStore((s) => s.questionNumber);
   const defaultValue = customQuestions[questionNumber][name];
@@ -80,6 +80,8 @@ QuestionInputFormProps) => {
                 {...textFieldProps}
                 fullWidth
                 label={label + "*"}
+                aria-invalid={errors && errors[name] ? true : false}
+                error={errors && errors[name] ? true : false}
                 placeholder={placeholder}
                 multiline={multiline}
                 minRows={minRows}
@@ -99,10 +101,12 @@ QuestionInputFormProps) => {
                 {...register(name, {
                   setValueAs: () => value,
                   required: { value: true, message: `${label} is required` },
-                  pattern: {
-                    value: /^[a-zA-Z ]*$/,
-                    message: "Only enter letters (A-Z)",
-                  },
+                  pattern: onlyLetters
+                    ? {
+                        value: /^[a-zA-Z ]*$/,
+                        message: "Only letters A-z accepted",
+                      }
+                    : undefined,
                 })}
               />
             )}

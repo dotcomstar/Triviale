@@ -21,7 +21,6 @@ import useHardModeStore from "../stores/hardModeStore";
 import useOnscreenKeyboardOnlyStore from "../stores/onscreenKeyboardOnlyStore";
 import useRetrievedStore from "../stores/retrievedStore";
 import useStatsStore from "../stores/statsStore";
-import useCustomQuestionsStore from "../stores/customQuestionsStore";
 
 const HomePage = () => {
   const { data } = useQuestions();
