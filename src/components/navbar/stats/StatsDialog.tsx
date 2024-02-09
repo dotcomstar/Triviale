@@ -13,7 +13,10 @@ import {
   STATISTICS_TITLE,
   STATS_DIALOG_ARIA,
 } from "../../../constants/strings";
-import useDailyIndex, { getPositiveIndex } from "../../../hooks/useDailyIndex";
+import useDailyIndex, {
+  getPositiveIndex,
+  oneDay,
+} from "../../../hooks/useDailyIndex";
 import useQuestionByID from "../../../hooks/useQuestionByID";
 import useGameStateStore from "../../../stores/gameStateStore";
 import useHardModeStore from "../../../stores/hardModeStore";
@@ -41,7 +44,7 @@ const StatsDialog = ({
   const isHardMode = useHardModeStore((s) => s.hardMode);
   const guesses = useGameStateStore((s) => s.guesses);
   const dailyIndex = useDailyIndex();
-  const date = new Date().toLocaleDateString();
+  const date = new Date(new Date().getTime() + oneDay).toLocaleDateString(); // Temp offset so new questions come the second day and not the first
   const questionState = useGameStateStore((s) => s.questionState);
   const solutionIndex = date;
   const retrieved = useRetrievedStore((s) => s.retrieved);
