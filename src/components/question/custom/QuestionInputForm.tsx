@@ -1,9 +1,20 @@
 import { useState } from "react";
-import { Autocomplete, TextField, TextFieldProps } from "@mui/material";
-import { Control, Controller, UseFormRegister } from "react-hook-form";
+import {
+  Autocomplete,
+  TextField,
+  TextFieldProps,
+  Typography,
+} from "@mui/material";
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  UseFormRegister,
+} from "react-hook-form";
 import { Question } from "../../../data/questions";
 import useCustomQuestionsStore from "../../../stores/customQuestionsStore";
 import useGameStateStore from "../../../stores/gameStateStore";
+import { ErrorMessage } from "@hookform/error-message";
 
 type QuestionKeyTypes = keyof Question;
 
@@ -18,6 +29,7 @@ interface QuestionInputFormProps {
   options?: readonly string[];
   multiline?: boolean;
   onlyLetters?: boolean;
+  errors?: FieldErrors<Question>;
 }
 
 const QuestionInputForm = ({
@@ -26,10 +38,11 @@ const QuestionInputForm = ({
   placeholder,
   control,
   register,
-  //   maxLength,
+  maxLength,
   minRows,
   options,
   multiline,
+  errors,
 }: //   onlyLetters,
 QuestionInputFormProps) => {
   const customQuestions = useCustomQuestionsStore((s) => s.customQuestions);
@@ -40,60 +53,70 @@ QuestionInputFormProps) => {
   const borderRadius = 3;
 
   return (
-    <Controller
-      control={control}
-      name={name}
-      render={() => (
-        <Autocomplete
-          freeSolo // Allows any string as input
-          fullWidth
-          autoSelect={true}
-          autoHighlight={true}
-          options={options || ([] as readonly string[])}
-          isOptionEqualToValue={(option, value) => option === value}
-          getOptionLabel={(option) => {
-            return option;
-          }}
-          onInputChange={(_e, v) => {
-            setValue(v);
-          }}
-          onChange={(_e, v) => {
-            setValue(v || "");
-          }}
-          value={value}
-          renderInput={(textFieldProps: TextFieldProps) => (
-            <TextField
-              {...textFieldProps}
-              fullWidth
-              label={label}
-              placeholder={placeholder}
-              multiline={multiline}
-              minRows={minRows}
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  borderRadius: 3,
-                },
-              }}
-              InputProps={{
-                ...textFieldProps.InputProps,
-                sx: { borderRadius: borderRadius },
-              }}
-              //   inputProps={{
-              //     ...textFieldProps.inputProps,
-              //     maxLength: maxLength,
-              //   }}
-              {...register(name, {
-                setValueAs: () => value,
-                // pattern: {
-                //   value: /^[a-zA-Z ]*$/,
-                //   message: "Please Enter Only Letters",
-                // },
-              })}
-            />
-          )}
-        />
-      )}
-    />
+    <>
+      <Controller
+        control={control}
+        name={name}
+        render={() => (
+          <Autocomplete
+            freeSolo // Allows any string as input
+            fullWidth
+            autoSelect={true}
+            autoHighlight={true}
+            options={options || ([] as readonly string[])}
+            isOptionEqualToValue={(option, value) => option === value}
+            getOptionLabel={(option) => {
+              return option;
+            }}
+            onInputChange={(_, v) => {
+              setValue(v);
+            }}
+            onChange={(_, v) => {
+              setValue(v || "");
+            }}
+            value={value}
+            renderInput={(textFieldProps: TextFieldProps) => (
+              <TextField
+                {...textFieldProps}
+                fullWidth
+                label={label + "*"}
+                placeholder={placeholder}
+                multiline={multiline}
+                minRows={minRows}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 3,
+                  },
+                }}
+                InputProps={{
+                  ...textFieldProps.InputProps,
+                  sx: { borderRadius: borderRadius },
+                }}
+                inputProps={{
+                  ...textFieldProps.inputProps,
+                  maxLength: maxLength,
+                }}
+                {...register(name, {
+                  setValueAs: () => value,
+                  required: { value: true, message: `${label} is required` },
+                  pattern: {
+                    value: /^[a-zA-Z ]*$/,
+                    message: "Only enter letters (A-Z)",
+                  },
+                })}
+              />
+            )}
+          />
+        )}
+      />
+      <ErrorMessage
+        errors={errors}
+        name={name}
+        render={({ message }) => (
+          <Typography color={"info.main"}>{`Error: ${message}`}</Typography>
+        )}
+      />
+    </>
   );
 };
 

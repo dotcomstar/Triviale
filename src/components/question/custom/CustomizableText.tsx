@@ -1,5 +1,6 @@
-import { Button, Stack, useMediaQuery } from "@mui/material";
+import { Button, Stack, Typography, useMediaQuery } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 import {
   MAX_CATEGORY_STRING_LENGTH,
   MOBILE_SCREEN_CUTOFF,
@@ -9,6 +10,7 @@ import useGameStateStore from "../../../stores/gameStateStore";
 import useCustomQuestionsStore from "../../../stores/customQuestionsStore";
 import QuestionInputForm from "./QuestionInputForm";
 import QuestionInputFormMulti from "./QuestionInputFormMulti";
+import { useEffect } from "react";
 
 const CustomizableText = () => {
   const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
@@ -16,8 +18,18 @@ const CustomizableText = () => {
   const { setQuestion } = useCustomQuestionsStore();
 
   const { customQuestions } = useCustomQuestionsStore();
-  const { handleSubmit, control, register } = useForm<Question>({
+  const {
+    handleSubmit,
+    control,
+    register,
+    formState: { errors },
+  } = useForm<Question>({
     defaultValues: customQuestions[questionNumber], // These can come from an async function call as well
+    criteriaMode: "all", // show all errors at once
+    resetOptions: {
+      keepDirtyValues: false, // user-interacted input will not be retained
+      keepErrors: false, // input errors will not be retained with value update
+    },
   });
 
   const onSubmit: SubmitHandler<Question> = (data: Question) => {
@@ -26,7 +38,12 @@ const CustomizableText = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      onChange={(e) => {
+        e.persist(); // REFACTOR: hacky solution allows last letter changed to be submitted
+      }}
+    >
       <Stack
         alignItems={"center"}
         justifyContent={"center"}
@@ -39,21 +56,23 @@ const CustomizableText = () => {
       >
         <QuestionInputForm
           name={"question"}
-          label={`Question ${questionNumber + 1}*`}
+          label={`Question ${questionNumber + 1}`}
           placeholder="Put your question here"
           control={control}
           register={register}
           minRows={3}
           multiline
+          errors={errors}
           options={[]} // An autocomplete with no options is used to leverage multiple inputs from cards
         />
         <QuestionInputForm
           name={"answer"}
-          label="Answer*"
+          label="Answer"
           placeholder="Put your answer here"
           control={control}
           register={register}
           onlyLetters
+          errors={errors}
           options={[]} // An autocomplete with no options is used to leverage multiple inputs from cards
         />
         <QuestionInputFormMulti
@@ -65,13 +84,13 @@ const CustomizableText = () => {
           onlyLetters
           options={[]} // An autocomplete with no options is used to leverage multiple inputs from cards
         />
-
         <QuestionInputForm
           name={"category"}
-          label="Category*"
+          label="Category"
           control={control}
           register={register}
           maxLength={MAX_CATEGORY_STRING_LENGTH}
+          errors={errors}
           options={ALL_CATEGORIES}
         />
         <Button variant="contained" fullWidth color="secondary" type="submit">

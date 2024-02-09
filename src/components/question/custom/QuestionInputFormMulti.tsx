@@ -13,7 +13,6 @@ interface QuestionInputFormProps {
   register: UseFormRegister<Question>;
   label: string;
   placeholder?: string;
-  maxLength?: number;
   minRows?: number;
   options?: readonly string[];
   multiline?: boolean;
@@ -26,7 +25,6 @@ const QuestionInputForm = ({
   placeholder,
   control,
   register,
-  //   maxLength,
   minRows,
   options,
   multiline,
@@ -55,7 +53,7 @@ QuestionInputFormProps) => {
           getOptionLabel={(option) => {
             return option;
           }}
-          onChange={(_e, v) => {
+          onChange={(_, v) => {
             setValue(v);
           }}
           value={value || []}
@@ -76,10 +74,6 @@ QuestionInputFormProps) => {
                 ...textFieldProps.InputProps,
                 sx: { borderRadius: borderRadius },
               }}
-              //   inputProps={{
-              //     ...textFieldProps.inputProps,
-              //     maxLength: maxLength,
-              //   }}
               {...register(name, {
                 setValueAs: () => value,
                 // pattern: {
