@@ -1,12 +1,13 @@
 import questions, { Question } from "../data/questions";
-import useRetrievedStore from "../stores/retrievedStore";
-import useMongoDBQuestions from "./useMongoDBQuestions";
+// import useRetrievedStore from "../stores/retrievedStore";
+// import useMongoDBQuestions from "./useMongoDBQuestions";
 
 export type QuestionsResponse = {
   data: Question[];
 };
 
 const useQuestions = (questionID?: string): QuestionsResponse => {
+  console.log(questionID);
   return { data: questions };
   // Try to get questions with MongoDB API.
   // const setRetrieved = useRetrievedStore((s) => s.setRetrieved);
