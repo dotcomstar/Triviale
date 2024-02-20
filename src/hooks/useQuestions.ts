@@ -7,7 +7,9 @@ export type QuestionsResponse = {
 };
 
 const useQuestions = (questionID?: string): QuestionsResponse => {
-  console.log(questionID);
+  if (questionID) {
+    console.log(questionID);
+  }
   return { data: questions };
   // Try to get questions with MongoDB API.
   // const setRetrieved = useRetrievedStore((s) => s.setRetrieved);
