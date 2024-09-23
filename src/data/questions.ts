@@ -1,4 +1,4 @@
-type Category = "SCI" | "HIS" | "ART" | "REL" | "GEO" | "POP" | string;
+export type Category = "SCI" | "HIS" | "ART" | "REL" | "GEO" | "POP" | string;
 
 const SCIENCE = "SCI";
 const HISTORY = "HIS";

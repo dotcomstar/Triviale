@@ -31,7 +31,7 @@ export interface StatsDialogProps {
   TransitionComponent: DialogProps["TransitionComponent"];
 }
 
-declare const window: any;
+declare const window: Window;
 
 const StatsDialog = ({
   open,
@@ -50,7 +50,7 @@ const StatsDialog = ({
     const safeIndex = getPositiveIndex(id + offset);
     const q = useQuestionByID(safeIndex);
     // Calculate all permutations with addOns and answers.
-    const answerWithSpaces = q?.answer.toLocaleUpperCase()!;
+    const answerWithSpaces = q?.answer.toLocaleUpperCase() ?? "";
     const answer = answerWithSpaces.replace(/\s+/g, "")!;
     const permutationsWithAddons =
       [[], ...(q?.addOns || []), []].flatMap(
@@ -62,7 +62,7 @@ const StatsDialog = ({
       ...(q?.altAnswer || []),
       ...(permutationsWithAddons || []),
     ].map((v) => v?.toLocaleUpperCase().replace(/\s+/g, ""));
-    return [q?.category!, answer, allAcceptableAnswers];
+    return [q?.category ?? "", answer, allAcceptableAnswers];
   };
 
   const [advancedStatsOpen, setAdvancedStatsOpen] = useState(false);
@@ -77,7 +77,7 @@ const StatsDialog = ({
   }\n${guesses
     .map((question, i) => {
       let prevCorrect = false;
-      let q = questionDetails(i);
+      const q = questionDetails(i);
       let numSkipped = 0;
       let countedSkipped = false;
       return (
@@ -123,11 +123,11 @@ const StatsDialog = ({
   };
 
   const handleShare = () => {
-    let userAgent = window.navigator.userAgent.toLowerCase(),
+    const userAgent = window.navigator.userAgent.toLowerCase(),
       macosPlatforms = /(macintosh|macintel|macppc|mac68k|macos)/i,
       windowsPlatforms = /(win32|win64|windows|wince)/i,
-      iosPlatforms = /(iphone|ipad|ipod)/i,
-      os = null;
+      iosPlatforms = /(iphone|ipad|ipod)/i;
+    let os = null;
 
     if (macosPlatforms.test(userAgent)) {
       os = "macos";

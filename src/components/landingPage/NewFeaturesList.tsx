@@ -7,18 +7,32 @@ const NewFeaturesList = () => {
       direction="column"
       justifyContent="center"
       alignItems="center"
-      width={"100%"}
+      width={"80%"}
       pb={3}
       pt={4}
     >
       {NEW_FEATURES_LIST.length !== 0 && (
         //   // Render an empty space if no new features so the title and buttons render correctly
         <>
-          <Typography color={"black"}>{NEW_FEATURES_LABEL}</Typography>
+          <Typography
+            color={"black"}
+            variant="h6"
+            sx={{ fontSize: 1 }}
+            letterSpacing={"-1px"}
+            whiteSpace={"break-spaces"}
+          >
+            {NEW_FEATURES_LABEL}
+          </Typography>
           <List sx={{ listStyleType: "disc", color: "black" }}>
             {NEW_FEATURES_LIST.map((feature) => (
               <ListItem key={feature} sx={{ display: "list-item" }}>
-                {feature}
+                <Typography
+                  variant="h6"
+                  letterSpacing={"-1px"}
+                  whiteSpace={"break-spaces"}
+                >
+                  {feature}
+                </Typography>
               </ListItem>
             ))}
           </List>

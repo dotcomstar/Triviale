@@ -21,7 +21,6 @@ interface Props {
 }
 
 const ExpandableText = ({ children }: Props) => {
-  if (!children) return null;
   const hardMode = useHardModeStore((s) => s.hardMode);
   const { gameState, moveToNextQuestion, questionNumber } = useGameStateStore();
   const guessNumber =
@@ -46,12 +45,14 @@ const ExpandableText = ({ children }: Props) => {
   const safeIndex = getPositiveIndex(
     questionNumber + (retrieved ? 0 : dailyIndex)
   );
-  const answer = useQuestionByID(safeIndex)?.answer!.replace(/\s+/g, "")!;
+  const answer = useQuestionByID(safeIndex)?.answer.replace(/\s+/g, "") ?? ""; // Set answer to empty string if nothing was received.
   const numWon = questionState.reduce(
     (acc, guess) => acc + (guess === "won" ? 1 : 0),
     0
   );
   const customWidth = "calc(100% - 48px)";
+
+  if (!children) return null;
 
   return (
     <Stack alignItems={"center"}>

@@ -39,7 +39,7 @@ const CustomizableText = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       onChange={(e) => {
-        e.persist(); // REFACTOR: hacky solution allows last letter changed to be submitted
+        e.persist(); // REFACTOR: This is a hacky solution that allows last letter changed to be submitted
       }}
     >
       <Stack

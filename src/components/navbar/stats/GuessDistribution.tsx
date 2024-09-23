@@ -36,19 +36,25 @@ const GuessDistribution = ({ sx }: GuessDistributionProps) => {
       {Array(MAX_CHALLENGES)
         .fill("")
         .map((_, i) => (
+          // This stack generates even spacing between rows.
+          // The next stack is used to align the bars to the left side.
           <Stack
             direction={"row"}
             sx={{ pb: 1 }}
             display={"flex"}
             justifyContent={"space-between"}
+            key={"space between rows" + i}
           >
             <Stack
               direction={"row"}
               justifyContent={"left"}
               sx={{ width: "100%" }}
+              key={"bar length, must be left aligned" + i}
             >
-              <Box width={"60px"}>
-                <Typography sx={{ mx: 2 }}>{i + 1}</Typography>
+              <Box width={"60px"} key={i}>
+                <Typography key={i} sx={{ mx: 2 }}>
+                  {i + 1}
+                </Typography>
               </Box>
               <Box
                 boxSizing={"border-box"}

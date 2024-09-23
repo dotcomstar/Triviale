@@ -7,8 +7,11 @@ export const LOCALE = "en-US";
 export const EDITED_BY = "Edited by Jet Lee";
 
 export const NEW_FEATURES_LABEL = "New feature(s):";
-export const NEW_FEATURES_LIST = ["Add preliminary typing animations"];
+export const NEW_FEATURES_LIST = [
+  `I am beta-testing one question per day. Please send feedback to ${CONTACT_EMAIL}`,
+];
 
+import { Category } from "../data/questions";
 import { QUESTIONS_PER_DAY } from "./settings";
 
 export const LANDING_TITLE = "Landing page";
@@ -62,6 +65,13 @@ export const HIGH_CONTRAST_MODE_DESCRIPTION = "For improved color vision";
 export const ONSCREEN_KEYBOARD_ONLY_LABEL = "Onscreen Keyboard Input Only";
 export const ONSCREEN_KEYBOARD_ONLY_DESCRIPTION =
   "Ignore key input except from the onscreen keyboard. Most helpful for users using speech recognition or other assistive devices.";
+export const PROGRESS_BUTTON_TEXT = (
+  questionNumber: number,
+  category: Category
+) =>
+  `${
+    QUESTIONS_PER_DAY > 1 ? "Q" + questionNumber + ", " : "Category: "
+  }${category}`;
 export const CORRECT_WORD_MESSAGE = (solution: string) =>
   `The word was ${solution}`;
 export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>

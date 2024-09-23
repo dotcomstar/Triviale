@@ -35,7 +35,7 @@ interface NavBarProps {
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
-    children: React.ReactElement<any, any>;
+    children: React.ReactElement<unknown, string>;
   },
   ref: React.Ref<unknown>
 ) {
