@@ -68,10 +68,7 @@ export const ONSCREEN_KEYBOARD_ONLY_DESCRIPTION =
 export const PROGRESS_BUTTON_TEXT = (
   questionNumber: number,
   category: Category
-) =>
-  `${
-    QUESTIONS_PER_DAY > 1 ? "Q" + questionNumber + ", " : "Category: "
-  }${category}`;
+) => `${QUESTIONS_PER_DAY > 1 ? "Q" + questionNumber + ", " : ""}${category}`;
 export const CORRECT_WORD_MESSAGE = (solution: string) =>
   `The word was ${solution}`;
 export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>

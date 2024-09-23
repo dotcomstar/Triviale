@@ -97,7 +97,7 @@ const ThemedLayout = ({ children }: Props) => {
       createTheme({
         typography: {
           h3: {
-            fontFamily: "Crimson, Roboto, Arial, sans-serif",
+            fonFamily: "Crimson, Roboto, Arial, sans-serif",
           },
           h5: {
             fontFamily: "Crimson, Roboto, Arial, sans-serif",
