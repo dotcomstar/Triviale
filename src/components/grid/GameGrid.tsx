@@ -17,7 +17,7 @@ const GameGrid = () => {
     questionNumber + (retrieved ? 0 : dailyIndex)
   );
   const question = useQuestionByID(safeIndex);
-  const answerWithSpaces = question?.answer.toLocaleUpperCase()!;
+  const answerWithSpaces = question?.answer.toLocaleUpperCase() ?? "";
   const answer = answerWithSpaces.replace(/\s+/g, "")!;
   const currGuess = useCurrGuessStore((s) => s.guess);
   const guesses = useGameStateStore((s) => s.guesses);
@@ -34,8 +34,8 @@ const GameGrid = () => {
     const count = new Map(); // Get count of all chars in answer
     // TODO: Compute only once and pass deep copy as param
     for (let i = 0; i < answer.length; i++) {
-      let currKey = answer[i];
-      let currCount = count.get(currKey);
+      const currKey = answer[i];
+      const currCount = count.get(currKey);
       if (currCount) {
         count.set(currKey, currCount + 1);
       } else {
@@ -44,8 +44,8 @@ const GameGrid = () => {
     }
     // Set all correct chars
     for (let i = 0; i < answer.length; i++) {
-      let currChar = guess[i];
-      let currCount: number = count.get(currChar);
+      const currChar = guess[i];
+      const currCount: number = count.get(currChar);
       if (currChar === answerArr[i]) {
         statuses[i] = theme.palette.success;
         count.set(currChar, currCount - 1);
@@ -53,8 +53,8 @@ const GameGrid = () => {
     }
     // Set all containing but in the wrong position chars
     for (let i = 0; i < guess.length; i++) {
-      let currChar = guess[i];
-      let currCount: number = count.get(currChar);
+      const currChar = guess[i];
+      const currCount: number = count.get(currChar);
       if (currCount && currCount > 0 && statuses[i] === theme.palette.error) {
         statuses[i] = theme.palette.warning;
         count.set(currChar, currCount - 1);

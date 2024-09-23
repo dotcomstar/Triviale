@@ -5,6 +5,7 @@ import Cell from "./Cell";
 import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 import useRetrievedStore from "../../stores/retrievedStore";
 import useHardModeStore from "../../stores/hardModeStore";
+import React from "react";
 
 interface GameRowProps {
   guess: string[];
@@ -38,7 +39,7 @@ const GameRow = ({
   if (answerOverride) {
     ans = answerOverride;
   }
-  const answerWithSpaces = ans?.toLocaleUpperCase()!;
+  const answerWithSpaces = ans?.toLocaleUpperCase() ?? "";
   const answer = answerWithSpaces.replace(/\s+/g, "")!;
   const emptyCellsLength =
     hardMode && !answerOverride
@@ -65,7 +66,7 @@ const GameRow = ({
           prevLean = !prevLean;
         }
         return (
-          <>
+          <React.Fragment key={i}>
             <Cell
               key={i}
               nthLetter={i + 1}
@@ -101,7 +102,7 @@ const GameRow = ({
                 }}
               />
             )}
-          </>
+          </React.Fragment>
         );
       })}
       {emptyCells.map((_, i) => {
@@ -114,7 +115,7 @@ const GameRow = ({
           prevLean = !prevLean;
         }
         return (
-          <>
+          <React.Fragment key={i}>
             <Cell
               key={i + guess.length}
               nthLetter={guess.length + i + 1}
@@ -136,7 +137,7 @@ const GameRow = ({
                 }}
               />
             )}
-          </>
+          </React.Fragment>
         );
       })}
     </Stack>

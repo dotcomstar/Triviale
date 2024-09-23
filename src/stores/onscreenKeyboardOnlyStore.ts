@@ -7,6 +7,7 @@ interface OnscreenKeyboardOnlyStore {
   toggleOnscreenKeyboardOnly: () => void;
 }
 
+// eslint-disable-next-line react-hooks/rules-of-hooks
 const dailyIndex = useDailyIndex();
 const existingGuesses = localStorage.getItem("prevGame") || "{}";
 const pastGuesses = JSON.parse(existingGuesses);

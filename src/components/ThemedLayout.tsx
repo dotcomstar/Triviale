@@ -91,15 +91,18 @@ const ThemedLayout = ({ children }: Props) => {
 
   const { palette } = createTheme();
 
-  // Update the theme only if the mode changes
+  // Update the theme only if the mode changes, eg toggle dark mode
   let theme = React.useMemo(
     () =>
       createTheme({
         typography: {
           h3: {
-            fontFamily: "Crimson, Roboto, Arial, sans-serif",
+            fonFamily: "Crimson, Roboto, Arial, sans-serif",
           },
           h5: {
+            fontFamily: "Crimson, Roboto, Arial, sans-serif",
+          },
+          h6: {
             fontFamily: "Crimson, Roboto, Arial, sans-serif",
           },
         },
@@ -170,7 +173,7 @@ const ThemedLayout = ({ children }: Props) => {
               }),
         },
       }),
-    [mode, highContrast]
+    [palette, mode, highContrast]
   );
 
   theme = responsiveFontSizes(theme);

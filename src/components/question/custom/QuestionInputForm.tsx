@@ -20,7 +20,7 @@ type QuestionKeyTypes = keyof Question;
 
 interface QuestionInputFormProps {
   name: QuestionKeyTypes;
-  control: Control<Question, any>;
+  control: Control<Question, unknown>;
   register: UseFormRegister<Question>;
   label: string;
   placeholder?: string;

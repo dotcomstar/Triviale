@@ -22,8 +22,8 @@ const PastGamesStats = ({ sx }: PastGamesStatsProps) => {
       {[
         numQuestionsAttempted,
         Math.round((sumTotalCorrect / nonZeroSumTotalGuesses) * 100),
-      ].map((s) => (
-        <Grid item xs={6}>
+      ].map((s, i) => (
+        <Grid item xs={6} key={String(s) + String(i)}>
           <Typography
             sx={{
               m: 3,
@@ -37,8 +37,8 @@ const PastGamesStats = ({ sx }: PastGamesStatsProps) => {
           </Typography>
         </Grid>
       ))}
-      {[TOTAL_TRIES_TEXT, SUCCESS_RATE_TEXT].map((s) => (
-        <Grid item xs={6}>
+      {[TOTAL_TRIES_TEXT, SUCCESS_RATE_TEXT].map((s, i) => (
+        <Grid item xs={6} key={String(s) + String(i)}>
           <Typography sx={{ m: 3, my: 0, fontSize: "12px" }} align="center">
             {s}
           </Typography>

@@ -1,6 +1,10 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import ThemedLayout from "../components/ThemedLayout";
-import { Auth0Provider, Auth0ProviderOptions } from "@auth0/auth0-react";
+import {
+  AppState,
+  Auth0Provider,
+  Auth0ProviderOptions,
+} from "@auth0/auth0-react";
 import { ReactNode } from "react";
 
 interface Props extends Auth0ProviderOptions {
@@ -11,7 +15,7 @@ interface Props extends Auth0ProviderOptions {
 // within the routing context as per https://stackoverflow.com/questions/73934043/how-to-use-auth0-provider-with-the-new-createbrowsererouter-in-v6-4
 const Auth0ProviderWithRedirectCallback = ({ children, ...props }: Props) => {
   const navigate = useNavigate();
-  const onRedirectCallback = (appState: any) => {
+  const onRedirectCallback = (appState: AppState | undefined) => {
     navigate((appState && appState.returnTo) || window.location.pathname);
   };
   return (

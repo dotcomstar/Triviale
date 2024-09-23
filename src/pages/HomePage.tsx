@@ -137,7 +137,7 @@ const HomePage = () => {
     } else {
       console.log("No previous stats");
     }
-  }, []);
+  }, [dailyIndex, importStats]);
 
   // Get a game in progress from today.
   useEffect(() => {
@@ -166,7 +166,7 @@ const HomePage = () => {
       // No previous guesses
       console.log("No previous guesses");
     }
-  }, []);
+  }, [dailyIndex, importGame, importGuess]);
 
   return (
     <>
@@ -232,7 +232,7 @@ const HomePage = () => {
                 console.log("enter");
                 let finalGuess = false;
                 let won = false;
-                let hasOneMoreGuess =
+                const hasOneMoreGuess =
                   questionState.filter((state) => state === "inProgress")
                     .length === 1;
                 if (index === answer.length || hardMode) {
@@ -277,15 +277,16 @@ const HomePage = () => {
                     loseGame();
                   }
                   // Report the current game's stats
-                  let todaysQuestionsGuessedIn = Array(MAX_CHALLENGES).fill(0);
-                  let indexOfLastGuess = guesses.map(
+                  const todaysQuestionsGuessedIn =
+                    Array(MAX_CHALLENGES).fill(0);
+                  const indexOfLastGuess = guesses.map(
                     (allGuessesForQuestion) =>
                       allGuessesForQuestion.filter(
                         (singleGuess) => singleGuess.join() !== ""
                       ).length - 1
                   );
                   indexOfLastGuess.forEach((guessIndex, questionIndex) => {
-                    let guessIncrease =
+                    const guessIncrease =
                       questionState[questionIndex] === "won" ||
                       (questionIndex === questionNumber &&
                         hasOneMoreGuess &&
@@ -295,7 +296,7 @@ const HomePage = () => {
                         ? 1
                         : 0;
                     todaysQuestionsGuessedIn[guessIndex] += guessIncrease;
-                    let c = todaysCategories[questionIndex];
+                    const c = todaysCategories[questionIndex];
                     if (advancedStats) {
                       advancedStats[c] = {
                         ...advancedStats[c],

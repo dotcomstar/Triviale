@@ -5,6 +5,8 @@ import useGameStateStore from "../../stores/gameStateStore";
 import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 import useQuestions from "../../hooks/useQuestions";
 import useRetrievedStore from "../../stores/retrievedStore";
+import { PROGRESS_BUTTON_TEXT } from "../../constants/strings";
+import React from "react";
 
 const ProgressBar = () => {
   const importGuess = useCurrGuessStore((s) => s.importGuess);
@@ -30,7 +32,7 @@ const ProgressBar = () => {
       {Array(QUESTIONS_PER_DAY)
         .fill("")
         .map((_, i, arr) => (
-          <>
+          <React.Fragment key={i}>
             <Button
               key={i}
               variant="contained"
@@ -60,10 +62,11 @@ const ProgressBar = () => {
                 textWrap: "nowrap",
               }}
             >
-              {`Q${i + 1}, ${
+              {PROGRESS_BUTTON_TEXT(
+                i + 1,
                 data[getPositiveIndex(i + (retrieved ? 0 : dailyIndex))]
                   .category
-              }`}
+              )}
             </Button>
             {i < arr.length - 1 && (
               <Box
@@ -74,7 +77,7 @@ const ProgressBar = () => {
                 }}
               />
             )}
-          </>
+          </React.Fragment>
         ))}
     </Stack>
   );
