@@ -103,15 +103,19 @@ const ExpandableText = ({ children }: Props) => {
                 : customWidth,
           }}
         >
-          {gameState === "inProgress"
-            ? questionState[questionNumber] === "inProgress"
-              ? SKIP_BUTTON_TEXT
-              : questionState[questionNumber] === "won"
-              ? WIN_MESSAGES[randomIndex] + " " + NEXT_QUESTIONS_TEXT
-              : NEXT_QUESTIONS_TEXT
-            : gameState === "lost"
-            ? NUMBER_CORRECT_TEXT(numWon)
-            : WIN_MESSAGES[randomIndex] + " " + NUMBER_CORRECT_TEXT(numWon)}
+          {
+            // TODO: Refactor this button into its own component.
+            // TODO: Place these strings in constants for easier localization.
+            gameState === "inProgress"
+              ? questionState[questionNumber] === "inProgress"
+                ? SKIP_BUTTON_TEXT
+                : questionState[questionNumber] === "won"
+                ? WIN_MESSAGES[randomIndex] + " " + NEXT_QUESTIONS_TEXT
+                : NEXT_QUESTIONS_TEXT
+              : gameState === "lost"
+              ? NUMBER_CORRECT_TEXT(numWon)
+              : WIN_MESSAGES[randomIndex] + " " + NUMBER_CORRECT_TEXT(numWon)
+          }
         </Button>
       )}
     </Stack>
