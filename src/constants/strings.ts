@@ -1,3 +1,6 @@
+import { Category } from "../data/questions";
+import { QUESTIONS_PER_DAY } from "./settings";
+
 // Base info
 export const GAME_TITLE = "Triviale";
 export const LOGO_ALT = `${GAME_TITLE} Logo`;
@@ -12,9 +15,6 @@ export const NEW_FEATURES_LABEL = "New feature(s):";
 export const NEW_FEATURES_LIST = [
   `I am beta-testing one question per day. Please send feedback to ${CONTACT_EMAIL}`,
 ];
-
-import { Category } from "../data/questions";
-import { QUESTIONS_PER_DAY } from "./settings";
 
 // Landing page
 export const LANDING_TITLE = "Landing page";
