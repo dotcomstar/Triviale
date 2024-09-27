@@ -10,7 +10,7 @@ import React from "react";
 interface GameRowProps {
   guess: string[];
   statuses?: PaletteColor[];
-  answerOverride?: string;
+  answerOverride?: string; // Used for the help dialog.
   isPastGuess?: boolean;
   borderColorOverride?: string;
 }
