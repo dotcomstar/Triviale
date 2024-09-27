@@ -2,9 +2,11 @@ import { Button, Paper, Stack, Typography } from "@mui/material";
 import { MAX_CHALLENGES } from "../../constants/settings";
 import {
   NEXT_QUESTIONS_TEXT,
+  NEXT_QUESTIONS_WIN_TEXT,
   NUMBER_CORRECT_TEXT,
   SKIP_BUTTON_TEXT,
   SKIP_LETTER,
+  WIN_MESSAGE_TEXT,
   WIN_MESSAGES,
 } from "../../constants/strings";
 import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
@@ -61,6 +63,7 @@ const ExpandableText = ({ children }: Props) => {
           {summary}
         </Typography>
       </Paper>
+
       {(guessNumber < MAX_CHALLENGES ||
         questionState[questionNumber] !== "inProgress") && (
         <Button
@@ -105,16 +108,15 @@ const ExpandableText = ({ children }: Props) => {
         >
           {
             // TODO: Refactor this button into its own component.
-            // TODO: Place these strings in constants for easier localization.
             gameState === "inProgress"
               ? questionState[questionNumber] === "inProgress"
                 ? SKIP_BUTTON_TEXT
                 : questionState[questionNumber] === "won"
-                ? WIN_MESSAGES[randomIndex] + " " + NEXT_QUESTIONS_TEXT
+                ? NEXT_QUESTIONS_WIN_TEXT(randomIndex)
                 : NEXT_QUESTIONS_TEXT
               : gameState === "lost"
               ? NUMBER_CORRECT_TEXT(numWon)
-              : WIN_MESSAGES[randomIndex] + " " + NUMBER_CORRECT_TEXT(numWon)
+              : WIN_MESSAGE_TEXT(randomIndex, numWon)
           }
         </Button>
       )}

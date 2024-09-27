@@ -73,11 +73,17 @@ export const NOT_CONTAINED_MESSAGE = (letter: string) =>
 export const NUMBER_CORRECT_TEXT = (numCorrect: number) =>
   `Got ${numCorrect} / ${QUESTIONS_PER_DAY} correct`;
 
-// Skips
+// Skip messages
 export const SKIP_LETTER = "-";
 export const SKIPPED_TEXT = "skipped";
+
+// Center button messages
 export const SKIP_BUTTON_TEXT = "Reveal the next clue";
 export const NEXT_QUESTIONS_TEXT = "Next Question";
+export const NEXT_QUESTIONS_WIN_TEXT = (randomIndex: number) =>
+  WIN_MESSAGES[randomIndex] + " " + NEXT_QUESTIONS_TEXT;
+export const WIN_MESSAGE_TEXT = (randomIndex: number, numWon: number) =>
+  WIN_MESSAGES[randomIndex] + " " + NUMBER_CORRECT_TEXT(numWon);
 
 // Encouragement
 export const START_ENCOURAGEMENT_TEXT =
