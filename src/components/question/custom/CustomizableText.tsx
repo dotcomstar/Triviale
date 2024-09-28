@@ -11,7 +11,7 @@ import QuestionInputForm from "./QuestionInputForm";
 import QuestionInputFormMulti from "./QuestionInputFormMulti";
 
 const CustomizableText = () => {
-  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
+  const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
   const questionNumber = useGameStateStore((s) => s.questionNumber);
   const { setQuestion } = useCustomQuestionsStore();
 
@@ -48,7 +48,7 @@ const CustomizableText = () => {
         display={"flex"}
         sx={{
           py: 3,
-          px: matches ? "25%" : 3,
+          px: isNotMobile ? "25%" : 3,
         }}
         spacing={1}
       >

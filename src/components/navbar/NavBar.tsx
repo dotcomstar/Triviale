@@ -56,7 +56,7 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
   const editing = useEditingStore((s) => s.editing);
   const theme = useTheme();
 
-  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
+  const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
   const { isAuthenticated } = useAuth0();
   const navigate = useNavigate();
 
@@ -65,16 +65,16 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
       <Stack
         direction="row"
         paddingX="10px"
-        paddingBottom={matches ? "10px" : "0px"}
-        paddingTop={matches ? "10px" : "4px"}
+        paddingBottom={isNotMobile ? "10px" : "0px"}
+        paddingTop={isNotMobile ? "10px" : "4px"}
         justifyContent="space-between"
         alignItems="center"
         sx={{ borderBottom: hasBottomBorder ? 1 : 0, borderColor: "DarkGray" }}
         px="calc(max(3vw,20px))"
       >
         <Stack direction="row" alignItems="center">
-          <HamburgerDrawer size={matches ? "large" : "small"} />
-          {matches && <Paper elevation={0} />}
+          <HamburgerDrawer size={isNotMobile ? "large" : "small"} />
+          {isNotMobile && <Paper elevation={0} />}
         </Stack>
         <Box onClick={() => navigate("/")}>
           <Typography
@@ -82,8 +82,8 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
             variant="h3"
             fontSize={"1.5REM"}
             position={"absolute"}
-            left={matches ? "45vw" : "40vw"}
-            top={matches ? "15px" : "10px"}
+            left={isNotMobile ? "45vw" : "40vw"}
+            top={isNotMobile ? "15px" : "10px"}
             color={editing ? "info.main" : "primary.contrastText"}
             sx={{
               transition: () =>
@@ -95,7 +95,7 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
             {GAME_TITLE}
           </Typography>
         </Box>
-        {matches ? (
+        {isNotMobile ? (
           <Stack direction="row" alignItems="center">
             <HelpButton />
             <StatsButton />

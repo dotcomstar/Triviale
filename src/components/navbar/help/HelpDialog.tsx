@@ -31,7 +31,7 @@ const HelpDialog = ({
   const handleClose = () => {
     onClose();
   };
-  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
+  const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
 
   return (
     <CustomDialog
@@ -41,7 +41,7 @@ const HelpDialog = ({
       ariaDescribedBy={HELP_DIALOG_ARIA}
       ariaLabeledBy={HELP_TITLE}
       dialogTitle={HELP_HOW_TO_PLAY}
-      fullScreen={!matches}
+      fullScreen={!isNotMobile}
     >
       <Typography sx={{ m: 3, my: 0, fontSize: "20px" }}>
         {HELP_NUM_TRIES}
