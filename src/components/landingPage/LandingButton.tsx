@@ -16,12 +16,12 @@ const LandingButton = ({
   color,
   variant = "contained",
 }: LandingButtonProps) => {
-  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
+  const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
   return (
     <Button
       sx={{
         borderRadius: 10,
-        width: matches ? "20vw" : "50vw",
+        width: isNotMobile ? "20vw" : "50vw",
         fontWeight: "semibold",
         height: "8dvh",
       }}
