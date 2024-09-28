@@ -59,6 +59,32 @@ export const mongoDBQuestions: MondoDBQuestion[] = [
 
 const questions: Question[] = [
   {
+    question: `These mathematical objects are the solutions to ordinary differential equations, which relate them with their derivatives. Composition of these objects make the codomain of one of them the domain of the other.  The vertical line test can easily determine whether a given graph describes one of these objects. For the point, name this mathematical term for a relation in which every input has exactly one possible output, often written in “f of x” form.`,
+    answer: "functions",
+    altAnswer: ["function"],
+    url: "https://files.quizbowlpackets.com/1823/Round%201.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `A character in this novel grows to over ten feet tall after being put on a stretching machine, since he had tried to appear on TV by using a shrink ray. The title character of this novel is deemed more virtuous than children like Mike Teavee and Augustus Gloop after he opens a Whipple-Scrumptious Fudgemallow Delight.  For the point, name this Roald Dahl novel in which Willy Wonka entrusts his Oompa-Loompas to the title boy after he finds a golden ticket.`,
+    answer: "Charlie and the Chocolate Factory",
+    url: "https://files.quizbowlpackets.com/1823/Round%201.pdf",
+    category: ART_AND_LITERATURE,
+  },
+  {
+    question: `On this date in 1929, Albert Kachelleck, the Gusenberg brothers, and four other members of Bugs Moran’s gang were killed, probably on the orders of Al Capone. This Christian feast day celebrates a saint who, according to legend, broke Roman law by performing weddings for soldiers. A Prohibition-era gangster massacre took place on, for the point, what holiday now often celebrated with flowers and written expressions of love?`,
+    answer: "Valentines Day",
+    altAnswer: [
+      "Valentines",
+      "St Valentines Day",
+      "St Valentines",
+      "Valentines Day Massacre",
+      "Valentines Day Massacre",
+    ],
+    url: "https://files.quizbowlpackets.com/1823/Round%201.pdf",
+    category: HISTORY,
+  },
+  {
     question: `In a novel by this author, the title character takes over Merlin's position by predicting an eclipse. Hank Morgan is a creation of this man, who wrote about the deceitful Duke and Dauphin and a boy who tricks children in St Petersburg, Missouri into whitewashing a fence. A Connecticut Yankee in King Arthur's Court and a novel about a boy who rafts down the Mississippi River are by, for the point, what creator of Huck Finn and Tom Sawyer?`,
     answer: "Mark Twain",
     altAnswer: ["Twain", "Clemens", "Sam Clemens", "Samuel Clemens"],
