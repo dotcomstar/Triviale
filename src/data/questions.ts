@@ -59,6 +59,38 @@ export const mongoDBQuestions: MondoDBQuestion[] = [
 
 const questions: Question[] = [
   {
+    question: `This country is home to the Turpan Water System, which collects runoff from the Flaming Mountains.  Monks in this country accidentally altered the dangerous confluence of three rivers when they created a giant stone statue to bless sailors traversing it. A tomb for one leader of this country contained a mercury river and an army of Terracotta soldiers. The Leshan Buddha is located in, for the point, what country, which was historically defended by its Great Wall?,`,
+    answer: "China",
+    altAnswer: ["Middle Kingdom", "Zhongguo"],
+    url: "https://files.quizbowlpackets.com/1823/Round%201.pdf",
+    category: HISTORY,
+  },
+  {
+    question: `This biblical figure’s father described him as either a “fruitful vine” or a “wild donkey’s foal,” and he was thrown in jail for refusing the romantic advances of Potiphar’s wife. This man slipped a silver cup into a bag of grain belonging to his brother, Benjamin. This man’s brothers, including Gad and Judah, sold him into slavery out of jealousy, since he was the son of Rachel and the favorite of his father, Jacob. For the point, name this biblical man who owned a beautiful coat.`,
+    answer: "Joseph",
+    url: "https://files.quizbowlpackets.com/1823/Round%201.pdf",
+    category: RELIGION,
+  },
+  {
+    question: `Characters with this profession include Ornstein, the captain of Gwyn’s Four in Dark Souls. In a 2014 game partially titled for this profession, players fight the Order of No Quarter and use a shovel as a weapon.  In Hearthstone, taunt minions can be killed by the battlecry of a Black one of these warriors, who says “None shall pass” in reference to a skit from Monty Python and the Holy Grail. For the point, name this class of warriors that, in video games, often fight dragons with swords.`,
+    answer: "Knight",
+    altAnswer: ["Knights", "Dragon Slayer", "Dragon Slayers"],
+    url: "https://files.quizbowlpackets.com/1823/Round%201.pdf",
+    category: POP_CULTURE,
+  },
+  {
+    question: `Three atoms of this element are present in acetone, the simplest ketone; one of those atoms is double bonded with oxygen. This element’s four valence electrons allow it to form four bonds with other elements.  This element’s allotropes include diamond, graphite, and stable nanotubes, and its 14-amu isotope is used in radiometric dating. For the point, name this element, the focus of organic chemistry, with atomic number 6 and atomic symbol C.`,
+    answer: "carbon",
+    url: "https://files.quizbowlpackets.com/1823/Round%201.pdf",
+    category: SCIENCE,
+  },
+  {
+    question: `After this event, critics complained that a two-year timeline has not yet begun because no “official notice” was given that Article 50 would be invoked. In its aftermath, Nigel Farage stepped down as a party leader and Theresa May replaced David Cameron as Prime Minister. Stock markets plunged after news broke of, for the poins, what June 2016 public referendum that decided to end a country’s participation in a European political community?`,
+    answer: "Brexit",
+    url: "http://localhost:5173/",
+    category: HISTORY,
+  },
+  {
     question: `These mathematical objects are the solutions to ordinary differential equations, which relate them with their derivatives. Composition of these objects make the codomain of one of them the domain of the other.  The vertical line test can easily determine whether a given graph describes one of these objects. For the point, name this mathematical term for a relation in which every input has exactly one possible output, often written in “f of x” form.`,
     answer: "functions",
     altAnswer: ["function"],

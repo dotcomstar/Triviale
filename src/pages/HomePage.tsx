@@ -43,7 +43,7 @@ const HomePage = () => {
     cacheGuess,
   } = useGameStateStore();
 
-  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
+  const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
   const dailyIndex = useDailyIndex();
   const retrieved = useRetrievedStore((s) => s.retrieved);
   const editing = useEditingStore((s) => s.editing);
@@ -170,7 +170,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Grid container paddingY={matches ? 1 : 0}>
+      <Grid container paddingY={isNotMobile ? 1 : 0}>
         <Grid item xs={12}>
           <NavBar />
         </Grid>
@@ -183,7 +183,7 @@ const HomePage = () => {
             sx={{
               maxHeight: editing
                 ? "100dvh"
-                : matches
+                : isNotMobile
                 ? "100dvh"
                 : "calc(100dvh - 290px)", // Always place keyboard at the bottom of the page
               overflow: "auto",

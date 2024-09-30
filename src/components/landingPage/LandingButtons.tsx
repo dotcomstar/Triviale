@@ -15,7 +15,7 @@ interface LandingButtonsProps {
 }
 
 const LandingButtons = ({ onClose }: LandingButtonsProps) => {
-  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
+  const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
   const { guesses, gameState } = useGameStateStore();
   const setHelpOpen = useDialogStore((s) => s.setHelpOpen);
   const setStatsOpen = useDialogStore((s) => s.setStatsOpen);
@@ -37,11 +37,11 @@ const LandingButtons = ({ onClose }: LandingButtonsProps) => {
         message={HARD_MODE_ALERT_MESSAGE}
       />
       <Stack
-        direction={matches ? "row" : "column-reverse"}
+        direction={isNotMobile ? "row" : "column-reverse"}
         justifyContent="center"
         alignItems="center"
-        width={matches ? "40dvw" : "100dvw"}
-        spacing={matches ? "5%" : "3%"}
+        width={isNotMobile ? "40dvw" : "100dvw"}
+        spacing={isNotMobile ? "5%" : "3%"}
       >
         {canToggleHardMode && gameState === "inProgress" && (
           <HowToPlayLandingButton setHelpOpen={setHelpOpen} />

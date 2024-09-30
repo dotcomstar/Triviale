@@ -28,8 +28,8 @@ const GuessDistribution = ({ sx }: GuessDistributionProps) => {
     1
   );
 
-  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
-  const baseLength = matches ? 7 : 15;
+  const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
+  const baseLength = isNotMobile ? 7 : 15;
 
   return (
     <Stack sx={{ ...sx }}>

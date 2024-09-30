@@ -37,7 +37,7 @@ const Cell = ({
   borderColorOverride,
 }: CellProps) => {
   const theme = useTheme();
-  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
+  const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
 
   const getStatusText = (): string => {
     let statusText = "";
@@ -81,7 +81,7 @@ const Cell = ({
           borderColorOverride ||
           `${value ? "primary.light" : "primary.darker"}`,
         borderRadius: 10,
-        height: matches ? "52px" : "48px",
+        height: isNotMobile ? "52px" : "48px",
         width: "52px",
         backgroundColor: status?.main || "info.dark",
         overflow: "clip",

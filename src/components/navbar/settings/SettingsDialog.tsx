@@ -39,7 +39,7 @@ const SettingsDialog = ({
     onClose();
   };
 
-  const matches = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
+  const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
 
   return (
     <CustomDialog
@@ -49,10 +49,10 @@ const SettingsDialog = ({
       ariaDescribedBy={SETTINGS_DIALOG_ARIA}
       ariaLabeledBy={SETTINGS_TITLE}
       dialogTitle={SETTINGS_TITLE}
-      fullScreen={!matches}
+      fullScreen={!isNotMobile}
       centerTitle
     >
-      <List sx={{ mx: matches ? 1 : 2 }}>
+      <List sx={{ mx: isNotMobile ? 1 : 2 }}>
         <ListItem>
           <HardModeSwitch />
         </ListItem>
