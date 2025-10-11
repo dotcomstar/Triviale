@@ -6,7 +6,7 @@ import LandingLogo from "./LandingLogo";
 import LandingDateInfo from "./LandingDateInfo";
 import LoginButton from "../auth/LoginButton";
 import ProfileButton from "../auth/ProfileButton";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useDiscord } from "../../contexts/DiscordContext";
 import LandingHelpText from "./LandingHelpText";
 import { MOBILE_SCREEN_CUTOFF } from "../../constants/settings";
 import NewFeaturesList from "./NewFeaturesList";
@@ -27,7 +27,7 @@ const LandingDialog = ({
   };
 
   const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated } = useDiscord();
   const backgroundColor = "#E3E3E1";
 
   return (

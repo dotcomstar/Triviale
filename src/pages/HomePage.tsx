@@ -83,6 +83,25 @@ const HomePage = () => {
     .fill("")
     .map((_, i) => data[getPositiveIndex(dailyIndex + i)].category);
 
+  // Test localStorage compatibility in Discord iframe
+  useEffect(() => {
+    try {
+      const testKey = 'discord-storage-test';
+      localStorage.setItem(testKey, 'works');
+      const test = localStorage.getItem(testKey);
+      localStorage.removeItem(testKey);
+
+      if (test === 'works') {
+        console.log('✅ localStorage works in Discord environment');
+      } else {
+        console.warn('⚠️ localStorage test failed - storage may not persist');
+      }
+    } catch (error) {
+      console.error('❌ localStorage is blocked in Discord iframe:', error);
+      console.warn('Game state may not persist. Consider implementing Discord SDK storage fallback.');
+    }
+  }, []);
+
   // Running on unload or beforeunload is unreliable according to https://developer.chrome.com/articles/page-lifecycle-api/#legacy-lifecycle-apis-to-avoid
   useEffect(() => {
     window.addEventListener("visibilitychange", handleTabClosing);

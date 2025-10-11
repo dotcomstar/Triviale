@@ -1,11 +1,33 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import NavBar from "../navbar/NavBar";
-import { withAuthenticationRequired } from "@auth0/auth0-react";
+import { useDiscord } from "../../contexts/DiscordContext";
 import useDialogStore from "../../stores/dialogStore";
+import { CircularProgress, Box } from "@mui/material";
 
 const ProtectedElements = () => {
   const closeAllDialogs = useDialogStore((s) => s.closeAllDialogs);
+  const { isAuthenticated, isLoading } = useDiscord();
+
   closeAllDialogs();
+
+  // Show loading spinner while checking authentication
+  if (isLoading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  // Redirect to home if not authenticated
+  if (!isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <>
@@ -15,6 +37,6 @@ const ProtectedElements = () => {
   );
 };
 
-const PrivateRoutes = withAuthenticationRequired(ProtectedElements);
+const PrivateRoutes = ProtectedElements;
 
 export default PrivateRoutes;

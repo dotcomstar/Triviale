@@ -1,4 +1,4 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useDiscord } from "../../contexts/DiscordContext";
 import IconButton from "@mui/material/IconButton";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
@@ -13,7 +13,17 @@ interface ProfileButtonProps {
 const ProfileButton = ({ startEdge, size }: ProfileButtonProps) => {
   const navigate = useNavigate();
   const closeAllDialogs = useDialogStore((s) => s.closeAllDialogs);
-  const { user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated } = useDiscord();
+
+  // Don't show profile button if not authenticated
+  if (!isAuthenticated || !user) {
+    return null;
+  }
+
+  // Get Discord avatar URL
+  const avatarUrl = user.avatar
+    ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
+    : undefined;
 
   return (
     <IconButton
@@ -25,17 +35,17 @@ const ProfileButton = ({ startEdge, size }: ProfileButtonProps) => {
         navigate("/profile");
       }}
     >
-      {isAuthenticated && (
-        <Avatar
-          src={user?.picture}
-          alt={user?.name}
-          sx={{
-            bgcolor: "primary.contrastText",
-            height: size === "small" ? 20 : 35,
-            width: size === "small" ? 20 : 35,
-          }}
-        />
-      )}
+      <Avatar
+        src={avatarUrl}
+        alt={user.global_name || user.username}
+        sx={{
+          bgcolor: "primary.contrastText",
+          height: size === "small" ? 20 : 35,
+          width: size === "small" ? 20 : 35,
+        }}
+      >
+        {!avatarUrl && (user.global_name?.[0] || user.username[0])}
+      </Avatar>
     </IconButton>
   );
 };

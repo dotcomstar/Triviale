@@ -1,4 +1,4 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useDiscord } from "../../contexts/DiscordContext";
 import {
   Box,
   Paper,
@@ -57,7 +57,7 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
   const theme = useTheme();
 
   const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated } = useDiscord();
   const navigate = useNavigate();
 
   return (

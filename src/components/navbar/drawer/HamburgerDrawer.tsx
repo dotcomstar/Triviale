@@ -1,4 +1,4 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useDiscord } from "../../../contexts/DiscordContext";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuRoundedIcon from "@mui/icons-material/Menu";
 import {
@@ -23,7 +23,7 @@ import StatsButton from "../stats/StatsButton";
 import SubscribeButton from "./SubscribeButton";
 
 const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
-  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+  const { isAuthenticated, login, logout } = useDiscord();
   const [expanded, setExpanded] = useState(false);
 
   const toggleDrawer =
@@ -64,7 +64,7 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
           {!isAuthenticated && (
             <ListItemButton
               sx={{ justifyContent: "space-between" }}
-              onClick={() => loginWithRedirect()}
+              onClick={() => login()}
             >
               <LoginButton startEdge />
               <ListItemText primary={"Login"} />
@@ -73,9 +73,7 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
           {isAuthenticated && (
             <ListItemButton
               sx={{ justifyContent: "space-between" }}
-              onClick={() =>
-                logout({ logoutParams: { returnTo: window.location.origin } })
-              }
+              onClick={() => logout()}
             >
               <LogoutButton startEdge />
               <ListItemText primary={"Log Out"} />

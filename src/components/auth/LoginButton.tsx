@@ -1,4 +1,4 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useDiscord } from "../../contexts/DiscordContext";
 import IconButton, { IconButtonOwnProps } from "@mui/material/IconButton";
 import LoginIcon from "@mui/icons-material/Login";
 import { LOGIN_ARIA } from "../../constants/strings";
@@ -14,14 +14,19 @@ const LoginButton = ({
   color,
   size = "large",
 }: LoginButtonProps) => {
-  const { loginWithRedirect } = useAuth0();
+  const { login, isAuthenticated, sdk } = useDiscord();
+
+  // Don't show login button if not in Discord or already authenticated
+  if (!sdk || isAuthenticated) {
+    return null;
+  }
 
   return (
     <IconButton
       edge={startEdge ? "start" : "end"}
       color={color ? color : "inherit"}
       aria-label={LOGIN_ARIA}
-      onClick={() => loginWithRedirect()}
+      onClick={() => login()}
     >
       <LoginIcon fontSize={size} />
     </IconButton>
