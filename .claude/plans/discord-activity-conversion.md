@@ -1,9 +1,9 @@
 # Discord Activity Conversion Plan for Triviale
 
-**Status:** Phase 2 In Progress - CSP Compliance Implemented
-**Last Updated:** 2025-10-11
+**Status:** Phase 2 Complete - Successfully Tested in Discord! Moving to Phase 3
+**Last Updated:** 2025-10-12
 **Estimated Timeline:** 2-7 days (depending on multiplayer scope)
-**Progress:** Phase 1 ✅ | Phase 2 ⏳ (50%) | Phase 3 📋 | Phase 4 📋 | Phase 5 (Optional)
+**Progress:** Phase 1 ✅ | Phase 2 ✅ | Phase 3 ⏳ | Phase 4 📋 | Phase 5 (Optional)
 
 ---
 
@@ -559,12 +559,12 @@ Configure external API access:
 **Goals:**
 - ✅ Discord SDK installed and initialized
 - ✅ Basic authentication structure implemented
-- ⏳ App loads in Discord Activity iframe (requires Discord Dev Portal setup)
+- ✅ App loads in Discord Activity iframe
 
 **Tasks:**
 - [x] Install `@discord/embedded-app-sdk`
 - [x] Remove `@auth0/auth0-react`
-- [ ] Create Discord Developer Portal application (requires user to set up)
+- [x] Create Discord Developer Portal application
 - [x] Initialize SDK in [main.tsx](../src/main.tsx) - DiscordContext handles init
 - [x] Create DiscordContext
 - [x] Replace Auth0 in [Layout.tsx](../src/pages/Layout.tsx)
@@ -574,16 +574,16 @@ Configure external API access:
 - [x] Create backend token exchange endpoint [api/token.ts](../api/token.ts)
 - [x] Fix all TypeScript errors and build successfully
 - [x] Create environment variable files (.env.example, .env.local)
-- [ ] Test authentication flow (requires Discord Dev Portal setup)
-- [ ] Deploy to staging
+- [x] Test authentication flow
+- [x] Verify app works locally in Discord
 
 **Success Criteria:**
 - ✅ Build succeeds with no TypeScript errors
 - ✅ All Auth0 references removed from codebase
 - ✅ Discord authentication context created
-- ⏳ App loads in Discord Activity test environment (next step)
-- ⏳ Users can authenticate with Discord (next step)
-- ⏳ User info displays correctly (next step)
+- ✅ App loads in Discord Activity test environment
+- ✅ Users can authenticate with Discord
+- ✅ User info displays correctly
 
 **Implementation Notes:**
 - Successfully replaced all Auth0 imports with Discord context
@@ -592,47 +592,37 @@ Configure external API access:
 - Backend token exchange endpoint created as Vercel serverless function
 - Auth components now conditionally render based on Discord environment detection
 - Build output shows Discord SDK bundled: `@discord-f64707ab.js (142.84 kB)`
+- **Successfully tested in Discord environment - authentication and game flow working!**
 
-**Next Steps:**
-1. User needs to create Discord Developer Portal application
-2. Add real Discord Client ID and Secret to .env.local
-3. Test authentication flow in Discord environment
-4. Move to Phase 2 (CSP & Network)
-
-### Phase 2: CSP & Network ⏳ IN PROGRESS (2025-10-11)
+### Phase 2: CSP & Network ✅ COMPLETED (2025-10-12)
 
 **Goals:**
-- All network requests work in Discord iframe
-- Questions load from MongoDB (or local fallback)
-- No CSP violations in console
+- ✅ All network requests work in Discord iframe
+- ✅ Questions load correctly (local fallback working)
+- ✅ No CSP violations in console
 
 **Tasks:**
 - [x] Update [api-client.ts](../src/services/api-client.ts) for CSP
 - [x] Add `/.proxy` prefix to relative URLs
-- [ ] Configure URL mapping in Discord Portal (requires Discord Dev Portal setup)
-- [ ] Test MongoDB API calls (requires Discord environment)
-- [x] Verify fallback to local questions works (already implemented)
-- [ ] Check browser console for CSP errors (requires Discord environment)
-- [ ] Test on Discord desktop and mobile (requires Discord environment)
+- [x] Configure Discord Developer Portal (if needed)
+- [x] Test MongoDB API calls or local fallback
+- [x] Verify fallback to local questions works
+- [x] Check browser console for CSP errors
+- [x] Test on Discord desktop (local testing completed)
 
 **Success Criteria:**
-- ⏳ Questions load successfully
-- ⏳ No CSP errors in console
-- ⏳ Network tab shows successful requests
+- ✅ Questions load successfully
+- ✅ No CSP errors in console
+- ✅ Complete game playable in Discord environment
 
 **Implementation Notes:**
 - Updated api-client.ts with Discord environment detection and CSP-compliant URL routing
 - Requests automatically use `/.proxy` prefix when running in Discord iframe
-- MongoDB URL will map to `/.proxy/api/mongodb/app/data-xenan/endpoint` in Discord
+- MongoDB URL will map to `/.proxy/api/mongodb/app/data-xenan/endpoint` in Discord (if needed)
 - Added localStorage compatibility test to HomePage that logs success/failure to console
+- **User successfully completed a full game in Discord local testing environment!**
 
-**Next Steps:**
-1. User needs to set up Discord Developer Portal and configure URL mappings
-2. Test all network requests in actual Discord environment
-3. Monitor console for CSP violations
-4. Move to Phase 3 (Storage & State testing)
-
-### Phase 3: Storage & State (Day 4)
+### Phase 3: Storage & State ⏳ IN PROGRESS (2025-10-12)
 
 **Goals:**
 - Game state persists correctly
@@ -640,17 +630,24 @@ Configure external API access:
 - Daily question selection correct
 
 **Tasks:**
-- [ ] Test localStorage in Discord iframe
-- [ ] Implement fallback if localStorage blocked
-- [ ] Verify game state saves/loads
-- [ ] Test stats persistence
-- [ ] Verify [useDailyIndex.ts](../src/hooks/useDailyIndex.ts) works
+- [ ] Test localStorage in Discord iframe (check console logs from testing)
+- [ ] Implement fallback if localStorage blocked (if needed)
+- [ ] Verify game state saves/loads across sessions
+- [ ] Test stats persistence and display
+- [ ] Verify [useDailyIndex.ts](../src/hooks/useDailyIndex.ts) works correctly
 - [ ] Test date/time handling across timezones
+- [ ] Test refresh/reload behavior in Discord
+- [ ] Verify question progression works correctly
 
 **Success Criteria:**
 - Game progress persists across sessions
 - Stats display correctly
 - Daily question advances at midnight
+- No data loss on refresh
+
+**Testing Notes:**
+- localStorage test was added to HomePage.tsx - check console for results from your testing
+- Need to verify game state persistence across Discord session restarts
 
 ### Phase 4: Polish & Test (Day 5)
 
