@@ -1,6 +1,5 @@
-import { IconButton } from "@mui/material";
+import { Box } from "@mui/material";
 import CardMembershipIcon from "@mui/icons-material/CardMembership";
-import { SUBSCRIBE_BUTTON_ARIA } from "../../../constants/strings";
 
 interface SubscribeButtonProps {
   startEdge?: boolean;
@@ -8,14 +7,16 @@ interface SubscribeButtonProps {
 
 const SubscribeButton = ({ startEdge }: SubscribeButtonProps) => {
   return (
-    <IconButton
-      edge={startEdge ? "start" : "end"}
-      color="inherit"
-      aria-label={SUBSCRIBE_BUTTON_ARIA}
-      href="https://www.buymeacoffee.com/jetrlee"
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        padding: startEdge ? "12px 12px 12px 0" : "12px 0 12px 12px",
+        color: "inherit",
+      }}
     >
       <CardMembershipIcon fontSize="large" />
-    </IconButton>
+    </Box>
   );
 };
 

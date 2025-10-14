@@ -23,7 +23,7 @@ import StatsButton from "../stats/StatsButton";
 import SubscribeButton from "./SubscribeButton";
 
 const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
-  const { isAuthenticated, login, logout } = useDiscord();
+  const { isAuthenticated, login, logout, sdk } = useDiscord();
   const [expanded, setExpanded] = useState(false);
 
   const toggleDrawer =
@@ -80,9 +80,23 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
             </ListItemButton>
           )}
           <ListItemButton
-            href="https://www.buymeacoffee.com/jetrlee"
-            rel="noopener"
-            sx={{ justifyContent: "space-between" }}
+            onClick={async (e) => {
+              e.stopPropagation(); // Prevent drawer from closing
+              try {
+                if (sdk) {
+                  // Use Discord SDK to open external URL
+                  await sdk.commands.openExternalLink({
+                    url: 'https://www.buymeacoffee.com/jetrlee',
+                  });
+                } else {
+                  // Fallback for non-Discord environment
+                  window.open('https://www.buymeacoffee.com/jetrlee', '_blank');
+                }
+              } catch (error) {
+                console.error('Failed to open subscribe link:', error);
+              }
+            }}
+            sx={{ justifyContent: "space-between", cursor: "pointer" }}
           >
             <SubscribeButton startEdge />
             <ListItemText primary={SUBSCRIBE_TEXT} />
