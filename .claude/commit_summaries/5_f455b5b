@@ -1,0 +1,20 @@
+# Commit Summary: Fix npm package dependencies
+
+**Commit Hash:** f455b5bb2ac6382b32f975b4a166945dd68d87f7
+**Author:** Jaxon Lee
+**Date:** Sun Oct 12 17:44:06 2025 -0400
+
+## Summary
+Cleaned up package dependencies and lock files, removing redundant entries and resolving dependency conflicts.
+
+## Changes
+- Updated `package-lock.json` with reorganized dependencies (632 insertions, 675 deletions)
+- Removed 3 entries from `package.json`
+- Updated `yarn.lock` with cleaner dependency tree (76 line reduction)
+
+## Impact
+- Improved dependency management consistency
+- Reduced lock file bloat
+- Resolved potential version conflicts
+- Cleaner package structure for better maintainability
+- Net reduction of ~43 lines across dependency files

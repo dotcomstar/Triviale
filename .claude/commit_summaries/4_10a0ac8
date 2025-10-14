@@ -1,0 +1,28 @@
+# Commit Summary: Add user setup guides
+
+**Commit Hash:** 10a0ac8513dc5489774139e6d3525afc7a599bf9
+**Author:** Jaxon Lee
+**Date:** Sun Oct 12 17:38:07 2025 -0400
+
+## Summary
+Reorganized and enhanced documentation by creating dedicated user guides directory with comprehensive setup instructions for Discord integration.
+
+## Changes
+
+### New Files
+- `.claude/user_guides/README.md` - Index of available user guides
+- `.claude/user_guides/LOCAL_DISCORD_SETUP.md` - Detailed local development setup guide for Discord Activity (377 lines)
+- `.claude/user_guides/DISCORD_SETUP.md` - Placeholder for Discord setup guide
+
+### Modified Files
+- Updated `.claude/plans/discord-activity-conversion.md` with better organization and cross-references to user guides
+
+### Moved Files
+- Relocated Discord setup documentation to user_guides directory for better organization
+
+## Impact
+- Improved documentation structure with dedicated guides directory
+- Comprehensive local development setup instructions now available
+- Better separation between planning documents and user-facing guides
+- Enhanced onboarding experience for developers setting up Discord Activity locally
+- ~470 lines of new documentation added

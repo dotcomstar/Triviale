@@ -1,0 +1,24 @@
+# Commit Summary: Make Claude plan document
+
+**Commit Hash:** e1156d9afc157709f966a4282b28d51fbee44590
+**Author:** Jaxon Lee
+**Date:** Sat Oct 11 13:12:03 2025 -0400
+
+## Summary
+Created comprehensive plan document for converting Triviale from a standard web application to a Discord Activity (Embedded App).
+
+## Changes
+- Added `.claude/plans/discord-activity-conversion.md` (1088 lines)
+- Document includes:
+  - Multi-phase conversion strategy
+  - Discord SDK integration requirements
+  - Authentication migration from Auth0 to Discord OAuth
+  - Environment configuration and security considerations
+  - Testing and deployment workflows
+  - Detailed technical specifications for each phase
+
+## Impact
+- Establishes roadmap for Discord Activity integration
+- Provides structured approach to major architectural changes
+- Documents authentication strategy changes
+- Serves as reference for implementation phases

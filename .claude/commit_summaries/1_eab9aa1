@@ -1,0 +1,24 @@
+# Commit Summary: Add CLAUDE.md file with /init
+
+**Commit Hash:** eab9aa1377098d98dfb0f8d97957ea2d06c25dab
+**Author:** Jaxon Lee
+**Date:** Sat Oct 11 12:49:20 2025 -0400
+
+## Summary
+Initial creation of CLAUDE.md project documentation file to provide guidance to Claude Code when working with the Triviale codebase.
+
+## Changes
+- Added comprehensive CLAUDE.md file (158 lines) documenting:
+  - Project overview and architecture
+  - Development commands (dev, build, lint, preview)
+  - State management structure using Zustand stores
+  - Component hierarchy and routing setup
+  - External services (Auth0, MongoDB, Analytics)
+  - Game logic flow and key settings
+  - Deployment process and important notes
+
+## Impact
+- Provides Claude Code with essential context about the project structure
+- Enables more informed assistance with development tasks
+- Documents the date-based question system and critical constants
+- Serves as reference for understanding the codebase architecture
