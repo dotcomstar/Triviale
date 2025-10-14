@@ -1,0 +1,33 @@
+# Commit Summary: Improve Discord SDK initialization handling
+
+**Commit Hash:** 1ac3622f62b834a07bb4b411ee7054c12ba0d583
+**Author:** Jaxon Lee
+**Date:** Tue Oct 14 14:39:53 2025 -0400
+
+## Summary
+Refactored Discord SDK initialization to gracefully handle non-Discord environments instead of throwing errors, enabling the app to run in both standalone and Discord Activity modes.
+
+## Changes
+
+### Initialization Flow Improvements
+- Removed upfront check for Discord environment (ancestorOrigins check)
+- Moved environment detection to Discord SDK's `ready()` method
+- Changed missing Client ID from error to graceful degradation
+
+### Error Handling
+- Converted initialization failures from errors to informational logs
+- Set `error` state to `null` when not in Discord (previously treated as error)
+- Added friendly console messages distinguishing between Discord and standalone modes
+
+### Logging Enhancements
+- Added "Initializing Discord SDK..." log for visibility
+- Enhanced success message with ✅ emoji and environment details
+- Added logging of Discord context (channelId, guildId, instanceId)
+- Changed error logs to informational logs for non-Discord environments
+
+## Impact
+- **Better UX**: App no longer shows errors when running outside Discord
+- **Flexible deployment**: Same codebase works in both Discord and standalone web
+- **Improved debugging**: Enhanced logging provides better visibility into initialization status
+- **Graceful fallback**: Missing configuration or non-Discord environment handled elegantly
+- Modified 17 lines, added 14 lines in `src/contexts/DiscordContext.tsx`
