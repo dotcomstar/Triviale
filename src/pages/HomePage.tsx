@@ -85,6 +85,10 @@ const HomePage = () => {
 
   // Test localStorage compatibility in Discord iframe
   useEffect(() => {
+    console.log('🎮 Phase 3 Testing - Storage & State Verification');
+    console.log('='.repeat(50));
+
+    // Test 1: localStorage compatibility
     try {
       const testKey = 'discord-storage-test';
       localStorage.setItem(testKey, 'works');
@@ -100,7 +104,30 @@ const HomePage = () => {
       console.error('❌ localStorage is blocked in Discord iframe:', error);
       console.warn('Game state may not persist. Consider implementing Discord SDK storage fallback.');
     }
-  }, []);
+
+    // Test 2: Log daily index
+    console.log('📅 Daily Index:', dailyIndex);
+    console.log('📋 Total Questions Available:', data.length);
+    console.log('🎯 Current Question Index (safe):', safeIndex);
+
+    // Test 3: Check existing localStorage data
+    const prevGame = localStorage.getItem('prevGame');
+    const gameStats = localStorage.getItem('gameStats');
+
+    if (prevGame && prevGame !== '{}') {
+      console.log('💾 Found previous game data:', JSON.parse(prevGame));
+    } else {
+      console.log('🆕 No previous game data (starting fresh)');
+    }
+
+    if (gameStats && gameStats !== '{}') {
+      console.log('📊 Found previous stats:', JSON.parse(gameStats));
+    } else {
+      console.log('🆕 No previous stats (starting fresh)');
+    }
+
+    console.log('='.repeat(50));
+  }, [dailyIndex, safeIndex]);
 
   // Running on unload or beforeunload is unreliable according to https://developer.chrome.com/articles/page-lifecycle-api/#legacy-lifecycle-apis-to-avoid
   useEffect(() => {
