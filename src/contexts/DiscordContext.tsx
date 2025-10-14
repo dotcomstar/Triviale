@@ -40,29 +40,30 @@ export const DiscordProvider = ({ children }: DiscordProviderProps) => {
         setIsLoading(true);
         setError(null);
 
-        // Check if we're running in Discord
-        const isInDiscord = window.location.ancestorOrigins?.[0]?.includes('discord.com');
+        const clientId = import.meta.env.VITE_DISCORD_CLIENT_ID;
 
-        if (!isInDiscord) {
-          console.log('Not running in Discord environment - Discord SDK disabled');
+        if (!clientId || clientId === 'placeholder_discord_client_id') {
+          console.log('Discord Client ID not configured - running in standalone mode');
           setIsLoading(false);
           return;
         }
 
-        const clientId = import.meta.env.VITE_DISCORD_CLIENT_ID;
-
-        if (!clientId || clientId === 'placeholder_discord_client_id') {
-          throw new Error('Discord Client ID not configured. Please set VITE_DISCORD_CLIENT_ID in .env.local');
-        }
-
-        // Initialize Discord SDK
+        // Initialize Discord SDK - it will detect if we're in Discord environment
+        console.log('Initializing Discord SDK...');
         const discordSdk = new DiscordSDK(clientId);
+
+        // ready() will timeout/fail if not in Discord environment
         await discordSdk.ready();
 
         setSdk(discordSdk);
         window.discordSdk = discordSdk;
 
-        console.log('Discord SDK initialized successfully');
+        console.log('✅ Discord SDK initialized successfully');
+        console.log('Discord environment detected:', {
+          channelId: discordSdk.channelId,
+          guildId: discordSdk.guildId,
+          instanceId: discordSdk.instanceId,
+        });
 
         // Try to authenticate automatically if we have stored auth
         const storedAuth = localStorage.getItem('discord_auth');
@@ -79,8 +80,10 @@ export const DiscordProvider = ({ children }: DiscordProviderProps) => {
 
         setIsLoading(false);
       } catch (err) {
-        console.error('Failed to initialize Discord SDK:', err);
-        setError(err instanceof Error ? err.message : 'Unknown error');
+        // If Discord SDK fails to initialize, we're likely not in Discord
+        console.log('Not running in Discord environment - Discord SDK disabled');
+        console.log('Error:', err instanceof Error ? err.message : 'Unknown error');
+        setError(null); // Don't treat this as an error, just disable Discord features
         setIsLoading(false);
       }
     };
