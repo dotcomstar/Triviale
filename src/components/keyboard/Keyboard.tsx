@@ -1,6 +1,7 @@
 import BackspaceIcon from "@mui/icons-material/Backspace";
-import { Icon, Stack } from "@mui/material";
+import { Icon, Stack, useMediaQuery } from "@mui/material";
 import { useEffect } from "react";
+import { MOBILE_SCREEN_CUTOFF } from "../../constants/settings";
 import { ENTER_KEY_ID, ENTER_TEXT } from "../../constants/strings";
 import Key from "./Key";
 import useGameStateStore from "../../stores/gameStateStore";
@@ -84,6 +85,7 @@ const Keyboard = ({
     (s) => s.onscreenKeyboardOnly
   );
   const hardMode = useHardModeStore((s) => s.hardMode);
+  const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
 
   const onClick = (value: string) => {
     if (value === "ENTER") {
@@ -127,8 +129,8 @@ const Keyboard = ({
       direction="column"
       justifyContent="center"
       alignItems="center"
-      spacing="8px"
-      sx={{ m: "8px" }}
+      spacing={isNotMobile ? "8px" : "4px"}
+      sx={{ m: isNotMobile ? "8px" : "4px" }}
     >
       <Stack direction="row" spacing={"6px"}>
         {["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"].map((key) => (

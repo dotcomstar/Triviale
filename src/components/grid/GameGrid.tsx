@@ -1,4 +1,5 @@
-import { Stack, useTheme } from "@mui/material";
+import { Stack, useMediaQuery, useTheme } from "@mui/material";
+import { MOBILE_SCREEN_CUTOFF } from "../../constants/settings";
 import { SKIPPED_TEXT } from "../../constants/strings";
 import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 import useQuestionByID from "../../hooks/useQuestionByID";
@@ -23,6 +24,7 @@ const GameGrid = () => {
   const guesses = useGameStateStore((s) => s.guesses);
   const hardMode = useHardModeStore((s) => s.hardMode);
   const theme = useTheme();
+  const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
 
   // TODO: Memoize and possibly export this function?
   const getStatuses = (guess: string[]) => {
@@ -92,7 +94,7 @@ const GameGrid = () => {
   };
 
   return (
-    <Stack direction={"column"} spacing={1}>
+    <Stack direction={"column"} spacing={isNotMobile ? 1 : 0.5}>
       {guesses.map(
         (q, i) =>
           i === questionNumber

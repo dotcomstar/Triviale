@@ -43,18 +43,23 @@ const LandingDialog = ({
     >
       <Stack
         direction="column"
-        justifyContent="space-between"
+        justifyContent="flex-start"
         alignItems="center"
         width={"100%"}
         height={"100%"}
-        spacing={isNotMobile ? undefined : "4%"}
-        sx={{ pt: isNotMobile ? 12 : 8, pb: isNotMobile ? 8 : 2, px: 4 }}
+        spacing={isNotMobile ? 2 : 0.5}
+        sx={{
+          pt: isNotMobile ? 8 : 2,
+          pb: isNotMobile ? 4 : 2,
+          px: isNotMobile ? 4 : 2,
+          overflow: "auto"
+        }}
       >
         <LandingLogo fontColor={backgroundColor} />
         <LandingHelpText />
         <NewFeaturesList />
         <LandingButtons onClose={handleClose} />
-        <Stack direction="column" pt={"20px"}>
+        <Stack direction="column" pt={isNotMobile ? 2 : 1} spacing={1}>
           <LandingDateInfo />
           {isAuthenticated ? (
             <ProfileButton />

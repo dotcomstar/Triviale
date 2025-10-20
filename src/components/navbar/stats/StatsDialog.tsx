@@ -166,13 +166,13 @@ const StatsDialog = ({
       ariaLabeledBy={STATISTICS_TITLE}
       dialogTitle={STATISTICS_TITLE}
     >
-      <PastGamesStats sx={{ mb: 1 }} />
+      <PastGamesStats sx={{ mb: 0.5 }} />
       <Typography
-        sx={{ m: 3, my: 0, mb: 1, fontSize: "20px", fontWeight: "bold" }}
+        sx={{ m: 2, my: 0, mb: 0.5, fontSize: "20px", fontWeight: "bold" }}
       >
         {GUESS_DISTRIBUTION_TEXT}
       </Typography>
-      <GuessDistribution sx={{ m: 3, my: 0, fontSize: "20px" }} />
+      <GuessDistribution sx={{ m: 2, my: 0, fontSize: "20px" }} />
       <ShareButton onShare={handleShare} />
       <AdvancedStatsButton
         onClick={() => setAdvancedStatsOpen(!advancedStatsOpen)}

@@ -5,7 +5,7 @@ import {
   IconButton,
   useTheme,
 } from "@mui/material";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
 export interface CustomDialogProps {
@@ -40,9 +40,21 @@ const CustomDialog = ({
   };
 
   const theme = useTheme();
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  // Reset scroll to top when dialog opens
+  useEffect(() => {
+    if (open && dialogRef.current) {
+      const dialogContent = dialogRef.current.querySelector('.MuiDialog-paper');
+      if (dialogContent) {
+        dialogContent.scrollTop = 0;
+      }
+    }
+  }, [open]);
 
   return (
     <Dialog
+      ref={dialogRef}
       onClose={handleClose}
       open={open}
       TransitionComponent={TransitionComponent}

@@ -8,8 +8,8 @@ const NewFeaturesList = () => {
       justifyContent="center"
       alignItems="center"
       width={"80%"}
-      pb={3}
-      pt={4}
+      pb={1}
+      pt={1}
     >
       {NEW_FEATURES_LIST.length !== 0 && (
         //   // Render an empty space if no new features so the title and buttons render correctly

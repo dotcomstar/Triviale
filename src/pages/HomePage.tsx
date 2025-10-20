@@ -1,5 +1,5 @@
 import { Alert, Grid, Paper, useMediaQuery } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import GameGrid from "../components/grid/GameGrid";
 import Keyboard from "../components/keyboard/Keyboard";
 import NavBar from "../components/navbar/NavBar";
@@ -82,6 +82,15 @@ const HomePage = () => {
   const todaysCategories = Array(QUESTIONS_PER_DAY)
     .fill("")
     .map((_, i) => data[getPositiveIndex(dailyIndex + i)].category);
+
+  const paperRef = useRef<HTMLDivElement>(null);
+
+  // Ensure the content area starts scrolled to the top
+  useEffect(() => {
+    if (paperRef.current) {
+      paperRef.current.scrollTop = 0;
+    }
+  }, [questionNumber]);
 
   // Test localStorage compatibility in Discord iframe
   useEffect(() => {
@@ -216,47 +225,63 @@ const HomePage = () => {
 
   return (
     <>
-      <Grid container paddingY={isNotMobile ? 1 : 0}>
-        <Grid item xs={12}>
+      <Grid
+        container
+        direction="column"
+        wrap="nowrap"
+        sx={{
+          height: "100dvh",
+          width: "100vw",
+          overflow: "hidden"
+        }}
+      >
+        <Grid item>
           <NavBar />
         </Grid>
-        <Grid item xs={12} px={1}>
+        <Grid item px={1}>
           <ProgressBar />
         </Grid>
-        <Grid item xs={12}>
+        <Grid
+          item
+          sx={{
+            flex: 1,
+            minHeight: 0,
+            overflow: "auto",
+            px: 1
+          }}
+        >
           <Paper
+            ref={paperRef}
             elevation={0}
             sx={{
-              maxHeight: editing
-                ? "100dvh"
-                : isNotMobile
-                ? "100dvh"
-                : "calc(100dvh - 290px)", // Always place keyboard at the bottom of the page
+              height: "100%",
               overflow: "auto",
             }}
           >
-            <Grid item xs={12} sx={{ mx: 0, pt: 1 }}>
-              {editing ? (
-                <CustomizableText />
-              ) : (
-                <ExpandableText>{question}</ExpandableText>
+            <Grid container direction="column">
+              <Grid item sx={{ mx: 0, pt: isNotMobile ? 1 : 0.5 }}>
+                {editing ? (
+                  <CustomizableText />
+                ) : (
+                  <ExpandableText>{question}</ExpandableText>
+                )}
+              </Grid>
+              {!editing && (
+                <Grid item sx={{ px: 0, mb: isNotMobile ? 1 : 0.5 }}>
+                  {questionState[questionNumber] === "lost" && (
+                    <Alert severity="info" sx={{ mb: 1, mx: isNotMobile ? 2 : 1 }}>
+                      Answer was {answerWithSpaces}
+                      {fullAnswer ? `, as in ${fullAnswer}` : ""}
+                    </Alert>
+                  )}
+                  <GameGrid />
+                </Grid>
               )}
             </Grid>
-            {!editing && (
-              <Grid item xs={12} sx={{ px: 1, mb: 1 }}>
-                {questionState[questionNumber] === "lost" && (
-                  <Alert severity="info" sx={{ mb: 1, mx: 2 }}>
-                    Answer was {answerWithSpaces}
-                    {fullAnswer ? `, as in ${fullAnswer}` : ""}
-                  </Alert>
-                )}
-                <GameGrid />
-              </Grid>
-            )}
           </Paper>
         </Grid>
 
-        <Grid item xs={12} sx={{ px: 0 }}>
+        <Grid item sx={{ px: 0 }}>
           {!editing && (
             <Keyboard
               onChar={(c) => {
