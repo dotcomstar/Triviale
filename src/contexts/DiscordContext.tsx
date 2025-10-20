@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { DiscordSDK } from '@discord/embedded-app-sdk';
 import type { DiscordAuth, DiscordUser } from '../types/discord';
+import { logger } from '../utils/logger';
 
 interface DiscordContextType {
   sdk: DiscordSDK | null;
@@ -43,13 +44,13 @@ export const DiscordProvider = ({ children }: DiscordProviderProps) => {
         const clientId = import.meta.env.VITE_DISCORD_CLIENT_ID;
 
         if (!clientId || clientId === 'placeholder_discord_client_id') {
-          console.log('Discord Client ID not configured - running in standalone mode');
+          logger.info('Discord Client ID not configured - running in standalone mode');
           setIsLoading(false);
           return;
         }
 
         // Initialize Discord SDK - it will detect if we're in Discord environment
-        console.log('Initializing Discord SDK...');
+        logger.info('Initializing Discord SDK...');
         const discordSdk = new DiscordSDK(clientId);
 
         // ready() will timeout/fail if not in Discord environment
@@ -58,8 +59,8 @@ export const DiscordProvider = ({ children }: DiscordProviderProps) => {
         setSdk(discordSdk);
         window.discordSdk = discordSdk;
 
-        console.log('✅ Discord SDK initialized successfully');
-        console.log('Discord environment detected:', {
+        logger.info('✅ Discord SDK initialized successfully');
+        logger.debug('Discord environment detected:', {
           channelId: discordSdk.channelId,
           guildId: discordSdk.guildId,
           instanceId: discordSdk.instanceId,
@@ -73,7 +74,7 @@ export const DiscordProvider = ({ children }: DiscordProviderProps) => {
             setAuth(parsedAuth);
             setUser(parsedAuth.user);
           } catch (e) {
-            console.error('Failed to parse stored auth:', e);
+            logger.error('Failed to parse stored auth:', e);
             localStorage.removeItem('discord_auth');
           }
         }
@@ -81,8 +82,8 @@ export const DiscordProvider = ({ children }: DiscordProviderProps) => {
         setIsLoading(false);
       } catch (err) {
         // If Discord SDK fails to initialize, we're likely not in Discord
-        console.log('Not running in Discord environment - Discord SDK disabled');
-        console.log('Error:', err instanceof Error ? err.message : 'Unknown error');
+        logger.info('Not running in Discord environment - Discord SDK disabled');
+        logger.debug('Error:', err instanceof Error ? err.message : 'Unknown error');
         setError(null); // Don't treat this as an error, just disable Discord features
         setIsLoading(false);
       }
@@ -104,7 +105,7 @@ export const DiscordProvider = ({ children }: DiscordProviderProps) => {
       const clientId = import.meta.env.VITE_DISCORD_CLIENT_ID;
 
       // Step 1: Authorize
-      console.log('Starting Discord OAuth flow...');
+      logger.info('Starting Discord OAuth flow...');
       const { code } = await sdk.commands.authorize({
         client_id: clientId,
         response_type: 'code',
@@ -116,7 +117,7 @@ export const DiscordProvider = ({ children }: DiscordProviderProps) => {
         ],
       });
 
-      console.log('Authorization code received, exchanging for token...');
+      logger.debug('Authorization code received, exchanging for token...');
 
       // Step 2: Exchange code for access token via backend
       const response = await fetch('/.proxy/api/token', {
@@ -133,14 +134,14 @@ export const DiscordProvider = ({ children }: DiscordProviderProps) => {
 
       const { access_token } = await response.json();
 
-      console.log('Access token received, authenticating...');
+      logger.debug('Access token received, authenticating...');
 
       // Step 3: Authenticate with Discord
       const authResult = await sdk.commands.authenticate({
         access_token,
       });
 
-      console.log('Authentication successful!', authResult.user.username);
+      logger.info('Authentication successful!', authResult.user.username);
 
       const discordAuth: DiscordAuth = {
         access_token,
@@ -158,7 +159,7 @@ export const DiscordProvider = ({ children }: DiscordProviderProps) => {
 
       setIsLoading(false);
     } catch (err) {
-      console.error('Login failed:', err);
+      logger.error('Login failed:', err);
       setError(err instanceof Error ? err.message : 'Login failed');
       setIsLoading(false);
     }
@@ -168,7 +169,7 @@ export const DiscordProvider = ({ children }: DiscordProviderProps) => {
     setAuth(null);
     setUser(null);
     localStorage.removeItem('discord_auth');
-    console.log('Logged out successfully');
+    logger.info('Logged out successfully');
   };
 
   const value: DiscordContextType = {

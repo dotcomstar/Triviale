@@ -21,6 +21,7 @@ import useHardModeStore from "../stores/hardModeStore";
 import useOnscreenKeyboardOnlyStore from "../stores/onscreenKeyboardOnlyStore";
 import useRetrievedStore from "../stores/retrievedStore";
 import useStatsStore from "../stores/statsStore";
+import { logger } from "../utils/logger";
 
 const HomePage = () => {
   const { data } = useQuestions();
@@ -92,12 +93,12 @@ const HomePage = () => {
     }
   }, [questionNumber]);
 
-  // Test localStorage compatibility in Discord iframe
+  // Test localStorage compatibility in Discord iframe (dev mode only)
   useEffect(() => {
-    console.log('🎮 Phase 3 Testing - Storage & State Verification');
-    console.log('='.repeat(50));
+    logger.debug('🎮 Storage & State Verification');
+    logger.debug('='.repeat(50));
 
-    // Test 1: localStorage compatibility
+    // Test localStorage compatibility
     try {
       const testKey = 'discord-storage-test';
       localStorage.setItem(testKey, 'works');
@@ -105,37 +106,31 @@ const HomePage = () => {
       localStorage.removeItem(testKey);
 
       if (test === 'works') {
-        console.log('✅ localStorage works in Discord environment');
+        logger.debug('✅ localStorage works');
       } else {
-        console.warn('⚠️ localStorage test failed - storage may not persist');
+        logger.warn('⚠️ localStorage test failed - storage may not persist');
       }
     } catch (error) {
-      console.error('❌ localStorage is blocked in Discord iframe:', error);
-      console.warn('Game state may not persist. Consider implementing Discord SDK storage fallback.');
+      logger.error('❌ localStorage is blocked:', error);
+      logger.warn('Game state may not persist.');
     }
 
-    // Test 2: Log daily index
-    console.log('📅 Daily Index:', dailyIndex);
-    console.log('📋 Total Questions Available:', data.length);
-    console.log('🎯 Current Question Index (safe):', safeIndex);
+    logger.debug('📅 Daily Index:', dailyIndex);
+    logger.debug('📋 Total Questions:', data.length);
+    logger.debug('🎯 Current Question Index:', safeIndex);
 
-    // Test 3: Check existing localStorage data
     const prevGame = localStorage.getItem('prevGame');
     const gameStats = localStorage.getItem('gameStats');
 
     if (prevGame && prevGame !== '{}') {
-      console.log('💾 Found previous game data:', JSON.parse(prevGame));
-    } else {
-      console.log('🆕 No previous game data (starting fresh)');
+      logger.debug('💾 Found previous game data');
     }
 
     if (gameStats && gameStats !== '{}') {
-      console.log('📊 Found previous stats:', JSON.parse(gameStats));
-    } else {
-      console.log('🆕 No previous stats (starting fresh)');
+      logger.debug('📊 Found previous stats');
     }
 
-    console.log('='.repeat(50));
+    logger.debug('='.repeat(50));
   }, [dailyIndex, safeIndex]);
 
   // Running on unload or beforeunload is unreliable according to https://developer.chrome.com/articles/page-lifecycle-api/#legacy-lifecycle-apis-to-avoid
@@ -175,10 +170,10 @@ const HomePage = () => {
   useEffect(() => {
     // Check if the user has already made guesses today.
     const existingStats = localStorage.getItem("gameStats") || "{}";
-    console.log(existingStats);
+    logger.debug('Loading stats:', existingStats);
     const pastStats = JSON.parse(existingStats);
     if (pastStats["numQuestionsAttempted"]) {
-      console.log("Importing past stats");
+      logger.debug("Importing past stats");
       const pastData = {
         numQuestionsAttempted: pastStats["numQuestionsAttempted"],
         questionsGuessedIn: pastStats["questionsGuessedIn"],
@@ -190,7 +185,7 @@ const HomePage = () => {
       };
       importStats(pastData);
     } else {
-      console.log("No previous stats");
+      logger.debug("No previous stats");
     }
   }, [dailyIndex, importStats]);
 
@@ -198,10 +193,10 @@ const HomePage = () => {
   useEffect(() => {
     // Check if the user has already made guesses today.
     const existingGuesses = localStorage.getItem("prevGame") || "{}";
-    console.log(existingGuesses);
+    logger.debug('Loading game:', existingGuesses);
     const pastGuesses = JSON.parse(existingGuesses);
     if (pastGuesses["pastOffset"] === dailyIndex) {
-      console.log("Importing past guesses");
+      logger.debug("Importing past guesses");
       const pastGame = {
         gameState: pastGuesses["gameState"],
         questionState: pastGuesses["questionState"],
@@ -219,7 +214,7 @@ const HomePage = () => {
       }
     } else {
       // No previous guesses
-      console.log("No previous guesses");
+      logger.debug("No previous guesses");
     }
   }, [dailyIndex, importGame, importGuess]);
 
@@ -285,7 +280,7 @@ const HomePage = () => {
           {!editing && (
             <Keyboard
               onChar={(c) => {
-                console.log(c);
+                logger.debug('Key pressed:', c);
                 if (
                   (hardMode || index < answer.length) &&
                   questionState[questionNumber] === "inProgress"
@@ -295,12 +290,12 @@ const HomePage = () => {
                 }
               }}
               onDelete={() => {
-                console.log("delete");
+                logger.debug("Delete pressed");
                 deleteChar();
                 cacheGuess(guess.filter((_, i) => i !== guess.length - 1));
               }}
               onEnter={() => {
-                console.log("enter");
+                logger.debug("Enter pressed");
                 let finalGuess = false;
                 let won = false;
                 const hasOneMoreGuess =
@@ -327,7 +322,7 @@ const HomePage = () => {
                     }
                     finalGuess = true;
                   } else {
-                    console.log("Incorrect :(");
+                    logger.debug("Incorrect guess");
                   }
                   makeGuess(guess);
                   resetGuess();

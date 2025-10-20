@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { MAX_CHALLENGES, QUESTIONS_PER_DAY } from "../constants/settings";
+import { logger } from "../utils/logger";
 
 export type WinState = "won" | "lost" | "inProgress";
 
@@ -31,15 +32,15 @@ const useGameStateStore = create<GameStateStore>((set) => ({
   guessNumber: Array(QUESTIONS_PER_DAY).fill(0),
   guesses: Array(QUESTIONS_PER_DAY).fill(Array(MAX_CHALLENGES).fill([])),
   winGame: () => {
-    console.log("Won the game");
+    logger.debug("Won the game");
     set(() => ({ gameState: "won" }));
   },
   loseGame: () => {
-    console.log("Lost the game");
+    logger.debug("Lost the game");
     set(() => ({ gameState: "lost" }));
   },
   winQuestion: (id: number) => {
-    console.log("Correct!");
+    logger.debug("Correct!");
     set((state) => ({
       questionState: [
         ...state.questionState.map((s, i) => (i === id ? "won" : s)),
@@ -47,7 +48,7 @@ const useGameStateStore = create<GameStateStore>((set) => ({
     }));
   },
   loseQuestion: (id: number) => {
-    console.log("Lost the question :(");
+    logger.debug("Lost the question");
     set((state) => ({
       questionState: [
         ...state.questionState.map((s, i) => (i === id ? "lost" : s)),

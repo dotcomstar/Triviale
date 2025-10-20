@@ -8,6 +8,3 @@ export const THEME_TRANSITION_TIME_MS = 100;
 export const MANUAL_OFFSET = -9; // Used to calibrate questions to days mapping
 export const MOBILE_SCREEN_CUTOFF = "600px";
 export const MAX_CATEGORY_STRING_LENGTH = 3;
-// export const WELCOME_INFO_MODAL_MS = 350;
-// export const DISCOURAGE_INAPP_BROWSERS = true;
-// export const ENABLE_ARCHIVED_GAMES = false;

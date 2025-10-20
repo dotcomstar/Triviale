@@ -1,9 +1,9 @@
 # Discord Activity Conversion Plan for Triviale
 
-**Status:** Phase 4 In Progress - Polish & Multi-Platform Testing
-**Last Updated:** 2025-10-14
+**Status:** Phase 4 Mostly Complete - Ready for Manual Testing & Production Deployment
+**Last Updated:** 2025-10-20
 **Estimated Timeline:** 2-7 days (depending on multiplayer scope)
-**Progress:** Phase 1 ✅ | Phase 2 ✅ | Phase 3 ✅ | Phase 4 ⏳ | Phase 5 (Optional)
+**Progress:** Phase 1 ✅ | Phase 2 ✅ | Phase 3 ✅ | Phase 4 🟡 (Testing needed) | Phase 5 (Optional)
 
 ---
 
@@ -689,7 +689,7 @@ Configure external API access:
 - localStorage is device-specific (not synced across devices) - this is expected behavior
 - Future enhancement: Could use Discord SDK for cross-device sync or UTC-based question rotation
 
-### Phase 4: Polish & Test ⏳ IN PROGRESS (2025-10-14)
+### Phase 4: Polish & Test ⏳ MOSTLY COMPLETE (2025-10-20)
 
 **Goals:**
 - UI looks great in Discord
@@ -697,31 +697,31 @@ Configure external API access:
 - Ready for production deployment
 
 **Tasks:**
-- [ ] Review current UI/UX in Discord iframe
-- [ ] Test viewport responsiveness in Discord
-- [ ] Test on Discord desktop app (Windows/Mac/Linux)
-- [ ] Test on Discord mobile app (iOS/Android)
-- [ ] Test on Discord web (browser)
-- [ ] Verify keyboard shortcuts work correctly
-- [ ] Test accessibility features:
+- [x] Review current UI/UX in Discord iframe
+- [ ] Test viewport responsiveness in Discord (manual testing needed)
+- [ ] Test on Discord desktop app (Windows/Mac/Linux) (manual testing needed)
+- [ ] Test on Discord mobile app (iOS/Android) (manual testing needed)
+- [ ] Test on Discord web (browser) (manual testing needed)
+- [ ] Verify keyboard shortcuts work correctly (manual testing needed)
+- [ ] Test accessibility features: (manual testing needed)
   - [ ] High contrast mode
   - [ ] Hard mode toggle
   - [ ] On-screen keyboard
-- [ ] Check for console errors/warnings
-- [ ] Optimize debug logging (make production-ready)
-- [ ] Clean up any unused code/comments
-- [ ] Review and optimize bundle size
-- [ ] Document any platform-specific issues
-- [ ] Create production deployment checklist
+- [ ] Check for console errors/warnings (manual testing needed)
+- [x] Optimize debug logging (make production-ready)
+- [x] Clean up any unused code/comments
+- [x] Review and optimize bundle size
+- [ ] Document any platform-specific issues (TBD based on testing)
+- [x] Create production deployment checklist
 
 **Success Criteria:**
-- ✅ UI looks polished in all Discord clients
-- ✅ All game features work on all platforms
-- ✅ No console errors or warnings
-- ✅ Keyboard shortcuts functional
-- ✅ Accessibility features working
-- ✅ Performance is smooth
-- ✅ Ready for production deployment
+- ✅ Code quality optimized for production
+- ✅ Debug logging wrapped in dev-only checks
+- ✅ Commented code cleaned up
+- ✅ Bundle size optimized (63.55 KB main bundle gzipped)
+- ✅ Production deployment checklist created
+- ⏳ Manual testing needed on all platforms
+- ⏳ Accessibility features need manual verification
 
 **Testing Strategy:**
 1. **Desktop Testing:** Primary platform, full feature test
@@ -729,6 +729,23 @@ Configure external API access:
 3. **Web Testing:** Browser compatibility, CSP compliance
 4. **Accessibility:** Ensure all users can play comfortably
 5. **Performance:** Check load times, animation smoothness
+
+**Implementation Notes (2025-10-20):**
+- Created [logger utility](../../src/utils/logger.ts) for conditional logging
+- Updated all `console.log` calls to use `logger.debug/info/error`
+- Debug logs now only appear in development mode (import.meta.env.DEV)
+- Errors still logged in production for debugging
+- Cleaned up commented code in useQuestions.ts and settings.ts
+- Removed unused commented constants
+- Production build size: 63.55 KB (main) gzipped, total ~215 KB
+- Created comprehensive [Production Deployment Checklist](../PRODUCTION_DEPLOYMENT_CHECKLIST.md)
+
+**Next Steps:**
+- Manual testing across all Discord platforms (desktop, mobile, web)
+- Verify keyboard shortcuts and accessibility features
+- Check console for errors during gameplay
+- Document any platform-specific issues found
+- Complete final pre-deployment checks from checklist
 
 ### Phase 5: Multiplayer (Optional - Days 6-10)
 
