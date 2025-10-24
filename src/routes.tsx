@@ -4,6 +4,8 @@ import HomePage from "./pages/HomePage";
 import Layout from "./pages/Layout";
 import UserProfilePage from "./pages/UserProfilePage";
 import PrivateRoutes from "./components/auth/PrivateRoutes";
+import TermsOfServicePage from "./pages/TermsOfServicePage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +15,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> }, // Default component
       { path: "login/callback", element: <Navigate to={"/"} /> },
+      { path: "terms", element: <TermsOfServicePage /> },
+      { path: "privacy", element: <PrivacyPolicyPage /> },
       {
         element: <PrivateRoutes />,
         children: [
