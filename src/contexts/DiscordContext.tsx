@@ -35,6 +35,76 @@ export const DiscordProvider = ({ children }: DiscordProviderProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Auto-login function that will be called on initialization
+  const autoLogin = async (discordSdk: DiscordSDK, clientId: string) => {
+    try {
+      // Step 1: Authorize with prompt: 'none' for automatic auth
+      logger.debug('Requesting authorization...');
+      const { code } = await discordSdk.commands.authorize({
+        client_id: clientId,
+        response_type: 'code',
+        state: '',
+        prompt: 'none', // This makes it automatic if user already authorized
+        scope: [
+          'identify',
+          'guilds',
+        ],
+      });
+
+      logger.debug('Authorization code received, exchanging for token...');
+
+      // Step 2: Exchange code for access token via backend
+      // Use /api/token in dev, /.proxy/api/token in Discord
+      const tokenEndpoint = window.location.ancestorOrigins?.[0]?.includes('discord.com')
+        ? '/.proxy/api/token'
+        : '/api/token';
+
+      logger.debug(`Using token endpoint: ${tokenEndpoint}`);
+
+      const response = await fetch(tokenEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        logger.error('Token exchange failed:', response.status, errorData);
+        throw new Error(`Token exchange failed: ${response.statusText}`);
+      }
+
+      const { access_token } = await response.json();
+
+      logger.debug('Access token received, authenticating...');
+
+      // Step 3: Authenticate with Discord
+      const authResult = await discordSdk.commands.authenticate({
+        access_token,
+      });
+
+      logger.info('✅ Auto-authentication successful!', authResult.user.username);
+
+      const discordAuth: DiscordAuth = {
+        access_token,
+        user: authResult.user as DiscordUser,
+        scopes: authResult.scopes.map(String),
+        expires: authResult.expires,
+        application: authResult.application,
+      };
+
+      setAuth(discordAuth);
+      setUser(authResult.user as DiscordUser);
+
+      // Store auth for next session
+      localStorage.setItem('discord_auth', JSON.stringify(discordAuth));
+    } catch (err) {
+      logger.error('Auto-login failed:', err);
+      throw err;
+    }
+  };
+
   useEffect(() => {
     const initDiscord = async () => {
       try {
@@ -68,14 +138,38 @@ export const DiscordProvider = ({ children }: DiscordProviderProps) => {
 
         // Try to authenticate automatically if we have stored auth
         const storedAuth = localStorage.getItem('discord_auth');
+        let hasValidStoredAuth = false;
+
         if (storedAuth) {
           try {
             const parsedAuth = JSON.parse(storedAuth);
-            setAuth(parsedAuth);
-            setUser(parsedAuth.user);
+            // Check if auth is not expired
+            const now = new Date();
+            const expires = new Date(parsedAuth.expires);
+
+            if (expires > now) {
+              logger.debug('Using stored auth (not expired)');
+              setAuth(parsedAuth);
+              setUser(parsedAuth.user);
+              hasValidStoredAuth = true;
+            } else {
+              logger.debug('Stored auth expired, will re-authenticate');
+              localStorage.removeItem('discord_auth');
+            }
           } catch (e) {
             logger.error('Failed to parse stored auth:', e);
             localStorage.removeItem('discord_auth');
+          }
+        }
+
+        // If we're in Discord environment but not authenticated, auto-login
+        if (!hasValidStoredAuth) {
+          logger.info('Auto-authenticating with Discord...');
+          try {
+            await autoLogin(discordSdk, clientId);
+          } catch (err) {
+            logger.error('Auto-login failed:', err);
+            // Continue with manual login option
           }
         }
 
@@ -120,7 +214,14 @@ export const DiscordProvider = ({ children }: DiscordProviderProps) => {
       logger.debug('Authorization code received, exchanging for token...');
 
       // Step 2: Exchange code for access token via backend
-      const response = await fetch('/.proxy/api/token', {
+      // Use /api/token in dev, /.proxy/api/token in Discord
+      const tokenEndpoint = window.location.ancestorOrigins?.[0]?.includes('discord.com')
+        ? '/.proxy/api/token'
+        : '/api/token';
+
+      logger.debug(`Using token endpoint: ${tokenEndpoint}`);
+
+      const response = await fetch(tokenEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -129,6 +230,8 @@ export const DiscordProvider = ({ children }: DiscordProviderProps) => {
       });
 
       if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        logger.error('Token exchange failed:', response.status, errorData);
         throw new Error(`Token exchange failed: ${response.statusText}`);
       }
 
