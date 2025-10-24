@@ -8,6 +8,7 @@ import {
   List,
   ListItemButton,
   ListItemText,
+  useMediaQuery,
 } from "@mui/material";
 import React, { useState } from "react";
 import {
@@ -21,10 +22,12 @@ import LogoutButton from "../../auth/LogoutButton";
 import HelpButton from "../help/HelpButton";
 import StatsButton from "../stats/StatsButton";
 import SubscribeButton from "./SubscribeButton";
+import { MOBILE_SCREEN_CUTOFF } from "../../../constants/settings";
 
 const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
   const { isAuthenticated, login, logout, sdk } = useDiscord();
   const [expanded, setExpanded] = useState(false);
+  const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -128,7 +131,17 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
         >
           <MenuRoundedIcon fontSize={size} />
         </IconButton>
-        <Drawer anchor={"left"} open={expanded} onClose={toggleDrawer(false)}>
+        <Drawer
+          anchor={"left"}
+          open={expanded}
+          onClose={toggleDrawer(false)}
+          sx={{
+            '& .MuiDrawer-paper': !isNotMobile ? {
+              marginTop: '60px',
+              height: 'calc(100% - 60px)'
+            } : {}
+          }}
+        >
           {list()}
         </Drawer>
       </React.Fragment>

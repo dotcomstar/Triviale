@@ -4,9 +4,11 @@ import {
   DialogTitle,
   IconButton,
   useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { ReactNode, useEffect, useRef } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { MOBILE_SCREEN_CUTOFF } from "../../constants/settings";
 
 export interface CustomDialogProps {
   open: boolean;
@@ -41,6 +43,7 @@ const CustomDialog = ({
 
   const theme = useTheme();
   const dialogRef = useRef<HTMLDivElement>(null);
+  const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
 
   // Reset scroll to top when dialog opens
   useEffect(() => {
@@ -64,7 +67,16 @@ const CustomDialog = ({
       fullWidth
       maxWidth="sm"
       fullScreen={fullScreen}
-      sx={{ zIndex: zIndex, mx: 0, pb: fullScreen ? 0 : 2 }}
+      sx={{
+        zIndex: zIndex,
+        mx: 0,
+        pb: fullScreen ? 0 : 2,
+        // On mobile fullscreen, add top padding for Discord header
+        '& .MuiDialog-paper': fullScreen && !isNotMobile ? {
+          marginTop: '60px',
+          height: 'calc(100% - 60px)'
+        } : {}
+      }}
       PaperProps={{
         style: {
           backgroundColor: backgroundColor

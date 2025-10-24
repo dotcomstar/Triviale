@@ -65,8 +65,8 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
       <Stack
         direction="row"
         paddingX="10px"
-        paddingBottom={isNotMobile ? "10px" : "0px"}
-        paddingTop={isNotMobile ? "10px" : "4px"}
+        paddingBottom={isNotMobile ? "10px" : "4px"}
+        paddingTop={isNotMobile ? "10px" : "6px"}
         justifyContent="space-between"
         alignItems="center"
         sx={{ borderBottom: hasBottomBorder ? 1 : 0, borderColor: "DarkGray" }}
@@ -83,7 +83,7 @@ const NavBar = ({ hasBottomBorder }: NavBarProps) => {
             fontSize={"1.5REM"}
             position={"absolute"}
             left={isNotMobile ? "45vw" : "40vw"}
-            top={isNotMobile ? "15px" : "10px"}
+            top={isNotMobile ? "15px" : "70px"}
             color={editing ? "info.main" : "primary.contrastText"}
             sx={{
               transition: () =>

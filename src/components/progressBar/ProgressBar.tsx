@@ -25,7 +25,7 @@ const ProgressBar = () => {
     <Stack
       direction="row"
       p={"0px"}
-      pb={"5px"}
+      pb={"3px"}
       justifyContent="center"
       alignItems="center"
     >

@@ -227,13 +227,16 @@ const HomePage = () => {
         sx={{
           height: "100dvh",
           width: "100vw",
-          overflow: "hidden"
+          overflow: "hidden",
+          // Add top spacing on mobile - Discord's mobile header needs clearance
+          paddingTop: isNotMobile ? 0 : "60px",
+          boxSizing: "border-box"
         }}
       >
         <Grid item>
           <NavBar />
         </Grid>
-        <Grid item px={1}>
+        <Grid item px={1} pt={isNotMobile ? 0 : 0.5}>
           <ProgressBar />
         </Grid>
         <Grid
