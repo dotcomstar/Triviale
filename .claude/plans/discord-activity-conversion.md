@@ -1,9 +1,9 @@
 # Discord Activity Conversion Plan for Triviale
 
-**Status:** Phase 4 Mostly Complete - Ready for Manual Testing & Production Deployment
-**Last Updated:** 2025-10-20
+**Status:** Phase 4 Complete - Deployed to Production, Awaiting Discord Verification
+**Last Updated:** 2025-10-24
 **Estimated Timeline:** 2-7 days (depending on multiplayer scope)
-**Progress:** Phase 1 ✅ | Phase 2 ✅ | Phase 3 ✅ | Phase 4 🟡 (Testing needed) | Phase 5 (Optional)
+**Progress:** Phase 1 ✅ | Phase 2 ✅ | Phase 3 ✅ | Phase 4 ✅ | Phase 5 (Optional)
 
 ---
 
@@ -689,15 +689,24 @@ Configure external API access:
 - localStorage is device-specific (not synced across devices) - this is expected behavior
 - Future enhancement: Could use Discord SDK for cross-device sync or UTC-based question rotation
 
-### Phase 4: Polish & Test ⏳ MOSTLY COMPLETE (2025-10-20)
+### Phase 4: Polish & Test ✅ COMPLETE (2025-10-24)
 
 **Goals:**
 - UI looks great in Discord
 - All features work across platforms
 - Ready for production deployment
+- Discord verification requirements met
 
 **Tasks:**
 - [x] Review current UI/UX in Discord iframe
+- [x] Optimize debug logging (make production-ready)
+- [x] Clean up any unused code/comments
+- [x] Review and optimize bundle size
+- [x] Create production deployment checklist
+- [x] Implement auto-login functionality for Discord Activity
+- [x] Add Terms of Service page
+- [x] Add Privacy Policy page
+- [x] Deploy to production
 - [ ] Test viewport responsiveness in Discord (manual testing needed)
 - [ ] Test on Discord desktop app (Windows/Mac/Linux) (manual testing needed)
 - [ ] Test on Discord mobile app (iOS/Android) (manual testing needed)
@@ -708,20 +717,21 @@ Configure external API access:
   - [ ] Hard mode toggle
   - [ ] On-screen keyboard
 - [ ] Check for console errors/warnings (manual testing needed)
-- [x] Optimize debug logging (make production-ready)
-- [x] Clean up any unused code/comments
-- [x] Review and optimize bundle size
 - [ ] Document any platform-specific issues (TBD based on testing)
-- [x] Create production deployment checklist
 
 **Success Criteria:**
 - ✅ Code quality optimized for production
 - ✅ Debug logging wrapped in dev-only checks
 - ✅ Commented code cleaned up
-- ✅ Bundle size optimized (63.55 KB main bundle gzipped)
+- ✅ Bundle size optimized (75.11 KB main bundle gzipped)
 - ✅ Production deployment checklist created
+- ✅ Auto-login implemented and deployed
+- ✅ Terms of Service page created at /terms
+- ✅ Privacy Policy page created at /privacy
+- ✅ Changes deployed to production
 - ⏳ Manual testing needed on all platforms
 - ⏳ Accessibility features need manual verification
+- ⏳ Discord verification process pending
 
 **Testing Strategy:**
 1. **Desktop Testing:** Primary platform, full feature test
@@ -730,22 +740,41 @@ Configure external API access:
 4. **Accessibility:** Ensure all users can play comfortably
 5. **Performance:** Check load times, animation smoothness
 
-**Implementation Notes (2025-10-20):**
-- Created [logger utility](../../src/utils/logger.ts) for conditional logging
-- Updated all `console.log` calls to use `logger.debug/info/error`
-- Debug logs now only appear in development mode (import.meta.env.DEV)
-- Errors still logged in production for debugging
-- Cleaned up commented code in useQuestions.ts and settings.ts
-- Removed unused commented constants
-- Production build size: 63.55 KB (main) gzipped, total ~215 KB
-- Created comprehensive [Production Deployment Checklist](../PRODUCTION_DEPLOYMENT_CHECKLIST.md)
+**Implementation Notes (2025-10-24):**
+- **Auto-Login Feature:**
+  - Implemented automatic Discord authentication on Activity load
+  - Added token expiration checking for stored auth tokens
+  - Dynamic endpoint detection (/.proxy/api/token in Discord, /api/token in dev)
+  - Only triggers auto-login if no valid stored auth exists
+  - Better error logging for debugging authentication issues
+
+- **Legal Pages:**
+  - Created TermsOfServicePage.tsx with Material-UI styling
+  - Created PrivacyPolicyPage.tsx (redirects to existing PrivacyPolicy.html)
+  - Added routes /terms and /privacy to routes.tsx
+  - Pages styled to match existing project design
+
+- **Configuration:**
+  - Added dev:vercel script to package.json for local API testing
+  - Updated vercel.json to properly handle routing
+
+- **Code Quality:**
+  - Created [logger utility](../../src/utils/logger.ts) for conditional logging
+  - Updated all `console.log` calls to use `logger.debug/info/error`
+  - Debug logs only appear in development mode (import.meta.env.DEV)
+  - Errors still logged in production for debugging
+  - Cleaned up commented code in useQuestions.ts and settings.ts
+  - Removed unused commented constants
+  - Production build size: 75.11 KB (main) gzipped, total ~215 KB
 
 **Next Steps:**
+- Test auto-login in deployed Discord Activity
+- Add Terms of Service URL (https://triviale.net/terms) to Discord Developer Portal
+- Add Privacy Policy URL (https://triviale.net/privacy) to Discord Developer Portal
+- Complete Discord verification requirements
 - Manual testing across all Discord platforms (desktop, mobile, web)
 - Verify keyboard shortcuts and accessibility features
-- Check console for errors during gameplay
 - Document any platform-specific issues found
-- Complete final pre-deployment checks from checklist
 
 ### Phase 5: Multiplayer (Optional - Days 6-10)
 
