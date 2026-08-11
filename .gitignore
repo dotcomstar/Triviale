@@ -24,3 +24,7 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+# Claude Code
+.claude/
+CLAUDE.local.md
