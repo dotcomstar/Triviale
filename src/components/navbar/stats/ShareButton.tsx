@@ -1,4 +1,4 @@
-import { ShareOutlined } from "@mui/icons-material";
+import ShareOutlined from "@mui/icons-material/ShareOutlined";
 import { Button, Stack } from "@mui/material";
 import { SHARE_TEXT } from "../../../constants/strings";
 
