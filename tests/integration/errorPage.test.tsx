@@ -16,7 +16,7 @@ vi.mock("@auth0/auth0-react", () => ({
 
 describe("error page", () => {
   it("renders the error page when navigating to an unknown route", async () => {
-    const { default: router } = await import("../src/routes");
+    const { default: router } = await import("../../src/routes");
     render(<RouterProvider router={router} />);
 
     await act(async () => {
@@ -32,7 +32,7 @@ describe("error page", () => {
   });
 
   it("navigates back to the home page from the error page", async () => {
-    const { default: router } = await import("../src/routes");
+    const { default: router } = await import("../../src/routes");
     render(<RouterProvider router={router} />);
 
     await act(async () => {

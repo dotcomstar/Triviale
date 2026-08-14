@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
-import { GAME_TITLE, PLAY_CLASSIC_MODE_LABEL } from "../src/constants/strings";
+import { GAME_TITLE, PLAY_CLASSIC_MODE_LABEL } from "../../src/constants/strings";
 
 vi.mock("@auth0/auth0-react", () => ({
   Auth0Provider: ({ children }: { children: React.ReactNode }) => children,
@@ -17,7 +17,7 @@ vi.mock("@auth0/auth0-react", () => ({
 
 describe("app routing", () => {
   it("loads the web page and routes to the home page at /", async () => {
-    const { default: router } = await import("../src/routes");
+    const { default: router } = await import("../../src/routes");
     render(<RouterProvider router={router} />);
 
     // NavBar's title, present once the home route has actually rendered.
