@@ -66,16 +66,16 @@ const useGameStateStore = create<GameStateStore>((set) => ({
     set((state) => ({
       guessNumber: [
         ...state.guessNumber.map((num, i) =>
-          i === state.questionNumber ? num + 1 : num
+          i === state.questionNumber ? num + 1 : num,
         ),
       ],
       guesses: [
         ...state.guesses.map((val, i) =>
           i === state.questionNumber
             ? val.map((g, ig) =>
-                ig === state.guessNumber[state.questionNumber] ? guess : g
+                ig === state.guessNumber[state.questionNumber] ? guess : g,
               )
-            : val
+            : val,
         ),
       ],
     }));
@@ -86,9 +86,9 @@ const useGameStateStore = create<GameStateStore>((set) => ({
         ...state.guesses.map((val, i) =>
           i === state.questionNumber
             ? val.map((g, ig) =>
-                ig === state.guessNumber[state.questionNumber] ? guess : g
+                ig === state.guessNumber[state.questionNumber] ? guess : g,
               )
-            : val
+            : val,
         ),
       ],
     }));
