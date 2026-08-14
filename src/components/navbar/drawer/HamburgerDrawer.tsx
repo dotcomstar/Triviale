@@ -25,6 +25,7 @@ import SubscribeButton from "./SubscribeButton";
 const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const [expanded, setExpanded] = useState(false);
+  const { setHelpOpen, setStatsOpen } = useDialogStore();
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -39,7 +40,6 @@ const HamburgerDrawer = ({ size }: { size?: "small" | "large" }) => {
     };
 
   const list = () => {
-    const { setHelpOpen, setStatsOpen } = useDialogStore();
     return (
       <Box
         sx={{ width: 250, height: "200" }}
