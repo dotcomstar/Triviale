@@ -8,7 +8,7 @@ Setup is just `npm install && npm run dev` (→ `http://localhost:5173/`) — no
 
 ## Commands
 
-- `/verify` — project skill that runs lint → test → build in sequence; there is no CI, so use this before considering a change done
+- `/verify` — project skill that runs lint → test → build in sequence; a GitHub Actions workflow (`.github/workflows/ci.yml`) runs the same three checks on push/PR to `main`/`production`, but run `/verify` locally before pushing rather than waiting on CI to catch it
 
 ## Testing
 
@@ -19,8 +19,8 @@ Setup is just `npm install && npm run dev` (→ `http://localhost:5173/`) — no
 
 ## Branches and deploy
 
-- `main` is the working/staging branch. Pushing to the `Production` branch is what triggers the live Vercel deploy — the branch names are not what you'd expect from convention. Use the `/deploy` skill for this (it confirms before pushing).
-- No CI is configured (no `.github/workflows`).
+- `main` is the working/staging branch. Pushing to the `production` branch (lowercase — easy to mistype as `Production`) is what triggers the live Vercel deploy via Vercel's GitHub integration — the branch names are not what you'd expect from convention. Use the `/deploy` skill for this (it confirms before pushing).
+- CI (`.github/workflows/ci.yml`) runs lint/test/build on push and PR to `main` and `production`. It does not deploy — deployment is still Vercel's git integration, untouched by Actions.
 
 ## Known gotchas
 
