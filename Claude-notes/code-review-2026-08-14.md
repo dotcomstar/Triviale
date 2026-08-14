@@ -4,7 +4,7 @@ A pass over the React + TypeScript daily-trivia app — Zustand stores, the gues
 
 - **Scope:** `src/` (37 files), `package.json`, README, eslint/tsconfig
 - **Stack:** React 18 · TypeScript · Zustand · MUI · React Query · Auth0
-- **Tests found:** 0
+- **Tests found:** 0 (at time of review; 43 tests across 9 files added same-day — see [Suggested test targets](#suggested-test-targets-for-the-pre-refactor-pass) below for what's now covered)
 - **Reviewed at:** working tree HEAD, `main` up to date with `origin/main` (clean)
 
 Rendered version (styled, same content): https://claude.ai/code/artifact/7f3587d8-b34b-4056-8d2c-f190fb17120f
@@ -151,14 +151,12 @@ The `useEffect` that wires up the tab-close save listener has no dependency arra
 
 **Fix:** `return data[id];`
 
-### 🟡 Moderate — No automated tests
-No test runner in `package.json`, no `*.test.*` files in `src/`
+### 🟡 Partially resolved 2026-08-14 — No automated tests
+Was: no test runner in `package.json`, no `*.test.*` files in `src/`
 
-The scoring/matching logic in `GameGrid.tsx`'s `getStatuses` and the answer/altAnswer/addOn permutation logic used to accept guesses are pure, high-value, easily unit-testable functions — and, per this review, currently contain real bugs. There's no test harness set up at all to catch regressions in them.
+Vitest + React Testing Library were already wired up (`vitest.config.ts`, `tests/setup.ts`) by the time of this pass, but coverage was still effectively zero — just a placeholder and two full-router integration tests. Added 43 tests across 9 files: `tests/hooks/useDailyIndex.test.ts`, `useTodayAsInt.test.ts`, `tests/stores/gameStateStore.test.ts`, `hardModeStore.test.ts`, `onscreenKeyboardOnlyStore.test.ts`, and component tests for `ProgressBar.tsx` and `Keyboard.tsx`. `tests/` now mirrors `src/`'s subfolders, and the two existing integration tests moved into `tests/integration/`.
 
-**Fix:** add Vitest + React Testing Library (pairs naturally with the existing Vite setup) and start with the letter-status and answer-matching logic, since that's the part players will notice first if it regresses.
-
-*(This is the finding most relevant to the test-writing pass — see Suggested test targets below.)*
+**Still open:** the highest-value target — `GameGrid.tsx`'s `getStatuses`, flagged in this review as pure logic that "currently contain[s] real bugs" — is still untested. It's an unexported closure inside the component, so testing it directly needs the extract-to-pure-function refactor mentioned under Best Practices first; that refactor was explicitly deferred rather than done as part of this pass. `HomePage.tsx`'s `onEnter` answer-matching is also still untested (deep Auth0/MongoDB/router dependencies). See the updated checklist under Suggested test targets below for the full picture.
 
 ### 🟡 Moderate — Orphaned file with a third-party script snippet
 `src/components/ConsentBanner`
@@ -232,14 +230,16 @@ The efficiency issues found are the same root causes flagged under Best Practice
 
 ## Suggested test targets (for the pre-refactor pass)
 
-Given "no automated tests" is itself a finding, and the plan is to write tests before the refactor, these are the spots in this report where a test would both document current (intended) behavior and catch a regression during the refactor:
+Given "no automated tests" is itself a finding, and the plan is to write tests before the refactor, these are the spots in this report where a test would both document current (intended) behavior and catch a regression during the refactor. Updated 2026-08-14 with what's now covered:
 
-- `GameGrid.tsx`'s `getStatuses` — letter-by-letter correct/present/absent logic, including the `SKIPPED_TEXT` short-circuit.
-- Answer-matching in `HomePage.tsx`'s `onEnter` — exact match, `altAnswer` matches, and the addOn-permutation matching in hard mode.
-- `gameStateStore.ts`'s `moveToNextQuestion` / win-lose transition — specifically the invariant this report initially got wrong (see Revisions): that it's only ever called when at least one question is still `"inProgress"`. A test here would pin that invariant down explicitly instead of leaving it implicit in `HomePage.tsx`'s control flow.
-- `hardModeStore.ts`/`onscreenKeyboardOnlyStore.ts`'s `fromToday` gate — the intended "freeze today for the session" behavior (see Revisions) is exactly the kind of behavior that's easy to accidentally "fix away" during a refactor if it isn't pinned down by a test first.
-- `getPositiveIndex` — negative and over-length inputs.
-- A `safeParse`/localStorage round-trip test, once the unguarded `JSON.parse` finding above is fixed — corrupted-value input should not throw.
+- [x] `gameStateStore.ts`'s `moveToNextQuestion` / win-lose transition — `tests/stores/gameStateStore.test.ts`. Includes a test that pins the store-level `-1` behavior down directly (calling `moveToNextQuestion()` once every question is won/lost) — consistent with Revision #1 below, which found that behavior unreachable via the app's actual, guarded call sites, but it's still what the store method itself does if called directly, which is worth having pinned down.
+- [x] `hardModeStore.ts`/`onscreenKeyboardOnlyStore.ts`'s `fromToday` gate — `tests/stores/hardModeStore.test.ts`, `onscreenKeyboardOnlyStore.test.ts`. Covers the "freeze today for the session" behavior from Revision #2 below across both stores, plus the toggle/set actions and their localStorage persistence.
+- [x] `getPositiveIndex` — negative and over-length inputs — `tests/hooks/useDailyIndex.test.ts`, alongside `useDailyIndex`'s own epoch-offset math and a new `useTodayAsInt.test.ts` for the sibling date-formatting hook.
+- [ ] `GameGrid.tsx`'s `getStatuses` — letter-by-letter correct/present/absent logic, including the `SKIPPED_TEXT` short-circuit. **Still not tested** — needs the extract-to-pure-function refactor (Best Practices, above) first, since it's currently an unexported closure. This remains the single highest-priority gap: it's the pure logic this review flagged as containing real bugs.
+- [ ] Answer-matching in `HomePage.tsx`'s `onEnter` — exact match, `altAnswer` matches, and the addOn-permutation matching in hard mode. **Still not tested** — deep dependencies (Auth0, MongoDB question hook, router) make this a bigger lift; would follow the same mocking pattern as `tests/integration/routing.test.tsx`.
+- [ ] A `safeParse`/localStorage round-trip test, once the unguarded `JSON.parse` finding above is fixed — corrupted-value input should not throw. **Still blocked** on that fix landing first.
+
+Also added beyond this original list: `tests/components/progressBar/ProgressBar.test.tsx` and `tests/components/keyboard/Keyboard.test.tsx` (rendering, click handlers, and — via `Keyboard`'s letter-status coloring — an indirect check on the same success/warning/error classification `GameGrid.tsx` needs, using a real question's answer rather than `GameGrid` itself).
 
 ---
 
