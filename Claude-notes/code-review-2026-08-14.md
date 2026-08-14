@@ -9,7 +9,7 @@ A pass over the React + TypeScript daily-trivia app — Zustand stores, the gues
 
 Rendered version (styled, same content): https://claude.ai/code/artifact/7f3587d8-b34b-4056-8d2c-f190fb17120f
 
-**Tally:** 2 Critical · 4 High · 12 Moderate · 6 already-solid
+**Tally:** 2 Critical · 4 High · 10 Moderate · 6 already-solid
 
 > This doc went through one round of author review — see **Revisions** at the bottom before trusting the Critical/edge-case findings at face value. Two initial findings were retracted because the surrounding control flow already guarded against them; the details of *why* are worth reading if you're using this as a map for test cases, since they explain real invariants the code currently relies on.
 
@@ -167,19 +167,10 @@ An extensionless file containing a single `<script>` tag (a Termly cookie-consen
 
 **Fix:** either move the snippet into `index.html`/`public` where it'll actually load, or delete the file if the consent banner is handled elsewhere.
 
-### 🟡 Moderate — Two lockfiles for two different package managers, tracked side by side
-`package-lock.json` (new) · `yarn.lock` (still present and still updated)
+### ✅ Resolved 2026-08-14 — Two lockfiles for two different package managers, tracked side by side
+`package-lock.json` (new) · `yarn.lock` (removed)
 
-Surfaced by an independent automated pass over the latest commit (`dfe6f03`, the npm-audit / dev-server-crash fix): that commit adds a brand-new `package-lock.json` while continuing to update the pre-existing `yarn.lock`. Whichever tool a contributor or the Vercel build actually resolves with, the other lockfile can silently drift on the next dependency change — versions actually deployed could diverge from what was tested locally. That's a real risk specifically because this commit exists to fix a dev-server crash by bumping major versions (`react-router-dom` 6→7, `vite` 4→6, `@typescript-eslint` 6→8); a future drift between the two lockfiles could reintroduce that class of crash in one environment but not the other, with no obvious cause.
-
-**Fix:** pick one package manager and delete the other lockfile — the README's Setup section already says `npm install`, so `yarn.lock` is the one to drop.
-
-### 🟡 Moderate — Dead config key: `allowScripts` is not a real npm/Yarn setting
-`package.json:45-47`
-
-Also from the automated pass: `"allowScripts": { "yarn@1.22.21": true }` isn't a recognized key for npm or classic Yarn v1 — the two package managers actually in use here. It looks like it was meant to allowlist the `yarn` dependency's install script (the shape resembles a LavaMoat/`@lavamoat/allow-scripts` config, which normally nests under a `lavamoat` key), but as written it's inert. If this was added in response to an npm-audit warning about install scripts, the warning is still unaddressed — this just looks like it was.
-
-**Fix:** remove the field, or replace it with whichever tool's actual config shape (e.g. a `lavamoat` block, or a corepack/pnpm setting) is meant to allowlist that script.
+That commit had added a brand-new `package-lock.json` while continuing to update the pre-existing `yarn.lock`, leaving two lockfiles that could silently drift apart on the next dependency change. Resolved by standardizing on npm — confirmed npm is what's actually installed and what populated the current `node_modules` on this machine, then removed `yarn.lock` and the `yarn` package dependency and ran a clean `npm install`.
 
 ---
 
@@ -259,3 +250,5 @@ This report went through one round of author review. Two findings from the origi
 1. **Retracted — "`moveToNextQuestion` sets `questionNumber` to -1 and crashes the keyboard."** Traced both call sites: `HomePage.tsx`'s `onEnter` only reaches `moveToNextQuestion()` in a branch that's unreachable unless `questionState.includes("inProgress")` is still true (the earlier `if (!questionState.includes("inProgress") || ...) { ...; return; }` guards it), and `ExpandableText.tsx`'s "Next Question" button gates on `gameState === "inProgress"`, which is only true before `winGame()`/`loseGame()` fire — and those only fire once no question remains in progress. So `indexOf("inProgress")` can't actually return -1 at either call site. Not reachable as originally reported.
 
 2. **Retracted — "Hard-mode / onscreen-keyboard 'today' check only evaluates once, at page load."** This is intentional: a session started before midnight should keep its in-progress question and settings rather than switch out from under the player mid-guess. The freeze is achieved consistently app-wide via a module-scope `presentDate` constant in `useDailyIndex.ts` (evaluated once per page load, shared by every consumer). The remaining concern — flagged under Best Practices — is only that the freeze is implemented via a hook-named function called outside React with the relevant lint rule disabled, which is fragile, not that the freeze itself is wrong.
+
+3. **Retracted — "Dead config key: `allowScripts` is not a real npm/Yarn setting."** This one wasn't caught by author pushback — it surfaced while actually doing the npm/yarn cleanup below. Running `npm install` produced `npm warn allow-scripts ... esbuild@0.25.12 (postinstall: node install.js) ... Run npm approve-scripts`. `allowScripts` is a real, currently-active npm 11 feature (npm's native answer to pnpm/yarn-Berry-style install-script gating) and it had correctly been gating `esbuild`'s postinstall script the whole time. The field was restored — scoped to just the still-real `esbuild@0.25.12` entry — via `npm approve-scripts esbuild`, rather than left removed. The lesson: a finding sourced from an automated review pass still needs independent verification before being reported as fact, same as any other finding.
