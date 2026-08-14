@@ -18,7 +18,7 @@ Rendered version (styled, same content): https://claude.ai/code/artifact/7f3587d
 ## If you fix three things first
 
 1. **Wrap every `JSON.parse(localStorage...)` in try/catch.** Two of the five call sites can currently blank-screen the entire app on boot from one bad value.
-2. **Replace the non-null assertion in `Keyboard.tsx`'s question lookup** with the same `?? ""` guard `GameGrid.tsx` already uses. Three files guard the identical lookup three different ways today, two of them unsafely.
+2. ~~Replace the non-null assertion in `Keyboard.tsx`'s question lookup with the same `?? ""` guard `GameGrid.tsx` already uses.~~ **Done 2026-08-14** — see the resolved Edge cases finding below. `HomePage.tsx`'s identical unguarded lookup (`data[safeIndex].question`) is a separate instance of the same pattern and is still open.
 3. **Remove the module-scope hook calls and their eslint-disable** in the two stores. It works by accident, not by design, and the disable comment hides that from future edits.
 
 ---
@@ -56,12 +56,14 @@ const pastGuesses = JSON.parse(existingGuesses); // throws → app never renders
 
 ## 2. Edge cases
 
-### 🔴 Critical — Non-null assertion papers over a real undefined case
-`src/components/keyboard/Keyboard.tsx:37-39`
+### ✅ Resolved 2026-08-14 — Non-null assertion papers over a real undefined case
+`src/components/keyboard/Keyboard.tsx:37-39` (pre-fix line numbers)
 
-`useQuestionByID(safeIndex)?.answer.toLocaleUpperCase()!` — the `?.` protects `.answer`, but the trailing `!` tells TypeScript to trust the result is never `undefined`. If the lookup misses, `answerWithSpaces` really is `undefined`, and the very next line's `.replace()` throws. The identical lookup is guarded three different ways in three files: safely in `GameGrid.tsx` (`?? ""`), unsafely here, and not at all in `HomePage.tsx` (`data[safeIndex].question`, no guard).
+Was: `useQuestionByID(safeIndex)?.answer.toLocaleUpperCase()!` — the `?.` protected `.answer`, but the trailing `!` claimed the result could never be `undefined`, so a missed lookup would throw on the next line's `.replace()`.
 
-**Fix:** pick one guarded pattern (GameGrid's `?? ""`) and use it everywhere this lookup happens, ideally via one shared hook that returns a safe default instead of three copies with three different risk levels.
+Fixed by switching to the same `?? ""` guard `GameGrid.tsx` already used — landed together with the `getStatus` hook-fan-out fix directly below, since both touched the same lines.
+
+**Still open:** the broader "one shared hook" consolidation this finding originally suggested wasn't done. `HomePage.tsx`'s `data[safeIndex].question` lookup (see the Moderate edge-case finding below) is the same pattern, still unguarded.
 
 ### 🟠 High — `advancedStats[c]` assumes a fixed category set the type doesn't enforce
 `src/data/questions.ts:1` · `src/pages/HomePage.tsx:300-323`
@@ -97,12 +99,14 @@ To be clear, computing this once per page load — not re-evaluating as the cloc
 
 **Fix:** rename `useDailyIndex`'s underlying date math to a plain (non-`use`-prefixed) function and call *that* once at module scope instead — same one-per-load freeze, no disable comment needed. The two stores can also stop duplicating the `fromToday`/`pastGuesses` computation between them.
 
-### 🟠 High — Keyboard's `getStatus` calls four hooks per key, 26 times per render
-`src/components/keyboard/Keyboard.tsx:29-70, 140, 152, 174`
+### ✅ Resolved 2026-08-14 — Keyboard's `getStatus` calls four hooks per key, 26 times per render
+`src/components/keyboard/Keyboard.tsx:29-70, 140, 152, 174` (pre-fix line numbers)
 
-`getStatus(val)` is invoked once per rendered key — 26 times per render — and each call internally re-runs `useDailyIndex()`, two `useGameStateStore()` selectors, `useRetrievedStore()`, and `useQuestionByID()` (itself an O(n) `.find()`), plus a couple of `.reduce()` passes over `guesses`. All 26 calls compute the exact same `answer`/`safeIndex` — none of it varies per key.
+Was: `getStatus(val)` was invoked once per rendered key — 26 times per render — and each call internally re-ran `useDailyIndex()`, two `useGameStateStore()` selectors, `useRetrievedStore()`, and `useQuestionByID()`, plus a couple of `.reduce()` passes over `guesses`. All 26 calls computed the exact same `answer`/`safeIndex`.
 
-**Fix:** hoist the shared hook calls and derived `answer`/`guesses` to the top of `Keyboard` once, and pass the already-computed values into a plain (non-hook) status function per key.
+Fixed by hoisting the hook calls and derived `answer`/`guesses`/`questionNumber`/`guessNumber` to the top of `Keyboard`, and turning `getStatus` into a plain function that takes those as arguments instead of calling hooks itself. (This was also an actual `react-hooks/rules-of-hooks` lint violation — calling hooks from a non-component function — surfaced when CI was set up; see `CLAUDE.md`'s Known gotchas.)
+
+**Still open:** `useQuestionByID`'s O(n) `.find()` instead of O(1) indexing (see the still-open Moderate finding below) — orthogonal to this fix, not addressed by it.
 
 ### 🟠 High — Store state mutated directly, bypassing Zustand's `set()`
 `src/pages/HomePage.tsx:300-322`
