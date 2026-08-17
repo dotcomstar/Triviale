@@ -66,4 +66,16 @@ describe("onscreenKeyboardOnlyStore", () => {
     );
     expect(localStorage.getItem("onscreenKeyboardOnly")).toBe("false");
   });
+
+  it("defaults onscreenKeyboardOnly to false instead of throwing when prevGame is malformed JSON", async () => {
+    localStorage.setItem("onscreenKeyboardOnly", "true");
+    localStorage.setItem("prevGame", "{not valid json");
+    vi.resetModules();
+    const { default: useOnscreenKeyboardOnlyStore } = await import(
+      "../../src/stores/onscreenKeyboardOnlyStore"
+    );
+    expect(useOnscreenKeyboardOnlyStore.getState().onscreenKeyboardOnly).toBe(
+      false
+    );
+  });
 });

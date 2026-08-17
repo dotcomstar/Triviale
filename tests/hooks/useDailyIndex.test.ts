@@ -63,6 +63,13 @@ describe("useDailyIndex", () => {
     expect(useDailyIndex()).toBe(8);
   });
 
+  it("getDailyIndex (the plain, non-hook function) returns the same value as the useDailyIndex wrapper", async () => {
+    vi.setSystemTime(new Date(2024, 10, 23));
+    vi.resetModules();
+    const { getDailyIndex } = await import("../../src/hooks/useDailyIndex");
+    expect(getDailyIndex()).toBe(8);
+  });
+
   it("returns a negative index once far enough past the epoch", async () => {
     // 30 days after the epoch. Shifted 9 days earlier to Dec 13, which is
     // 21 days after the epoch.

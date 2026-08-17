@@ -17,26 +17,20 @@ Rendered version (styled, same content): https://claude.ai/code/artifact/7f3587d
 
 ## If you fix three things first
 
-1. **Wrap every `JSON.parse(localStorage...)` in try/catch.** Two of the five call sites can currently blank-screen the entire app on boot from one bad value.
-2. ~~Replace the non-null assertion in `Keyboard.tsx`'s question lookup with the same `?? ""` guard `GameGrid.tsx` already uses.~~ **Done 2026-08-14** — see the resolved Edge cases finding below. `HomePage.tsx`'s identical unguarded lookup (`data[safeIndex].question`) is a separate instance of the same pattern and is still open.
-3. **Remove the module-scope hook calls and their eslint-disable** in the two stores. It works by accident, not by design, and the disable comment hides that from future edits.
+1. ~~Wrap every `JSON.parse(localStorage...)` in try/catch.~~ **Done 2026-08-16** — see the resolved Critical finding below.
+2. ~~Replace the non-null assertion in `Keyboard.tsx`'s question lookup with the same `?? ""` guard `GameGrid.tsx` already uses.~~ **Done 2026-08-14** — see the resolved Edge cases finding below. `HomePage.tsx`'s identical unguarded lookup (`data[safeIndex].question`) was a separate instance of the same pattern; **also done 2026-08-16**, see the resolved Moderate edge-case finding below.
+3. ~~Remove the module-scope hook calls and their eslint-disable in the two stores.~~ **Done 2026-08-16** — see the resolved High finding below.
 
 ---
 
 ## 1. Error handling
 
-### 🔴 Critical — Unguarded `JSON.parse(localStorage)`, two copies run before React even mounts
-`src/stores/hardModeStore.ts:13-14` · `src/stores/onscreenKeyboardOnlyStore.ts:12-13` · `src/pages/HomePage.tsx:124, 147`
+### ✅ Resolved 2026-08-16 — Unguarded `JSON.parse(localStorage)`, two copies ran before React even mounts
+`src/stores/hardModeStore.ts:13-14` · `src/stores/onscreenKeyboardOnlyStore.ts:12-13` · `src/pages/HomePage.tsx:124, 147` (pre-fix line numbers)
 
-Five call sites parse `localStorage.getItem("prevGame")`/`"gameStats"` with no `try/catch`. The two in the stores run at **module import time**, before the router's `errorElement` in `routes.tsx` exists to catch anything. One manually-edited or half-written value in `localStorage` throws a `SyntaxError` and the app fails to boot — a blank page, not the `ErrorPage` already built for exactly this situation.
+Was: 4 call sites (not 5 as originally counted — `"theme"`/`"hardMode"`/`"onscreenKeyboardOnly"` are read as raw strings, never `JSON.parse`d) parsed `localStorage.getItem("prevGame")`/`"gameStats"` with no `try/catch`. The two in the stores ran at **module import time**, before the router's `errorElement` in `routes.tsx` existed to catch anything. One manually-edited or half-written value in `localStorage` threw a `SyntaxError` and the app failed to boot — a blank page, not the `ErrorPage` already built for exactly this situation.
 
-```ts
-// hardModeStore.ts — runs at import time, outside any try/catch
-const existingGuesses = localStorage.getItem("prevGame") || "{}";
-const pastGuesses = JSON.parse(existingGuesses); // throws → app never renders
-```
-
-**Fix:** add one shared `safeParse(key, fallback)` helper that try/catches and returns the fallback on failure; use it at all five sites instead of four near-identical copies of the unsafe version.
+Fixed by adding a shared `safeParse<T>(key, fallback)` helper (`src/utils/safeParse.ts`, new file) that try/catches around `localStorage.getItem` + `JSON.parse` and returns the fallback on any failure (missing key, empty string, or malformed JSON) — used at all 4 sites. Covered by `tests/utils/safeParse.test.ts` plus a malformed-JSON regression case added to each store's test file.
 
 ### 🟡 Moderate — Share failures are swallowed with a console.log
 `src/components/navbar/stats/StatsDialog.tsx:150-153`
@@ -63,14 +57,14 @@ Was: `useQuestionByID(safeIndex)?.answer.toLocaleUpperCase()!` — the `?.` prot
 
 Fixed by switching to the same `?? ""` guard `GameGrid.tsx` already used — landed together with the `getStatus` hook-fan-out fix directly below, since both touched the same lines.
 
-**Still open:** the broader "one shared hook" consolidation this finding originally suggested wasn't done. `HomePage.tsx`'s `data[safeIndex].question` lookup (see the Moderate edge-case finding below) is the same pattern, still unguarded.
+**Still open:** the broader "one shared hook" consolidation this finding originally suggested wasn't done. `HomePage.tsx`'s `data[safeIndex].question` lookup (see the resolved Moderate edge-case finding below) was the same pattern — now fixed too, but via a different mechanism (a guarded local variable, not a shared hook), so the consolidation itself remains undone.
 
-### 🟠 High — `advancedStats[c]` assumes a fixed category set the type doesn't enforce
-`src/data/questions.ts:1` · `src/pages/HomePage.tsx:300-323`
+### ✅ Resolved 2026-08-16 — `advancedStats[c]` assumed a fixed category set the type doesn't enforce
+`src/data/questions.ts:1` · `src/pages/HomePage.tsx:300-323` (pre-fix line numbers)
 
-`Category` is typed as `"SCI" | "HIS" | "ART" | "REL" | "GEO" | "POP" | string` — the trailing `| string` means TypeScript accepts any category, but `advancedStats` is only ever initialized for the six fixed categories in `ALL_CATEGORIES`. Any custom/imported question with a different category makes `advancedStats[c]` `undefined`, and the next line's `.questionsGuessedIn.map(...)` throws.
+Was: `Category` is typed as `"SCI" | "HIS" | "ART" | "REL" | "GEO" | "POP" | string` — the trailing `| string` means TypeScript accepts any category, but `advancedStats` was only ever initialized for the six fixed categories in `ALL_CATEGORIES`. Any custom/imported question with a different category made `advancedStats[c]` `undefined`, and the next line's `.questionsGuessedIn.map(...)` threw.
 
-**Fix:** either drop the `| string` escape hatch from `Category`, or initialize/guard `advancedStats[c]` lazily before writing to it.
+Confirmed during the fix that the `| string` escape hatch is genuinely in use — `src/stores/customQuestionsStore.ts`'s `defaultQuestions` assigns `category: "ANY"`, a value outside the 6-entry union — so narrowing `Category`'s type was ruled out as the fix (it would've required reworking the custom-question editor too). Instead, `statsStore.ts` gained two new actions, `recordCategoryGuess` and `finalizeCategoryAttempt`, which lazily initialize `advancedStats[category]` via `state.advancedStats?.[category] ?? emptyCategoryStat()` before updating it, so an unrecognized category is created on the fly instead of throwing. `HomePage.tsx`'s two direct-mutation call sites now call these actions instead (see the resolved Best Practices finding below — same fix covers both). Covered by `tests/stores/statsStore.test.ts`, including a case that calls both actions with `"ANY"` directly.
 
 ### 🟡 Moderate — `indexOfLastGuess` can be -1 and silently mis-records a stat
 `src/pages/HomePage.tsx:282-298`
@@ -79,25 +73,23 @@ For a question with zero submitted guesses, `allGuessesForQuestion.filter(...).l
 
 **Fix:** clamp/skip when `guessIndex < 0` before indexing into `todaysQuestionsGuessedIn`.
 
-### 🟡 Moderate — HomePage's `data[safeIndex]` access has no bounds guard
-`src/pages/HomePage.tsx:53-70`
+### ✅ Resolved 2026-08-16 — HomePage's `data[safeIndex]` access had no bounds guard
+`src/pages/HomePage.tsx:53-70` (pre-fix line numbers) — also covered a 7th access point at the old line 84 (`todaysCategories`) that this finding's original scope missed.
 
-`getPositiveIndex` wraps against the length of the local `questions` array (imported directly in `useDailyIndex.ts`), while `data` in `HomePage.tsx` comes from `useQuestions()`. Today both resolve to the same array, so it's safe by coincidence — but the moment `useQuestions`' commented-out MongoDB path (see Documentation, below) comes back and `data` can have a different length or be temporarily empty, this becomes an unguarded out-of-range read with no fallback, unlike the `?? ""` pattern used in `GameGrid.tsx`.
+Was: `getPositiveIndex` wraps against the length of the local `questions` array (imported directly in `useDailyIndex.ts`), while `data` in `HomePage.tsx` comes from `useQuestions()`. Both resolved to the same array, so it was safe by coincidence — but the moment `useQuestions`' commented-out MongoDB path (see Documentation, below) comes back and `data` can have a different length or be temporarily empty, this would become an unguarded out-of-range read with no fallback, unlike the `?? ""` pattern used in `GameGrid.tsx`.
 
-**Fix:** guard this the same way `GameGrid.tsx` already does, before the MongoDB path is re-enabled.
+Fixed by introducing `const questionData = data[safeIndex];` and switching every subsequent `data[safeIndex].field` access (6 of them, plus the separate `todaysCategories` line) to `questionData?.field` with `?? ""` fallbacks matching `GameGrid.tsx`'s existing idiom. Kept as a direct guarded index rather than switching to `GameGrid.tsx`'s `useQuestionByID(safeIndex)` pattern, since `HomePage` already owns `data` from its own `useQuestions()` call and needs 5 distinct fields off one object — routing through `useQuestionByID` would mean a redundant second `useQuestions()` call plus its O(n) `.find()` scan (see the still-open Moderate finding below) for no benefit.
 
 ---
 
 ## 3. Best practices
 
-### 🟠 High — React hooks called at module scope, with the lint rule disabled to allow it
-`src/stores/hardModeStore.ts:11-12` · `src/stores/onscreenKeyboardOnlyStore.ts:10-11`
+### ✅ Resolved 2026-08-16 — React hooks called at module scope, with the lint rule disabled to allow it
+`src/stores/hardModeStore.ts:11-12` · `src/stores/onscreenKeyboardOnlyStore.ts:10-11` (pre-fix line numbers)
 
-Both files call `useDailyIndex()` at the top level of the module — not inside a component or a hook — behind `// eslint-disable-next-line react-hooks/rules-of-hooks`. It only works because `useDailyIndex` happens not to call any real React hook internally (no `useState`/`useEffect`/`useContext`). That's an implementation detail of a function named like a hook, not a guarantee — the lint rule exists precisely to catch this, and disabling it hides the risk instead of removing it. Any future edit to `useDailyIndex` that adds a real hook breaks the app at import time, everywhere.
+Was: both files called `useDailyIndex()` at the top level of the module — not inside a component or a hook — behind `// eslint-disable-next-line react-hooks/rules-of-hooks`. It only worked because `useDailyIndex` happened not to call any real React hook internally (no `useState`/`useEffect`/`useContext`). That was an implementation detail of a function named like a hook, not a guarantee — the lint rule exists precisely to catch this, and disabling it hid the risk instead of removing it.
 
-To be clear, computing this once per page load — not re-evaluating as the clock ticks — looks intentional and is the right call: it's what keeps a session started at 11:50pm on today's question instead of yanking the player onto tomorrow's mid-guess. That freeze-per-session behavior is worth keeping exactly as-is. The concern here is only the mechanism: a hook-named function called outside React, with the lint rule that guards against that silenced rather than addressed.
-
-**Fix:** rename `useDailyIndex`'s underlying date math to a plain (non-`use`-prefixed) function and call *that* once at module scope instead — same one-per-load freeze, no disable comment needed. The two stores can also stop duplicating the `fromToday`/`pastGuesses` computation between them.
+The freeze-per-session behavior itself (computing "today" once per page load, not re-evaluating as the clock ticks) was already correct and intentional — see Revision #2 below — so the fix only touched the mechanism. `useDailyIndex.ts`'s pure-arithmetic body was extracted into a new exported plain function `getDailyIndex()`; the `useDailyIndex` hook is now a one-line wrapper (`const useDailyIndex = (): number => getDailyIndex();`) so all 8 real component call sites keep working unchanged. Both stores now call `getDailyIndex()` directly at module scope, and the `eslint-disable-next-line` comment is gone from both. The stale `// 13 December 2023 Game Epoch` comment (see the Documentation finding below) was also fixed while touching this file. The two stores' duplicated `fromToday`/`pastGuesses` computation was **not** deduped into a shared helper — noted as a lower-priority cosmetic follow-up, not done here.
 
 ### ✅ Resolved 2026-08-14 — Keyboard's `getStatus` calls four hooks per key, 26 times per render
 `src/components/keyboard/Keyboard.tsx:29-70, 140, 152, 174` (pre-fix line numbers)
@@ -108,12 +100,12 @@ Fixed by hoisting the hook calls and derived `answer`/`guesses`/`questionNumber`
 
 **Still open:** `useQuestionByID`'s O(n) `.find()` instead of O(1) indexing (see the still-open Moderate finding below) — orthogonal to this fix, not addressed by it.
 
-### 🟠 High — Store state mutated directly, bypassing Zustand's `set()`
-`src/pages/HomePage.tsx:300-322`
+### ✅ Resolved 2026-08-16 — Store state mutated directly, bypassing Zustand's `set()`
+`src/pages/HomePage.tsx:300-322` (pre-fix line numbers)
 
-`advancedStats[c] = { ...advancedStats[c], ... }` mutates the object returned from `useStatsStore()` in place, outside of any `set()` call. Every other update in the codebase goes through immutable `set()` updates; this one silently breaks that convention, so subscribers relying on reference-equality checks may not re-render, and the mutation happens outside Zustand's change-tracking entirely.
+Was: `advancedStats[c] = { ...advancedStats[c], ... }` mutated the object returned from `useStatsStore()` in place, outside of any `set()` call. Every other update in the codebase went through immutable `set()` updates; this one silently broke that convention, so subscribers relying on reference-equality checks might not re-render, and the mutation happened outside Zustand's change-tracking entirely.
 
-**Fix:** add an `updateAdvancedStats` action to `statsStore.ts` that does this update through `set()`, and call that from `HomePage.tsx` instead of mutating the destructured object.
+Fixed by adding two actions to `statsStore.ts` — `recordCategoryGuess(category, guessIndex, guessIncrease)` and `finalizeCategoryAttempt(category)` — matching the existing `importStats`/`logGame` convention of rebuilding state immutably inside `set()`. Two actions rather than one combined action, since they map 1:1 onto `HomePage.tsx`'s two existing loops over different data shapes. `HomePage.tsx`'s two direct-mutation blocks were replaced with calls to these actions; this is also where the fix for the `advancedStats[c]` fixed-category-set finding above lives (both actions lazily initialize a missing category instead of assuming the fixed 6). Covered by `tests/stores/statsStore.test.ts`.
 
 ### 🟡 Moderate — `Array(n).fill([])` shares one array reference across every slot
 `src/stores/gameStateStore.ts:29-32`
@@ -178,12 +170,12 @@ That commit had added a brand-new `package-lock.json` while continuing to update
 
 ## 4. Documentation completeness
 
-### 🟡 Moderate — Copy-pasted "Game Epoch" comment no longer matches the code
+### 🟡 Partially resolved 2026-08-16 — Copy-pasted "Game Epoch" comment no longer matches the code
 `src/hooks/useDailyIndex.ts:1, 5` · `src/hooks/useTodayAsInt.ts:1`
 
-Both files open with `// 13 December 2023 Game Epoch`. In `useDailyIndex.ts`, the actual `firstGameDate` is `new Date(2024, 10, 22)` — 22 November 2024 — so the comment describes a date the code no longer uses. In `useTodayAsInt.ts` the comment is entirely unrelated to what that function does (it just formats today's date as a `YYYYMMDD` int).
+Was: both files open with `// 13 December 2023 Game Epoch`. In `useDailyIndex.ts`, the actual `firstGameDate` is `new Date(2024, 10, 22)` — 22 November 2024 — so the comment described a date the code no longer used. In `useTodayAsInt.ts` the comment is entirely unrelated to what that function does (it just formats today's date as a `YYYYMMDD` int).
 
-**Fix:** update or remove the comment in `useDailyIndex.ts` to match `firstGameDate`, and drop it entirely from `useTodayAsInt.ts`.
+`useDailyIndex.ts`'s comment fixed to `// 22 November 2024 Game Epoch` while touching that file for the module-scope-hooks fix above. **Still open:** `useTodayAsInt.ts`'s copy of the comment wasn't touched — that file wasn't part of this pass's scope.
 
 ### 🟡 Moderate — README feature list doesn't match the shipped config
 `README.md:43` ("Three new questions every day") · `src/constants/settings.ts:2`
@@ -241,7 +233,7 @@ Given "no automated tests" is itself a finding, and the plan is to write tests b
 - [x] `getPositiveIndex` — negative and over-length inputs — `tests/hooks/useDailyIndex.test.ts`, alongside `useDailyIndex`'s own epoch-offset math and a new `useTodayAsInt.test.ts` for the sibling date-formatting hook.
 - [ ] `GameGrid.tsx`'s `getStatuses` — letter-by-letter correct/present/absent logic, including the `SKIPPED_TEXT` short-circuit. **Still not tested** — needs the extract-to-pure-function refactor (Best Practices, above) first, since it's currently an unexported closure. This remains the single highest-priority gap: it's the pure logic this review flagged as containing real bugs.
 - [ ] Answer-matching in `HomePage.tsx`'s `onEnter` — exact match, `altAnswer` matches, and the addOn-permutation matching in hard mode. **Still not tested** — deep dependencies (Auth0, MongoDB question hook, router) make this a bigger lift; would follow the same mocking pattern as `tests/integration/routing.test.tsx`.
-- [ ] A `safeParse`/localStorage round-trip test, once the unguarded `JSON.parse` finding above is fixed — corrupted-value input should not throw. **Still blocked** on that fix landing first.
+- [x] A `safeParse`/localStorage round-trip test — `tests/utils/safeParse.test.ts` (missing key, empty string, valid JSON, malformed JSON), plus a malformed-JSON regression case added to `tests/stores/hardModeStore.test.ts` and `onscreenKeyboardOnlyStore.test.ts`.
 
 Also added beyond this original list: `tests/components/progressBar/ProgressBar.test.tsx` and `tests/components/keyboard/Keyboard.test.tsx` (rendering, click handlers, and — via `Keyboard`'s letter-status coloring — an indirect check on the same success/warning/error classification `GameGrid.tsx` needs, using a real question's answer rather than `GameGrid` itself).
 

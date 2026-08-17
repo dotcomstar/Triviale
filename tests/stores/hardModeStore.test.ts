@@ -75,4 +75,14 @@ describe("hardModeStore", () => {
     expect(useHardModeStore.getState().hardMode).toBe(true);
     expect(localStorage.getItem("hardMode")).toBe("true");
   });
+
+  it("defaults hardMode to false instead of throwing when prevGame is malformed JSON", async () => {
+    localStorage.setItem("hardMode", "true");
+    localStorage.setItem("prevGame", "{not valid json");
+    vi.resetModules();
+    const { default: useHardModeStore } = await import(
+      "../../src/stores/hardModeStore"
+    );
+    expect(useHardModeStore.getState().hardMode).toBe(false);
+  });
 });
