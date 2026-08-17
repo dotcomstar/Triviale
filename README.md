@@ -1,6 +1,8 @@
 # [Triviale]
 [Triviale]: https://www.triviale.net/
 
+![coverage](https://img.shields.io/badge/coverage-70%25-yellow)
+
 A daily trivia puzzle game. Try to answer the question before it's finished being asked!
 
 ![Triviale image](https://jetrlee.vercel.app/Triviale.png)
