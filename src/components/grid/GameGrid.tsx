@@ -1,5 +1,5 @@
 import { Stack, useTheme } from "@mui/material";
-import { SKIPPED_TEXT } from "../../constants/strings";
+import { SKIP_LETTER } from "../../constants/strings";
 import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 import useQuestionByID from "../../hooks/useQuestionByID";
 import useCurrGuessStore from "../../stores/currGuessStore";
@@ -28,7 +28,7 @@ const GameGrid = () => {
   const getStatuses = (guess: string[]) => {
     const answerArr = answer.split("");
     const statuses = Array(guess.length).fill(theme.palette.error); // Fill with 'incorrect' color by default
-    if (guess.includes(SKIPPED_TEXT)) {
+    if (guess.includes(SKIP_LETTER)) {
       return; // Don't compute if the guess was skipped.
     }
     const count = new Map(); // Get count of all chars in answer
@@ -67,6 +67,15 @@ const GameGrid = () => {
     // for (let i = Math.min(guess.length, answer.length); i < guess.length; i++) {
     //   statuses[i] = theme.palette.error;
     // }
+
+    // Known limitation: a hard-mode guess accepted via a *prefix* addOn
+    // (guess = addOn + answer, e.g. "PabloPicasso" for "Picasso") never gets
+    // per-letter success here, because this loop compares guess[i] to
+    // answerArr[i] with no positional offset — the real answer's letters
+    // sit at the wrong indices in the guess. Not a loop-bound issue (both
+    // loops already only ever compare within-range letters); fixing it needs
+    // actual alignment logic, which doesn't exist yet. The addOn is still
+    // recognized at the whole-guess level by getBorderColorOverrides below.
     return statuses;
   };
 

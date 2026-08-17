@@ -53,12 +53,18 @@ const useStatsStore = create<StatsStore>((set) => ({
     };
   }, {}),
   importStats: (pastStore: StatsStoreImport) => {
-    set(() => ({
+    set((state) => ({
       numQuestionsAttempted: pastStore.numQuestionsAttempted,
       questionsGuessedIn: pastStore.questionsGuessedIn,
       changedToday: pastStore.changedToday,
       currentStreak: pastStore.currentStreak,
-      advancedStats: pastStore.advancedStats,
+      // Merge onto the current (fully-populated) shape rather than
+      // overwriting outright, so an older/partial persisted blob missing a
+      // category doesn't leave advancedStats[c] undefined for readers.
+      advancedStats: {
+        ...state.advancedStats,
+        ...pastStore.advancedStats,
+      },
     }));
   },
   logGame: (game: StatsStoreImport) => {

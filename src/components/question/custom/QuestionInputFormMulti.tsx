@@ -18,7 +18,7 @@ import { ErrorMessage } from "@hookform/error-message";
 
 type QuestionKeyTypes = keyof Question;
 
-interface QuestionInputFormProps {
+interface QuestionInputFormMultiProps {
   name: QuestionKeyTypes;
   control: Control<Question, unknown>;
   register: UseFormRegister<Question>;
@@ -31,7 +31,7 @@ interface QuestionInputFormProps {
   errors?: FieldErrors<Question>;
 }
 
-const QuestionInputForm = ({
+const QuestionInputFormMulti = ({
   name,
   label,
   placeholder,
@@ -42,7 +42,7 @@ const QuestionInputForm = ({
   multiline,
   errors,
   onlyLetters,
-}: QuestionInputFormProps) => {
+}: QuestionInputFormMultiProps) => {
   const customQuestions = useCustomQuestionsStore((s) => s.customQuestions);
   const questionNumber = useGameStateStore((s) => s.questionNumber);
   const defaultValue = customQuestions[questionNumber][name];
@@ -65,7 +65,7 @@ const QuestionInputForm = ({
             options={options || ([] as readonly string[])}
             isOptionEqualToValue={(option, value) => option === value}
             getOptionLabel={(option) => {
-              return option[0];
+              return option;
             }}
             onChange={(_, v) => {
               setValue(v);
@@ -115,4 +115,4 @@ const QuestionInputForm = ({
   );
 };
 
-export default QuestionInputForm;
+export default QuestionInputFormMulti;

@@ -36,7 +36,7 @@ const useCustomQuestionsStore = create<CustomQuestionsStore>((set) => ({
     set((store) => ({ customQuestions: [...store.customQuestions, question] })),
   removeQuestion: (index) =>
     set((store) => ({
-      customQuestions: store.customQuestions.filter((_, i) => i === index),
+      customQuestions: store.customQuestions.filter((_, i) => i !== index),
     })),
   setQuestion: (question, index) =>
     set((store) => ({

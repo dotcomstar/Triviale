@@ -194,7 +194,7 @@ const HomePage = () => {
           >
             <Grid item xs={12} sx={{ mx: 0, pt: 1 }}>
               {editing ? (
-                <CustomizableText />
+                <CustomizableText key={questionNumber} />
               ) : (
                 <ExpandableText>{question}</ExpandableText>
               )}

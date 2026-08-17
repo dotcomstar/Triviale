@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import ProgressBar from "../../../src/components/progressBar/ProgressBar";
+import { MAX_CHALLENGES } from "../../../src/constants/settings";
 import { PROGRESS_BUTTON_TEXT } from "../../../src/constants/strings";
 import questions from "../../../src/data/questions";
 import useDailyIndex, {
@@ -56,5 +57,22 @@ describe("ProgressBar", () => {
 
     expect(useGameStateStore.getState().questionNumber).toBe(0);
     expect(useCurrGuessStore.getState().guess).toEqual(["a", "b", "c"]);
+  });
+
+  it("does not throw when clicking a finished question's tab (guessNumber at MAX_CHALLENGES)", () => {
+    // Losing a question (or winning on the last guess) leaves
+    // guessNumber[i] === MAX_CHALLENGES, one past guesses[i]'s last valid
+    // index -- guesses[i][MAX_CHALLENGES] is undefined.
+    for (let g = 0; g < MAX_CHALLENGES; g++) {
+      useGameStateStore.getState().makeGuess(["x"]);
+    }
+    render(<ProgressBar />);
+
+    expect(() =>
+      fireEvent.click(
+        screen.getByRole("button", { name: expectedButtonName(0) })
+      )
+    ).not.toThrow();
+    expect(useCurrGuessStore.getState().guess).toEqual([]);
   });
 });
