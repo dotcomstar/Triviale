@@ -7,7 +7,7 @@ describe("hardModeStore", () => {
   beforeEach(() => {
     localStorage.clear();
     vi.useFakeTimers();
-    vi.setSystemTime(new Date(2024, 10, 23)); // useDailyIndex() === 8 on this date
+    vi.setSystemTime(new Date(2024, 10, 23)); // useDailyIndex() === 24 on this date
   });
 
   afterEach(() => {
@@ -35,7 +35,7 @@ describe("hardModeStore", () => {
 
   it("restores hardMode when the saved game matches today's index", async () => {
     localStorage.setItem("hardMode", "true");
-    localStorage.setItem("prevGame", JSON.stringify({ pastOffset: 8 }));
+    localStorage.setItem("prevGame", JSON.stringify({ pastOffset: 24 }));
     vi.resetModules();
     const { default: useHardModeStore } = await import(
       "../../src/stores/hardModeStore"
@@ -44,7 +44,7 @@ describe("hardModeStore", () => {
   });
 
   it("keeps hardMode false when the saved game matches today but hardMode wasn't set", async () => {
-    localStorage.setItem("prevGame", JSON.stringify({ pastOffset: 8 }));
+    localStorage.setItem("prevGame", JSON.stringify({ pastOffset: 24 }));
     vi.resetModules();
     const { default: useHardModeStore } = await import(
       "../../src/stores/hardModeStore"

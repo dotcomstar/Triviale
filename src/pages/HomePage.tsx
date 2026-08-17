@@ -289,6 +289,7 @@ const HomePage = () => {
                       ).length - 1
                   );
                   indexOfLastGuess.forEach((guessIndex, questionIndex) => {
+                    if (guessIndex < 0) return; // No guesses were made for this question.
                     const guessIncrease =
                       questionState[questionIndex] === "won" ||
                       (questionIndex === questionNumber &&

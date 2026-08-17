@@ -52,33 +52,35 @@ describe("useDailyIndex", () => {
     vi.useRealTimers();
   });
 
-  it("computes the day offset from the game epoch, adjusted by MANUAL_OFFSET", async () => {
+  it("computes the day offset from the game epoch, adjusted by MANUAL_OFFSET and QUESTIONS_PER_DAY", async () => {
     // One day after the Nov 22 2024 epoch. MANUAL_OFFSET (-9) shifts
     // "today" 9 days earlier to Nov 14, which is 8 days before the epoch.
+    // QUESTIONS_PER_DAY (3) scales that day-offset into a question-block
+    // offset: 8 * 3 = 24.
     vi.setSystemTime(new Date(2024, 10, 23));
     vi.resetModules();
     const { default: useDailyIndex } = await import(
       "../../src/hooks/useDailyIndex"
     );
-    expect(useDailyIndex()).toBe(8);
+    expect(useDailyIndex()).toBe(24);
   });
 
   it("getDailyIndex (the plain, non-hook function) returns the same value as the useDailyIndex wrapper", async () => {
     vi.setSystemTime(new Date(2024, 10, 23));
     vi.resetModules();
     const { getDailyIndex } = await import("../../src/hooks/useDailyIndex");
-    expect(getDailyIndex()).toBe(8);
+    expect(getDailyIndex()).toBe(24);
   });
 
   it("returns a negative index once far enough past the epoch", async () => {
     // 30 days after the epoch. Shifted 9 days earlier to Dec 13, which is
-    // 21 days after the epoch.
+    // 21 days after the epoch. Scaled by QUESTIONS_PER_DAY (3): -21 * 3 = -63.
     vi.setSystemTime(new Date(2024, 11, 22));
     vi.resetModules();
     const { default: useDailyIndex } = await import(
       "../../src/hooks/useDailyIndex"
     );
-    expect(useDailyIndex()).toBe(-21);
+    expect(useDailyIndex()).toBe(-63);
   });
 
   it("returns zero on epoch day once MANUAL_OFFSET is accounted for", async () => {

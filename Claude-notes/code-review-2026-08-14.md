@@ -66,12 +66,12 @@ Was: `Category` is typed as `"SCI" | "HIS" | "ART" | "REL" | "GEO" | "POP" | str
 
 Confirmed during the fix that the `| string` escape hatch is genuinely in use — `src/stores/customQuestionsStore.ts`'s `defaultQuestions` assigns `category: "ANY"`, a value outside the 6-entry union — so narrowing `Category`'s type was ruled out as the fix (it would've required reworking the custom-question editor too). Instead, `statsStore.ts` gained two new actions, `recordCategoryGuess` and `finalizeCategoryAttempt`, which lazily initialize `advancedStats[category]` via `state.advancedStats?.[category] ?? emptyCategoryStat()` before updating it, so an unrecognized category is created on the fly instead of throwing. `HomePage.tsx`'s two direct-mutation call sites now call these actions instead (see the resolved Best Practices finding below — same fix covers both). Covered by `tests/stores/statsStore.test.ts`, including a case that calls both actions with `"ANY"` directly.
 
-### 🟡 Moderate — `indexOfLastGuess` can be -1 and silently mis-records a stat
-`src/pages/HomePage.tsx:282-298`
+### ✅ Resolved 2026-08-16 — `indexOfLastGuess` could be -1 and silently mis-record a stat
+`src/pages/HomePage.tsx:282-298` (pre-fix line numbers)
 
-For a question with zero submitted guesses, `allGuessesForQuestion.filter(...).length - 1` is `-1`. `todaysQuestionsGuessedIn[-1] += guessIncrease` doesn't throw (JS arrays accept string keys), it just creates a stray `"-1"` property instead of recording the stat anywhere real. Invisible today because `QUESTIONS_PER_DAY` is 1 so this multi-question branch barely runs, but it's live code.
+Was: for a question with zero submitted guesses, `allGuessesForQuestion.filter(...).length - 1` is `-1`. `todaysQuestionsGuessedIn[-1] += guessIncrease` doesn't throw (JS arrays accept string keys), it just creates a stray `"-1"` property instead of recording the stat anywhere real. Flagged as invisible while `QUESTIONS_PER_DAY` was 1, since the multi-question branch barely ran — but live code that mattered as soon as that changed.
 
-**Fix:** clamp/skip when `guessIndex < 0` before indexing into `todaysQuestionsGuessedIn`.
+Traced whether this is actually reachable via normal play: every question that transitions to `"won"`/`"lost"` does so from inside `onEnter`'s own flow, which always calls `makeGuess()` for that question in the same code path immediately after `winQuestion()`/`loseQuestion()` — so by the time the stats-reporting block runs, every finished question should already have ≥1 recorded guess, same invariant as Revision #1's retraction below, just not re-verified with the same rigor at the time. Fixed defensively anyway (skip when `guessIndex < 0`, per the original fix suggestion) rather than relying on that invariant staying true, directly motivated by `QUESTIONS_PER_DAY` moving from 1 to 3 on 2026-08-16 and this branch now actually running on every game.
 
 ### ✅ Resolved 2026-08-16 — HomePage's `data[safeIndex]` access had no bounds guard
 `src/pages/HomePage.tsx:53-70` (pre-fix line numbers) — also covered a 7th access point at the old line 84 (`todaysCategories`) that this finding's original scope missed.
@@ -107,17 +107,12 @@ Was: `advancedStats[c] = { ...advancedStats[c], ... }` mutated the object return
 
 Fixed by adding two actions to `statsStore.ts` — `recordCategoryGuess(category, guessIndex, guessIncrease)` and `finalizeCategoryAttempt(category)` — matching the existing `importStats`/`logGame` convention of rebuilding state immutably inside `set()`. Two actions rather than one combined action, since they map 1:1 onto `HomePage.tsx`'s two existing loops over different data shapes. `HomePage.tsx`'s two direct-mutation blocks were replaced with calls to these actions; this is also where the fix for the `advancedStats[c]` fixed-category-set finding above lives (both actions lazily initialize a missing category instead of assuming the fixed 6). Covered by `tests/stores/statsStore.test.ts`.
 
-### 🟡 Moderate — `Array(n).fill([])` shares one array reference across every slot
-`src/stores/gameStateStore.ts:29-32`
+### ✅ Resolved 2026-08-16 — `Array(n).fill([])` shared one array reference across every slot
+`src/stores/gameStateStore.ts:29-32` (pre-fix line numbers)
 
-`Array(MAX_CHALLENGES).fill([])` fills every challenge slot with *the same* array instance, and `Array(QUESTIONS_PER_DAY).fill(Array(...))` does the same one level up. It's harmless today only because every update goes through `.map()` (which allocates fresh arrays), so the shared initial reference never gets mutated in place. It's a footgun the moment `QUESTIONS_PER_DAY` goes above 1 (per the README's "three new questions every day") or any future code mutates a guess array directly.
+Was: `Array(MAX_CHALLENGES).fill([])` filled every challenge slot with *the same* array instance, and `Array(QUESTIONS_PER_DAY).fill(Array(...))` did the same one level up. It was harmless while `QUESTIONS_PER_DAY` was 1 (and, per the code-path analysis, likely still harmless even at 3 — every update goes through `.map()`, which allocates fresh arrays rather than mutating the shared initial reference) — but a footgun not worth carrying once `QUESTIONS_PER_DAY` actually went above 1 on 2026-08-16.
 
-```ts
-guesses: Array(QUESTIONS_PER_DAY).fill(Array(MAX_CHALLENGES).fill([])),
-// every question, every challenge slot → same [] reference
-```
-
-**Fix:** build with `Array.from({ length }, () => ...)` so each slot gets its own array.
+Fixed by building both levels with `Array.from({ length }, () => ...)` so every question gets its own `guesses[i]` array and every challenge slot within it gets its own `[]`, instead of all sharing one instance. Covered by a new regression test in `tests/stores/gameStateStore.test.ts` asserting `guesses[0]`, `guesses[1]`, and `guesses[2]` are distinct references.
 
 ### 🟡 Moderate — Side effects run directly in the render body, not in useEffect
 `src/pages/ErrorPage.tsx:13-14` · `src/components/auth/PrivateRoutes.tsx:7-8`
@@ -177,12 +172,12 @@ Was: both files open with `// 13 December 2023 Game Epoch`. In `useDailyIndex.ts
 
 `useDailyIndex.ts`'s comment fixed to `// 22 November 2024 Game Epoch` while touching that file for the module-scope-hooks fix above. **Still open:** `useTodayAsInt.ts`'s copy of the comment wasn't touched — that file wasn't part of this pass's scope.
 
-### 🟡 Moderate — README feature list doesn't match the shipped config
+### ✅ Resolved 2026-08-16 — README feature list didn't match the shipped config
 `README.md:43` ("Three new questions every day") · `src/constants/settings.ts:2`
 
-`QUESTIONS_PER_DAY = 1`, not three. This isn't just a stale doc — it also means the multi-question code paths (the per-question stats loop and the `guesses` array-of-arrays in `gameStateStore.ts`) are effectively unexercised in production, which is exactly where the shared-array-reference and `-1`-index findings above are hiding.
+Was: `QUESTIONS_PER_DAY = 1`, not three. This wasn't just a stale doc — it also meant the multi-question code paths (the per-question stats loop and the `guesses` array-of-arrays in `gameStateStore.ts`) were effectively unexercised in production, which is exactly where the shared-array-reference and `-1`-index findings above were hiding.
 
-**Fix:** either update the README to reflect the current single-question mode, or treat restoring `QUESTIONS_PER_DAY > 1` as a real feature with the edge cases above fixed first.
+Resolved the way this finding's own **Fix** suggested: `QUESTIONS_PER_DAY` bumped to 3 as a real feature, with both edge cases above fixed first (shared array reference, `indexOfLastGuess < 0`), plus a defensive guard added to `ProgressBar.tsx`'s previously-unguarded `data[...].category` access (same class of issue as the resolved `HomePage.tsx` finding above, now actually exercised since that loop runs 3x instead of 1x). README's line 43 needed no edit — it was already correct, just describing a feature that wasn't shipped yet.
 
 ### 🟡 Moderate — No documentation of the persisted-state shape
 localStorage keys `"prevGame"`, `"gameStats"`, `"hardMode"`, `"onscreenKeyboardOnly"`, `"theme"`

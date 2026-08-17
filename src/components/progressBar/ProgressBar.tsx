@@ -65,7 +65,7 @@ const ProgressBar = () => {
               {PROGRESS_BUTTON_TEXT(
                 i + 1,
                 data[getPositiveIndex(i + (retrieved ? 0 : dailyIndex))]
-                  .category
+                  ?.category ?? ""
               )}
             </Button>
             {i < arr.length - 1 && (

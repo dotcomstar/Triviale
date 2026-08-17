@@ -7,7 +7,7 @@ describe("onscreenKeyboardOnlyStore", () => {
   beforeEach(() => {
     localStorage.clear();
     vi.useFakeTimers();
-    vi.setSystemTime(new Date(2024, 10, 23)); // useDailyIndex() === 8 on this date
+    vi.setSystemTime(new Date(2024, 10, 23)); // useDailyIndex() === 24 on this date
   });
 
   afterEach(() => {
@@ -39,7 +39,7 @@ describe("onscreenKeyboardOnlyStore", () => {
 
   it("restores onscreenKeyboardOnly when the saved game matches today's index", async () => {
     localStorage.setItem("onscreenKeyboardOnly", "true");
-    localStorage.setItem("prevGame", JSON.stringify({ pastOffset: 8 }));
+    localStorage.setItem("prevGame", JSON.stringify({ pastOffset: 24 }));
     vi.resetModules();
     const { default: useOnscreenKeyboardOnlyStore } = await import(
       "../../src/stores/onscreenKeyboardOnlyStore"

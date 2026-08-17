@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import ProgressBar from "../../../src/components/progressBar/ProgressBar";
+import { PROGRESS_BUTTON_TEXT } from "../../../src/constants/strings";
 import questions from "../../../src/data/questions";
 import useDailyIndex, {
   getPositiveIndex,
@@ -14,8 +15,13 @@ import useGameStateStore from "../../../src/stores/gameStateStore";
 // scope to match the pattern already used in hardModeStore.ts.
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const dailyIndex = useDailyIndex();
-const expectedCategory = () =>
-  questions[getPositiveIndex(dailyIndex)].category;
+// Button labels go through the same PROGRESS_BUTTON_TEXT formatter
+// ProgressBar itself uses, which prepends "Q<n>, " once QUESTIONS_PER_DAY > 1.
+const expectedButtonName = (questionIndex: number) =>
+  PROGRESS_BUTTON_TEXT(
+    questionIndex + 1,
+    questions[getPositiveIndex(dailyIndex + questionIndex)].category
+  );
 
 describe("ProgressBar", () => {
   beforeEach(() => {
@@ -26,7 +32,17 @@ describe("ProgressBar", () => {
   it("renders a button labeled with today's question category", () => {
     render(<ProgressBar />);
     expect(
-      screen.getByRole("button", { name: expectedCategory() })
+      screen.getByRole("button", { name: expectedButtonName(0) })
+    ).toBeInTheDocument();
+  });
+
+  it("renders one button per question, each labeled with its own category", () => {
+    render(<ProgressBar />);
+    expect(
+      screen.getByRole("button", { name: expectedButtonName(1) })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: expectedButtonName(2) })
     ).toBeInTheDocument();
   });
 
@@ -34,7 +50,9 @@ describe("ProgressBar", () => {
     useGameStateStore.getState().cacheGuess(["a", "b", "c"]);
     render(<ProgressBar />);
 
-    fireEvent.click(screen.getByRole("button", { name: expectedCategory() }));
+    fireEvent.click(
+      screen.getByRole("button", { name: expectedButtonName(0) })
+    );
 
     expect(useGameStateStore.getState().questionNumber).toBe(0);
     expect(useCurrGuessStore.getState().guess).toEqual(["a", "b", "c"]);

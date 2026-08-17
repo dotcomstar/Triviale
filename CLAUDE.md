@@ -24,7 +24,7 @@ Setup is just `npm install && npm run dev` (→ `http://localhost:5173/`) — no
 
 ## Known gotchas
 
-- README says "three new questions every day," but `src/constants/settings.ts` sets `QUESTIONS_PER_DAY = 1`, and the multi-question code paths are effectively dead. Don't trust that line of the README.
+- `src/constants/settings.ts` sets `QUESTIONS_PER_DAY = 3` (2026-08-16, up from 1) — README's "three new questions every day" is now accurate, and the multi-question code paths (per-question stats loop, `guesses` array-of-arrays) are live, not dead. If you're touching those paths, they're exercised in production now.
 - `src/hooks/useQuestions.ts` reads from local `src/data/questions.ts`; the MongoDB-backed fetch path is commented out. The real backend is not wired up.
 - `main.py` (a Lambda handler for a MongoDB "ping") is dead/experimental — not part of the build or deploy pipeline, not referenced by any npm script. It contains a hardcoded MongoDB username and a block explicitly commented `# [VULN] SQL Injection`. Don't reactivate or copy from it without scrubbing credentials and rewriting that block.
 - For known issues in the current `src/` (error handling, edge cases, etc.), see @Claude-notes/code-review-2026-08-14.md — read it before assuming a file is clean, and update it if you fix or invalidate something it lists.
