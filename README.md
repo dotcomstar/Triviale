@@ -5,7 +5,7 @@
 
 A daily trivia puzzle game. Try to answer the question before it's finished being asked!
 
-![Triviale image](https://jetrlee.vercel.app/Triviale.png)
+![Triviale image](public/screenshot.png)
 
 Introducing **Triviale** — where curiosity meets competition.
 
