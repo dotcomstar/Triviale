@@ -90,7 +90,7 @@ const GameRow = ({
                   borderColor:
                     borderColorOverride ||
                     (statuses[i] === theme.palette.success &&
-                      statuses[i + 1] === theme.palette.success)
+                    statuses[i + 1] === theme.palette.success
                       ? statuses[i].main
                       : !answerOverride &&
                         (statuses[i] === theme.palette.error ||
@@ -98,7 +98,7 @@ const GameRow = ({
                           statuses[i] === theme.palette.warning ||
                           statuses[i + 1] === theme.palette.warning)
                       ? "primary.darker"
-                      : "primary.light",
+                      : "primary.light"),
                 }}
               />
             )}

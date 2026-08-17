@@ -9,6 +9,8 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -37,3 +39,33 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      # Regenerates coverage.json (read by the README's shields.io endpoint
+      # badge) and pushes it to a dedicated, unprotected `badges` branch —
+      # not main, which requires a PR. Only runs on a direct push to main
+      # (not PRs, not production) so forked-PR runs never need push access.
+      - name: Update coverage badge
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          npm run test:coverage
+          node -e "
+            const pct = require('./coverage/coverage-summary.json').total.statements.pct;
+            const color = pct >= 80 ? 'green' : pct >= 60 ? 'yellow' : 'red';
+            const badge = { schemaVersion: 1, label: 'coverage', message: pct.toFixed(0) + '%', color };
+            require('fs').writeFileSync('/tmp/coverage-badge.json', JSON.stringify(badge));
+          "
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin badges:refs/remotes/origin/badges 2>/dev/null || true
+          if git show-ref --verify --quiet refs/remotes/origin/badges; then
+            git checkout -B badges origin/badges
+          else
+            git checkout --orphan badges
+            git rm -rf . >/dev/null 2>&1 || true
+          fi
+          cp /tmp/coverage-badge.json coverage.json
+          git add coverage.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update coverage badge"
+            git push origin badges
+          fi

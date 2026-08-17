@@ -36,12 +36,7 @@ const CustomizableText = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      onChange={(e) => {
-        e.persist(); // REFACTOR: This is a hacky solution that allows last letter changed to be submitted
-      }}
-    >
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Stack
         alignItems={"center"}
         justifyContent={"center"}

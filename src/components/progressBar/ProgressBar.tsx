@@ -38,7 +38,7 @@ const ProgressBar = () => {
               variant="contained"
               onClick={() => {
                 moveToQuestion(i);
-                importGuess(guesses[i][guessNumber[i]]);
+                importGuess(guesses[i][guessNumber[i]] ?? []);
               }}
               disableElevation
               color={

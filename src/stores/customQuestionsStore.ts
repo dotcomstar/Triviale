@@ -36,7 +36,7 @@ const useCustomQuestionsStore = create<CustomQuestionsStore>((set) => ({
     set((store) => ({ customQuestions: [...store.customQuestions, question] })),
   removeQuestion: (index) =>
     set((store) => ({
-      customQuestions: store.customQuestions.filter((_, i) => i === index),
+      customQuestions: store.customQuestions.filter((_, i) => i !== index),
     })),
   setQuestion: (question, index) =>
     set((store) => ({
@@ -46,9 +46,9 @@ const useCustomQuestionsStore = create<CustomQuestionsStore>((set) => ({
     })),
   resetQuestions: () =>
     set(() => ({
-      customQuestions: defaultQuestions,
+      customQuestions: structuredClone(defaultQuestions),
     })),
-  customQuestions: defaultQuestions,
+  customQuestions: structuredClone(defaultQuestions),
 }));
 
 if (process.env.NODE_ENV === "development")

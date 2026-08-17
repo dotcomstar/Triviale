@@ -17,8 +17,8 @@ interface EmailButtonProps {
 }
 
 const EmailButton = ({ text }: EmailButtonProps) => {
-  const deviceWidth = window.screen.height;
-  const deviceHeight = window.screen.width;
+  const deviceWidth = window.screen.width;
+  const deviceHeight = window.screen.height;
   const vw = Math.max(
     document.documentElement.clientWidth || 0,
     window.innerWidth || 0
@@ -75,7 +75,15 @@ const EmailButton = ({ text }: EmailButtonProps) => {
     >
       <Typography>{text}</Typography>
       <Link
-        href={`mailto:${CONTACT_EMAIL}?subject=${GAME_TITLE} ${text}&body=%0D%0A%0D%0A%0A--%0ADevice%20summary%3A%0AScreen%20Resolution%3A%20${screenResolution}%0AViewport%20Size%3A%20${viewPortSize}%0ATimezone%3A%20${timeZone}%0A%0ALocal%20Storage%3A%0A${gameData}`}
+        href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+          `${GAME_TITLE} ${text}`
+        )}&body=%0D%0A%0D%0A%0A--%0ADevice%20summary%3A%0AScreen%20Resolution%3A%20${encodeURIComponent(
+          screenResolution
+        )}%0AViewport%20Size%3A%20${encodeURIComponent(
+          viewPortSize
+        )}%0ATimezone%3A%20${encodeURIComponent(
+          timeZone
+        )}%0A%0ALocal%20Storage%3A%0A${encodeURIComponent(gameData)}`}
         title={`Send ${text} to ${CONTACT_EMAIL}`}
         color={"inherit"}
         target="_blank"

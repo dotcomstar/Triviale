@@ -22,6 +22,7 @@ import useOnscreenKeyboardOnlyStore from "../stores/onscreenKeyboardOnlyStore";
 import useRetrievedStore from "../stores/retrievedStore";
 import useStatsStore from "../stores/statsStore";
 import { safeParse, JSONRecord } from "../utils/safeParse";
+import { getAcceptableAnswers } from "../utils/acceptableAnswers";
 
 const HomePage = () => {
   const { data } = useQuestions();
@@ -57,19 +58,7 @@ const HomePage = () => {
   const fullAnswer = questionData?.fullAnswer;
   const answer = answerWithSpaces.replace(/\s+/g, "");
 
-  // Calculate all permutations with addOns and answers.
-  // TODO: Calculate all permutations with addOns and altAnswers as well
-  const permutationsWithAddons =
-    [[], ...(questionData?.addOns || []), []].flatMap(
-      (d) => questionData?.addOns?.map((v) => d + answer + v) || []
-    ) || [];
-
-  // An array of all accepted answers in  uppercase with no spaces
-  const allAcceptableAnswers = [
-    questionData?.answer,
-    ...(questionData?.altAnswer || []),
-    ...(permutationsWithAddons || []),
-  ].map((v) => v?.toLocaleUpperCase().replace(/\s+/g, ""));
+  const allAcceptableAnswers = getAcceptableAnswers(questionData, answer);
 
   const { setStatsOpen } = useDialogStore();
   const {
@@ -160,9 +149,9 @@ const HomePage = () => {
       importGame(pastGame);
       if (pastGame.gameState === "inProgress") {
         importGuess(
-          pastGame.guesses[pastGame.questionNumber][
-            pastGame.guessNumber[pastGame.questionNumber]
-          ]
+          pastGame.guesses?.[pastGame.questionNumber]?.[
+            pastGame.guessNumber?.[pastGame.questionNumber]
+          ] ?? []
         );
       }
     } else {
@@ -194,7 +183,7 @@ const HomePage = () => {
           >
             <Grid item xs={12} sx={{ mx: 0, pt: 1 }}>
               {editing ? (
-                <CustomizableText />
+                <CustomizableText key={questionNumber} />
               ) : (
                 <ExpandableText>{question}</ExpandableText>
               )}
@@ -238,7 +227,7 @@ const HomePage = () => {
                 const hasOneMoreGuess =
                   questionState.filter((state) => state === "inProgress")
                     .length === 1;
-                if (index === answer.length || hardMode) {
+                if (index === answer.length || (hardMode && index > 0)) {
                   if (
                     guess.join("") === answer ||
                     (hardMode && allAcceptableAnswers.includes(guess.join("")))
@@ -282,6 +271,12 @@ const HomePage = () => {
                   // Report the current game's stats
                   const todaysQuestionsGuessedIn =
                     Array(MAX_CHALLENGES).fill(0);
+                  // Per-category equivalent of todaysQuestionsGuessedIn above,
+                  // so finalizeCategoryAttempt can derive changedToday from
+                  // this session's guesses instead of the category's
+                  // all-time cumulative total.
+                  const todaysCategoryGuessedIn: Record<string, number[]> =
+                    {};
                   const indexOfLastGuess = guesses.map(
                     (allGuessesForQuestion) =>
                       allGuessesForQuestion.filter(
@@ -300,13 +295,19 @@ const HomePage = () => {
                         ? 1
                         : 0;
                     todaysQuestionsGuessedIn[guessIndex] += guessIncrease;
-                    recordCategoryGuess(
-                      todaysCategories[questionIndex],
-                      guessIndex,
-                      guessIncrease
-                    );
+                    const category = todaysCategories[questionIndex];
+                    todaysCategoryGuessedIn[category] ??=
+                      Array(MAX_CHALLENGES).fill(0);
+                    todaysCategoryGuessedIn[category][guessIndex] +=
+                      guessIncrease;
+                    recordCategoryGuess(category, guessIndex, guessIncrease);
                   });
-                  todaysCategories.forEach((c) => finalizeCategoryAttempt(c));
+                  todaysCategories.forEach((c) =>
+                    finalizeCategoryAttempt(
+                      c,
+                      todaysCategoryGuessedIn[c] ?? Array(MAX_CHALLENGES).fill(0)
+                    )
+                  );
                   logGame({
                     numQuestionsAttempted: QUESTIONS_PER_DAY,
                     questionsGuessedIn: todaysQuestionsGuessedIn,

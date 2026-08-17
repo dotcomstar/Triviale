@@ -27,7 +27,7 @@ export interface StatsStore extends StatsStoreImport {
     guessIndex: number,
     guessIncrease: number
   ) => void;
-  finalizeCategoryAttempt: (category: string) => void;
+  finalizeCategoryAttempt: (category: string, todayGuessedIn: number[]) => void;
 }
 
 const emptyCategoryStat = (): BaseStatsStoreImport => ({
@@ -53,12 +53,18 @@ const useStatsStore = create<StatsStore>((set) => ({
     };
   }, {}),
   importStats: (pastStore: StatsStoreImport) => {
-    set(() => ({
+    set((state) => ({
       numQuestionsAttempted: pastStore.numQuestionsAttempted,
       questionsGuessedIn: pastStore.questionsGuessedIn,
       changedToday: pastStore.changedToday,
       currentStreak: pastStore.currentStreak,
-      advancedStats: pastStore.advancedStats,
+      // Merge onto the current (fully-populated) shape rather than
+      // overwriting outright, so an older/partial persisted blob missing a
+      // category doesn't leave advancedStats[c] undefined for readers.
+      advancedStats: {
+        ...state.advancedStats,
+        ...pastStore.advancedStats,
+      },
     }));
   },
   logGame: (game: StatsStoreImport) => {
@@ -86,7 +92,7 @@ const useStatsStore = create<StatsStore>((set) => ({
         },
       };
     }),
-  finalizeCategoryAttempt: (category) =>
+  finalizeCategoryAttempt: (category, todayGuessedIn) =>
     set((state) => {
       const existing = state.advancedStats?.[category] ?? emptyCategoryStat();
       return {
@@ -95,7 +101,10 @@ const useStatsStore = create<StatsStore>((set) => ({
           [category]: {
             ...existing,
             numQuestionsAttempted: existing.numQuestionsAttempted + 1,
-            changedToday: existing.questionsGuessedIn.map((v) => v > 0),
+            // Derived from this session's own guesses, not existing's
+            // all-time cumulative questionsGuessedIn -- otherwise this
+            // stays true forever once any guess-bucket is ever hit.
+            changedToday: todayGuessedIn.map((v) => v > 0),
           },
         },
       };
