@@ -1,7 +1,7 @@
 # [Triviale]
 [Triviale]: https://www.triviale.net/
 
-![coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dotcomstar/Triviale/main/.github/badges/coverage.json)
+![coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dotcomstar/Triviale/badges/coverage.json)
 
 A daily trivia puzzle game. Try to answer the question before it's finished being asked!
 
