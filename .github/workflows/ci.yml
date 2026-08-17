@@ -9,6 +9,8 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -37,3 +39,26 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      # Regenerates .github/badges/coverage.json (read by the README's
+      # shields.io endpoint badge) and commits it back to main. Only runs
+      # on a direct push to main (not PRs, not production) so forked-PR
+      # runs never need push access, and `[skip ci]` in the commit message
+      # stops this push from re-triggering the workflow.
+      - name: Update coverage badge
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          npm run test:coverage
+          node -e "
+            const pct = require('./coverage/coverage-summary.json').total.statements.pct;
+            const color = pct >= 80 ? 'green' : pct >= 60 ? 'yellow' : 'red';
+            const badge = { schemaVersion: 1, label: 'coverage', message: pct.toFixed(0) + '%', color };
+            require('fs').writeFileSync('.github/badges/coverage.json', JSON.stringify(badge));
+          "
+          if ! git diff --quiet -- .github/badges/coverage.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add .github/badges/coverage.json
+            git commit -m "Update coverage badge [skip ci]"
+            git push
+          fi
