@@ -14,6 +14,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <RouterProvider router={router} />
       <ReactQueryDevtools />
     </QueryClientProvider>
-    <Analytics mode="production" />
+    <Analytics />
   </React.StrictMode>
 );

@@ -94,7 +94,7 @@ const QuestionInputFormMulti = ({
                   setValueAs: () => value,
                   pattern: onlyLetters
                     ? {
-                        value: /^[a-zA-Z ]*$/g,
+                        value: /^[a-zA-Z ]*$/,
                         message: "Only letters A-z accepted",
                       }
                     : undefined,

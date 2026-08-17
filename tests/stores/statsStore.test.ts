@@ -38,16 +38,19 @@ describe("statsStore", () => {
 
   it("finalizeCategoryAttempt lazily initializes a category not in the initial set instead of throwing", () => {
     expect(() =>
-      useStatsStore.getState().finalizeCategoryAttempt("ANY")
+      useStatsStore.getState().finalizeCategoryAttempt("ANY", [0, 0, 0, 0, 0])
     ).not.toThrow();
     expect(
       useStatsStore.getState().advancedStats?.["ANY"].numQuestionsAttempted
     ).toBe(1);
   });
 
-  it("finalizeCategoryAttempt increments numQuestionsAttempted and recomputes changedToday", () => {
+  it("finalizeCategoryAttempt increments numQuestionsAttempted and derives changedToday from this session's guesses, not the cumulative total", () => {
     useStatsStore.getState().recordCategoryGuess("SCI", 2, 1);
-    useStatsStore.getState().finalizeCategoryAttempt("SCI");
+    // A prior day's cumulative guess at index 0 -- must not leak into
+    // today's changedToday just because it makes questionsGuessedIn[0] > 0.
+    useStatsStore.getState().recordCategoryGuess("SCI", 0, 1);
+    useStatsStore.getState().finalizeCategoryAttempt("SCI", [0, 0, 1, 0, 0]);
 
     const sci = useStatsStore.getState().advancedStats?.["SCI"];
     expect(sci?.numQuestionsAttempted).toBe(1);

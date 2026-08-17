@@ -70,3 +70,5 @@ Install dependencies:
 Run the program locally:
 `npm run dev`
 This will open Triviale on your localhost. eg. `http://localhost:5173/`
+
+No `.env` file is required — the app falls back to the production Auth0 tenant and API endpoint baked into source. To point a local/staging build at a different Auth0 tenant or API endpoint instead, copy `.env.example` to `.env.local` and fill in `VITE_AUTH0_DOMAIN`, `VITE_AUTH0_CLIENT_ID`, and/or `VITE_API_BASE_URL`.

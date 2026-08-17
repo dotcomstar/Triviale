@@ -12,11 +12,12 @@ const UserProfilePage = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   if (isLoading) {
-    console.log("Loading page");
     return <div>Loading ...</div>;
   }
 
-  console.log(user);
+  if (import.meta.env.DEV) {
+    console.log(user);
+  }
   return (
     isAuthenticated && (
       <Stack direction={"column"} alignItems={"left"} sx={{ m: 4 }} spacing={1}>
@@ -32,7 +33,9 @@ const UserProfilePage = () => {
         <EditingButton />
 
         <Link
-          href={`mailto:${CONTACT_EMAIL}?subject=${DELETE_USER_PROFILE_TEXT} ${user?.email}&body=%0D%0A%0D%0A%0A--%0A`}
+          href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+            `${DELETE_USER_PROFILE_TEXT} ${user?.email ?? ""}`
+          )}&body=%0D%0A%0D%0A%0A--%0A`}
           title={`Send profile deletion request to ${CONTACT_EMAIL}`}
           color={"inherit"}
           target="_blank"

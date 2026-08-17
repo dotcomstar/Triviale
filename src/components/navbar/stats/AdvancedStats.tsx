@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Grid, SxProps, Typography } from "@mui/material";
 import { ALL_CATEGORIES } from "../../../data/questions";
 import useStatsStore from "../../../stores/statsStore";
@@ -32,12 +33,12 @@ const AdvancedStats = () => {
         ADV_STATS_TOTAL_TRIES_TEXT,
         ADV_STATS_AVG_GUESS_TEXT,
       ].map((s) => (
-        <Grid item xs={4}>
+        <Grid item xs={4} key={s}>
           <Typography {...TypProps}>{s}</Typography>
         </Grid>
       ))}
       {ALL_CATEGORIES.map((c) => (
-        <>
+        <Fragment key={c}>
           <Grid item xs={4}>
             <Typography {...TypProps}>{c}</Typography>
           </Grid>
@@ -68,7 +69,7 @@ const AdvancedStats = () => {
                 : 0}
             </Typography>
           </Grid>
-        </>
+        </Fragment>
       ))}
     </Grid>
   );

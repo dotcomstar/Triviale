@@ -36,6 +36,7 @@ export const HELP_DIALOG_ARIA = "help-dialog-slide";
 export const HELP_WRONG_LETTER = "T is not in the word in any spot.";
 export const HELP_BUTTON_ARIA = "help";
 export const EXAMPLES_TEXT = "Examples";
+export const STATS_BUTTON_ARIA = "stats";
 
 // Cell descriptions
 export const PRESENT_TEXT = "present in another position";
@@ -140,6 +141,8 @@ export const DELETE_USER_PROFILE_TEXT = "Delete Profile";
 // Custom questions
 export const EDIT_BUTTON_ARIA = "edit questions";
 export const RETURN_FROM_EDIT_BUTTON_ARIA = "play questions";
+export const EDIT_BUTTON_TEXT = "Edit questions";
+export const RETURN_FROM_EDIT_BUTTON_TEXT = "Stop editing questions";
 
 // Misc
 export const PLAY_CLASSIC_MODE_LABEL = "Play";

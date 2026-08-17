@@ -46,9 +46,9 @@ const useCustomQuestionsStore = create<CustomQuestionsStore>((set) => ({
     })),
   resetQuestions: () =>
     set(() => ({
-      customQuestions: defaultQuestions,
+      customQuestions: structuredClone(defaultQuestions),
     })),
-  customQuestions: defaultQuestions,
+  customQuestions: structuredClone(defaultQuestions),
 }));
 
 if (process.env.NODE_ENV === "development")

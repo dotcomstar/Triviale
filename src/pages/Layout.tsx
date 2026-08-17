@@ -28,8 +28,11 @@ const Auth0ProviderWithRedirectCallback = ({ children, ...props }: Props) => {
 const Layout = () => {
   return (
     <Auth0ProviderWithRedirectCallback
-      domain="triviale.us.auth0.com"
-      clientId="uHV7AShHn22WhqjYNvzI1eMFyr1i2Fzr"
+      domain={import.meta.env.VITE_AUTH0_DOMAIN ?? "triviale.us.auth0.com"}
+      clientId={
+        import.meta.env.VITE_AUTH0_CLIENT_ID ??
+        "uHV7AShHn22WhqjYNvzI1eMFyr1i2Fzr"
+      }
       authorizationParams={{
         redirect_uri: window.location.origin,
       }}

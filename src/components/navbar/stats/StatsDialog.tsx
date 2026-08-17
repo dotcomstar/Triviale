@@ -24,6 +24,7 @@ import GuessDistribution from "./GuessDistribution";
 import PastGamesStats from "./PastGamesStats";
 import ShareButton from "./ShareButton";
 import useRetrievedStore from "../../../stores/retrievedStore";
+import { getAcceptableAnswers } from "../../../utils/acceptableAnswers";
 
 export interface StatsDialogProps {
   open: boolean;
@@ -50,19 +51,9 @@ const StatsDialog = ({
   const questionDetails = (id: number) => {
     const safeIndex = getPositiveIndex(id + offset);
     const q = questionsData[safeIndex];
-    // Calculate all permutations with addOns and answers.
     const answerWithSpaces = q?.answer.toLocaleUpperCase() ?? "";
     const answer = answerWithSpaces.replace(/\s+/g, "")!;
-    const permutationsWithAddons =
-      [[], ...(q?.addOns || []), []].flatMap(
-        (d) => q?.addOns?.map((v) => d + answer + v) || []
-      ) || [];
-    // An array of all accepted answers in  uppercase with no spaces
-    const allAcceptableAnswers = [
-      q?.answer,
-      ...(q?.altAnswer || []),
-      ...(permutationsWithAddons || []),
-    ].map((v) => v?.toLocaleUpperCase().replace(/\s+/g, ""));
+    const allAcceptableAnswers = getAcceptableAnswers(q, answer);
     return [q?.category ?? "", answer, allAcceptableAnswers];
   };
 

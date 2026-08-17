@@ -7,7 +7,7 @@ A follow-up pass over the React + TypeScript daily-trivia app, covering the part
 - **Reviewed at:** working tree HEAD (`a3d458b`), `main` up to date with `origin/main` (clean)
 - **Method:** three parallel Explore passes over disjoint file sets, then independent manual verification of every High finding by directly reading the flagged files, plus a live browser reproduction of the top finding — this codebase's own review history logged a false-positive finding in the 08-14 pass (see its Revisions section), so nothing here was taken on an agent's word alone before being written down. This pass's own verification caught two of its own miscalibrations while the fixes were being implemented — see this doc's Revisions section at the bottom.
 
-**Tally:** 7 High · 15 Moderate · 9 already-solid *(one originally-High finding was retracted on closer inspection — see Revisions)*
+**Tally:** 7 High · 15 Moderate · 9 already-solid *(one originally-High finding was retracted on closer inspection — see Revisions)*. All 7 High and all 15 Moderate findings are now resolved as of 2026-08-17 (see each finding below for what changed).
 
 ---
 
@@ -22,14 +22,14 @@ A follow-up pass over the React + TypeScript daily-trivia app, covering the part
 
 ## 1. Error handling
 
-### 🟡 Moderate — `EmailButton`'s `mailto:` body isn't URL-encoded
+### ✅ Resolved 2026-08-17 — `EmailButton`'s `mailto:` body isn't URL-encoded
 `src/components/navbar/settings/EmailButton.tsx:78`
 
 The href interpolates `GAME_TITLE`, `text`, and `JSON.stringify(gameData)` directly — only line breaks are manually encoded (`%0D%0A`). `gameData` embeds question/answer/category text verbatim (plausible to contain `&`, `#`, `%`, or `+`, e.g. "Q&A"-style content), any of which truncates or corrupts the email's `subject`/`body` at that character with no error shown. `src/pages/UserProfilePage.tsx:35`'s delete-account mailto has the same gap, lower stakes (just `user?.email`, less likely to contain special characters, but still not spec-correct).
 
-**Fix:** wrap each interpolated segment in `encodeURIComponent(...)`.
+**Fixed by:** wrapping each interpolated segment (`GAME_TITLE`/`text` in the subject, `screenResolution`/`viewPortSize`/`timeZone`/`gameData` in the body) in `encodeURIComponent(...)` in both `EmailButton.tsx` and `UserProfilePage.tsx`'s delete-account link.
 
-### 🟡 Moderate — `prevGame` from `safeParse` is trusted for shape, not just parse-validity
+### ✅ Resolved 2026-08-17 — `prevGame` from `safeParse` is trusted for shape, not just parse-validity
 `src/pages/HomePage.tsx:161-167`
 
 ```js
@@ -42,14 +42,14 @@ importGuess(
 
 The 08-16 fix made `JSON.parse` failures safe via `safeParse`, but that only guards against malformed JSON — it does nothing if the value parses fine but has the wrong *shape* (hand-edited `localStorage`, or a future change to `MAX_CHALLENGES`/`QUESTIONS_PER_DAY` like the one that just landed). A mismatched shape throws a raw `TypeError` on page load, the exact failure mode `safeParse` was built to prevent, just one layer deeper.
 
-**Fix:** bounds-check before indexing (`pastGame.guesses?.[pastGame.questionNumber]?.[...]`), or validate shape/version inside `safeParse`'s fallback path.
+**Fixed by:** bounds-checking before indexing — `pastGame.guesses?.[pastGame.questionNumber]?.[pastGame.guessNumber?.[pastGame.questionNumber]] ?? []`, same fallback idiom as the `ProgressBar.tsx` fix above.
 
-### 🟡 Moderate — Full Auth0 `user` object logged to console
+### ✅ Resolved 2026-08-17 — Full Auth0 `user` object logged to console
 `src/pages/UserProfilePage.tsx:19` (also a stray `console.log("Loading page")` at line 15)
 
 Logs name, email, and picture URL to the browser console on every profile-page visit, with no dev-only gate.
 
-**Fix:** remove, or gate behind `import.meta.env.DEV`.
+**Fixed by:** removing the stray `"Loading page"` log entirely, and gating the `user` log behind `import.meta.env.DEV`.
 
 ---
 
@@ -150,7 +150,7 @@ removeQuestion: (index) =>
 
 **Fixed by:** `filter((_, i) => i !== index)`.
 
-### 🟡 Moderate — Hard mode has no minimum-guess-length guard
+### ✅ Resolved 2026-08-17 — Hard mode has no minimum-guess-length guard
 `src/pages/HomePage.tsx:241`
 
 ```js
@@ -159,9 +159,9 @@ if (index === answer.length || hardMode) { ... }
 
 Normal mode blocks submission until the guess is exactly the right length; hard mode bypasses that check entirely with no replacement, so pressing Enter with zero letters typed still runs the full comparison/lose-check/`makeGuess`/`resetGuess` path — silently burning one of `MAX_CHALLENGES` guesses. Corroborating: `NOT_ENOUGH_LETTERS_MESSAGE` and its siblings (`constants/strings.ts:65` area) are defined but never referenced anywhere in `src/` — this validation looks planned and never wired in.
 
-**Fix:** require `index > 0` (or some minimum) before allowing hard-mode submission, and show `NOT_ENOUGH_LETTERS_MESSAGE` otherwise.
+**Fixed by:** `index === answer.length || (hardMode && index > 0)`. Deliberately *not* wired to `NOT_ENOUGH_LETTERS_MESSAGE` — normal mode already has the identical silent-no-op UX today when `index !== answer.length` (nothing renders, no toast infrastructure exists anywhere in gameplay), so this keeps hard mode consistent with that existing behavior rather than introducing new toast/Snackbar machinery for just this one case. Wiring an actual message remains open if that inconsistency (silent no-op vs. an explicit message) is worth addressing later.
 
-### 🟡 Moderate — Triplicated `permutationsWithAddons` logic never generates the prefix-only accepted answer
+### ✅ Resolved 2026-08-17 — Triplicated `permutationsWithAddons` logic never generates the prefix-only accepted answer
 `src/pages/HomePage.tsx:62-65`, `src/components/grid/GameGrid.tsx:76-78`, `src/components/navbar/stats/StatsDialog.tsx:53-58`
 
 All three independently repeat:
@@ -172,13 +172,13 @@ All three independently repeat:
 ```
 Verified against real data in `src/data/pastQuestions.txt` (e.g. `answer: "Picasso", addOns: ["Pablo"]`, intended accepted form `"PabloPicasso"`): this only ever produces `answer+addOn` (suffix) and `addOn+answer+addOn` (nonsense double-glue) — it never produces `addOn+answer` alone (prefix-only), because `v` is always sourced from `addOns` and never has an empty/no-suffix option. The leading/trailing `[]` sentinels cover the "no-prefix" case redundantly (both produce the same result) rather than covering "no-suffix." Currently **dormant** — no entry in the live `src/data/questions.ts` has an `addOns` field — but `pastQuestions.txt` has ~15 prefix-style `addOns` entries staged for rotation in, at which point correct prefix-form guesses in hard mode would be silently rejected.
 
-**Fix:** build the accepted set explicitly as `{addOn+answer}`, `{answer+addOn}`, and optionally `{addOn+answer+addOn}` — not one cartesian product missing the prefix-only case — and extract into one shared helper (this is a separate duplicated expression from the already-tracked `getPositiveIndex(...)` one in the 08-14 doc).
+**Fixed by:** extracting a single `getAcceptableAnswers(question, answer)` helper (new file, `src/utils/acceptableAnswers.ts`) used by all three call sites, building the accepted set explicitly as `{addOn+answer}`, `{answer+addOn}`, and `{addOn+answer+addOn}` per addOn — covering the prefix-only case the old cartesian product missed. Covered by `tests/utils/acceptableAnswers.test.ts`, including a case pinning down the prefix-only acceptance.
 
 ---
 
 ## 3. Best practices
 
-### 🟡 Moderate — `EmailButton`'s screen-resolution fields are swapped
+### ✅ Resolved 2026-08-17 — `EmailButton`'s screen-resolution fields are swapped
 `src/components/navbar/settings/EmailButton.tsx:20-21`
 
 ```js
@@ -186,23 +186,23 @@ const deviceWidth = window.screen.height;
 const deviceHeight = window.screen.width;
 ```
 
-Every feedback/bug-report email reports width and height transposed. **Fix:** swap the two assignments.
+Every feedback/bug-report email reports width and height transposed. **Fixed by:** swapping the two assignments.
 
-### 🟡 Moderate — `<Analytics mode="production" />` is hardcoded in `main.tsx`
+### ✅ Resolved 2026-08-17 — `<Analytics mode="production" />` is hardcoded in `main.tsx`
 `src/main.tsx:17`
 
 Per `@vercel/analytics`'s docs, `mode: "production"` means "always use the production script, sends events to the server," vs. the default `"auto"`, which detects dev and uses a console-log path instead. Hardcoding `"production"` means every `npm run dev` session sends real page-view events into the live analytics dataset.
 
-**Fix:** drop the `mode` prop (defaults to `"auto"`) or set it conditionally via `import.meta.env.PROD`.
+**Fixed by:** dropping the `mode` prop entirely (defaults to `"auto"`).
 
-### 🟡 Moderate — No environment-variable mechanism exists at all
+### ✅ Resolved 2026-08-17 — No environment-variable mechanism exists at all
 `src/pages/Layout.tsx:31-32` (Auth0 `domain`/`clientId` literals) · `src/services/api-client.ts:4` (Mongo base URL literal)
 
 The 08-14 doc's still-open "README omits env var setup" finding undersells this: `grep -rn "import.meta.env" src` returns zero matches, and no `.env*` file exists anywhere in the repo. There is currently no way to point a local/staging build at a different Auth0 tenant or API endpoint without editing source — this isn't a docs gap on top of working config, it's that the config mechanism itself was never built. `src/vite-env.d.ts` also has no `ImportMetaEnv` augmentation, which fixing this would need.
 
-**Fix:** move these into `VITE_AUTH0_DOMAIN` / `VITE_AUTH0_CLIENT_ID` / `VITE_API_BASE_URL`, read via `import.meta.env`, add an `ImportMetaEnv` interface to `vite-env.d.ts`, and document in the README (the doc fix from the 08-14 finding still applies once this lands).
+**Fixed by:** adding an `ImportMetaEnv` interface (`VITE_AUTH0_DOMAIN`/`VITE_AUTH0_CLIENT_ID`/`VITE_API_BASE_URL`) to `vite-env.d.ts`, reading each via `import.meta.env.VITE_* ?? <existing hardcoded value>` in `Layout.tsx`/`api-client.ts`, and adding `.env.example` plus a Setup note in the README. Chose a fallback-to-current-value default over making the vars required, specifically to preserve the "no env vars needed, `npm install && npm run dev` just works" zero-config property this project already has (documented in `CLAUDE.md`) — requiring the vars would also break CI, which has no `.env` and no secrets configured for these (non-secret) values.
 
-### 🟡 Moderate — `statsStore`'s `finalizeCategoryAttempt` computes `changedToday` from cumulative data
+### ✅ Resolved 2026-08-17 — `statsStore`'s `finalizeCategoryAttempt` computes `changedToday` from cumulative data
 `src/stores/statsStore.ts:98`
 
 ```js
@@ -211,49 +211,49 @@ changedToday: existing.questionsGuessedIn.map((v) => v > 0),
 
 Unlike the correct top-level pattern (`HomePage.tsx:313`: `changedToday: todaysQuestionsGuessedIn.map((v) => v > 0)`, derived from a today-only local counter), this per-category version derives `changedToday` from `existing.questionsGuessedIn` — the same field the action mutates cumulatively across every day, never reset per session. Once any guess-bucket has ever been hit for a category, `changedToday[i]` is permanently `true`, contradicting the field's name. New code from the 08-16 fix, so not previously tracked. Currently low-impact — `AdvancedStats.tsx` never reads this field — but a landmine for whoever wires up a per-category "today" indicator next.
 
-**Fix:** track a per-session today-only counter analogous to `todaysQuestionsGuessedIn` and diff against it.
+**Fixed by:** `finalizeCategoryAttempt` now takes a second `todayGuessedIn: number[]` argument and derives `changedToday` from that instead of `existing.questionsGuessedIn`. `HomePage.tsx` builds this per-category, today-only counter (`todaysCategoryGuessedIn`) alongside the existing top-level `todaysQuestionsGuessedIn`, in the same `indexOfLastGuess.forEach` loop, and passes the right slice to each `finalizeCategoryAttempt` call. `tests/stores/statsStore.test.ts`'s existing test for this action didn't actually exercise the bug (it never populated a non-today `questionsGuessedIn` bucket) — updated to record a guess at index 0 (simulating a prior day) alongside today's index-2 guess, confirming `changedToday[0]` stays `false`.
 
-### 🟡 Moderate — `customQuestionsStore`'s `defaultQuestions` is a shared reference, same class as an already-fixed bug
+### ✅ Resolved 2026-08-17 — `customQuestionsStore`'s `defaultQuestions` is a shared reference, same class as an already-fixed bug
 `src/stores/customQuestionsStore.ts:49, 51`
 
 Both the store's initial state (`customQuestions: defaultQuestions`) and `resetQuestions()` point directly at the module-level `defaultQuestions` array and its object literals, rather than cloning — the exact pattern the 08-14 review found and fixed in `gameStateStore.ts`'s `Array(n).fill([])` (now `Array.from(...)`). No live mutation path exists today (`setQuestion`/`addQuestion` are immutable via `.map()`/spread), so this is latent, not actively broken.
 
-**Fix:** `structuredClone(defaultQuestions)` or a `getDefaultQuestions()` factory instead of the bare reference.
+**Fixed by:** `structuredClone(defaultQuestions)` at both call sites. Covered by a new regression test in `tests/stores/customQuestionsStore.test.ts` asserting neither the initial state nor a post-`resetQuestions()` state share references with `defaultQuestions`.
 
-### 🟡 Moderate — Two aria-label bugs in navbar buttons
+### ✅ Resolved 2026-08-17 — Two aria-label bugs in navbar buttons
 `src/components/navbar/stats/StatsButton.tsx:12` · `src/components/question/EditingButton.tsx:18, 29`
 
 `StatsButton`'s `aria-label="help"` is hardcoded and duplicates `HelpButton`'s value, misidentifying this Stats-opening button to assistive tech (every sibling button uses a dedicated `*_ARIA` constant). `EditingButton`'s `aria-label={editing ? EDIT_BUTTON_ARIA : RETURN_FROM_EDIT_BUTTON_ARIA}` is inverted relative to its own visible text (`"Stop editing questions"` / `"Edit quesitons"` — also a typo, and hardcoded rather than pulled from `constants/strings.ts` like every other user-facing string in the app).
 
-**Fix:** add a `STATS_BUTTON_ARIA` constant; swap `EditingButton`'s ternary branches and move its visible strings into `constants/strings.ts`, fixing the typo.
+**Fixed by:** adding a `STATS_BUTTON_ARIA` constant and using it in `StatsButton.tsx`; swapping `EditingButton`'s aria-label ternary branches to match its actual behavior; and adding `EDIT_BUTTON_TEXT`/`RETURN_FROM_EDIT_BUTTON_TEXT` constants (fixing the "quesitons" typo) used for both the visible label and the same ternary ordering as the aria-label.
 
-### 🟡 Moderate — `AdvancedStats` renders two lists with no usable `key`
+### ✅ Resolved 2026-08-17 — `AdvancedStats` renders two lists with no usable `key`
 `src/components/navbar/stats/AdvancedStats.tsx:34-38, 39-72`
 
 The first `Grid item` `.map()` (34-38) passes no `key` at all; the second (39-72) wraps 3 `Grid item`s in a shorthand `<>` fragment that can't carry one either. Triggers React's missing-key warning on every render.
 
-**Fix:** `key={s}` on the first map; `<React.Fragment key={c}>` instead of `<>` on the second.
+**Fixed by:** `key={s}` on the first map; `<Fragment key={c}>` (imported from `react`) instead of `<>` on the second.
 
-### 🟡 Moderate — Stray global flag on a validation regex causes intermittent flakiness
+### ✅ Resolved 2026-08-17 — Stray global flag on a validation regex causes intermittent flakiness
 `src/components/question/custom/QuestionInputFormMulti.tsx:97`
 
 The alt-answers `pattern` is `/^[a-zA-Z ]*$/g` — unlike the otherwise-identical `QuestionInputForm.tsx:106` (`/^[a-zA-Z ]*$/`, no `g`). A global regex retains `lastIndex` across `.test()` calls, so repeated validation of the same value can alternately pass and fail.
 
-**Fix:** drop the `g` flag.
+**Fixed by:** dropping the `g` flag.
 
-### 🟡 Moderate — Dead `e.persist()` call masks an unverified original fix
+### ✅ Resolved 2026-08-17 — Dead `e.persist()` call masks an unverified original fix
 `src/components/question/custom/CustomizableText.tsx:41-43`
 
 `<form onChange={(e) => e.persist()}>` calls a no-op — React 17+ removed event pooling (this app is on React 18). The comment above it ("hacky solution that allows last letter changed to be submitted") describes a workaround that no longer does anything, so whatever it was compensating for may be unaddressed.
 
-**Fix:** remove the dead call; re-verify the original "last letter dropped" issue is actually fixed elsewhere before removing, in case it isn't.
+**Fixed by:** removing the dead `onChange` handler entirely (it did nothing besides call the no-op). Re-verified first: since `e.persist()` has been inert since React 17, this handler was already functionally identical to not having one at all, so removing it is a zero-behavior-change cleanup, not a risk to the original "last letter dropped" fix (which, if still needed, was never actually provided by this line to begin with).
 
-### 🟡 Moderate — Misnamed component: file, component name, and behavior are three different things
+### ✅ Resolved 2026-08-17 — Misnamed component: file, component name, and behavior are three different things
 `src/components/landingPage/ShareLandingButton.tsx`
 
 The file is `ShareLandingButton.tsx`, but the component and its props interface are both named `PlayLandingButton`/`PlayLandingButtonProps` — identical to the actual `PlayLandingButton.tsx` — and its real behavior is opening the Stats dialog, not sharing or playing.
 
-**Fix:** rename the component (e.g. `OpenStatsLandingButton`) to match its behavior.
+**Fixed by:** renaming the component/interface to `OpenStatsLandingButton`/`OpenStatsLandingButtonProps` (file left as `ShareLandingButton.tsx`, and its import in `LandingButtons.tsx` unchanged, since default exports don't need the local import name to match).
 
 ---
 
@@ -291,7 +291,7 @@ Not a separate root cause list this pass either — same as the 08-14 doc's conc
 Zero test files exist for:
 
 - [ ] `src/stores/currGuessStore.ts`
-- [ ] `src/stores/customQuestionsStore.ts` — would have caught the `removeQuestion` inversion immediately
+- [x] `src/stores/customQuestionsStore.ts` — `tests/stores/customQuestionsStore.test.ts`, added alongside the `removeQuestion` inversion fix; now also covers the `structuredClone` shared-reference fix
 - [ ] `src/stores/dialogStore.ts`
 - [ ] `src/stores/editingStore.ts`
 - [ ] `src/stores/highContrastStore.ts`
@@ -303,8 +303,8 @@ Zero test files exist for:
 
 Partial coverage, worth extending:
 
-- [ ] `tests/components/progressBar/ProgressBar.test.tsx` exists but never exercises a finished/lost question or `guessNumber[i] === MAX_CHALLENGES` — add a case for this to pin down the fix once it lands.
-- [ ] `tests/stores/statsStore.test.ts` exists but doesn't cover `finalizeCategoryAttempt`'s `changedToday` computation.
+- [x] `tests/components/progressBar/ProgressBar.test.tsx` — added a case exercising a finished/lost question (`guessNumber[i] === MAX_CHALLENGES`), pinning down the `ProgressBar` click-handler fix.
+- [x] `tests/stores/statsStore.test.ts` — now covers `finalizeCategoryAttempt`'s `changedToday` computation, including a case that would have caught the cumulative-vs-today-only bug (a prior-day guess at a different index no longer leaks into `changedToday`).
 - [ ] `src/components/keyboard/Key.tsx` is only exercised indirectly via `Keyboard.test.tsx`, not in isolation.
 
 ---

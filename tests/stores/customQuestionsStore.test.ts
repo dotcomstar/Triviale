@@ -39,4 +39,17 @@ describe("customQuestionsStore", () => {
     expect(customQuestions[1]).toEqual(sampleQuestion);
     expect(customQuestions[0]).toEqual(defaultQuestions[0]);
   });
+
+  it("initial customQuestions and resetQuestions don't share references with defaultQuestions", () => {
+    const { customQuestions } = useCustomQuestionsStore.getState();
+    expect(customQuestions).not.toBe(defaultQuestions);
+    expect(customQuestions[0]).not.toBe(defaultQuestions[0]);
+
+    useCustomQuestionsStore.getState().setQuestion(sampleQuestion, 0);
+    useCustomQuestionsStore.getState().resetQuestions();
+    const { customQuestions: afterReset } = useCustomQuestionsStore.getState();
+    expect(afterReset).not.toBe(defaultQuestions);
+    expect(afterReset[0]).not.toBe(defaultQuestions[0]);
+    expect(afterReset).toEqual(defaultQuestions);
+  });
 });

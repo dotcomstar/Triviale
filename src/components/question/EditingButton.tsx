@@ -3,7 +3,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import useEditingStore from "../../stores/editingStore";
 import {
   EDIT_BUTTON_ARIA,
+  EDIT_BUTTON_TEXT,
   RETURN_FROM_EDIT_BUTTON_ARIA,
+  RETURN_FROM_EDIT_BUTTON_TEXT,
 } from "../../constants/strings";
 import PublishIcon from "@mui/icons-material/Publish";
 
@@ -15,7 +17,7 @@ const EditingButton = ({ size = "large" }: { size?: "small" | "large" }) => {
       <IconButton
         edge="end"
         color="inherit"
-        aria-label={editing ? EDIT_BUTTON_ARIA : RETURN_FROM_EDIT_BUTTON_ARIA}
+        aria-label={editing ? RETURN_FROM_EDIT_BUTTON_ARIA : EDIT_BUTTON_ARIA}
         onClick={() => setEditing(!editing)}
         sx={{ width: "max-content" }}
       >
@@ -26,7 +28,7 @@ const EditingButton = ({ size = "large" }: { size?: "small" | "large" }) => {
         )}
       </IconButton>
       <Typography>
-        {editing ? "Stop editing questions" : "Edit quesitons"}
+        {editing ? RETURN_FROM_EDIT_BUTTON_TEXT : EDIT_BUTTON_TEXT}
       </Typography>
     </Stack>
   );

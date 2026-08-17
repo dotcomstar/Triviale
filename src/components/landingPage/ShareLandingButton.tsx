@@ -1,15 +1,15 @@
 import { OPEN_STATS_TEXT } from "../../constants/strings";
 import LandingButton from "./LandingButton";
 
-interface PlayLandingButtonProps {
+interface OpenStatsLandingButtonProps {
   onClose: () => void;
   setStatsOpen: (flag: boolean) => void;
 }
 
-const PlayLandingButton = ({
+const OpenStatsLandingButton = ({
   onClose,
   setStatsOpen,
-}: PlayLandingButtonProps) => {
+}: OpenStatsLandingButtonProps) => {
   return (
     <LandingButton
       color={"secondary"}
@@ -23,4 +23,4 @@ const PlayLandingButton = ({
   );
 };
 
-export default PlayLandingButton;
+export default OpenStatsLandingButton;

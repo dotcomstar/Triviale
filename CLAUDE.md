@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Setup is just `npm install && npm run dev` (→ `http://localhost:5173/`) — no env vars needed. Auth0 domain/clientId (`src/pages/Layout.tsx`) and the MongoDB Data API base URL (`src/services/api-client.ts`) are hardcoded directly in source, not env-driven.
+Setup is just `npm install && npm run dev` (→ `http://localhost:5173/`) — no env vars needed. Auth0 domain/clientId (`src/pages/Layout.tsx`) and the MongoDB Data API base URL (`src/services/api-client.ts`) fall back to hardcoded production values when `VITE_AUTH0_DOMAIN`/`VITE_AUTH0_CLIENT_ID`/`VITE_API_BASE_URL` aren't set (see `.env.example`).
 
 ## Commands
 

@@ -7,6 +7,7 @@ import useGameStateStore from "../../stores/gameStateStore";
 import GameRow from "./GameRow";
 import useRetrievedStore from "../../stores/retrievedStore";
 import useHardModeStore from "../../stores/hardModeStore";
+import { getAcceptableAnswers } from "../../utils/acceptableAnswers";
 
 const GameGrid = () => {
   const dailyIndex = useDailyIndex();
@@ -80,19 +81,7 @@ const GameGrid = () => {
   };
 
   const getBorderColorOverrides = (guess: string[]) => {
-    // Calculate all permutations with addOns and answers.
-    // TODO: Calculate all permutations with addOns and altAnswers as well
-    const permutationsWithAddons =
-      [[], ...(question?.addOns || []), []].flatMap(
-        (d) => question?.addOns?.map((v) => d + answer + v) || []
-      ) || [];
-
-    // An array of all accepted answers in  uppercase with no spaces
-    const allAcceptableAnswers = [
-      question?.answer,
-      ...(question?.altAnswer || []),
-      ...(permutationsWithAddons || []),
-    ].map((v) => v?.toLocaleUpperCase().replace(/\s+/g, ""));
+    const allAcceptableAnswers = getAcceptableAnswers(question, answer);
 
     if (allAcceptableAnswers.includes(guess.join(""))) {
       return theme.palette.success.main;
