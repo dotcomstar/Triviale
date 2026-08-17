@@ -3,72 +3,43 @@
 
 ![coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dotcomstar/Triviale/badges/coverage.json)
 
-A daily trivia puzzle game. Try to answer the question before it's finished being asked!
+A daily trivia game that pairs Wordle-style guessing with real trivia questions. Type an answer, get letter-by-letter feedback, and each wrong guess reveals a bit more of the question.
 
 ![Triviale image](public/screenshot.png)
 
-Introducing **Triviale** — where curiosity meets competition.
+## How it works
 
-Triviale combines the viral simplicity of Wordle with the intellectual depth of trivia. Each day, players solve a short trivia puzzle by typing in the correct word or phrase, unlocking new hints as they go. It’s quick, clever, and shareable.
-
-🎯 **The Problem:** Most trivia games rely on multiple choice and luck instead of knowledge and deduction. People want something smarter, shorter, and more satisfying.
-
-💡 **The Solution:** Triviale is a daily trivia riddle that makes you think, not guess. Players type answers, see real-time feedback (like Wordle), and unlock clues until they solve it.
-
-🧩 **How It Works:**
-
-1. A new question every day (example: “After this event, critics complained that a two-year timeline has not yet begun because…”)
-2. Type your guess and get letter-by-letter feedback.
-3. Unlock new clues as you play.
-4. Share your spoiler-free results with friends.
-
-🚀 **Why Now:** Wordle showed that millions love simple, daily puzzles. Trivia is a $6B+ market — but no one has merged daily puzzles with real knowledge until now. Triviale = Wordle’s virality × Jeopardy’s depth.
-
-👥 **Audience:** Trivia lovers, crossword fans, lifelong learners, educators, and anyone who loves daily mental challenges.
-
-💰 **Business Model:** Freemium with premium packs, archives, and sponsored trivia categories. Share-to-play incentives drive organic growth.
-
-📈 **Roadmap:**
-
-* Phase 1: MVP launch (daily puzzles + sharing)
-* Phase 2: Categories, leaderboards
-* Phase 3: Mobile app & monetization
-* Phase 4: Multiplayer tournaments + AI-generated trivia
-
-🎯 **Our Vision:** To make learning addictive. To turn “Did you know?” into a daily habit shared by millions.
-
-**Triviale — Where curiosity meets competition.**
-
+1. A new set of questions arrives each day, spanning categories like history, science, and pop culture.
+2. Type a guess; letters are marked correct, present, or absent, the same as Wordle.
+3. A wrong guess reveals more of the question as a hint.
+4. Share a spoiler-free summary of your results once you're done.
 
 ## Features
 
-- Three new questions every day
-- Expand a question to get more info
-- Answer the question in a Wordle-style
-- Hard mode (no information is given about the answer's length)
-- Dark mode
-- High contrast mode
-- User accounts
+- Three new questions every day, drawn from categories like history, science, and pop culture
+- Expandable questions that reveal more context as you play
+- Wordle-style letter-by-letter feedback
+- Hard mode (answer length isn't shown up front)
+- Dark mode and a high-contrast mode
+- User accounts, so progress and stats carry across devices
 
-## Technical Info
-- The website is hosted on [Vercel](https://vercel.com/) and auto-deploys from the Production branch
-   - The main branch is used for development and staging
-- The questions are tested a day beforehand by a [QA engineer](https://github.com/mncasay)
-- The front-end is written in React and TypeScript
-- Questions are stored in a MongoDB database and queried with a REST API
-- User account logins are handled by Auth0
-- I am currently fine-tuning auto-generated questions with Chat-GPT 4
+## Technical info
 
+- Front end: React + TypeScript, MUI for components, Zustand for state, React Query for data fetching
+- Hosted on [Vercel](https://vercel.com/), auto-deployed from the `production` branch; `main` is the working/staging branch
+- User accounts are handled by Auth0
+- Questions currently ship as static local data (`src/data/questions.ts`); a MongoDB-backed API exists in the codebase but isn't wired up yet
+- Questions are drafted with GPT-4 assistance and reviewed by a [QA engineer](https://github.com/mncasay) a day ahead of publishing
 
 ## Setup
 
-Need: `npm`
+Requires `npm`.
 
-Install dependencies:
-`npm install`
+```bash
+npm install
+npm run dev
+```
 
-Run the program locally:
-`npm run dev`
-This will open Triviale on your localhost. eg. `http://localhost:5173/`
+This starts Triviale locally at `http://localhost:5173/`.
 
 No `.env` file is required — the app falls back to the production Auth0 tenant and API endpoint baked into source. To point a local/staging build at a different Auth0 tenant or API endpoint instead, copy `.env.example` to `.env.local` and fill in `VITE_AUTH0_DOMAIN`, `VITE_AUTH0_CLIENT_ID`, and/or `VITE_API_BASE_URL`.
