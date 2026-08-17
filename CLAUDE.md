@@ -20,6 +20,7 @@ Setup is just `npm install && npm run dev` (→ `http://localhost:5173/`) — no
 ## Branches and deploy
 
 - `main` is the working/staging branch. Pushing to the `production` branch (lowercase — easy to mistype as `Production`) is what triggers the live Vercel deploy via Vercel's GitHub integration — the branch names are not what you'd expect from convention. Use the `/deploy` skill for this (it confirms before pushing).
+- `badges` is a CI-managed orphan branch holding only `coverage.json` (read by the README's coverage badge, see `.github/workflows/ci.yml`'s "Update coverage badge" step) — not an app branch. `vercel.json`'s `git.deploymentEnabled.badges: false` stops Vercel from trying to build it.
 - CI (`.github/workflows/ci.yml`) runs lint/test/build on push and PR to `main` and `production`. It does not deploy — deployment is still Vercel's git integration, untouched by Actions.
 
 ## Known gotchas
