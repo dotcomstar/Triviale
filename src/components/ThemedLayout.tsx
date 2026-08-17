@@ -60,7 +60,11 @@ const ThemedLayout = ({ children }: Props) => {
     // Defaults to light mode.
     const existingPreference = localStorage.getItem("theme");
     if (existingPreference) {
-      existingPreference === "light" ? setMode("light") : setMode("dark");
+      if (existingPreference === "light") {
+        setMode("light");
+      } else {
+        setMode("dark");
+      }
     } else {
       if (
         window.matchMedia &&

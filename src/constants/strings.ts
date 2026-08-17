@@ -13,7 +13,7 @@ export const EDITED_BY = "Edited by Jet Lee";
 // New features
 export const NEW_FEATURES_LABEL = "New feature(s):";
 export const NEW_FEATURES_LIST = [
-  `I am beta-testing one question per day. Please send feedback to ${CONTACT_EMAIL}`,
+  `Now with three questions per day! Please send feedback to ${CONTACT_EMAIL}`,
 ];
 
 // Landing page

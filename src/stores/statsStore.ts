@@ -22,7 +22,19 @@ export interface StatsStoreImport extends BaseStatsStoreImport {
 export interface StatsStore extends StatsStoreImport {
   importStats: (pastStore: StatsStoreImport) => void;
   logGame: (game: StatsStoreImport) => void;
+  recordCategoryGuess: (
+    category: string,
+    guessIndex: number,
+    guessIncrease: number
+  ) => void;
+  finalizeCategoryAttempt: (category: string) => void;
 }
+
+const emptyCategoryStat = (): BaseStatsStoreImport => ({
+  numQuestionsAttempted: 0,
+  questionsGuessedIn: Array(MAX_CHALLENGES).fill(0),
+  changedToday: Array(MAX_CHALLENGES).fill(false),
+});
 
 const useStatsStore = create<StatsStore>((set) => ({
   numQuestionsAttempted: 0,
@@ -59,6 +71,35 @@ const useStatsStore = create<StatsStore>((set) => ({
       changedToday: state.changedToday.map((v, i) => v || game.changedToday[i]),
     }));
   },
+  recordCategoryGuess: (category, guessIndex, guessIncrease) =>
+    set((state) => {
+      const existing = state.advancedStats?.[category] ?? emptyCategoryStat();
+      return {
+        advancedStats: {
+          ...state.advancedStats,
+          [category]: {
+            ...existing,
+            questionsGuessedIn: existing.questionsGuessedIn.map((val, i) =>
+              i === guessIndex ? val + guessIncrease : val
+            ),
+          },
+        },
+      };
+    }),
+  finalizeCategoryAttempt: (category) =>
+    set((state) => {
+      const existing = state.advancedStats?.[category] ?? emptyCategoryStat();
+      return {
+        advancedStats: {
+          ...state.advancedStats,
+          [category]: {
+            ...existing,
+            numQuestionsAttempted: existing.numQuestionsAttempted + 1,
+            changedToday: existing.questionsGuessedIn.map((v) => v > 0),
+          },
+        },
+      };
+    }),
 }));
 
 if (process.env.NODE_ENV === "development")

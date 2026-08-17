@@ -14,7 +14,7 @@ import {
   STATS_DIALOG_ARIA,
 } from "../../../constants/strings";
 import useDailyIndex, { getPositiveIndex } from "../../../hooks/useDailyIndex";
-import useQuestionByID from "../../../hooks/useQuestionByID";
+import useQuestions from "../../../hooks/useQuestions";
 import useGameStateStore from "../../../stores/gameStateStore";
 import useHardModeStore from "../../../stores/hardModeStore";
 import CustomDialog from "../CustomDialog";
@@ -46,9 +46,10 @@ const StatsDialog = ({
   const solutionIndex = date;
   const retrieved = useRetrievedStore((s) => s.retrieved);
   const offset = retrieved ? 0 : dailyIndex;
+  const { data: questionsData } = useQuestions();
   const questionDetails = (id: number) => {
     const safeIndex = getPositiveIndex(id + offset);
-    const q = useQuestionByID(safeIndex);
+    const q = questionsData[safeIndex];
     // Calculate all permutations with addOns and answers.
     const answerWithSpaces = q?.answer.toLocaleUpperCase() ?? "";
     const answer = answerWithSpaces.replace(/\s+/g, "")!;

@@ -29,7 +29,9 @@ const useGameStateStore = create<GameStateStore>((set) => ({
   questionState: Array(QUESTIONS_PER_DAY).fill("inProgress"),
   questionNumber: 0,
   guessNumber: Array(QUESTIONS_PER_DAY).fill(0),
-  guesses: Array(QUESTIONS_PER_DAY).fill(Array(MAX_CHALLENGES).fill([])),
+  guesses: Array.from({ length: QUESTIONS_PER_DAY }, () =>
+    Array.from({ length: MAX_CHALLENGES }, () => [] as string[])
+  ),
   winGame: () => {
     console.log("Won the game");
     set(() => ({ gameState: "won" }));
@@ -66,16 +68,16 @@ const useGameStateStore = create<GameStateStore>((set) => ({
     set((state) => ({
       guessNumber: [
         ...state.guessNumber.map((num, i) =>
-          i === state.questionNumber ? num + 1 : num
+          i === state.questionNumber ? num + 1 : num,
         ),
       ],
       guesses: [
         ...state.guesses.map((val, i) =>
           i === state.questionNumber
             ? val.map((g, ig) =>
-                ig === state.guessNumber[state.questionNumber] ? guess : g
+                ig === state.guessNumber[state.questionNumber] ? guess : g,
               )
-            : val
+            : val,
         ),
       ],
     }));
@@ -86,9 +88,9 @@ const useGameStateStore = create<GameStateStore>((set) => ({
         ...state.guesses.map((val, i) =>
           i === state.questionNumber
             ? val.map((g, ig) =>
-                ig === state.guessNumber[state.questionNumber] ? guess : g
+                ig === state.guessNumber[state.questionNumber] ? guess : g,
               )
-            : val
+            : val,
         ),
       ],
     }));

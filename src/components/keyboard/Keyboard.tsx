@@ -25,20 +25,13 @@ const getKeyWidth = (numKeys: number, multiplier: number) => {
   } * 6px)) / 10 * ${multiplier})`;
 };
 
-// TODO: Speed up getting status
-const getStatus = (val: string | undefined) => {
-  const dailyIndex = useDailyIndex();
-  const questionNumber = useGameStateStore((s) => s.questionNumber);
-  const guessNumber = useGameStateStore((s) => s.guessNumber);
-  const retrieved = useRetrievedStore((s) => s.retrieved);
-  const safeIndex = getPositiveIndex(
-    questionNumber + (retrieved ? 0 : dailyIndex)
-  );
-  const answerWithSpaces =
-    useQuestionByID(safeIndex)?.answer.toLocaleUpperCase()!;
-  const answer = answerWithSpaces.replace(/\s+/g, "")!;
-  const guesses = useGameStateStore((s) => s.guesses);
-
+const getStatus = (
+  val: string | undefined,
+  answer: string,
+  guesses: string[][][],
+  questionNumber: number,
+  guessNumber: number[]
+) => {
   // If the letter has been used thus far in a submitted guess
   if (
     val &&
@@ -48,7 +41,7 @@ const getStatus = (val: string | undefined) => {
       false
     )
   ) {
-    if (answer?.includes(val)) {
+    if (answer.includes(val)) {
       if (
         guesses[questionNumber].reduce(
           (accumulator, guess, i) =>
@@ -84,6 +77,17 @@ const Keyboard = ({
     (s) => s.onscreenKeyboardOnly
   );
   const hardMode = useHardModeStore((s) => s.hardMode);
+  const dailyIndex = useDailyIndex();
+  const questionNumber = useGameStateStore((s) => s.questionNumber);
+  const guessNumber = useGameStateStore((s) => s.guessNumber);
+  const guesses = useGameStateStore((s) => s.guesses);
+  const retrieved = useRetrievedStore((s) => s.retrieved);
+  const safeIndex = getPositiveIndex(
+    questionNumber + (retrieved ? 0 : dailyIndex)
+  );
+  const answerWithSpaces =
+    useQuestionByID(safeIndex)?.answer.toLocaleUpperCase() ?? "";
+  const answer = answerWithSpaces.replace(/\s+/g, "");
 
   const onClick = (value: string) => {
     if (value === "ENTER") {
@@ -120,7 +124,7 @@ const Keyboard = ({
     return () => {
       window.removeEventListener("keyup", listener);
     };
-  }, [onEnter, onDelete, onChar]);
+  }, [onEnter, onDelete, onChar, hardMode, onscreenKeyboardOnly]);
 
   return (
     <Stack
@@ -137,7 +141,7 @@ const Keyboard = ({
             key={key}
             onClick={onClick}
             width={topRowKeyWidth}
-            status={getStatus(key)}
+            status={getStatus(key, answer, guesses, questionNumber, guessNumber)}
             isRevealing={isRevealing}
           />
         ))}
@@ -149,7 +153,7 @@ const Keyboard = ({
             key={key}
             onClick={onClick}
             width={defaultKeyWidth}
-            status={getStatus(key)}
+            status={getStatus(key, answer, guesses, questionNumber, guessNumber)}
             isRevealing={isRevealing}
           />
         ))}
@@ -171,7 +175,7 @@ const Keyboard = ({
             key={key}
             onClick={onClick}
             width={defaultKeyWidth}
-            status={getStatus(key)}
+            status={getStatus(key, answer, guesses, questionNumber, guessNumber)}
             isRevealing={isRevealing}
           />
         ))}

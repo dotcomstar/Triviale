@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main, production]
+  pull_request:
+    branches: [main, production]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # jsdom (a test devDependency) requires Node ^22.22.2 || ^24.15.0 || >=26.0.0
+      # (its bundled undici uses an internal webidl API not present on older
+      # Node) - keep this in sync with whatever's actually in package.json.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      # package.json's `allowScripts` field (npm's postinstall-script gating,
+      # needed to let esbuild's postinstall run) requires npm 11+, which the
+      # default Node 24 runner doesn't bundle yet.
+      - name: Use npm 11
+        run: npm install -g npm@11
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build

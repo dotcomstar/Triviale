@@ -21,6 +21,7 @@ import useHardModeStore from "../stores/hardModeStore";
 import useOnscreenKeyboardOnlyStore from "../stores/onscreenKeyboardOnlyStore";
 import useRetrievedStore from "../stores/retrievedStore";
 import useStatsStore from "../stores/statsStore";
+import { safeParse, JSONRecord } from "../utils/safeParse";
 
 const HomePage = () => {
   const { data } = useQuestions();
@@ -50,27 +51,33 @@ const HomePage = () => {
   const safeIndex = getPositiveIndex(
     questionNumber + (retrieved ? 0 : dailyIndex)
   );
-  const question = data[safeIndex].question;
-  const answerWithSpaces = data[safeIndex].answer.toLocaleUpperCase();
-  const fullAnswer = data[safeIndex].fullAnswer;
+  const questionData = data[safeIndex];
+  const question = questionData?.question ?? "";
+  const answerWithSpaces = (questionData?.answer ?? "").toLocaleUpperCase();
+  const fullAnswer = questionData?.fullAnswer;
   const answer = answerWithSpaces.replace(/\s+/g, "");
 
   // Calculate all permutations with addOns and answers.
   // TODO: Calculate all permutations with addOns and altAnswers as well
   const permutationsWithAddons =
-    [[], ...(data[safeIndex].addOns || []), []].flatMap(
-      (d) => data[safeIndex].addOns?.map((v) => d + answer + v) || []
+    [[], ...(questionData?.addOns || []), []].flatMap(
+      (d) => questionData?.addOns?.map((v) => d + answer + v) || []
     ) || [];
 
   // An array of all accepted answers in  uppercase with no spaces
   const allAcceptableAnswers = [
-    data[safeIndex].answer,
-    ...(data[safeIndex].altAnswer || []),
+    questionData?.answer,
+    ...(questionData?.altAnswer || []),
     ...(permutationsWithAddons || []),
-  ].map((v) => v.toLocaleUpperCase().replace(/\s+/g, ""));
+  ].map((v) => v?.toLocaleUpperCase().replace(/\s+/g, ""));
 
   const { setStatsOpen } = useDialogStore();
-  const { importStats, logGame } = useStatsStore();
+  const {
+    importStats,
+    logGame,
+    recordCategoryGuess,
+    finalizeCategoryAttempt,
+  } = useStatsStore();
   const {
     questionsGuessedIn,
     numQuestionsAttempted,
@@ -81,7 +88,7 @@ const HomePage = () => {
 
   const todaysCategories = Array(QUESTIONS_PER_DAY)
     .fill("")
-    .map((_, i) => data[getPositiveIndex(dailyIndex + i)].category);
+    .map((_, i) => data[getPositiveIndex(dailyIndex + i)]?.category ?? "");
 
   // Running on unload or beforeunload is unreliable according to https://developer.chrome.com/articles/page-lifecycle-api/#legacy-lifecycle-apis-to-avoid
   useEffect(() => {
@@ -119,9 +126,7 @@ const HomePage = () => {
   // Get past stats on page load
   useEffect(() => {
     // Check if the user has already made guesses today.
-    const existingStats = localStorage.getItem("gameStats") || "{}";
-    console.log(existingStats);
-    const pastStats = JSON.parse(existingStats);
+    const pastStats = safeParse<JSONRecord>("gameStats", {});
     if (pastStats["numQuestionsAttempted"]) {
       console.log("Importing past stats");
       const pastData = {
@@ -142,9 +147,7 @@ const HomePage = () => {
   // Get a game in progress from today.
   useEffect(() => {
     // Check if the user has already made guesses today.
-    const existingGuesses = localStorage.getItem("prevGame") || "{}";
-    console.log(existingGuesses);
-    const pastGuesses = JSON.parse(existingGuesses);
+    const pastGuesses = safeParse<JSONRecord>("prevGame", {});
     if (pastGuesses["pastOffset"] === dailyIndex) {
       console.log("Importing past guesses");
       const pastGame = {
@@ -286,6 +289,7 @@ const HomePage = () => {
                       ).length - 1
                   );
                   indexOfLastGuess.forEach((guessIndex, questionIndex) => {
+                    if (guessIndex < 0) return; // No guesses were made for this question.
                     const guessIncrease =
                       questionState[questionIndex] === "won" ||
                       (questionIndex === questionNumber &&
@@ -296,31 +300,13 @@ const HomePage = () => {
                         ? 1
                         : 0;
                     todaysQuestionsGuessedIn[guessIndex] += guessIncrease;
-                    const c = todaysCategories[questionIndex];
-                    if (advancedStats) {
-                      advancedStats[c] = {
-                        ...advancedStats[c],
-                        questionsGuessedIn: advancedStats[
-                          c
-                        ].questionsGuessedIn.map((val, i) =>
-                          i === guessIndex ? val + guessIncrease : val
-                        ),
-                      };
-                    }
-                  });
-                  if (advancedStats) {
-                    todaysCategories.forEach(
-                      (c) =>
-                        (advancedStats[c] = {
-                          ...advancedStats[c],
-                          numQuestionsAttempted:
-                            advancedStats[c].numQuestionsAttempted + 1,
-                          changedToday: advancedStats[c].questionsGuessedIn.map(
-                            (v) => v > 0
-                          ),
-                        })
+                    recordCategoryGuess(
+                      todaysCategories[questionIndex],
+                      guessIndex,
+                      guessIncrease
                     );
-                  }
+                  });
+                  todaysCategories.forEach((c) => finalizeCategoryAttempt(c));
                   logGame({
                     numQuestionsAttempted: QUESTIONS_PER_DAY,
                     questionsGuessedIn: todaysQuestionsGuessedIn,

@@ -1,16 +1,15 @@
 import { create } from "zustand";
 import { mountStoreDevtool } from "simple-zustand-devtools";
-import useDailyIndex from "../hooks/useDailyIndex";
+import { getDailyIndex } from "../hooks/useDailyIndex";
+import { safeParse, JSONRecord } from "../utils/safeParse";
 
 interface OnscreenKeyboardOnlyStore {
   onscreenKeyboardOnly: boolean;
   toggleOnscreenKeyboardOnly: () => void;
 }
 
-// eslint-disable-next-line react-hooks/rules-of-hooks
-const dailyIndex = useDailyIndex();
-const existingGuesses = localStorage.getItem("prevGame") || "{}";
-const pastGuesses = JSON.parse(existingGuesses);
+const dailyIndex = getDailyIndex();
+const pastGuesses = safeParse<JSONRecord>("prevGame", {});
 const fromToday = pastGuesses["pastOffset"] === dailyIndex;
 
 const useOnscreenKeyboardOnlyStore = create<OnscreenKeyboardOnlyStore>(

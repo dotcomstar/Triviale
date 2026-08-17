@@ -1,4 +1,4 @@
-import { LeaderboardOutlined } from "@mui/icons-material";
+import LeaderboardOutlined from "@mui/icons-material/LeaderboardOutlined";
 import { IconButton } from "@mui/material";
 import useDialogStore from "../../../stores/dialogStore";
 
