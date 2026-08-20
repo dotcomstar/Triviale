@@ -71,6 +71,13 @@ onClick={() => {
 
 **Fixed by:** `importGuess(guesses[i][guessNumber[i]] ?? [])` in `ProgressBar.tsx:41`.
 
+### ✅ Resolved 2026-08-20 — Same file's render body had the same unguarded-shape gap, one layer deeper than the click-handler fix above
+`src/components/progressBar/ProgressBar.tsx:47` (pre-fix)
+
+Surfaced while writing `tests/pages/HomePage.persistence.test.tsx` (see the [test coverage plan](./test-coverage-plan-2026-08-20.md)): the click-handler fix above only guards `guesses[i][guessNumber[i]]` being out of range *within* a well-formed `guesses[i]` array. It doesn't guard `guesses[i]` itself being `undefined` — which happens if `prevGame.guesses` from `localStorage` is shorter than `QUESTIONS_PER_DAY` (same shape-mismatch class as the already-fixed `HomePage.tsx:161-167` finding two sections up, just never chased into this file). `guesses[i].reduce(...)` in the render body (the "has this question been started yet" warning-color check) then throws unconditionally for every render of that question's button — and unlike the click-handler version, **this is a render-phase error**, so the router's `errorElement` actually does catch it: a malformed `prevGame` blob doesn't just glitch one click, it takes the whole page to the error screen on load. `importGame` (`gameStateStore.ts`) writes whatever shape `safeParse` hands it straight into state with no validation, so nothing upstream currently prevents this.
+
+**Fixed by:** `(guesses[i] ?? []).reduce(...)` in the render body, plus hardening the click handler from `guesses[i][guessNumber[i]] ?? []` to `guesses[i]?.[guessNumber[i]] ?? []` so it no longer shares the same gap. Covered by a new case in `tests/components/progressBar/ProgressBar.test.tsx` seeding `guesses: [["a"]]` (shorter than `QUESTIONS_PER_DAY`) and asserting neither render nor a click on the missing question's tab throws — verified live by reverting the render-body guard and confirming the test fails with the exact predicted `TypeError` before restoring the fix.
+
 ### ✅ Resolved 2026-08-17 — `GameGrid`'s skip-check tests the wrong constant, so it never fires
 `src/components/grid/GameGrid.tsx:31`
 
@@ -290,22 +297,22 @@ Not a separate root cause list this pass either — same as the 08-14 doc's conc
 
 Zero test files exist for:
 
-- [ ] `src/stores/currGuessStore.ts`
+- [x] `src/stores/currGuessStore.ts` — `tests/stores/currGuessStore.test.ts`, added 2026-08-20 (see [test-coverage-plan-2026-08-20.md](./test-coverage-plan-2026-08-20.md)). Pins the `deleteChar`-on-empty-guess `Math.max(0, -1)` clamp and `importGuess([])`'s `{[], 0}` result — the exact input `ProgressBar.tsx`'s `?? []` guard feeds it.
 - [x] `src/stores/customQuestionsStore.ts` — `tests/stores/customQuestionsStore.test.ts`, added alongside the `removeQuestion` inversion fix; now also covers the `structuredClone` shared-reference fix
-- [ ] `src/stores/dialogStore.ts`
-- [ ] `src/stores/editingStore.ts`
-- [ ] `src/stores/highContrastStore.ts`
-- [ ] `src/stores/retrievedStore.ts`
+- [x] `src/stores/dialogStore.ts` — `tests/stores/dialogStore.test.ts`, added 2026-08-20. Pins the `isLandingOpen: true` initial-state default (load-bearing for `routing.test.tsx`), per-flag isolation, and `closeAllDialogs`.
+- [x] `src/stores/editingStore.ts` — `tests/stores/editingStore.test.ts`, added 2026-08-20.
+- [x] `src/stores/highContrastStore.ts` — `tests/stores/highContrastStore.test.ts`, added 2026-08-20. Covers the module-load `localStorage` init (via the `vi.resetModules()` pattern from `hardModeStore.test.ts`) and persistence on toggle.
+- [x] `src/stores/retrievedStore.ts` — `tests/stores/retrievedStore.test.ts`, added 2026-08-20.
 - [x] `src/components/grid/GameGrid.tsx` — `tests/components/grid/GameGrid.test.tsx`, added 2026-08-19. Chose render-based testing over the extract-to-pure-function refactor both this doc and the 08-14 doc deferred — kept in scope as "add tests," no production-code change, consistent with how `Keyboard.test.tsx` already covers the identical class of logic. Covers the `SKIP_LETTER` short-circuit and the correct/warning/error classification, plus a hard-mode addOn-acceptance case (needs a mocked question, since no real data has `addOns` — done by replacing `questions[1]` via `vi.mock` on `src/data/questions`, not the `useQuestionByID` hook, so every other test in the file keeps using real `questions[0]` data unaffected). Both regression cases were verified live: temporarily reintroducing each historical bug (wrong constant; missing parens) makes the corresponding new test fail, confirming they actually pin the defects rather than passing vacuously.
 - [x] `src/components/grid/GameRow.tsx` — `tests/components/grid/GameRow.test.tsx`, added 2026-08-19 alongside the above. The border-color precedence regression is actually asserted from the `GameGrid` test (comparing a cell's and its divider's computed `border-color`, since `.className` checks don't apply here — `Cell.tsx` sets color via raw `sx`, not MUI's `color` prop, unlike `Key.tsx`). `GameRow.test.tsx` itself covers the `answerOverride` prop (bypasses question lookup — used by the help dialog) and the previously-undocumented, previously-untested `offsetFromPrevSkipped`/`shouldSkip` space-boundary gap logic.
 - [x] `src/components/grid/Cell.tsx` — `tests/components/grid/Cell.test.tsx`, added 2026-08-19. Covers the aria-label construction (status text, skipped-letter label, ordinal suffixes including the `11th`/`12th`/`13th` guard clauses) and the `borderColorOverride` vs. plain-status border rendering.
-- [ ] `src/components/ThemedLayout.tsx`
+- [x] `src/components/ThemedLayout.tsx` — `tests/components/ThemedLayout.test.tsx`, added 2026-08-20. Covers the `localStorage` → `prefers-color-scheme` → light-default detection chain, `toggleColorMode` persistence, and the `highContrastStore`-driven colorblind palette swap.
 
 Partial coverage, worth extending:
 
-- [x] `tests/components/progressBar/ProgressBar.test.tsx` — added a case exercising a finished/lost question (`guessNumber[i] === MAX_CHALLENGES`), pinning down the `ProgressBar` click-handler fix.
+- [x] `tests/components/progressBar/ProgressBar.test.tsx` — added a case exercising a finished/lost question (`guessNumber[i] === MAX_CHALLENGES`), pinning down the `ProgressBar` click-handler fix. 2026-08-20: also added a case for a shape-mismatched `guesses` array shorter than `QUESTIONS_PER_DAY`, pinning the render-body fix in the finding directly above this section.
 - [x] `tests/stores/statsStore.test.ts` — now covers `finalizeCategoryAttempt`'s `changedToday` computation, including a case that would have caught the cumulative-vs-today-only bug (a prior-day guess at a different index no longer leaks into `changedToday`).
-- [ ] `src/components/keyboard/Key.tsx` is only exercised indirectly via `Keyboard.test.tsx`, not in isolation.
+- [ ] `src/components/keyboard/Key.tsx` is only exercised indirectly via `Keyboard.test.tsx`, not in isolation. Deliberately deprioritized in the 2026-08-20 test coverage plan — its indirect coverage already yields 100% lines, so an isolation suite would mostly re-assert what `Keyboard.test.tsx` proves.
 
 ---
 
