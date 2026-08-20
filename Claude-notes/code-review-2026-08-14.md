@@ -32,19 +32,19 @@ Was: 4 call sites (not 5 as originally counted — `"theme"`/`"hardMode"`/`"onsc
 
 Fixed by adding a shared `safeParse<T>(key, fallback)` helper (`src/utils/safeParse.ts`, new file) that try/catches around `localStorage.getItem` + `JSON.parse` and returns the fallback on any failure (missing key, empty string, or malformed JSON) — used at all 4 sites. Covered by `tests/utils/safeParse.test.ts` plus a malformed-JSON regression case added to each store's test file.
 
-### 🟡 Moderate — Share failures are swallowed with a console.log
-`src/components/navbar/stats/StatsDialog.tsx:150-153`
+### ✅ Resolved 2026-08-20 — Share failures are swallowed with a console.log
+`src/components/navbar/stats/StatsDialog.tsx:150-153` (pre-fix line numbers)
 
-`navigator.share(...).catch(error => console.log("Error sharing", error))` gives the user zero feedback when a share fails (permission denial, no share target, etc.) — the button just appears to do nothing.
+Was: `navigator.share(...).catch(error => console.log("Error sharing", error))` gave the user zero feedback when a share fails (permission denial, no share target, etc.) — the button just appeared to do nothing.
 
-**Fix:** fall back to `handleCopy()` (which already shows a "copied" state) on share rejection, same as the no-native-share branch already does.
+**Fixed by:** falling back to `handleCopy()` on rejection, same as the no-native-share branch already does — with one deliberate carve-out found while implementing: `navigator.share()` also rejects with an `AbortError` when the user simply dismisses the native share sheet themselves, which isn't a failure — falling back to copy on *every* rejection would surprise them with an unwanted "copied" toast after a plain cancel. The catch handler checks `error?.name === "AbortError"` and returns early for that case before falling back to `handleCopy()` for anything else. Checking `.name` directly rather than `error instanceof Error` first: `DOMException` (what `navigator.share()` actually rejects with) isn't reliably an `Error` subclass across environments — `instanceof Error` is `false` for it in jsdom, caught live by a failing test before landing this. Covered by `tests/components/navbar/stats/StatsDialog.test.tsx`'s `handleShare OS branching` describe block, including a case pinning the AbortError carve-out specifically.
 
-### 🟡 Moderate — No timeout, interceptors, or error surfacing on the API client
+### 🟡 Moderate, deliberately deprioritized — No timeout, interceptors, or error surfacing on the API client
 `src/services/api-client.ts:3-5` · `src/hooks/useMongoDBQuestions.tsx`
 
-`axios.create({ baseURL })` has no timeout and no response/error interceptor, and the one hook that uses it discards the query's `error` entirely. Harmless while the MongoDB path is disabled, but worth setting up before it's turned back on so a slow/broken endpoint doesn't hang the question load silently.
+`axios.create({ baseURL })` has no timeout and no response/error interceptor, and the one hook that uses it discards the query's `error` entirely. Still true, still not fixed — this sits on the MongoDB-backed fetch path, which remains disabled/experimental (see `CLAUDE.md`'s Known gotchas and the Documentation finding below). Deliberately left alone during the 2026-08-20 Moderate-findings pass for the same reason the 2026-08-20 test coverage plan skipped testing it: fixing dead code now would cement an API contract the real backend doesn't have yet, and would need re-verifying once that path is actually turned on anyway.
 
-**Fix:** add a request timeout and a response interceptor that normalizes/logs failures; surface `error`/`isError` from the hook instead of dropping it.
+**Fix, when the MongoDB path is revived:** add a request timeout and a response interceptor that normalizes/logs failures; surface `error`/`isError` from the hook instead of dropping it.
 
 ---
 
@@ -114,33 +114,35 @@ Was: `Array(MAX_CHALLENGES).fill([])` filled every challenge slot with *the same
 
 Fixed by building both levels with `Array.from({ length }, () => ...)` so every question gets its own `guesses[i]` array and every challenge slot within it gets its own `[]`, instead of all sharing one instance. Covered by a new regression test in `tests/stores/gameStateStore.test.ts` asserting `guesses[0]`, `guesses[1]`, and `guesses[2]` are distinct references.
 
-### 🟡 Moderate — Side effects run directly in the render body, not in useEffect
+### ⚪ Retracted 2026-08-20 — "Side effects run directly in the render body, not in useEffect" — tried, verified, and reverted
 `src/pages/ErrorPage.tsx:13-14` · `src/components/auth/PrivateRoutes.tsx:7-8`
 
-Both components call `closeAllDialogs()` — a store-mutating action — directly in the function body during render, rather than inside `useEffect`. Render is supposed to be pure; calling a state-mutating action on every render (including re-renders unrelated to navigation) works today but is fragile and is the same category of bug React's strict mode exists to catch.
+Was flagged as: both components call `closeAllDialogs()` — a store-mutating action — directly in the function body during render, rather than inside `useEffect`, which is fragile and the same category of bug React's strict mode exists to catch.
 
-**Fix:** move `closeAllDialogs()` into a `useEffect(() => closeAllDialogs(), [])` in both components.
+**Tried both `useEffect` and `useLayoutEffect`, and verified live that both regress real behavior**, in the same "implement the suggested fix, then verify it before trusting it" spirit as this doc's own Revisions section below. Root cause: `NavBar` (rendered by both `ErrorPage` and `PrivateRoutes`) renders `<LandingDialog open={isLandingOpen} .../>`, and `isLandingOpen` defaults to `true`. Any effect-based close — including `useLayoutEffect`, which is specifically designed to run before the browser paints — still lets `NavBar`'s *first* render see the stale `true` value, since the effect can't run until after that first render/commit completes. Confirmed by bisection against the last-known-good commit (`git stash` the two files, keep everything else, re-run): with the render-body call, the existing full-router `errorPage.test.tsx` tests pass; with either effect variant, they fail — `screen.findByRole("heading", { name: "Oops!" })` times out because the whole page ends up wrapped in a stuck `aria-hidden="true"`, MUI's modal manager having marked siblings hidden for a dialog that (briefly) rendered open before the effect closed it again.
 
-### 🟡 Moderate — Dead/disabled data-fetching hook, unused query result
+**Kept as the original render-body call**, now with a comment in both files explaining why (pointing back here), so a future pass doesn't rediscover the same regression. Also surfaced and fixed while investigating: the first `describe` block in `tests/integration/errorPage.test.tsx` was missing the `beforeEach` reset for `useDialogStore` that the rest of the suite already uses — real test-isolation gap (state can leak from other test files in the same worker), independent of this finding, fixed alongside it.
+
+### 🟡 Moderate, deliberately deprioritized — Dead/disabled data-fetching hook, unused query result
 `src/hooks/useMongoDBQuestions.tsx` · `src/hooks/useQuestions.ts`
 
-`useMongoDBQuestions` builds a full `useQuery` call and never returns or uses its result — the hook always returns `undefined`. `useQuestions` hardcodes a return of the local `questions` array with ~20 lines of the real MongoDB-backed logic commented out below it, plus a stray `console.log(questionID)` for an effectively-unused parameter.
+`useMongoDBQuestions` builds a full `useQuery` call and never returns or uses its result — the hook always returns `undefined`. `useQuestions` hardcodes a return of the local `questions` array with ~20 lines of the real MongoDB-backed logic commented out below it, plus a stray `console.log(questionID)` for an effectively-unused parameter. Still true, still not fixed, same reasoning as the API-client finding above — this is the dead/experimental MongoDB path, deliberately left alone rather than half-finished.
 
-**Fix:** either finish and wire up the MongoDB path, or delete the dead code and the unused `questionID` parameter until it's ready — the commented block will only drift further from working as the rest of the code around it changes.
+**Fix, when the MongoDB path is revived:** either finish and wire up the MongoDB path, or delete the dead code and the unused `questionID` parameter until it's ready — the commented block will only drift further from working as the rest of the code around it changes.
 
-### 🟡 Moderate — `visibilitychange` listener re-attached on every render
-`src/pages/HomePage.tsx:87-92`
+### ✅ Resolved 2026-08-20 — `visibilitychange` listener re-attached on every render
+`src/pages/HomePage.tsx:87-92` (pre-fix line numbers)
 
-The `useEffect` that wires up the tab-close save listener has no dependency array, so React tears down and re-adds the `window` listener on every single render of `HomePage`, not just when relevant state changes.
+Was: the `useEffect` that wires up the tab-close save listener had no dependency array, so React tore down and re-added the `window` listener on every single render of `HomePage`.
 
-**Fix:** keep the latest save-handler in a `ref` and register the listener once with `[]`, or accept the dependency array and list the actual state it closes over.
+**Fixed by:** the first of the fix's two suggested options — `handleTabClosingRef` keeps the latest `handleTabClosing` closure (assigned during render, a well-established pattern for exactly this "always call the freshest closure" need), and the `useEffect` that adds/removes the actual `window` listener now has an empty `[]` dependency array, registering it once.
 
-### 🟡 Moderate — `useQuestionByID` scans the array instead of indexing it
-`src/hooks/useQuestionByID.ts:5`
+### ✅ Resolved 2026-08-20 — `useQuestionByID` scans the array instead of indexing it
+`src/hooks/useQuestionByID.ts:5` (pre-fix line numbers)
 
-`data.find((_, i) => i === id)` is an O(n) scan to do what `data[id]` does in O(1) — called from inside the 26x-per-render loop in `Keyboard.tsx` above.
+Was: `data.find((_, i) => i === id)` — an O(n) scan to do what `data[id]` does in O(1), called from inside the 26x-per-render loop in `Keyboard.tsx` above.
 
-**Fix:** `return data[id];`
+**Fixed by:** `return data[id];`, exactly as suggested.
 
 ### 🟡 Partially resolved 2026-08-14 — No automated tests
 Was: no test runner in `package.json`, no `*.test.*` files in `src/`
@@ -149,12 +151,12 @@ Vitest + React Testing Library were already wired up (`vitest.config.ts`, `tests
 
 **Still open:** the highest-value target — `GameGrid.tsx`'s `getStatuses`, flagged in this review as pure logic that "currently contain[s] real bugs" — is still untested. It's an unexported closure inside the component, so testing it directly needs the extract-to-pure-function refactor mentioned under Best Practices first; that refactor was explicitly deferred rather than done as part of this pass. `HomePage.tsx`'s `onEnter` answer-matching is also still untested (deep Auth0/MongoDB/router dependencies). See the updated checklist under Suggested test targets below for the full picture.
 
-### 🟡 Moderate — Orphaned file with a third-party script snippet
+### ✅ Resolved 2026-08-20 — Orphaned file with a third-party script snippet
 `src/components/ConsentBanner`
 
-An extensionless file containing a single `<script>` tag (a Termly cookie-consent resource blocker) that isn't imported anywhere in `src` — it's not part of the build and doesn't reach the page.
+Was: an extensionless file containing a single `<script>` tag (a Termly cookie-consent resource blocker) that wasn't imported anywhere in `src` — not part of the build, didn't reach the page.
 
-**Fix:** either move the snippet into `index.html`/`public` where it'll actually load, or delete the file if the consent banner is handled elsewhere.
+**Fixed by:** deleting the file, per the repo owner's explicit call between the two options this finding's original Fix line offered — no live cookie-consent mechanism depends on it, so it was pure dead weight rather than a half-wired feature.
 
 ### ✅ Resolved 2026-08-14 — Two lockfiles for two different package managers, tracked side by side
 `package-lock.json` (new) · `yarn.lock` (removed)
@@ -179,26 +181,26 @@ Was: `QUESTIONS_PER_DAY = 1`, not three. This wasn't just a stale doc — it als
 
 Resolved the way this finding's own **Fix** suggested: `QUESTIONS_PER_DAY` bumped to 3 as a real feature, with both edge cases above fixed first (shared array reference, `indexOfLastGuess < 0`), plus a defensive guard added to `ProgressBar.tsx`'s previously-unguarded `data[...].category` access (same class of issue as the resolved `HomePage.tsx` finding above, now actually exercised since that loop runs 3x instead of 1x). README's line 43 needed no edit — it was already correct, just describing a feature that wasn't shipped yet.
 
-### 🟡 Moderate — No documentation of the persisted-state shape
+### ✅ Resolved 2026-08-20 — No documentation of the persisted-state shape
 localStorage keys `"prevGame"`, `"gameStats"`, `"hardMode"`, `"onscreenKeyboardOnly"`, `"theme"`
 
-The shape of what's saved to `localStorage` is defined only by the object literals passed to `JSON.stringify` in `HomePage.tsx`, and read back by string key (`pastStats["numQuestionsAttempted"]`, etc.) in four different files with no shared type. Nothing documents the schema or which fields are required for a successful import, which makes the unguarded `JSON.parse` issue above easier to introduce and harder to notice.
+Was: the shape of what's saved to `localStorage` was defined only by the object literals passed to `JSON.stringify` in `HomePage.tsx`, and read back by string key (`pastStats["numQuestionsAttempted"]`, etc.) with no shared type, making it easy for a read to silently drift from what was actually written.
 
-**Fix:** define one `PersistedGame`/`PersistedStats` type used by both the writer (`HomePage.tsx`) and readers (the two stores), instead of matching string keys by convention.
+Traced first rather than inventing new types from scratch: `src/stores/gameStateStore.ts` and `src/stores/statsStore.ts` already export `GameStateImport`/`StatsStoreImport`, the exact canonical shapes their own `importGame`/`importStats` actions require — the actual gap was that `HomePage.tsx`'s read/write side never referenced them. **Fixed by:** two new types local to `HomePage.tsx`, `PersistedGame = GameStateImport & { pastOffset: number }` and `PersistedStats = StatsStoreImport & { dailyIndex: number }` (extending the stores' own types with the one extra freshness-check field each envelope carries), used to type both the writer (`handleTabClosing`'s two `JSON.stringify` calls) and the reader (`safeParse<Partial<PersistedGame/Stats>>(...)`). Chosen over a brand-new type file since `HomePage.tsx` is genuinely the only file that touches these two `localStorage` keys directly. A real, if minor, side benefit: typing the read side against `Partial<...>` forced explicit fallbacks (matching each store's own initial-state values) for fields a malformed/hand-edited blob might be missing — previously those were passed straight through untyped, `undefined` and all, into `importGame`/`importStats`.
 
-### 🟡 Moderate — Repeated, unexplained index expression with no shared helper
-`src/components/grid/GameGrid.tsx:16-18` · `src/components/keyboard/Keyboard.tsx:34-36` · `src/pages/HomePage.tsx:50-52`
+### ✅ Resolved 2026-08-20 — Repeated, unexplained index expression with no shared helper
+`src/components/grid/GameGrid.tsx:16-18` · `src/components/keyboard/Keyboard.tsx:34-36` · `src/pages/HomePage.tsx:50-52` (pre-fix line numbers)
 
-`getPositiveIndex(questionNumber + (retrieved ? 0 : dailyIndex))` appears verbatim in three files with no comment anywhere explaining what the `retrieved` branch means or why it changes how the index is computed.
+Was: `getPositiveIndex(questionNumber + (retrieved ? 0 : dailyIndex))` appeared verbatim in three files with no comment anywhere explaining what the `retrieved` branch means or why it changes how the index is computed.
 
-**Fix:** extract this into one shared `useSafeQuestionIndex()` hook with a comment on what "retrieved" represents — fixes the duplication and the missing explanation at once.
+**Fixed by:** a new `src/hooks/useSafeQuestionIndex.ts`, exactly as suggested, with a comment explaining what `retrieved` represents — tracing its only real production call site (currently dead, inside `useQuestions.ts`'s commented-out MongoDB branch) and its devtool label ("Retrieved from DynamoDB Store") to explain the intent: it was meant to mark whether `data` came pre-scoped to today's window from the (disabled) backend fetch, vs. needing the `dailyIndex` offset into the full local array. `dailyIndex`/`questionNumber` themselves stay as separate hook/store reads in all three call sites, since each still needs them individually for other purposes beyond this one expression — only the duplicated expression itself was extracted, not every value that feeds it.
 
-### 🟡 Moderate — Setup instructions omit required environment configuration
+### ✅ Resolved 2026-08-17 (doc caught up 2026-08-20) — Setup instructions omit required environment configuration
 README.md "Setup" section
 
-The README's setup steps are `npm install` → `npm run dev`, but the app depends on Auth0 (domain/client ID) and a MongoDB-backed API endpoint per the "Technical Info" section above it. Nothing in Setup mentions the env vars or config needed to run auth or data-fetching locally.
+Was: the README's setup steps were `npm install` → `npm run dev`, with nothing mentioning env vars or config for auth/data-fetching.
 
-**Fix:** add the required env vars (with a `.env.example`) to Setup, or note explicitly which features work without them.
+Already fixed by the 08-17 pass's "No environment-variable mechanism exists at all" finding (see that doc), which added `.env.example` and a Setup note explaining the fallback-to-production-values behavior — this doc's own copy of the finding just never got marked resolved at the time. Confirmed still accurate 2026-08-20 by re-reading README.md's current Setup section directly rather than trusting the other doc's claim at face value.
 
 ---
 
@@ -243,3 +245,5 @@ This report went through one round of author review. Two findings from the origi
 2. **Retracted — "Hard-mode / onscreen-keyboard 'today' check only evaluates once, at page load."** This is intentional: a session started before midnight should keep its in-progress question and settings rather than switch out from under the player mid-guess. The freeze is achieved consistently app-wide via a module-scope `presentDate` constant in `useDailyIndex.ts` (evaluated once per page load, shared by every consumer). The remaining concern — flagged under Best Practices — is only that the freeze is implemented via a hook-named function called outside React with the relevant lint rule disabled, which is fragile, not that the freeze itself is wrong.
 
 3. **Retracted — "Dead config key: `allowScripts` is not a real npm/Yarn setting."** This one wasn't caught by author pushback — it surfaced while actually doing the npm/yarn cleanup below. Running `npm install` produced `npm warn allow-scripts ... esbuild@0.25.12 (postinstall: node install.js) ... Run npm approve-scripts`. `allowScripts` is a real, currently-active npm 11 feature (npm's native answer to pnpm/yarn-Berry-style install-script gating) and it had correctly been gating `esbuild`'s postinstall script the whole time. The field was restored — scoped to just the still-real `esbuild@0.25.12` entry — via `npm approve-scripts esbuild`, rather than left removed. The lesson: a finding sourced from an automated review pass still needs independent verification before being reported as fact, same as any other finding.
+
+4. **Retracted 2026-08-20 — "Side effects run directly in the render body, not in useEffect" (`ErrorPage.tsx`/`PrivateRoutes.tsx`).** See the finding itself, now marked Retracted in the Best Practices section above, for the full trace. Short version: both `useEffect` and `useLayoutEffect` were actually implemented and tested, not just reasoned about — both let `NavBar`'s default-open `LandingDialog` render open on the very first paint (since neither effect variant can run before that first render commits), which a live test run showed left the whole page stuck behind a MUI-applied `aria-hidden="true"`. Reverted to the original render-body call, now with an explaining comment in both files. Same lesson as retraction #3 above: a structurally-cleaner-looking fix still needs to be actually run, not just reasoned about, before it's trusted.

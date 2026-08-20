@@ -1,22 +1,17 @@
 import { Stack, useTheme } from "@mui/material";
 import { SKIP_LETTER } from "../../constants/strings";
-import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 import useQuestionByID from "../../hooks/useQuestionByID";
+import useSafeQuestionIndex from "../../hooks/useSafeQuestionIndex";
 import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
 import GameRow from "./GameRow";
-import useRetrievedStore from "../../stores/retrievedStore";
 import useHardModeStore from "../../stores/hardModeStore";
 import { getAcceptableAnswers } from "../../utils/acceptableAnswers";
 
 const GameGrid = () => {
-  const dailyIndex = useDailyIndex();
   const guessNumber = useGameStateStore((s) => s.guessNumber);
-  const retrieved = useRetrievedStore((s) => s.retrieved);
   const questionNumber = useGameStateStore((s) => s.questionNumber);
-  const safeIndex = getPositiveIndex(
-    questionNumber + (retrieved ? 0 : dailyIndex)
-  );
+  const safeIndex = useSafeQuestionIndex();
   const question = useQuestionByID(safeIndex);
   const answerWithSpaces = question?.answer.toLocaleUpperCase() ?? "";
   const answer = answerWithSpaces.replace(/\s+/g, "")!;

@@ -1,5 +1,5 @@
 import { Alert, Grid, Paper, useMediaQuery } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import GameGrid from "../components/grid/GameGrid";
 import Keyboard from "../components/keyboard/Keyboard";
 import NavBar from "../components/navbar/NavBar";
@@ -13,16 +13,23 @@ import {
 } from "../constants/settings";
 import useDailyIndex, { getPositiveIndex } from "../hooks/useDailyIndex";
 import useQuestions from "../hooks/useQuestions";
+import useSafeQuestionIndex from "../hooks/useSafeQuestionIndex";
 import useCurrGuessStore from "../stores/currGuessStore";
 import useDialogStore from "../stores/dialogStore";
 import useEditingStore from "../stores/editingStore";
-import useGameStateStore from "../stores/gameStateStore";
+import useGameStateStore, { GameStateImport } from "../stores/gameStateStore";
 import useHardModeStore from "../stores/hardModeStore";
 import useOnscreenKeyboardOnlyStore from "../stores/onscreenKeyboardOnlyStore";
-import useRetrievedStore from "../stores/retrievedStore";
-import useStatsStore from "../stores/statsStore";
-import { safeParse, JSONRecord } from "../utils/safeParse";
+import useStatsStore, { StatsStoreImport } from "../stores/statsStore";
+import { safeParse } from "../utils/safeParse";
 import { getAcceptableAnswers } from "../utils/acceptableAnswers";
+
+// The shape of the two `localStorage` blobs HomePage persists/restores.
+// Built on the stores' own GameStateImport/StatsStoreImport (the canonical
+// shape `importGame`/`importStats` require) plus the one extra field each
+// blob's envelope carries for freshness-checking on restore.
+type PersistedGame = GameStateImport & { pastOffset: number };
+type PersistedStats = StatsStoreImport & { dailyIndex: number };
 
 const HomePage = () => {
   const { data } = useQuestions();
@@ -47,11 +54,8 @@ const HomePage = () => {
 
   const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
   const dailyIndex = useDailyIndex();
-  const retrieved = useRetrievedStore((s) => s.retrieved);
   const editing = useEditingStore((s) => s.editing);
-  const safeIndex = getPositiveIndex(
-    questionNumber + (retrieved ? 0 : dailyIndex)
-  );
+  const safeIndex = useSafeQuestionIndex();
   const questionData = data[safeIndex];
   const question = questionData?.question ?? "";
   const answerWithSpaces = (questionData?.answer ?? "").toLocaleUpperCase();
@@ -79,53 +83,63 @@ const HomePage = () => {
     .fill("")
     .map((_, i) => data[getPositiveIndex(dailyIndex + i)]?.category ?? "");
 
-  // Running on unload or beforeunload is unreliable according to https://developer.chrome.com/articles/page-lifecycle-api/#legacy-lifecycle-apis-to-avoid
-  useEffect(() => {
-    window.addEventListener("visibilitychange", handleTabClosing);
-    return () => {
-      window.removeEventListener("visibilitychange", handleTabClosing);
-    };
-  });
-
   // Save game state to local storage.
   const handleTabClosing = () => {
-    localStorage.setItem(
-      "prevGame",
-      JSON.stringify({
-        pastOffset: dailyIndex,
-        gameState: gameState,
-        questionState: questionState,
-        questionNumber: questionNumber,
-        guessNumber: guessNumber,
-        guesses: guesses,
-      })
-    );
-    localStorage.setItem(
-      "gameStats",
-      JSON.stringify({
-        numQuestionsAttempted: numQuestionsAttempted,
-        questionsGuessedIn: questionsGuessedIn,
-        changedToday: changedToday,
-        dailyIndex: dailyIndex,
-        advancedStats: advancedStats,
-      })
-    );
+    const persistedGame: PersistedGame = {
+      pastOffset: dailyIndex,
+      gameState: gameState,
+      questionState: questionState,
+      questionNumber: questionNumber,
+      guessNumber: guessNumber,
+      guesses: guesses,
+    };
+    localStorage.setItem("prevGame", JSON.stringify(persistedGame));
+
+    const persistedStats: PersistedStats = {
+      numQuestionsAttempted: numQuestionsAttempted,
+      questionsGuessedIn: questionsGuessedIn,
+      changedToday: changedToday,
+      dailyIndex: dailyIndex,
+      advancedStats: advancedStats,
+    };
+    localStorage.setItem("gameStats", JSON.stringify(persistedStats));
   };
+
+  // Keep the latest handler in a ref so the listener below can be
+  // registered once (not re-attached on every render, which closing over
+  // handleTabClosing directly in the effect would require) while still
+  // always saving the current state when visibilitychange fires.
+  // Running on unload or beforeunload is unreliable according to https://developer.chrome.com/articles/page-lifecycle-api/#legacy-lifecycle-apis-to-avoid
+  const handleTabClosingRef = useRef(handleTabClosing);
+  handleTabClosingRef.current = handleTabClosing;
+
+  useEffect(() => {
+    const listener = () => handleTabClosingRef.current();
+    window.addEventListener("visibilitychange", listener);
+    return () => {
+      window.removeEventListener("visibilitychange", listener);
+    };
+  }, []);
 
   // Get past stats on page load
   useEffect(() => {
     // Check if the user has already made guesses today.
-    const pastStats = safeParse<JSONRecord>("gameStats", {});
-    if (pastStats["numQuestionsAttempted"]) {
+    const pastStats = safeParse<Partial<PersistedStats>>("gameStats", {});
+    if (pastStats.numQuestionsAttempted) {
       console.log("Importing past stats");
-      const pastData = {
-        numQuestionsAttempted: pastStats["numQuestionsAttempted"],
-        questionsGuessedIn: pastStats["questionsGuessedIn"],
+      // Partial<PersistedStats> means every field below could be missing
+      // from a hand-edited or stale-shape blob -- fall back to the same
+      // empty values the store itself starts from, rather than passing
+      // undefined into importStats.
+      const pastData: StatsStoreImport = {
+        numQuestionsAttempted: pastStats.numQuestionsAttempted,
+        questionsGuessedIn:
+          pastStats.questionsGuessedIn ?? Array(MAX_CHALLENGES).fill(0),
         changedToday:
-          pastStats["dailyIndex"] === dailyIndex
-            ? pastStats["changedToday"]
+          pastStats.dailyIndex === dailyIndex
+            ? pastStats.changedToday ?? Array(MAX_CHALLENGES).fill(false)
             : Array(MAX_CHALLENGES).fill(false),
-        advancedStats: pastStats["advancedStats"],
+        advancedStats: pastStats.advancedStats,
       };
       importStats(pastData);
     } else {
@@ -136,21 +150,30 @@ const HomePage = () => {
   // Get a game in progress from today.
   useEffect(() => {
     // Check if the user has already made guesses today.
-    const pastGuesses = safeParse<JSONRecord>("prevGame", {});
-    if (pastGuesses["pastOffset"] === dailyIndex) {
+    const pastGuesses = safeParse<Partial<PersistedGame>>("prevGame", {});
+    if (pastGuesses.pastOffset === dailyIndex) {
       console.log("Importing past guesses");
-      const pastGame = {
-        gameState: pastGuesses["gameState"],
-        questionState: pastGuesses["questionState"],
-        questionNumber: pastGuesses["questionNumber"],
-        guessNumber: pastGuesses["guessNumber"],
-        guesses: pastGuesses["guesses"],
+      // Same fallback rationale as pastData above -- match the store's own
+      // initial state for any field a malformed blob is missing.
+      const pastGame: GameStateImport = {
+        gameState: pastGuesses.gameState ?? "inProgress",
+        questionState:
+          pastGuesses.questionState ??
+          Array(QUESTIONS_PER_DAY).fill("inProgress"),
+        questionNumber: pastGuesses.questionNumber ?? 0,
+        guessNumber:
+          pastGuesses.guessNumber ?? Array(QUESTIONS_PER_DAY).fill(0),
+        guesses:
+          pastGuesses.guesses ??
+          Array.from({ length: QUESTIONS_PER_DAY }, () =>
+            Array.from({ length: MAX_CHALLENGES }, () => [] as string[])
+          ),
       };
       importGame(pastGame);
       if (pastGame.gameState === "inProgress") {
         importGuess(
-          pastGame.guesses?.[pastGame.questionNumber]?.[
-            pastGame.guessNumber?.[pastGame.questionNumber]
+          pastGame.guesses[pastGame.questionNumber]?.[
+            pastGame.guessNumber[pastGame.questionNumber]
           ] ?? []
         );
       }

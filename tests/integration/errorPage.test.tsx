@@ -17,6 +17,14 @@ vi.mock("@auth0/auth0-react", () => ({
 }));
 
 describe("error page", () => {
+  // dialogStore is a Zustand singleton shared across test files in this
+  // worker -- reset it for isolation, matching the rest of the suite's
+  // convention (this describe block predates that convention, which is how
+  // it went unnoticed until now).
+  beforeEach(() => {
+    useDialogStore.setState(useDialogStore.getInitialState(), true);
+  });
+
   // Full-router renders (now rendering 3 questions' worth of UI instead of
   // 1) are comfortably under a second alone, but can cross Vitest's default
   // 5s timeout under the parallel worker contention of a full `npm test`
@@ -98,11 +106,11 @@ describe("error page branch coverage", () => {
   });
 
   it("renders an Error instance's message and leaves every dialog closed", async () => {
-    // Seed some dialogs open first -- this is the pin for the still-open
-    // 08-14 finding that closeAllDialogs() runs directly in ErrorPage's
-    // render body rather than a useEffect. Asserting the *resulting store
-    // state* (not how/when it got there) means this test keeps passing
-    // whichever way that finding is eventually resolved.
+    // Seed some dialogs open first. The 08-14 finding that this should move
+    // to useEffect was tried and retracted -- see ErrorPage.tsx's comment
+    // and the 08-14 doc's Revisions section -- so this deliberately stays a
+    // render-body call. Asserting the *resulting store state* (not how it
+    // got there) keeps this test meaningful either way.
     useDialogStore.getState().setStatsOpen(true);
     useDialogStore.getState().setHelpOpen(true);
 

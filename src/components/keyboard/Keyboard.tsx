@@ -4,10 +4,9 @@ import { useEffect } from "react";
 import { ENTER_KEY_ID, ENTER_TEXT } from "../../constants/strings";
 import Key from "./Key";
 import useGameStateStore from "../../stores/gameStateStore";
-import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 import useQuestionByID from "../../hooks/useQuestionByID";
+import useSafeQuestionIndex from "../../hooks/useSafeQuestionIndex";
 import useOnscreenKeyboardOnlyStore from "../../stores/onscreenKeyboardOnlyStore";
-import useRetrievedStore from "../../stores/retrievedStore";
 import useHardModeStore from "../../stores/hardModeStore";
 
 type KeyboardProps = {
@@ -77,14 +76,10 @@ const Keyboard = ({
     (s) => s.onscreenKeyboardOnly
   );
   const hardMode = useHardModeStore((s) => s.hardMode);
-  const dailyIndex = useDailyIndex();
   const questionNumber = useGameStateStore((s) => s.questionNumber);
   const guessNumber = useGameStateStore((s) => s.guessNumber);
   const guesses = useGameStateStore((s) => s.guesses);
-  const retrieved = useRetrievedStore((s) => s.retrieved);
-  const safeIndex = getPositiveIndex(
-    questionNumber + (retrieved ? 0 : dailyIndex)
-  );
+  const safeIndex = useSafeQuestionIndex();
   const answerWithSpaces =
     useQuestionByID(safeIndex)?.answer.toLocaleUpperCase() ?? "";
   const answer = answerWithSpaces.replace(/\s+/g, "");

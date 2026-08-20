@@ -142,6 +142,17 @@ const StatsDialog = ({
         .then(() => console.log("Successful share"))
         .catch((error) => {
           console.log("Error sharing", error);
+          // AbortError means the user dismissed the native share sheet
+          // themselves -- not a failure, so don't surprise them with a
+          // "copied" toast for something they didn't ask to copy. Checking
+          // .name directly rather than `instanceof Error` first: DOMException
+          // (what navigator.share actually rejects with) isn't reliably an
+          // Error subclass across environments -- e.g. `instanceof Error` is
+          // false for it in jsdom.
+          if (error?.name === "AbortError") {
+            return;
+          }
+          handleCopy();
         });
     } else {
       // The browser does not have a native share button.

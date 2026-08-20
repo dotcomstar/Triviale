@@ -9,7 +9,15 @@ import useDialogStore from "../stores/dialogStore";
 import ThemedLayout from "../components/ThemedLayout";
 
 const ErrorPage = () => {
-  // Close dialogs on error page
+  // Deliberately called here in the render body, not useEffect/useLayoutEffect
+  // -- see the 08-14 code review doc's Revisions section for why. Short
+  // version: NavBar renders LandingDialog open={isLandingOpen}, which
+  // defaults true, and ANY effect-based close (including useLayoutEffect)
+  // lets it render open on the first commit before closing a tick later --
+  // verified live to leave a stuck aria-hidden on the whole page in tests,
+  // hiding this page's own content from the accessibility tree. Calling it
+  // here means NavBar's very first render already sees the closed value, no
+  // open-then-close transition ever happens, matching real user expectation.
   const closeAllDialogs = useDialogStore((s) => s.closeAllDialogs);
   closeAllDialogs();
 

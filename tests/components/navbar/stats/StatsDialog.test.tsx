@@ -211,8 +211,26 @@ describe("StatsDialog", () => {
       expect(await screen.findByText(GAME_COPIED_MESSAGE)).toBeInTheDocument();
     });
 
-    it("still-open 08-14 finding: a rejected share is only console.logged, never retried via copy", async () => {
+    it("08-14 finding, fixed: a genuine share failure falls back to copy", async () => {
       const shareFn = vi.fn().mockRejectedValue(new Error("share failed"));
+      setNavigatorShare(shareFn);
+      setUserAgent(MAC_UA);
+      const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+      renderDialog();
+
+      fireEvent.click(screen.getByRole("button", { name: SHARE_TEXT }));
+
+      // Wait for the rejected promise's .catch() to actually run before
+      // asserting -- otherwise this check races ahead of it, and the
+      // pending handleCopy() call lands during whichever test runs next.
+      expect(await screen.findByText(GAME_COPIED_MESSAGE)).toBeInTheDocument();
+      expect(copy).toHaveBeenCalled();
+      expect(logSpy).toHaveBeenCalledWith("Error sharing", expect.any(Error));
+    });
+
+    it("does not fall back to copy when the user just dismisses the native share sheet (AbortError)", async () => {
+      const abortError = new DOMException("cancelled", "AbortError");
+      const shareFn = vi.fn().mockRejectedValue(abortError);
       setNavigatorShare(shareFn);
       setUserAgent(MAC_UA);
       const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
@@ -225,7 +243,7 @@ describe("StatsDialog", () => {
 
       expect(copy).not.toHaveBeenCalled();
       expect(screen.queryByText(GAME_COPIED_MESSAGE)).not.toBeInTheDocument();
-      expect(logSpy).toHaveBeenCalledWith("Error sharing", expect.any(Error));
+      expect(logSpy).toHaveBeenCalledWith("Error sharing", abortError);
     });
   });
 });
