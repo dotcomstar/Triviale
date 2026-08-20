@@ -38,13 +38,13 @@ const ProgressBar = () => {
               variant="contained"
               onClick={() => {
                 moveToQuestion(i);
-                importGuess(guesses[i][guessNumber[i]] ?? []);
+                importGuess(guesses[i]?.[guessNumber[i]] ?? []);
               }}
               disableElevation
               color={
                 questionState[i] === "inProgress"
                   ? // Check if game has been started yet
-                    guesses[i].reduce(
+                    (guesses[i] ?? []).reduce(
                       (acc, guess) => acc + (guess.length > 0 ? 1 : 0),
                       0
                     ) > 0

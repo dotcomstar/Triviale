@@ -1,6 +1,8 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
-import { describe, expect, it, vi } from "vitest";
+import { createMemoryRouter, RouterProvider } from "react-router-dom";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import ErrorPage from "../../src/pages/ErrorPage";
+import useDialogStore from "../../src/stores/dialogStore";
 
 vi.mock("@auth0/auth0-react", () => ({
   Auth0Provider: ({ children }: { children: React.ReactNode }) => children,
@@ -62,4 +64,76 @@ describe("error page", () => {
     },
     15000
   );
+});
+
+// The two tests above only exercise the isRouteErrorResponse branch (an
+// unmatched route). ErrorPage's other three branches -- a real Error
+// instance, a thrown string, and the unknown-value fallback -- need a
+// component that throws a controlled value, since this app's router has no
+// loaders/actions that could throw one for us.
+const Thrower = ({ error }: { error: unknown }) => {
+  throw error;
+};
+
+// Topology mirrors src/routes.tsx: a root route carrying errorElement, with
+// no root `element` (react-router defaults a childless-element route to
+// rendering an Outlet), and the thrower nested as its index child -- the
+// same shape the real app uses for HomePage. This lets ErrorPage's own
+// errorElement catch a render-phase throw from its sibling route, exactly
+// as it does in production, without needing the full src/routes.tsx router.
+const renderErrorFor = (error: unknown) => {
+  const router = createMemoryRouter([
+    {
+      path: "/",
+      errorElement: <ErrorPage />,
+      children: [{ index: true, element: <Thrower error={error} /> }],
+    },
+  ]);
+  return render(<RouterProvider router={router} />);
+};
+
+describe("error page branch coverage", () => {
+  beforeEach(() => {
+    useDialogStore.setState(useDialogStore.getInitialState(), true);
+  });
+
+  it("renders an Error instance's message and leaves every dialog closed", async () => {
+    // Seed some dialogs open first -- this is the pin for the still-open
+    // 08-14 finding that closeAllDialogs() runs directly in ErrorPage's
+    // render body rather than a useEffect. Asserting the *resulting store
+    // state* (not how/when it got there) means this test keeps passing
+    // whichever way that finding is eventually resolved.
+    useDialogStore.getState().setStatsOpen(true);
+    useDialogStore.getState().setHelpOpen(true);
+
+    renderErrorFor(new Error("boom"));
+
+    expect(await screen.findByText("boom")).toBeInTheDocument();
+    expect(useDialogStore.getState()).toMatchObject({
+      isHelpOpen: false,
+      isStatsOpen: false,
+      isSettingsOpen: false,
+      isLandingOpen: false,
+    });
+  });
+
+  it("renders a thrown string directly as the error message", async () => {
+    renderErrorFor("plain string error");
+
+    expect(await screen.findByText("plain string error")).toBeInTheDocument();
+  });
+
+  it("falls back to 'Unknown error' and logs the value for a non-Error, non-string throw", async () => {
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    const weirdError = { code: 42 };
+
+    renderErrorFor(weirdError);
+
+    expect(await screen.findByText("Unknown error")).toBeInTheDocument();
+    expect(consoleErrorSpy).toHaveBeenCalledWith(weirdError);
+
+    consoleErrorSpy.mockRestore();
+  });
 });
