@@ -81,7 +81,7 @@ describe("ProgressBar", () => {
     // importGame a guesses array shorter than QUESTIONS_PER_DAY, leaving
     // guesses[i] undefined for later questions -- both the render body's
     // .reduce() and the click handler's index into it need to tolerate that.
-    useGameStateStore.setState({ guesses: [["a"]] });
+    useGameStateStore.setState({ guesses: [[["a"]]] });
 
     expect(() => render(<ProgressBar />)).not.toThrow();
 
