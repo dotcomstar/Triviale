@@ -17,6 +17,7 @@ const GameGrid = () => {
   const answer = answerWithSpaces.replace(/\s+/g, "")!;
   const currGuess = useCurrGuessStore((s) => s.guess);
   const guesses = useGameStateStore((s) => s.guesses);
+  const questionState = useGameStateStore((s) => s.questionState);
   const hardMode = useHardModeStore((s) => s.hardMode);
   const theme = useTheme();
 
@@ -101,6 +102,9 @@ const GameGrid = () => {
                       hardMode ? getBorderColorOverrides(g) : undefined
                     }
                     isPastGuess={gi < guessNumber[i]}
+                    isWinningRow={
+                      questionState[i] === "won" && gi === guessNumber[i] - 1
+                    }
                   /> // Past guesses
                 )
               )

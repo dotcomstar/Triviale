@@ -6,6 +6,8 @@ import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 import useRetrievedStore from "../../stores/retrievedStore";
 import useHardModeStore from "../../stores/hardModeStore";
 import React from "react";
+import { WAVE_STEP_MS } from "../../constants/settings";
+import { getFlipTotalMs } from "../../utils/animationTiming";
 
 interface GameRowProps {
   guess: string[];
@@ -13,6 +15,7 @@ interface GameRowProps {
   answerOverride?: string; // Used for the help dialog.
   isPastGuess?: boolean;
   borderColorOverride?: string;
+  isWinningRow?: boolean;
 }
 
 const GameRow = ({
@@ -21,6 +24,7 @@ const GameRow = ({
   answerOverride,
   isPastGuess,
   borderColorOverride,
+  isWinningRow,
 }: GameRowProps) => {
   const hardMode = useHardModeStore((s) => s.hardMode);
   const dailyIndex = useDailyIndex();
@@ -57,6 +61,7 @@ const GameRow = ({
       direction="row"
       justifyContent={answerOverride ? "left" : "center"}
       alignItems="center"
+      sx={{ perspective: "300px" }}
     >
       {guess.map((letter, i) => {
         let shouldSkip = false;
@@ -74,6 +79,11 @@ const GameRow = ({
               status={statuses[i]}
               borderColorOverride={borderColorOverride}
               alternateLean={!hardMode && prevLean === shouldSkip}
+              winBounceDelayMs={
+                isWinningRow
+                  ? getFlipTotalMs(guess.length) + WAVE_STEP_MS * i
+                  : undefined
+              }
             />
             {(inProgressHardMode ||
               i < Math.max(guess.length - 1, answer.length - 1)) && ( // Prevents hanging box after the last letter

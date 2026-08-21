@@ -127,4 +127,36 @@ describe("GameGrid", () => {
       getComputedStyle(divider as Element).borderColor
     );
   });
+
+  it("only bounces the guess that actually won the question, not an earlier wrong guess", () => {
+    useRetrievedStore.getState().setRetrieved(true);
+    // A wrong guess first, then the winning exact-match guess.
+    useGameStateStore.getState().makeGuess(Array(12).fill("Z"));
+    useGameStateStore.getState().makeGuess(Array.from("JOHANNESBURG"));
+    useGameStateStore.getState().winQuestion(0);
+
+    render(<GameGrid />);
+
+    const wrongGuessCell = document.querySelector('[aria-label^="1st letter, Z"]');
+    const winningGuessCell = document.querySelector(
+      '[aria-label="1st letter, J, correct"]'
+    );
+    expect(getComputedStyle(wrongGuessCell as Element).animation).toBe("none");
+    expect(
+      getComputedStyle(winningGuessCell as Element).animation
+    ).not.toBe("none");
+  });
+
+  it("does not bounce any row for a question that hasn't been won", () => {
+    useRetrievedStore.getState().setRetrieved(true);
+    useGameStateStore.getState().makeGuess(Array.from("JOHANNESBURG"));
+    // Not calling winQuestion -- an exact-match letter pattern alone
+    // shouldn't be enough to trigger the wave without questionState saying
+    // "won".
+
+    render(<GameGrid />);
+
+    const cell = document.querySelector('[aria-label="1st letter, J, correct"]');
+    expect(getComputedStyle(cell as Element).animation).toBe("none");
+  });
 });

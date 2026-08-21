@@ -3,7 +3,11 @@ import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import HomePage from "../../src/pages/HomePage";
 import ThemedLayout from "../../src/components/ThemedLayout";
-import { MAX_CHALLENGES, QUESTIONS_PER_DAY } from "../../src/constants/settings";
+import {
+  CONFETTI_LEAD_MS,
+  MAX_CHALLENGES,
+  QUESTIONS_PER_DAY,
+} from "../../src/constants/settings";
 import useCurrGuessStore from "../../src/stores/currGuessStore";
 import useDialogStore from "../../src/stores/dialogStore";
 import useEditingStore from "../../src/stores/editingStore";
@@ -11,6 +15,13 @@ import useGameStateStore from "../../src/stores/gameStateStore";
 import useHardModeStore from "../../src/stores/hardModeStore";
 import useRetrievedStore from "../../src/stores/retrievedStore";
 import useStatsStore from "../../src/stores/statsStore";
+import { getFlipTotalMs, getWaveTotalMs } from "../../src/utils/animationTiming";
+
+// The real canvas-confetti call touches a <canvas> 2D context jsdom doesn't
+// implement -- stubbed the same way Keyboard is below, so the game-end
+// timing tests can assert it fired without pulling in real canvas support.
+const confettiMock = vi.hoisted(() => vi.fn());
+vi.mock("canvas-confetti", () => ({ default: confettiMock }));
 
 // Same Auth0 mock block as tests/integration/routing.test.tsx. HomePage
 // itself never calls useAuth0, but the NavBar it renders (and
@@ -155,6 +166,7 @@ describe("HomePage gameplay", () => {
     // would otherwise sit on top of the page on every render.
     useDialogStore.getState().setLandingOpen(false);
     keyboardHolder.current = undefined;
+    confettiMock.mockClear();
   });
 
   describe("winning and losing guesses", () => {
@@ -318,23 +330,49 @@ describe("HomePage gameplay", () => {
     });
 
     it("ends the game as won once every question is won, and records per-question and per-category stats", () => {
-      renderHomePage();
+      // A game-ending win holds the stats dialog behind the winning row's
+      // flip + wave animations and a confetti burst (HomePage.tsx's onEnter
+      // handler) instead of opening it synchronously -- fake timers let this
+      // test advance past that delay deterministically instead of racing it.
+      vi.useFakeTimers();
+      try {
+        renderHomePage();
 
-      typeGuess("CAT");
-      pressEnter(); // question 0 won
-      act(() => {
-        useGameStateStore.getState().moveToQuestion(1);
-      });
-      typeGuess("DOG");
-      pressEnter(); // question 1 won
-      act(() => {
-        useGameStateStore.getState().moveToQuestion(2);
-      });
-      typeGuess("SUN");
-      pressEnter(); // question 2 won -- the final question, triggers game-end
+        typeGuess("CAT");
+        pressEnter(); // question 0 won
+        act(() => {
+          useGameStateStore.getState().moveToQuestion(1);
+        });
+        typeGuess("DOG");
+        pressEnter(); // question 1 won
+        act(() => {
+          useGameStateStore.getState().moveToQuestion(2);
+        });
+        typeGuess("SUN");
+        pressEnter(); // question 2 won -- the final question, triggers game-end
 
-      expect(useGameStateStore.getState().gameState).toBe("won");
-      expect(useDialogStore.getState().isStatsOpen).toBe(true);
+        expect(useGameStateStore.getState().gameState).toBe("won");
+        // Neither confetti nor the stats dialog have fired yet -- both are
+        // still waiting on the scheduled delay.
+        expect(confettiMock).not.toHaveBeenCalled();
+        expect(useDialogStore.getState().isStatsOpen).toBe(false);
+
+        const wordLength = "SUN".length;
+        const confettiDelayMs =
+          getFlipTotalMs(wordLength) + getWaveTotalMs(wordLength);
+        act(() => {
+          vi.advanceTimersByTime(confettiDelayMs);
+        });
+        expect(confettiMock).toHaveBeenCalledTimes(1);
+        expect(useDialogStore.getState().isStatsOpen).toBe(false);
+
+        act(() => {
+          vi.advanceTimersByTime(CONFETTI_LEAD_MS);
+        });
+        expect(useDialogStore.getState().isStatsOpen).toBe(true);
+      } finally {
+        vi.useRealTimers();
+      }
 
       const stats = useStatsStore.getState();
       expect(stats.numQuestionsAttempted).toBe(QUESTIONS_PER_DAY);
