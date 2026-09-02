@@ -58,4 +58,24 @@ describe("GameRow", () => {
     expect(currentGuessEmptyCells).toBe(1);
     expect(pastGuessEmptyCells).toBe(0);
   });
+
+  it("does not replay a wave when a winning row mounts from existing state", () => {
+    render(<GameRow guess={["C", "A", "T"]} isWinningRow answerOverride="CAT" />);
+
+    const cellAnimation = (label: string) =>
+      getComputedStyle(
+        document.querySelector(`[aria-label^="${label}"]`) as Element
+      ).animation;
+
+    expect(cellAnimation("1st letter, C")).toBe("none");
+    expect(cellAnimation("2nd letter, A")).toBe("none");
+    expect(cellAnimation("3rd letter, T")).toBe("none");
+  });
+
+  it("does not bounce a non-winning row's letters", () => {
+    render(<GameRow guess={["C", "A", "T"]} answerOverride="CAT" />);
+
+    const cell = document.querySelector('[aria-label^="1st letter, C"]');
+    expect(getComputedStyle(cell as Element).animation).toBe("none");
+  });
 });

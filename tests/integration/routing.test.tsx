@@ -19,7 +19,11 @@ describe("app routing", () => {
   // Full-router render (now rendering 3 questions' worth of UI instead of
   // 1) is comfortably under a second alone, but can cross Vitest's default
   // 5s timeout under the parallel worker contention of a full `npm test`
-  // run — bump per-test rather than the global default.
+  // run — bump per-test rather than the global default. Bumped a second
+  // time after Cell.tsx gained the typing/flip/bounce animation hooks (two
+  // more useState/useRef/useEffect pairs and a useMediaQuery call per Cell,
+  // multiplied across every rendered row) pushed this past the first bump's
+  // 15s under the same full-suite contention.
   it(
     "loads the web page and routes to the home page at /",
     async () => {
@@ -47,6 +51,6 @@ describe("app routing", () => {
         await screen.findByRole("button", { name: "ENTER key" })
       ).toBeInTheDocument();
     },
-    15000
+    30000
   );
 });

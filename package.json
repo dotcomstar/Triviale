@@ -23,6 +23,7 @@
     "@tanstack/react-query-devtools": "^5.13.5",
     "@vercel/analytics": "^1.1.1",
     "axios": "^1.6.2",
+    "canvas-confetti": "^1.9.4",
     "copy-to-clipboard": "^3.3.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -34,6 +35,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.2",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20.8.6",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",

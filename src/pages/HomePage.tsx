@@ -1,4 +1,5 @@
 import { Alert, Grid, Paper, useMediaQuery } from "@mui/material";
+import confetti from "canvas-confetti";
 import { useEffect, useRef } from "react";
 import GameGrid from "../components/grid/GameGrid";
 import Keyboard from "../components/keyboard/Keyboard";
@@ -7,6 +8,7 @@ import ProgressBar from "../components/progressBar/ProgressBar";
 import ExpandableText from "../components/question/ExpandableText";
 import CustomizableText from "../components/question/custom/CustomizableText";
 import {
+  CONFETTI_LEAD_MS,
   MAX_CHALLENGES,
   MOBILE_SCREEN_CUTOFF,
   QUESTIONS_PER_DAY,
@@ -23,6 +25,7 @@ import useOnscreenKeyboardOnlyStore from "../stores/onscreenKeyboardOnlyStore";
 import useStatsStore, { StatsStoreImport } from "../stores/statsStore";
 import { safeParse } from "../utils/safeParse";
 import { getAcceptableAnswers } from "../utils/acceptableAnswers";
+import { getFlipTotalMs, getWaveTotalMs } from "../utils/animationTiming";
 
 // The shape of the two `localStorage` blobs HomePage persists/restores.
 // Built on the stores' own GameStateImport/StatsStoreImport (the canonical
@@ -53,6 +56,9 @@ const HomePage = () => {
   } = useGameStateStore();
 
   const isNotMobile = useMediaQuery(`(min-width:${MOBILE_SCREEN_CUTOFF})`);
+  const prefersReducedMotion = useMediaQuery(
+    "(prefers-reduced-motion: reduce)"
+  );
   const dailyIndex = useDailyIndex();
   const editing = useEditingStore((s) => s.editing);
   const safeIndex = useSafeQuestionIndex();
@@ -82,6 +88,18 @@ const HomePage = () => {
   const todaysCategories = Array(QUESTIONS_PER_DAY)
     .fill("")
     .map((_, i) => data[getPositiveIndex(dailyIndex + i)]?.category ?? "");
+
+  // Confetti + the delayed stats-dialog open (on a game-ending win) are
+  // scheduled via setTimeout so they land after the winning row's flip and
+  // wave animations finish. Tracked in a ref so a navigation away mid-delay
+  // doesn't fire a state update on an unmounted component.
+  const gameEndTimeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+  useEffect(() => {
+    const timeouts = gameEndTimeoutsRef.current;
+    return () => {
+      timeouts.forEach(clearTimeout);
+    };
+  }, []);
 
   // Save game state to local storage.
   const handleTabClosing = () => {
@@ -336,7 +354,28 @@ const HomePage = () => {
                     questionsGuessedIn: todaysQuestionsGuessedIn,
                     changedToday: todaysQuestionsGuessedIn.map((v) => v > 0),
                   });
-                  setStatsOpen(true);
+                  // On a win, hold the stats dialog back until the winning
+                  // row's flip + wave animations have played, with a
+                  // confetti burst after the wave and before the dialog.
+                  if (hasOneMoreGuess && won && !prefersReducedMotion) {
+                    const waveStartMs = getFlipTotalMs(guess.length);
+                    const confettiMs =
+                      waveStartMs + getWaveTotalMs(guess.length);
+                    gameEndTimeoutsRef.current.push(
+                      setTimeout(() => {
+                        confetti({
+                          particleCount: 150,
+                          spread: 70,
+                          origin: { y: 0.6 },
+                        });
+                      }, confettiMs),
+                      setTimeout(() => {
+                        setStatsOpen(true);
+                      }, confettiMs + CONFETTI_LEAD_MS)
+                    );
+                  } else {
+                    setStatsOpen(true);
+                  }
                   return;
                 }
                 if (
