@@ -128,7 +128,7 @@ describe("GameGrid", () => {
     );
   });
 
-  it("only bounces the guess that actually won the question, not an earlier wrong guess", () => {
+  it("does not replay a winning-row bounce when a completed question is mounted", () => {
     useRetrievedStore.getState().setRetrieved(true);
     // A wrong guess first, then the winning exact-match guess.
     useGameStateStore.getState().makeGuess(Array(12).fill("Z"));
@@ -142,9 +142,7 @@ describe("GameGrid", () => {
       '[aria-label="1st letter, J, correct"]'
     );
     expect(getComputedStyle(wrongGuessCell as Element).animation).toBe("none");
-    expect(
-      getComputedStyle(winningGuessCell as Element).animation
-    ).not.toBe("none");
+    expect(getComputedStyle(winningGuessCell as Element).animation).toBe("none");
   });
 
   it("does not bounce any row for a question that hasn't been won", () => {

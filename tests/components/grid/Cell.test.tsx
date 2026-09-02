@@ -233,16 +233,39 @@ describe("Cell submit flip + color reveal", () => {
 });
 
 describe("Cell win bounce", () => {
-  it("applies the bounce with the given delay when winBounceDelayMs is set", () => {
-    render(<Cell nthLetter={2} value="A" winBounceDelayMs={250} />);
+  it("plays a live winning reveal as a flip followed by a delayed bounce", () => {
+    const { rerender } = render(
+      <Cell nthLetter={2} value="A" winBounceDelayMs={250} />
+    );
     const cell = document.querySelector('[aria-label^="2nd letter, A"]');
-    expect(getComputedStyle(cell as Element).animation).toContain(
+    expect(getComputedStyle(cell as Element).animation).toBe("none");
+
+    rerender(
+      <Cell
+        nthLetter={2}
+        value="A"
+        status={theme.palette.success}
+        winBounceDelayMs={250}
+      />
+    );
+    const animation = getComputedStyle(cell as Element).animation;
+    expect(animation).toContain(
+      `${FLIP_ANIMATION_MS}ms ease-in-out ${REVEAL_TIME_MS}ms`
+    );
+    expect(animation).toContain(
       `${WAVE_BOUNCE_MS}ms ease-out 250ms`
     );
   });
 
-  it("does not bounce when winBounceDelayMs is not set", () => {
-    render(<Cell nthLetter={2} value="A" />);
+  it("does not replay a bounce when a scored winning cell mounts", () => {
+    render(
+      <Cell
+        nthLetter={2}
+        value="A"
+        status={theme.palette.success}
+        winBounceDelayMs={250}
+      />
+    );
     const cell = document.querySelector('[aria-label^="2nd letter, A"]');
     expect(getComputedStyle(cell as Element).animation).toBe("none");
   });

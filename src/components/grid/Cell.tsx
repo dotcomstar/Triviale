@@ -101,23 +101,36 @@ const Cell = ({
   // instead of replaying the flip.
   const prevHadStatusRef = useRef(!!status);
   const [isFlipping, setIsFlipping] = useState(false);
+  const [isWaving, setIsWaving] = useState(false);
   const [displayStatus, setDisplayStatus] = useState(status);
   useEffect(() => {
     const wasUnrevealed = !prevHadStatusRef.current;
     prevHadStatusRef.current = !!status;
+
+    // This setting can change while a flip is waiting to reveal its color.
+    // Honor it immediately instead of requiring the Cell to receive a new
+    // status prop before it can leave the in-progress animation state.
+    if (prefersReducedMotion) {
+      if (status) {
+        setDisplayStatus(status);
+      }
+      setIsFlipping(false);
+      setIsWaving(false);
+      return;
+    }
     if (!status || !wasUnrevealed) {
       return;
     }
-    if (prefersReducedMotion) {
-      setDisplayStatus(status);
-      return;
-    }
     setIsFlipping(true);
+    // A wave is meaningful only for the live transition from an unscored
+    // Cell. Persisted/revisited winning rows mount with a status already set
+    // and therefore remain still.
+    setIsWaving(winBounceDelayMs !== undefined);
     const midpoint =
       REVEAL_TIME_MS * (nthLetter - 1) + FLIP_ANIMATION_MS / 2;
     const reveal = setTimeout(() => setDisplayStatus(status), midpoint);
     return () => clearTimeout(reveal);
-  }, [status, prefersReducedMotion, nthLetter]);
+  }, [status, prefersReducedMotion, nthLetter, winBounceDelayMs]);
 
   const getStatusText = (): string => {
     let statusText = "";
@@ -149,13 +162,17 @@ const Cell = ({
 
   const animation = isPopping
     ? `${popKeyframes} ${PULSE_TYPE_MS}ms ease-out`
-    : winBounceDelayMs !== undefined && !prefersReducedMotion
-    ? `${bounceKeyframes} ${WAVE_BOUNCE_MS}ms ease-out ${winBounceDelayMs}ms`
-    : isFlipping
-    ? `${flipKeyframes} ${FLIP_ANIMATION_MS}ms ease-in-out ${
-        REVEAL_TIME_MS * (nthLetter - 1)
-      }ms`
-    : "none";
+    : [
+        isFlipping &&
+          `${flipKeyframes} ${FLIP_ANIMATION_MS}ms ease-in-out ${
+            REVEAL_TIME_MS * (nthLetter - 1)
+          }ms`,
+        isWaving &&
+          !prefersReducedMotion &&
+          `${bounceKeyframes} ${WAVE_BOUNCE_MS}ms ease-out ${winBounceDelayMs}ms`,
+      ]
+        .filter(Boolean)
+        .join(", ") || "none";
 
   return (
     <Box
