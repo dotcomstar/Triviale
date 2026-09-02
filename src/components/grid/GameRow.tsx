@@ -1,7 +1,7 @@
-import { Box, PaletteColor, Stack, useTheme } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import useQuestionByID from "../../hooks/useQuestionByID";
 import useGameStateStore from "../../stores/gameStateStore";
-import Cell from "./Cell";
+import Cell, { LetterStatus } from "./Cell";
 import useDailyIndex, { getPositiveIndex } from "../../hooks/useDailyIndex";
 import useRetrievedStore from "../../stores/retrievedStore";
 import useHardModeStore from "../../stores/hardModeStore";
@@ -11,7 +11,7 @@ import { getFlipTotalMs } from "../../utils/animationTiming";
 
 interface GameRowProps {
   guess: string[];
-  statuses?: PaletteColor[];
+  statuses?: LetterStatus[];
   answerOverride?: string; // Used for the help dialog.
   isPastGuess?: boolean;
   borderColorOverride?: string;
@@ -52,7 +52,6 @@ const GameRow = ({
         : 1
       : answer.length - guess.length;
   const emptyCells = Array.from(Array(emptyCellsLength));
-  const theme = useTheme();
   let offsetFromPrevSkipped = 1;
   let prevLean = true;
 
@@ -99,14 +98,13 @@ const GameRow = ({
                       : 2,
                   borderColor:
                     borderColorOverride ||
-                    (statuses[i] === theme.palette.success &&
-                    statuses[i + 1] === theme.palette.success
-                      ? statuses[i].main
+                    (statuses[i] === "success" && statuses[i + 1] === "success"
+                      ? "success.main"
                       : !answerOverride &&
-                        (statuses[i] === theme.palette.error ||
-                          statuses[i + 1] === theme.palette.error ||
-                          statuses[i] === theme.palette.warning ||
-                          statuses[i + 1] === theme.palette.warning)
+                        (statuses[i] === "error" ||
+                          statuses[i + 1] === "error" ||
+                          statuses[i] === "warning" ||
+                          statuses[i + 1] === "warning")
                       ? "primary.darker"
                       : "primary.light"),
                 }}

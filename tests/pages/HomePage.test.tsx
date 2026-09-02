@@ -386,6 +386,58 @@ describe("HomePage gameplay", () => {
       );
     });
 
+    it("a repeat Enter press after a game-ending win reopens the stats dialog without re-logging stats", () => {
+      vi.useFakeTimers();
+      try {
+        renderHomePage();
+        typeGuess("CAT");
+        pressEnter();
+        act(() => {
+          useGameStateStore.getState().moveToQuestion(1);
+        });
+        typeGuess("DOG");
+        pressEnter();
+        act(() => {
+          useGameStateStore.getState().moveToQuestion(2);
+        });
+        typeGuess("SUN");
+        pressEnter(); // game-ending win: stats logged, dialog held back
+        expect(useStatsStore.getState().numQuestionsAttempted).toBe(
+          QUESTIONS_PER_DAY
+        );
+        expect(useDialogStore.getState().isStatsOpen).toBe(false);
+
+        // A second tap on ENTER inside the animation delay (a mobile
+        // double-tap, say) used to re-run the whole game-end block, and
+        // logGame is additive -- the day's stats were counted twice. Now it
+        // just brings the dialog forward.
+        pressEnter();
+        expect(useDialogStore.getState().isStatsOpen).toBe(true);
+        const stats = useStatsStore.getState();
+        expect(stats.numQuestionsAttempted).toBe(QUESTIONS_PER_DAY);
+        expect(stats.questionsGuessedIn[0]).toBe(QUESTIONS_PER_DAY);
+        expect(
+          stats.advancedStats?.[MOCK_CATEGORY].numQuestionsAttempted
+        ).toBe(QUESTIONS_PER_DAY);
+
+        // Same after the scheduled delay has fired and the dialog was
+        // dismissed -- Enter reopens it, nothing more.
+        act(() => {
+          vi.advanceTimersByTime(
+            getFlipTotalMs(3) + getWaveTotalMs(3) + CONFETTI_LEAD_MS
+          );
+          useDialogStore.getState().setStatsOpen(false);
+        });
+        pressEnter();
+        expect(useDialogStore.getState().isStatsOpen).toBe(true);
+        expect(useStatsStore.getState().numQuestionsAttempted).toBe(
+          QUESTIONS_PER_DAY
+        );
+      } finally {
+        vi.useRealTimers();
+      }
+    });
+
     it("ends the game as lost once every question is decided, with lost questions contributing zero to stats", () => {
       renderHomePage();
 

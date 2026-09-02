@@ -1,4 +1,4 @@
-import { Stack, Typography, useTheme } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { GAME_TITLE } from "../../constants/strings";
 import Cell from "../grid/Cell";
 
@@ -7,13 +7,12 @@ interface LandingLogoProps {
 }
 
 const LandingLogo = ({ fontColor }: LandingLogoProps) => {
-  const theme = useTheme();
   return (
     <Stack direction="row" justifyContent="center" alignItems="center">
       <Typography translate="no" variant="h3">
         <Cell
           value={GAME_TITLE.toLocaleUpperCase()[0]}
-          status={theme.palette.success}
+          status="success"
           nthLetter={1}
           fontSizeOverride="10vw"
           isH3

@@ -1,4 +1,4 @@
-import { Stack, Typography, useTheme } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import {
   EXAMPLES_TEXT,
   HELP_CORRECT_LETTER_AND_SPOT,
@@ -9,7 +9,6 @@ import GameRow from "../../grid/GameRow";
 
 // TODO: Bold the referenced letters.
 const SampleGame = () => {
-  const theme = useTheme();
   return (
     <Stack direction={"column"} sx={{ m: 3, mt: 0 }}>
       <Typography sx={{ mb: 1 }} fontWeight={"bold"}>
@@ -17,34 +16,19 @@ const SampleGame = () => {
       </Typography>
       <GameRow
         guess={["B", "U", "R", "R"]}
-        statuses={[
-          theme.palette.success,
-          theme.palette.primary,
-          theme.palette.primary,
-          theme.palette.primary,
-        ]}
+        statuses={["success", "primary", "primary", "primary"]}
         answerOverride="BRAD"
       />
       <Typography sx={{ mb: 2 }}>{HELP_CORRECT_LETTER_AND_SPOT}</Typography>
       <GameRow
         guess={["C", "R", "A", "B"]}
-        statuses={[
-          theme.palette.primary,
-          theme.palette.warning,
-          theme.palette.primary,
-          theme.palette.primary,
-        ]}
+        statuses={["primary", "warning", "primary", "primary"]}
         answerOverride="BRAD"
       />
       <Typography sx={{ mb: 2 }}>{HELP_CORRECT_LETTER_WRONG_SPOT}</Typography>
       <GameRow
         guess={["E", "N", "T", "S"]}
-        statuses={[
-          theme.palette.primary,
-          theme.palette.primary,
-          theme.palette.error,
-          theme.palette.primary,
-        ]}
+        statuses={["primary", "primary", "error", "primary"]}
         answerOverride="BRAD"
       />
       <Typography sx={{ mb: 2 }}>{HELP_WRONG_LETTER}</Typography>

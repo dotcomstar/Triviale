@@ -1,7 +1,6 @@
 import { keyframes } from "@emotion/react";
 import {
   Box,
-  PaletteColor,
   Typography,
   Zoom,
   useMediaQuery,
@@ -41,10 +40,20 @@ const bounceKeyframes = keyframes`
   100% { transform: translateY(0); }
 `;
 
+// The scoring outcome of a letter, named by the theme palette entry that
+// colors it. Deliberately a key rather than the PaletteColor object itself:
+// ThemedLayout rebuilds the theme in place on a dark-mode or colorblind
+// toggle, so every palette object is replaced without any Cell remounting.
+// Resolving the key against the current theme at render time keeps an
+// already-scored tile in the right color; caching the object would freeze
+// it in the previous mode's color. "primary" is the neutral tile the help
+// dialog's sample rows use for letters that aren't being explained.
+export type LetterStatus = "success" | "warning" | "error" | "primary";
+
 interface CellProps {
   nthLetter: number;
   value?: string;
-  status?: PaletteColor;
+  status?: LetterStatus;
   fontSizeOverride?: string;
   isH3?: boolean;
   fontColor?: string;
@@ -119,6 +128,11 @@ const Cell = ({
       return;
     }
     if (!status || !wasUnrevealed) {
+      // Already revealed (or cleared): mirror the prop directly. This also
+      // covers a dependency change while a reveal timer is still pending --
+      // the cleanup below has just cancelled that timer, so without this the
+      // tile would never receive its color.
+      setDisplayStatus(status);
       return;
     }
     setIsFlipping(true);
@@ -138,11 +152,11 @@ const Cell = ({
       return "";
     }
     statusText += ", ";
-    if (status === theme.palette.success) {
+    if (status === "success") {
       statusText += CORRECT_TEXT;
-    } else if (status === theme.palette.warning) {
+    } else if (status === "warning") {
       statusText += PRESENT_TEXT;
-    } else if (status === theme.palette.error) {
+    } else if (status === "error") {
       statusText += ABSENT_TEXT;
     }
     return statusText;
@@ -159,6 +173,11 @@ const Cell = ({
   } letter, ${
     value ? (value === SKIP_LETTER ? SKIPPED_TEXT : value) : "empty"
   }${getStatusText()}`;
+
+  // Resolved on every render, not cached, so the tile follows theme changes.
+  const displayColor = displayStatus
+    ? theme.palette[displayStatus]
+    : undefined;
 
   const animation = isPopping
     ? `${popKeyframes} ${PULSE_TYPE_MS}ms ease-out`
@@ -190,7 +209,7 @@ const Cell = ({
         borderRadius: 10,
         height: isNotMobile ? "52px" : "48px",
         width: "52px",
-        backgroundColor: displayStatus?.main || "info.dark",
+        backgroundColor: displayColor?.main || "info.dark",
         overflow: "clip",
         borderTopLeftRadius: "100px",
         borderTopRightRadius: alternateLean ? undefined : "100px",
@@ -202,7 +221,7 @@ const Cell = ({
       <Zoom in={!!value} easing={"cubic-bezier(.05, 2, 1, 1)"}>
         <Typography
           fontSize={fontSizeOverride ? fontSizeOverride : "1.5em"}
-          color={fontColor ? fontColor : displayStatus?.contrastText}
+          color={fontColor ? fontColor : displayColor?.contrastText}
           fontWeight={"bold"}
           variant={isH3 ? "h3" : "body1"}
         >

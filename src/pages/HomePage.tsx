@@ -298,6 +298,18 @@ const HomePage = () => {
                   !questionState.includes("inProgress") ||
                   (hasOneMoreGuess && finalGuess)
                 ) {
+                  // Enter once the game is already over -- a repeat tap during
+                  // the game-end animation delay below, after dismissing the
+                  // stats dialog, or on a reloaded finished game -- only
+                  // reopens the dialog. `gameState` here is this render's
+                  // value, still "inProgress" on the finishing submission
+                  // itself, so that first pass is the only one that ends the
+                  // game and logs its stats. logGame is additive: before this
+                  // guard every repeat press counted the day again.
+                  if (gameState !== "inProgress") {
+                    setStatsOpen(true);
+                    return;
+                  }
                   if (
                     questionState.reduce(
                       (acc, state) => acc && state === "won",
