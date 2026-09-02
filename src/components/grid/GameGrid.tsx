@@ -4,6 +4,7 @@ import useQuestionByID from "../../hooks/useQuestionByID";
 import useSafeQuestionIndex from "../../hooks/useSafeQuestionIndex";
 import useCurrGuessStore from "../../stores/currGuessStore";
 import useGameStateStore from "../../stores/gameStateStore";
+import { LetterStatus } from "./Cell";
 import GameRow from "./GameRow";
 import useHardModeStore from "../../stores/hardModeStore";
 import { getAcceptableAnswers } from "../../utils/acceptableAnswers";
@@ -24,7 +25,7 @@ const GameGrid = () => {
   // TODO: Memoize and possibly export this function?
   const getStatuses = (guess: string[]) => {
     const answerArr = answer.split("");
-    const statuses = Array(guess.length).fill(theme.palette.error); // Fill with 'incorrect' color by default
+    const statuses: LetterStatus[] = Array(guess.length).fill("error"); // Fill with 'incorrect' by default
     if (guess.includes(SKIP_LETTER)) {
       return; // Don't compute if the guess was skipped.
     }
@@ -44,7 +45,7 @@ const GameGrid = () => {
       const currChar = guess[i];
       const currCount: number = count.get(currChar);
       if (currChar === answerArr[i]) {
-        statuses[i] = theme.palette.success;
+        statuses[i] = "success";
         count.set(currChar, currCount - 1);
       }
     }
@@ -52,8 +53,8 @@ const GameGrid = () => {
     for (let i = 0; i < guess.length; i++) {
       const currChar = guess[i];
       const currCount: number = count.get(currChar);
-      if (currCount && currCount > 0 && statuses[i] === theme.palette.error) {
-        statuses[i] = theme.palette.warning;
+      if (currCount && currCount > 0 && statuses[i] === "error") {
+        statuses[i] = "warning";
         count.set(currChar, currCount - 1);
       }
     }

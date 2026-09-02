@@ -1,5 +1,5 @@
-import { useTheme } from "@mui/material";
-import { act, render, renderHook } from "@testing-library/react";
+import { ThemeProvider, createTheme } from "@mui/material";
+import { act, render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import Cell from "../../../src/components/grid/Cell";
 import { SKIP_LETTER } from "../../../src/constants/strings";
@@ -9,14 +9,6 @@ import {
   REVEAL_TIME_MS,
   WAVE_BOUNCE_MS,
 } from "../../../src/constants/settings";
-
-// Cell/GameRow compare `status === theme.palette.X` by strict reference, and
-// tests render with no ThemeProvider, so useTheme() resolves to MUI's
-// default-theme singleton. Grabbing that same singleton here (rather than a
-// fresh createTheme()) is required for status props to `===`-match what
-// Cell's own useTheme() call returns internally.
-const { result } = renderHook(() => useTheme());
-const theme = result.current;
 
 // tests/setup.ts's matchMedia polyfill always returns matches: false, which
 // is what makes every animation test below exercise the "motion allowed"
@@ -82,27 +74,27 @@ describe("Cell", () => {
 
   it("appends the correct status description for success/warning/error", () => {
     const { rerender } = render(
-      <Cell nthLetter={1} value="A" status={theme.palette.success} />
+      <Cell nthLetter={1} value="A" status="success" />
     );
     expect(
       document.querySelector('[aria-label="1st letter, A, correct"]')
     ).toBeInTheDocument();
 
-    rerender(<Cell nthLetter={1} value="A" status={theme.palette.warning} />);
+    rerender(<Cell nthLetter={1} value="A" status="warning" />);
     expect(
       document.querySelector(
         '[aria-label="1st letter, A, present in another position"]'
       )
     ).toBeInTheDocument();
 
-    rerender(<Cell nthLetter={1} value="A" status={theme.palette.error} />);
+    rerender(<Cell nthLetter={1} value="A" status="error" />);
     expect(
       document.querySelector('[aria-label="1st letter, A, absent"]')
     ).toBeInTheDocument();
   });
 
   it("renders no visible border when a status is set and no override is given", () => {
-    render(<Cell nthLetter={1} value="A" status={theme.palette.error} />);
+    render(<Cell nthLetter={1} value="A" status="error" />);
     const cell = document.querySelector('[aria-label="1st letter, A, absent"]');
     expect(cell).toHaveStyle({ borderStyle: "none" });
   });
@@ -112,7 +104,7 @@ describe("Cell", () => {
       <Cell
         nthLetter={1}
         value="A"
-        status={theme.palette.error}
+        status="error"
         borderColorOverride="rgb(0, 128, 0)"
       />
     );
@@ -171,7 +163,7 @@ describe("Cell submit flip + color reveal", () => {
   });
 
   it("does not flip when a past guess mounts with a status already set", () => {
-    render(<Cell nthLetter={1} value="A" status={theme.palette.success} />);
+    render(<Cell nthLetter={1} value="A" status="success" />);
     const cell = document.querySelector('[aria-label^="1st letter, A"]');
     expect(getComputedStyle(cell as Element).animation).toBe("none");
   });
@@ -185,7 +177,7 @@ describe("Cell submit flip + color reveal", () => {
     const colorBeforeReveal = getComputedStyle(cell()).backgroundColor;
 
     rerender(
-      <Cell nthLetter={nthLetter} value="A" status={theme.palette.success} />
+      <Cell nthLetter={nthLetter} value="A" status="success" />
     );
     expect(getComputedStyle(cell()).animation).toContain(
       `${FLIP_ANIMATION_MS}ms ease-in-out ${REVEAL_TIME_MS * (nthLetter - 1)}ms`
@@ -214,7 +206,7 @@ describe("Cell submit flip + color reveal", () => {
       document.querySelector('[aria-label^="1st letter, A"]') as Element;
     const colorBeforeReveal = getComputedStyle(cell()).backgroundColor;
 
-    rerender(<Cell nthLetter={1} value="A" status={theme.palette.success} />);
+    rerender(<Cell nthLetter={1} value="A" status="success" />);
     expect(getComputedStyle(cell()).animation).toBe("none");
     expect(getComputedStyle(cell()).backgroundColor).not.toBe(
       colorBeforeReveal
@@ -244,7 +236,7 @@ describe("Cell win bounce", () => {
       <Cell
         nthLetter={2}
         value="A"
-        status={theme.palette.success}
+        status="success"
         winBounceDelayMs={250}
       />
     );
@@ -262,7 +254,7 @@ describe("Cell win bounce", () => {
       <Cell
         nthLetter={2}
         value="A"
-        status={theme.palette.success}
+        status="success"
         winBounceDelayMs={250}
       />
     );
@@ -276,5 +268,54 @@ describe("Cell win bounce", () => {
     const cell = document.querySelector('[aria-label^="2nd letter, A"]');
     expect(getComputedStyle(cell as Element).animation).toBe("none");
     restore();
+  });
+});
+
+describe("Cell theme changes", () => {
+  const lightTheme = createTheme({
+    palette: { success: { main: "#6AAA64" } },
+  });
+  const darkTheme = createTheme({
+    palette: { success: { main: "#538D4E" } },
+  });
+
+  it("recolors an already-scored tile when the theme's palette changes", () => {
+    const { rerender } = render(
+      <ThemeProvider theme={lightTheme}>
+        <Cell nthLetter={1} value="A" status="success" />
+      </ThemeProvider>
+    );
+    const cell = () =>
+      document.querySelector('[aria-label^="1st letter, A"]') as Element;
+    expect(getComputedStyle(cell()).backgroundColor).toBe(
+      "rgb(106, 170, 100)"
+    );
+
+    // ThemedLayout rebuilds the theme in place on a dark-mode / colorblind
+    // toggle -- the Cell is not remounted, it just sees a new theme.
+    rerender(
+      <ThemeProvider theme={darkTheme}>
+        <Cell nthLetter={1} value="A" status="success" />
+      </ThemeProvider>
+    );
+    expect(getComputedStyle(cell()).backgroundColor).toBe(
+      "rgb(83, 141, 78)"
+    );
+  });
+
+  it("follows a status change on an already-revealed tile without flipping", () => {
+    const { rerender } = render(
+      <Cell nthLetter={1} value="A" status="success" />
+    );
+    const cell = () =>
+      document.querySelector('[aria-label^="1st letter, A"]') as Element;
+    const successColor = getComputedStyle(cell()).backgroundColor;
+
+    rerender(<Cell nthLetter={1} value="A" status="error" />);
+    expect(
+      document.querySelector('[aria-label="1st letter, A, absent"]')
+    ).toBeInTheDocument();
+    expect(getComputedStyle(cell()).backgroundColor).not.toBe(successColor);
+    expect(getComputedStyle(cell()).animation).toBe("none");
   });
 });
